@@ -1,0 +1,14 @@
+{
+  "name": "fyllut-ettersending",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "git@github.com:navikt/fyllut-ettersending.git",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
