@@ -4,9 +4,7 @@ metadata:
   name: "fyllut-ettersending"
   namespace: "skjemadigitalisering"
   labels:
-    "team": "skjemadigitalisering"
-    "start.nais.io/created-by": "me"
-    "start.nais.io/creationTimestamp": "2022-06-01T08:39:01.641874987"
+    team: skjemadigitalisering
 spec:
   image: {{image}}
   liveness:
@@ -33,7 +31,7 @@ spec:
     requests:
       cpu: "200"
       memory: "256Mi"
-  ingresses: 
+  ingresses:
   {{#each ingresses as |url|}}
     - {{url}}
   {{/each}}
