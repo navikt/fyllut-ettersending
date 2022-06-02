@@ -13,9 +13,9 @@ const Home: NextPage<HomeProps> = (props) => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>FyllUt - Ettersending</title>
+        <title>FyllUt :: Ettersending</title>
         <meta name="description" content="Ettersending av vedlegg" />
-        <link rel="icon" href="/home/akgagnat/Projects/fyllut-ettersending/public/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
