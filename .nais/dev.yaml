@@ -1,2 +1,11 @@
 ingresses:
 - "https://fyllut-ettersending.dev.intern.nav.no"
+accessPolicy:
+  outbound:
+    rules:
+      - application: skjemautfylling
+      - application: skjemautfylling-experimental
+      - application: skjemautfylling-delingslenke
+env:
+  - name: FYLLUT_BASE_URL
+    value: http://skjemautfylling-experimental/fyllut
