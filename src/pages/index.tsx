@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import { GetServerSidePropsContext } from "next/types";
+import Layout from "../components/layout/layout";
+import Header from "../components/header/header";
+import Content from "../components/content/content";
+import { Heading } from "@navikt/ds-react";
 
 interface HomeProps {
   enheter: any[];
@@ -11,34 +13,28 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = (props) => {
   const { enheter } = props
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>FyllUt :: Ettersending</title>
         <meta name="description" content="Ettersending av vedlegg" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Hallo ettersending!
-        </h1>
+      <Layout>
+        <Header>
+          <Heading spacing size="xlarge" level="1">
+            Ettersende dokumentasjon
+          </Heading>
+        </Header>
 
-        <div>Tester integrasjon mot FyllUt med <a href="https://doc.nais.io/clusters/service-discovery/">Kubernetes Service Discovery</a>: {enheter.length} enheter hentet</div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+        <Content>
+          <Heading spacing size="large" level="2">
+            Innsendingsvalg
+          </Heading>
+          Tester integrasjon mot FyllUt med <a href="https://doc.nais.io/clusters/service-discovery/">Kubernetes Service Discovery</a>: {enheter.length} enheter hentet
+        </Content>
+      </Layout>
+    </>
   )
 }
 
@@ -49,6 +45,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Følgende fetch må kjøres på server i gcp siden vi bruker Kubernetes service discovery
   // (dvs. FYLLUT_BASE_URL er en url som refererer til fylluts applikasjonsnavn i gcp)
   const data = await fetch(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`)
+  console.log(data);
   const enheter = await data.json()
   console.log(`Server: fetched ${enheter.length} enheter...`)
 
