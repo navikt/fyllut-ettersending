@@ -1,16 +1,18 @@
-import styles from './header.module.css';
-import { ReactNode } from "react";
+import styles from "./header.module.css";
+import { Heading } from "@navikt/ds-react";
 
-interface Props {
-  children: ReactNode;
-}
 
-const Header = ({children}: Props) => {
+const Header = () => {
   return (
     <header className={styles.header}>
-      {children}
+      <div className="header-content">
+        <Heading size="xlarge" level="1">
+          Ettersende dokumentasjon
+        </Heading>
+        <Heading size="small">SKJEMA OG SØKNAD</Heading>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;

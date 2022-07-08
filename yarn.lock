@@ -142,10 +142,15 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
-"@navikt/ds-icons@^0.8.18":
-  version "0.8.18"
-  resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.8.18.tgz#94db590d5a169cd3ffeb7489ace0568ce92d60bc"
-  integrity sha512-pruwrqnjX9TOnGliVg9HM5g0vvAaBvwPHDlNdJB3xQRoSd+lh2X6f1QuPjsJj7bISFaxCcXJlq4QON3+d3VJlA==
+"@navikt/ds-css@^0.18.27":
+  version "0.18.27"
+  resolved "https://registry.yarnpkg.com/@navikt/ds-css/-/ds-css-0.18.27.tgz#77a464d3dc1299e8b64329d8e18f43a05a70c6f2"
+  integrity sha512-JK+EqtuUcehxSRI6YqyZuVeDLXotoZLYmED6DM77+atCRvphpPDc9fQuzXkByI25s9crNdXaS0sRCXSYSS62yA==
+
+"@navikt/ds-icons@^0.8.19":
+  version "0.8.19"
+  resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-0.8.19.tgz#9241e82dfe2704b4b9e56541998472d9b9dfa30f"
+  integrity sha512-gQx6Tt1Xd/oEASroPLx2WcHsY78H0tj0Jl1gQGXQOm0tLs7EU09G/dzITvhHzXDT5t0MPnqg+Wz9NaK9jF12+Q==
   dependencies:
     uuid "^8.3.2"
 
@@ -154,14 +159,14 @@
   resolved "https://registry.yarnpkg.com/@navikt/ds-icons/-/ds-icons-1.0.0-rc.2.tgz#ce0e55c9075fcbaa468469e66dbfc058d328895b"
   integrity sha512-dywiMdicYYdHnl8OO9ObUpQ37s5qLGJV9fElKSyLJzLgO0VR5VYmV7xplP4keq4m+FUyLw50q9/+T+mHz7Unbg==
 
-"@navikt/ds-react@^0.19.21":
-  version "0.19.21"
-  resolved "https://registry.yarnpkg.com/@navikt/ds-react/-/ds-react-0.19.21.tgz#47c9fe5c1251b140aaeda4f810b0af7f41e50ce9"
-  integrity sha512-NxHt/hpR0f0lsCK7LjgwmY7s7ghJKAHFHKrL0JadNZ2kazm6vFYYGJZEv86V1MWI52ZFXMrhevDTEqhoucUy7w==
+"@navikt/ds-react@^0.19.22":
+  version "0.19.22"
+  resolved "https://registry.yarnpkg.com/@navikt/ds-react/-/ds-react-0.19.22.tgz#686b137059c2833f5a375ec89aabd82c562ec5a2"
+  integrity sha512-FouYilES1yA5n28w9pYx0ZkwZhMq792PzjqYVcVAVqFic9erCA2sgsl6F1R8nnp8e80QrpYnA1twJl2Ya+gsug==
   dependencies:
     "@floating-ui/react-dom" "0.6.0"
     "@material-ui/core" "^4.12.3"
-    "@navikt/ds-icons" "^0.8.18"
+    "@navikt/ds-icons" "^0.8.19"
     "@popperjs/core" "^2.10.1"
     "@radix-ui/react-tabs" "0.1.5"
     "@radix-ui/react-toggle-group" "0.1.5"

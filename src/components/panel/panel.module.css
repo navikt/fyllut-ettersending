@@ -1,0 +1,18 @@
+.panel {
+    text-align: center;
+    background-color: #f1f1f1;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    max-width: 640px;
+    display: inline-block;
+  }
+
+  .button-row{
+      display: flex;
+      flex-direction: row;
+  }
+
+  .button {
+    margin: 1rem !important;
+  }
