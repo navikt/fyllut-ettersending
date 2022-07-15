@@ -1,4 +1,4 @@
-import styles from './panel.module.css';
+import styles from "./panel.module.css";
 import { ReactNode } from "react";
 import { Panel as NavPanel} from "@navikt/ds-react";
 

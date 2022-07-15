@@ -1,6 +1,32 @@
 .layout {
-  background-color: #f1f1f1;
-  margin: auto;
-  width: 50%;
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background-color: #ffffff;
+}
+
+.hr {
+  height: 4px;
+  width: 100%;
+  background-color: #33aa5f;
+  margin: 0;
+}
+
+.content {
+  background-color: #ffffff;
+  max-width: 640px;
+  width: 100%;
+  padding-left: 1.5rem ;
+  padding-right: 1.5rem ;
+}
+
+.backLink {
+  display: block;
+  margin-top: 2.75rem;
+  margin-bottom: 1.75rem;
 }
