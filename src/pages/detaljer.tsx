@@ -1,10 +1,12 @@
-import type { NextPage } from "next";
-import { GetServerSidePropsContext } from "next/types";
 import "@navikt/ds-css";
-import { Checkbox, CheckboxGroup, Heading, } from "@navikt/ds-react";
+import { Button, Checkbox, CheckboxGroup, Detail, Heading, TextField } from "@navikt/ds-react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next/types";
 import { useEffect, useState } from "react";
-import { getArchiveSubjects, getForm, getNavUnits } from "../api/apiService";
-import { Form, NavUnit } from "../api/domain";
+import { getForm, getNavUnits } from "../api/apiService";
+import { Form, NavUnit, UserData } from "../api/domain";
+import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
 
 interface Props {
   form: Form;
@@ -12,20 +14,50 @@ interface Props {
 }
 
 const Detaljer: NextPage<Props> = (props) => {
-  const {form, navUnits} = props;
-  const [submissionType, setSubmissionType] = useState("ettersende-vedlegg");
-  const [showSearch, setShowSearch] = useState(false);
-  const [showAttachmentsToSend, setShowAttachmentsToSend] = useState(false);
+  const { form, navUnits } = props;
+  const router = useRouter();
+  //const { id } = router.query;
+  const [attachmentType, setAttachmentType] = useState<string[]>([]);
+  const [showAnotherAttachmentType, setShowAnotherAttachmentType] = useState(false);
+  const [submissionInvolves, setSubmissionInvolves] = useState("");
+  const [socialno, setSocialNo] = useState("");
+  const [userdata, setUserData] = useState<UserData>({
+    fornavn: "Ola",
+    etternavn: "Nordmann",
+    postnr: "0001",
+    poststed: "Oslo",
+    gateAddresse: "Addresse 1",
+    land: "Norway",
+  });
+
+  const handleRadioGroupChange = (event: any) => {
+    setSubmissionInvolves(event);
+  };
+
+  const handleSocialNoOnChange = (event: any) => {
+    setSocialNo(event.target.value);
+  };
 
   useEffect(() => {
-    switch (submissionType) {
-      case "ettersende-vedlegg":
-        setShowSearch(true);
-        break;
-      default:
-        setShowSearch(false);
+    if (attachmentType.includes("annen-dok")) {
+      setShowAnotherAttachmentType(true);
+    } else {
+      setShowAnotherAttachmentType(false);
     }
-  }, [submissionType]);
+  }, [attachmentType]);
+
+
+  const handleCheckBoxChange = (value: string) => {
+    console.log("value", value);
+  };
+
+  const handleUserDataInputChange = (evt: any) => {
+    const target = evt.target as HTMLInputElement;
+    setUserData({
+      ...userdata,
+      [target.name]: target.value,
+    });
+  };
 
   return (
     <>
@@ -33,31 +65,65 @@ const Detaljer: NextPage<Props> = (props) => {
         Sende dokumentasjon i posten
       </Heading>
 
-      {showAttachmentsToSend && (
+      <div className="section">
+        <Heading level="1" size="small">
+          {form.title}
+        </Heading>
+        <Detail spacing>{form.properties.formNumber}</Detail>
+      </div>
+
+      <div className="section">
         <CheckboxGroup
-          legend="Velg vedlegg du skal ettersende"
-          onChange={(val: any[]) => console.log(val)}
+          legend="Hvilke vedlegg skal du ettersende?"
+          onChange={(val: string[]) => setAttachmentType(val)}
           size="medium"
         >
-          <Checkbox value="res1">Result 1 From array</Checkbox>
-          <Checkbox value="res2">Result 2 From array</Checkbox>
+          {form.attachments.map(attachment => (
+            <Checkbox key={attachment.key} value={attachment.label}>{attachment.label}</Checkbox>
+          ))}
         </CheckboxGroup>
+      </div>
+
+      {showAnotherAttachmentType && (
+        <TextField
+          label="Hvilken annen dokumentasjon skal du sende?"
+          value={userdata.postnr}
+          name="postnr"
+          size="medium"
+        />
       )}
+
+      <SubmissionRadioGroup
+        submissionType={submissionInvolves}
+        radioGroupOnChange={handleRadioGroupChange}
+        userdata={userdata}
+        userdataOnChange={handleUserDataInputChange}
+        socialno={socialno}
+        socialnoOnChange={handleSocialNoOnChange}
+        navUnits={navUnits}
+      />
+
+      <div className="button-group">
+        <Button variant="primary" onClick={() => router.push("#")} size="medium">
+          Neste
+        </Button>
+
+        <Button variant="secondary" onClick={() => console.log("Userdata", userdata)} size="medium">
+          Avbryt
+        </Button>
+      </div>
     </>
   );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const form = await getForm("lo0001"); // TODO: Legg inn form path.
+  const form = await getForm("nav952020");
   const navUnits = await getNavUnits();
-  const archiveSubjects = {}; // await getArchiveSubjects();
+  console.log("form", form);
+  console.log("navUnits", navUnits);
 
   return {
-    props: {
-      form,
-      navUnits,
-      archiveSubjects,
-    },
+    props: { form, navUnits },
   };
 }
 

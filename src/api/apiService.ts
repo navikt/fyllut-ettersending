@@ -24,8 +24,8 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
     ...form,
     properties: {
       formNumber: form?.properties.skjemanummer,
-      submissionType: form?.properties.innsending,
-      navUnitTypes: form?.properties.enhetstyper,
+      submissionType: form?.properties.innsending ?? null,
+      navUnitTypes: form?.properties.enhetstyper ?? [],
     }
   }
 }
@@ -33,7 +33,7 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
 const getNavUnits = async (): Promise<NavUnit[]> => {
   let units: any[] = [];
   try {
-    units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
+    units = await get(`https://fyllut-experimental.dev.nav.no/fyllut/api/enhetsliste`);
   } catch (e) {
     console.error(e);
   }

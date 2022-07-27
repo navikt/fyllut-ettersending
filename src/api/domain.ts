@@ -1,18 +1,23 @@
-import { getArchiveSubjects } from "./apiService";
-
 interface Form {
   _id: string;
   modified: string;
   path: string;
   title: string;
   properties: FormProperties;
-  attachments: [];
+  attachments: Attachments[];
+}
+
+interface Attachments {
+  label: string;
+  key: string;
+  description: string;
 }
 
 interface FormProperties {
-  formNumber: string;
-  submissionType: string;
-  navUnitTypes: string[];
+  formNumber?: string;
+  skjemanummer?: string;
+  submissionType?: string;
+  navUnitTypes?: string[];
 }
 
 interface NavUnit {
@@ -26,8 +31,27 @@ interface KeyValue {
  [key: string]: string,
 }
 
+interface UserData {
+  fornavn: string;
+  etternavn: string;
+  postnr: string;
+  poststed: string;
+  gateAddresse: string;
+  land: string;
+}
+
+export const userDataInit:UserData = {
+  fornavn: "",
+  etternavn: "",
+  postnr: "",
+  poststed: "",
+  gateAddresse: "",
+  land: ""
+};
+
 export type {
   Form,
   NavUnit,
   KeyValue,
+  UserData
 }
