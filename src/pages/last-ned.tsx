@@ -35,12 +35,12 @@ const UploadToMyPage: NextPage<Props> = (props) => {
         <Heading level="1" size="medium" spacing>
           2. Fyll ut og last ned vedleggskjema
         </Heading>
-        <BodyShort spacing>
+        <div>
           Dette/disse skjemaet/skjemaene må du fylle ut, skrive ut og legge ved i denne innsendingen:
           <ul>
             <li>Søknad om førerhund (åpnes i ny fane)</li>
           </ul>
-        </BodyShort>
+        </div>
       </div>
 
       <div className="section">
@@ -48,12 +48,10 @@ const UploadToMyPage: NextPage<Props> = (props) => {
           3. Disse dokumentene må du skaffe selv
         </Heading>
 
-        <BodyShort spacing>
-          <ul>
-            <li>Vedlegg B</li>
-            <li>Vedlegg X</li>
-          </ul>
-        </BodyShort>
+        <ul>
+          <li>Vedlegg B</li>
+          <li>Vedlegg X</li>
+        </ul>
       </div>
 
       <div className="section">
