@@ -5,29 +5,23 @@ body {
   margin: 0;
 }
 
-.button-group {
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+
+.form-results{
 }
 
-button:first-child {
-  margin-right: 1rem !important;
-}
-
-.application-results{
-}
-
-.application-results a{
+.form-results a{
   background-color: #F1F1F1;
   margin-bottom: 1rem;
 }
 
-.application-results a:hover{
+.form-results a:hover{
   background-color: #E6F0FF;
 }
 
 .section{
   margin-bottom: 2rem;
+}
+
+.clickable{
+  cursor: pointer;
 }

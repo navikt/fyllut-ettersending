@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { useRouter } from "next/router";
+import ButtonGroup from "../components/button/ButtonGroup";
+import { Paths, ButtonText } from "../api/domain";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -16,15 +18,12 @@ const Home: NextPage = () => {
         Du kan ettersende dokumentasjonen ved å laste den opp på Min Side / DittNAV eller sende det i posten.
       </BodyLong>
 
-      <div className="button-group">
-        <Button variant="primary" onClick={() => router.push("https://www.nav.no/person/dittnav/")} size="medium">
-          Last opp på Min Side
-        </Button>
-
-        <Button variant="secondary" onClick={() => router.push("/velg-skjema")} size="medium">
-          Send i posten
-        </Button>
-      </div>
+      <ButtonGroup
+        primaryBtnPath={Paths.navMyPage}
+        primaryBtnText={ButtonText.uploadToMyPage}
+        secondaryBtnText={ButtonText.sendViaPost}
+        secondaryBtnPath={Paths.selectForm}
+      />
     </>
   );
 };

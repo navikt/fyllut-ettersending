@@ -1,52 +1,88 @@
 import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
-import { useState } from "react";
-import { NavUnit, UserData } from "../../api/domain";
+import { useEffect, useState } from "react";
+import { NavUnit, UserData, userDataInit, FormData } from "../../api/domain";
 
 interface Props {
-  submissionType: string;
-  radioGroupOnChange: any;
-  userdata: UserData;
-  userdataOnChange: any;
-  socialno: string;
-  socialnoOnChange: any;
-  navUnits: NavUnit[];
+  userdata?: UserData;
+  updateFormData: any;
+  formData: FormData;
+  navUnits?: NavUnit[] | undefined;
 }
 
-const SubmissionRadioGroup = ({ submissionType, radioGroupOnChange, userdata, userdataOnChange, socialno, socialnoOnChange, navUnits}: Props) => {
+enum SubmissionType {
+  hasSocialNumber = "has-social-number",
+  noSocialNumber = "no-social-number",
+  other = "other",
+}
+
+const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => {
   const [beenInContactWithNAV, setBeenInContactWithNAV] = useState("nei");
+  const [userdata, setUserData] = useState<UserData>(userDataInit);
+
+  useEffect(() => {
+    updateFormData("userData", userdata);
+  }, [userdata]);
+
+  const handleUserDataInputChange = (evt: any) => {
+    const target = evt.target as HTMLInputElement;
+    setUserData({
+      ...userdata,
+      [target.name]: target.value,
+    });
+  };
 
   return (
     <>
       <div className="section">
-        <RadioGroup legend="Hvem gjelder innsendelsen for?" size="medium" onChange={radioGroupOnChange} value={submissionType}>
-          <Radio value="har-fodselnr-eller-dnummer">En person som har fødselsnummer eller D-nummer</Radio>
-          <Radio value="har-ikke-fodselnr-eller-dnummer">En person som ikke har fødselsnummer eller D-nummer</Radio>
-          <Radio value="flere-personer-eller-annet">
+        <RadioGroup
+          legend="Hvem gjelder innsendelsen for?"
+          size="medium"
+          onChange={(value) => updateFormData("submissionInvolves", value)}
+          value={formData.submissionInvolves}
+          name="submissionInvolves"
+        >
+          <Radio name="submissionInvolves" value={SubmissionType.hasSocialNumber}>
+            En person som har fødselsnummer eller D-nummer
+          </Radio>
+          <Radio name="submissionInvolves" value={SubmissionType.noSocialNumber}>
+            En person som ikke har fødselsnummer eller D-nummer
+          </Radio>
+          <Radio name="submissionInvolves" value={SubmissionType.other}>
             Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
           </Radio>
         </RadioGroup>
       </div>
 
       <div className="section">
-        {submissionType === "flere-personer-eller-annet" && (
-          <Select label="Velg hvilken NAV-enhet som skal motta innsendingen" size="medium">
-            <option value="">NAV-enhet</option>
+        {formData.submissionInvolves === SubmissionType.other && (
+          <Select
+            label="Velg hvilken NAV-enhet som skal motta innsendingen"
+            size="medium"
+            onChange={(evt) => updateFormData("navDeviceToReceiveSubmission", evt.target.value)}
+          >
+            {navUnits
+              ?.sort((a, b) => (a.name > b.name ? 1 : -1))
+              .map((navUnit) => (
+                <option value={navUnit.name}>{navUnit.name}</option>
+              ))}
           </Select>
         )}
       </div>
 
-      {submissionType === "har-fodselnr-eller-dnummer" && (
-        <TextField
-          value={socialno}
-          name="socialNo"
-          label="Fødselsnummer / D-nummer"
-          onChange={socialnoOnChange}
-          placeholder="Skriv inn tekst"
-          size="medium"
-        />
+      {formData.submissionInvolves === SubmissionType.hasSocialNumber && (
+        <div className="section">
+          <TextField
+            value={formData.socialNo}
+            name="socialNo"
+            label="Fødselsnummer / D-nummer"
+            onChange={(evt) => updateFormData("socialNo", evt.target.value)}
+            placeholder="Skriv inn tekst"
+            size="medium"
+          />
+        </div>
       )}
 
-      {submissionType === "har-ikke-fodselnr-eller-dnummer" && (
+      {formData.submissionInvolves === SubmissionType.noSocialNumber && (
         <>
           <div className="section">
             <TextField
@@ -54,37 +90,43 @@ const SubmissionRadioGroup = ({ submissionType, radioGroupOnChange, userdata, us
               name="fornavn"
               label="Fornavn"
               size="medium"
-              onChange={userdataOnChange}
+              onChange={handleUserDataInputChange}
             />
             <TextField
               value={userdata.etternavn}
               name="etternavn"
               label="Etternavn"
               size="medium"
-              onChange={userdataOnChange}
+              onChange={handleUserDataInputChange}
             />
             <TextField
               label="Gateadresse"
               value={userdata.gateAddresse}
               name="gateAddresse"
-              onChange={userdataOnChange}
+              onChange={handleUserDataInputChange}
               size="medium"
             />
             <TextField
               label="Postnummer"
               value={userdata.postnr}
               name="postnr"
-              onChange={userdataOnChange}
+              onChange={handleUserDataInputChange}
               size="medium"
             />
             <TextField
               label="Poststed"
               value={userdata.poststed}
               name="poststed"
-              onChange={userdataOnChange}
+              onChange={handleUserDataInputChange}
               size="medium"
             />
-            <TextField label="Land" value={userdata.land} name="land" onChange={userdataOnChange} size="medium" />
+            <TextField
+              label="Land"
+              value={userdata.land}
+              name="land"
+              onChange={handleUserDataInputChange}
+              size="medium"
+            />
           </div>
 
           <RadioGroup
@@ -97,13 +139,13 @@ const SubmissionRadioGroup = ({ submissionType, radioGroupOnChange, userdata, us
             <Radio value="nei">Nei</Radio>
           </RadioGroup>
 
-          {console.log("insideChild navUnit", navUnits)}
-
           {beenInContactWithNAV === "ja" && (
             <Select label="Hvilken NAV-enhet har du vært i kontakt med?" size="medium">
-              {navUnits.map(navUnit => (
-                <option value="">{navUnit.name}</option>
-              ))}
+              {navUnits
+                ?.sort((a, b) => (a.name > b.name ? 1 : -1))
+                .map((navUnit) => (
+                  <option value="">{navUnit.name}</option>
+                ))}
             </Select>
           )}
         </>

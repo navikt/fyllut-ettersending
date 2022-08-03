@@ -1,49 +1,36 @@
 import "@navikt/ds-css";
-import { BodyShort, Heading, Label, LinkPanel, Radio, RadioGroup, Search, Select } from "@navikt/ds-react";
+import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
-import { Form, KeyValue, UserData, userDataInit, NavUnit } from "../api/domain";
+import { ButtonText, Form, KeyValue, NavUnit, Paths } from "../api/domain";
+import ButtonGroup from "../components/button/ButtonGroup";
+import FormSearch from "../components/search/formSearch";
+import SubjectOfSubmission from "../components/submission/subjectOfSubmission";
 import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
+import { useFormData } from "../data/appState";
 
 interface Props {
   forms: Form[];
-  temaer: KeyValue[];
+  archiveSubjects: KeyValue[];
   navUnits: NavUnit[];
 }
 
 const VelgSkjema: NextPage<Props> = (props) => {
-  const { forms, temaer, navUnits } = props;
-  const router = useRouter();
-  const [submissionType, setSubmissionType] = useState("ettersende-vedlegg");
-  const [submissionInvolves, setSubmissionInvolves] = useState("");
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState<Form[]>([]);
-  const searchRef = useRef(null);
-  const [socialno, setSocialNo] = useState("");
-  const [userdata, setUserData] = useState<UserData>(userDataInit);
+  enum SubmissionType {
+    forwardAttachment = "forward-attachment",
+    sendAnotherDoc = "send-another-doc",
+  }
 
-  useEffect(() => {
-    const result = forms.filter((e) => e.title.includes(searchInput));
-    setSearchResult(result);
-  }, [searchInput]);
+  const { forms, archiveSubjects, navUnits } = props;
+  const [submissionType, setSubmissionType] = useState(SubmissionType.forwardAttachment);
+  const { formData, setFormData } = useFormData();
 
-  const handleRadioGroupChange = (event: any) => {
-    setSubmissionInvolves(event);
-  };
-
-  const handleSocialNoOnChange = (event: any) => {
-    setSocialNo(event.target.value);
-  };
-
-  const handleUserDataInputChange = (evt: any) => {
-    const target = evt.target as HTMLInputElement;
-    setUserData({
-      ...userdata,
-      [target.name]: target.value,
-    });
+  const updateFormData = (key: string, data: any) => {
+    console.log("data", data);
+    setFormData({ ...formData, [key]: data });
   };
 
   return (
@@ -61,61 +48,25 @@ const VelgSkjema: NextPage<Props> = (props) => {
           onChange={(val: any) => setSubmissionType(val)}
           value={submissionType}
         >
-          <Radio value="ettersende-vedlegg">Jeg skal ettersende vedlegg til en tidligere innsendt søknad</Radio>
-          <Radio value="sende-annen-dok">Jeg skal sende annen dokumentasjon til NAV</Radio>
+          <Radio value={SubmissionType.forwardAttachment}>
+            Jeg skal ettersende vedlegg til en tidligere innsendt søknad
+          </Radio>
+          <Radio value={SubmissionType.sendAnotherDoc}>Jeg skal sende annen dokumentasjon til NAV</Radio>
         </RadioGroup>
       </div>
 
-      <div className="section">
-        <Label spacing>Hvilket skjema vil du ettersende dokumentasjon til?</Label>
-        <BodyShort spacing>
-          Søk på skjemanavn, skjemanummer eller stikkord. Velg søknad / skjema i søkeresultatet.
-        </BodyShort>
-      </div>
+      {submissionType === SubmissionType.forwardAttachment && <FormSearch forms={forms} />}
 
-      {submissionType === "ettersende-vedlegg" && (
+      {submissionType === SubmissionType.sendAnotherDoc && (
         <>
-          <div className="section">
-            <Search
-              ref={searchRef}
-              label="Søk"
-              onChange={(e) => setSearchInput(e)}
-              onClear={() => setSearchInput("")}
-              size="medium"
-              variant="secondary"
-            />
-          </div>
+          <SubjectOfSubmission archiveSubjects={archiveSubjects} formData={formData} updateFormData={updateFormData} />
 
-          <div className="application-results">
-            {searchResult.map((form, index) => (
-              <LinkPanel href={form._id} key={index} border>
-                <LinkPanel.Title>{form.title}</LinkPanel.Title>
-                <LinkPanel.Description>{form.path}</LinkPanel.Description>
-              </LinkPanel>
-            ))}
-          </div>
-        </>
-      )}
+          <SubmissionRadioGroup updateFormData={updateFormData} formData={formData} navUnits={navUnits} />
 
-      {submissionType === "sende-annen-dok" && (
-        <>
-          <div className="section">
-            <Select label="Velg tema for innsendingen" size="medium">
-              {Object?.keys(temaer)?.map((tema) => (
-                <option value={tema}>{temaer[tema]}</option>
-              ))}
-              <option value="tema">tema</option>
-            </Select>
-          </div>
-
-          <SubmissionRadioGroup
-            submissionType={submissionInvolves}
-            radioGroupOnChange={handleRadioGroupChange}
-            userdata={userdata}
-            userdataOnChange={handleUserDataInputChange}
-            socialno={socialno}
-            socialnoOnChange={handleSocialNoOnChange}
-            navUnits={navUnits}
+          <ButtonGroup
+            primaryBtnPath={Paths.downloadPage}
+            primaryBtnText={ButtonText.next}
+            secondaryBtnText={ButtonText.cancel}
           />
         </>
       )}
@@ -125,14 +76,11 @@ const VelgSkjema: NextPage<Props> = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const forms = await getForms();
-  const temaer = await getArchiveSubjects();
+  const archiveSubjects = await getArchiveSubjects();
   const navUnits = await getNavUnits();
-  console.log("form", forms);
-  console.log("temaer", temaer);
-  console.log("navUnits", navUnits);
 
   return {
-    props: { forms, temaer, navUnits },
+    props: { forms, archiveSubjects, navUnits },
   };
 }
 

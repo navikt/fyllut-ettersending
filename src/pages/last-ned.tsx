@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
+import { useFormData } from "../data/appState";
 
 interface Props {}
 
 const UploadToMyPage: NextPage<Props> = (props) => {
+  const { formData } = useFormData();
+
   return (
     <>
       <div className="section">
@@ -20,7 +23,10 @@ const UploadToMyPage: NextPage<Props> = (props) => {
         <BodyShort spacing>
           Førstesiden inneholder viktig informasjon som NAV trenger. Den skal sendes inn sammen med dokumentene dine.
         </BodyShort>
-        <Button variant="primary" onClick={() => console.log("TO DO")} size="medium">
+      </div>
+
+      <div className="section">
+        <Button variant="primary" onClick={() => console.log("formData", formData)} size="medium">
           Last ned førsteside
         </Button>
       </div>

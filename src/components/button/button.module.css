@@ -1,0 +1,14 @@
+.buttonGroup {
+    padding: 1rem 0;
+    display: flex;
+    width: 100%;
+  }
+  
+  .button{
+    width: 14rem;
+  }
+  
+  .button:first-child {
+    margin-right: 1rem !important;
+  }
+  

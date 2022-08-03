@@ -31,6 +31,17 @@ interface KeyValue {
  [key: string]: string,
 }
 
+interface FormData {
+  attachments?: string[];
+  userData?: UserData;
+  socialNo?: string;
+  submissionInvolves?: string;
+  applicationId?: string;
+  subjectOfSubmission?: string;
+  nameOfUploadedDocument?: string;
+  navDeviceToReceiveSubmission?: string
+}
+
 interface UserData {
   fornavn: string;
   etternavn: string;
@@ -38,6 +49,19 @@ interface UserData {
   poststed: string;
   gateAddresse: string;
   land: string;
+}
+
+export enum Paths {
+  downloadPage = "/last-ned",
+  selectForm = "/velg-skjema",
+  navMyPage = "https://www.nav.no/person/dittnav/"
+}
+
+export enum ButtonText {
+  next = "Neste",
+  cancel = "Avbryt",
+  uploadToMyPage = "Last opp på Min Side",
+  sendViaPost = "Send i posten"
 }
 
 export const userDataInit:UserData = {
@@ -49,9 +73,26 @@ export const userDataInit:UserData = {
   land: ""
 };
 
+export const userDummyDataInit:UserData =  {
+  fornavn: "Ola",
+  etternavn: "Nordmann",
+  postnr: "0001",
+  poststed: "Oslo",
+  gateAddresse: "Addresse 1",
+  land: "Norway",
+}
+
+export const formDataInit:FormData = {
+  attachments: [],
+  userData: userDataInit,
+  socialNo: "",
+  submissionInvolves: ""
+};
+
 export type {
   Form,
   NavUnit,
   KeyValue,
-  UserData
+  UserData,
+  FormData
 }

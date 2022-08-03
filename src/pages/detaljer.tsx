@@ -1,62 +1,32 @@
 import "@navikt/ds-css";
-import { Button, Checkbox, CheckboxGroup, Detail, Heading, TextField } from "@navikt/ds-react";
+import { Detail, Heading } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
-import { useEffect, useState } from "react";
 import { getForm, getNavUnits } from "../api/apiService";
-import { Form, NavUnit, UserData } from "../api/domain";
+import { ButtonText, Form, NavUnit, Paths } from "../api/domain";
+import ChooseAttachments from "../components/attachment/chooseAttachments";
+import ButtonGroup from "../components/button/ButtonGroup";
 import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
+import { useFormData } from "../data/appState";
 
 interface Props {
   form: Form;
   navUnits: NavUnit[];
+  id: string;
 }
 
 const Detaljer: NextPage<Props> = (props) => {
-  const { form, navUnits } = props;
-  const router = useRouter();
-  //const { id } = router.query;
-  const [attachmentType, setAttachmentType] = useState<string[]>([]);
-  const [showAnotherAttachmentType, setShowAnotherAttachmentType] = useState(false);
-  const [submissionInvolves, setSubmissionInvolves] = useState("");
-  const [socialno, setSocialNo] = useState("");
-  const [userdata, setUserData] = useState<UserData>({
-    fornavn: "Ola",
-    etternavn: "Nordmann",
-    postnr: "0001",
-    poststed: "Oslo",
-    gateAddresse: "Addresse 1",
-    land: "Norway",
-  });
+  const { form, navUnits, id } = props;
+  const { formData, setFormData } = useFormData();
 
-  const handleRadioGroupChange = (event: any) => {
-    setSubmissionInvolves(event);
+  const updateFormData = (key: string, data: any) => {
+    console.log("data", data);
+    console.log("key", key);
+    setFormData({ ...formData, [key]: data });
   };
 
-  const handleSocialNoOnChange = (event: any) => {
-    setSocialNo(event.target.value);
-  };
-
-  useEffect(() => {
-    if (attachmentType.includes("annen-dok")) {
-      setShowAnotherAttachmentType(true);
-    } else {
-      setShowAnotherAttachmentType(false);
-    }
-  }, [attachmentType]);
-
-
-  const handleCheckBoxChange = (value: string) => {
-    console.log("value", value);
-  };
-
-  const handleUserDataInputChange = (evt: any) => {
-    const target = evt.target as HTMLInputElement;
-    setUserData({
-      ...userdata,
-      [target.name]: target.value,
-    });
+  const getNavUnitsFromApplicationData = (deviceTypes: string[] | undefined) => {
+    return navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
   };
 
   return (
@@ -72,58 +42,30 @@ const Detaljer: NextPage<Props> = (props) => {
         <Detail spacing>{form.properties.formNumber}</Detail>
       </div>
 
-      <div className="section">
-        <CheckboxGroup
-          legend="Hvilke vedlegg skal du ettersende?"
-          onChange={(val: string[]) => setAttachmentType(val)}
-          size="medium"
-        >
-          {form.attachments.map(attachment => (
-            <Checkbox key={attachment.key} value={attachment.label}>{attachment.label}</Checkbox>
-          ))}
-        </CheckboxGroup>
-      </div>
-
-      {showAnotherAttachmentType && (
-        <TextField
-          label="Hvilken annen dokumentasjon skal du sende?"
-          value={userdata.postnr}
-          name="postnr"
-          size="medium"
-        />
-      )}
+      <ChooseAttachments form={form} updateFormData={updateFormData} />
 
       <SubmissionRadioGroup
-        submissionType={submissionInvolves}
-        radioGroupOnChange={handleRadioGroupChange}
-        userdata={userdata}
-        userdataOnChange={handleUserDataInputChange}
-        socialno={socialno}
-        socialnoOnChange={handleSocialNoOnChange}
-        navUnits={navUnits}
+        formData={formData}
+        updateFormData={updateFormData}
+        navUnits={getNavUnitsFromApplicationData(form.properties.navUnitTypes)}
       />
 
-      <div className="button-group">
-        <Button variant="primary" onClick={() => router.push("#")} size="medium">
-          Neste
-        </Button>
-
-        <Button variant="secondary" onClick={() => console.log("Userdata", userdata)} size="medium">
-          Avbryt
-        </Button>
-      </div>
+      <ButtonGroup
+        primaryBtnPath={Paths.downloadPage}
+        primaryBtnText={ButtonText.next}
+        secondaryBtnText={ButtonText.cancel}
+      />
     </>
   );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const form = await getForm("nav952020");
+  const id = context.query?.id as string;
+  const form = await getForm(id);
   const navUnits = await getNavUnits();
-  console.log("form", form);
-  console.log("navUnits", navUnits);
 
   return {
-    props: { form, navUnits },
+    props: { form, navUnits, id },
   };
 }
 
