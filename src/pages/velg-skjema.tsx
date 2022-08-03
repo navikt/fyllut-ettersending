@@ -1,7 +1,6 @@
 import "@navikt/ds-css";
 import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";

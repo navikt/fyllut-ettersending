@@ -37,7 +37,7 @@ const FormSearch = ({ forms }: Props) => {
 
     <div className="form-results">
       {searchResult.map((form, index) => (
-        <Link href={{ pathname: "detaljer", query: { id: form.path } }}>
+        <Link href={{ pathname: `detaljer/${form.path}`}}>
           <LinkPanel className="clickable" key={index} border>
             <LinkPanel.Title>{form.title}</LinkPanel.Title>
             <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>

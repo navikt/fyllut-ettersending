@@ -2,12 +2,12 @@ import "@navikt/ds-css";
 import { Detail, Heading } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
-import { getForm, getNavUnits } from "../api/apiService";
-import { ButtonText, Form, NavUnit, Paths } from "../api/domain";
-import ChooseAttachments from "../components/attachment/chooseAttachments";
-import ButtonGroup from "../components/button/ButtonGroup";
-import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
-import { useFormData } from "../data/appState";
+import { getForm, getNavUnits } from "../../api/apiService";
+import { ButtonText, Form, NavUnit, Paths } from "../../api/domain";
+import ChooseAttachments from "../../components/attachment/chooseAttachments";
+import ButtonGroup from "../../components/button/ButtonGroup";
+import SubmissionRadioGroup from "../../components/submission/submissionRadioGroup";
+import { useFormData } from "../../data/appState";
 
 interface Props {
   form: Form;
@@ -60,7 +60,7 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const id = context.query?.id as string;
+  const id = context.params?.id as string;
   const form = await getForm(id);
   const navUnits = await getNavUnits();
 
