@@ -2,10 +2,14 @@ import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
 import { useFormData } from "../data/appState";
+import { download } from "../api/frontPageService";
+import { GetServerSidePropsContext } from "next/types";
 
-interface Props {}
+interface Props {
+  url: string;
+}
 
-const UploadToMyPage: NextPage<Props> = (props) => {
+const LastNed: NextPage<Props> = ({url}: Props) => {
   const { formData } = useFormData();
 
   return (
@@ -26,7 +30,7 @@ const UploadToMyPage: NextPage<Props> = (props) => {
       </div>
 
       <div className="section">
-        <Button variant="primary" onClick={() => console.log("formData", formData)} size="medium">
+        <Button variant="primary" onClick={() => {download(url, formData)}} size="medium">
           Last ned førsteside
         </Button>
       </div>
@@ -68,4 +72,10 @@ const UploadToMyPage: NextPage<Props> = (props) => {
   );
 };
 
-export default UploadToMyPage;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  return {
+    props: { url: process.env.FYLLUT_BASE_URL },
+  };
+}
+
+export default LastNed;

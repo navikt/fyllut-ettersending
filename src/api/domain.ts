@@ -18,6 +18,7 @@ interface FormProperties {
   skjemanummer?: string;
   submissionType?: string;
   navUnitTypes?: string[];
+  theme?: string;
 }
 
 interface NavUnit {
@@ -32,7 +33,10 @@ interface KeyValue {
 }
 
 interface FormData {
-  attachments?: string[];
+  formNumber?: string;
+  title?: string;
+  theme?: string;
+  attachments: string[];
   userData?: UserData;
   socialNo?: string;
   submissionInvolves?: string;
@@ -82,7 +86,7 @@ export const userDummyDataInit:UserData =  {
   land: "Norway",
 }
 
-export const formDataInit:FormData = {
+export const formDataInit: FormData = {
   attachments: [],
   userData: userDataInit,
   socialNo: "",

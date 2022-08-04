@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { useRouter } from "next/router";
-import ButtonGroup from "../components/button/ButtonGroup";
+import ButtonGroup from "../components/button/buttonGroup";
 import { Paths, ButtonText } from "../api/domain";
 
 const Home: NextPage = () => {

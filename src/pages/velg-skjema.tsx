@@ -5,7 +5,7 @@ import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
 import { ButtonText, Form, KeyValue, NavUnit, Paths } from "../api/domain";
-import ButtonGroup from "../components/button/ButtonGroup";
+import ButtonGroup from "../components/button/buttonGroup";
 import FormSearch from "../components/search/formSearch";
 import SubjectOfSubmission from "../components/submission/subjectOfSubmission";
 import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";

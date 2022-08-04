@@ -5,9 +5,10 @@ import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../api/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
-import ButtonGroup from "../../components/button/ButtonGroup";
+import ButtonGroup from "../../components/button/buttonGroup";
 import SubmissionRadioGroup from "../../components/submission/submissionRadioGroup";
 import { useFormData } from "../../data/appState";
+import { useEffect } from "react";
 
 interface Props {
   form: Form;
@@ -28,6 +29,15 @@ const Detaljer: NextPage<Props> = (props) => {
   const getNavUnitsFromApplicationData = (deviceTypes: string[] | undefined) => {
     return navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
   };
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      formNumber: form.properties.formNumber,
+      title: form.title,
+      theme: form.properties.theme,
+    });
+  }, [id]);
 
   return (
     <>

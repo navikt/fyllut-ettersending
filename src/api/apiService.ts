@@ -1,5 +1,6 @@
-import { get } from "./http";
+import { get, post } from "./http";
 import { Form, KeyValue, NavUnit } from "./domain";
+import { FrontPageRequest } from "./frontPageService";
 
 const getForms = async (): Promise<Form[]> => {
   let forms = [];
@@ -26,6 +27,7 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
       formNumber: form?.properties.skjemanummer,
       submissionType: form?.properties.innsending ?? null,
       navUnitTypes: form?.properties.enhetstyper ?? [],
+      theme: form?.properties.tema,
     }
   }
 }
@@ -33,7 +35,7 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
 const getNavUnits = async (): Promise<NavUnit[]> => {
   let units: any[] = [];
   try {
-    units = await get(`https://fyllut-experimental.dev.nav.no/fyllut/api/enhetsliste`);
+    units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
   } catch (e) {
     console.error(e);
   }
@@ -61,9 +63,19 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
   return subjects;
 }
 
+const downloadFrontPage = async (url: string, data: FrontPageRequest) => {
+  try {
+    // TODO: Find out why process.env.FYLLUT_BASE_URL do not work and we have to send url.
+    return post(`${url}/api/foersteside`, JSON.stringify(data));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export {
   getForms,
   getForm,
   getNavUnits,
   getArchiveSubjects,
+  downloadFrontPage,
 }
