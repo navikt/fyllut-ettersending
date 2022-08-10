@@ -2,7 +2,7 @@ import { Label, Select, TextField } from "@navikt/ds-react";
 import { FormData, KeyValue } from "../../api/domain";
 
 interface Props {
-  archiveSubjects: KeyValue[];
+  archiveSubjects: KeyValue;
   updateFormData: any;
   formData: FormData;
 }
