@@ -13,7 +13,7 @@ import { useFormData } from "../data/appState";
 
 interface Props {
   forms: Form[];
-  archiveSubjects: KeyValue[];
+  archiveSubjects: KeyValue;
   navUnits: NavUnit[];
 }
 
