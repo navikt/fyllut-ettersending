@@ -62,8 +62,8 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
           >
             {navUnits
               ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-              .map((navUnit) => (
-                <option value={navUnit.name}>{navUnit.name}</option>
+              .map((navUnit, index) => (
+                <option key={index} value={navUnit.name}>{navUnit.name}</option>
               ))}
           </Select>
         )}
@@ -143,8 +143,8 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
             <Select label="Hvilken NAV-enhet har du vært i kontakt med?" size="medium">
               {navUnits
                 ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-                .map((navUnit) => (
-                  <option value="">{navUnit.name}</option>
+                .map((navUnit, index) => (
+                  <option key={index} value="">{navUnit.name}</option>
                 ))}
             </Select>
           )}

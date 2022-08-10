@@ -14,7 +14,7 @@ const FormSearch = ({ forms }: Props) => {
   useEffect(() => {
     const result = forms.filter((e) => e.title.includes(searchInput));
     setSearchResult(result);
-  }, [searchInput]);
+  }, [searchInput, forms]);
 
   
   return (
@@ -37,7 +37,7 @@ const FormSearch = ({ forms }: Props) => {
 
     <div className="form-results">
       {searchResult.map((form, index) => (
-        <Link href={{ pathname: `detaljer/${form.path}`}}>
+        <Link key={index} href={{ pathname: `detaljer/${form.path}`}}>
           <LinkPanel className="clickable" key={index} border>
             <LinkPanel.Title>{form.title}</LinkPanel.Title>
             <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>

@@ -20,8 +20,8 @@ const SubjectOfSubmission = ({ archiveSubjects, updateFormData, formData  }: Pro
 
       <div className="section">
         <Select label="Velg tema for innsendingen" size="medium" value={formData.subjectOfSubmission} onChange={(evt) => updateFormData("subjectOfSubmission", archiveSubjects[evt.target.value])}>
-          {Object.keys(archiveSubjects).map((subject) => (
-            <option value={subject}>{archiveSubjects[subject]}</option>
+          {Object.keys(archiveSubjects).map((subject, index) => (
+            <option key={index} value={subject}>{archiveSubjects[subject]}</option>
           ))}
           <option value="tema">tema</option>
         </Select>
