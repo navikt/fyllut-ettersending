@@ -23,6 +23,7 @@ const Home: NextPage = () => {
         primaryBtnText={ButtonText.uploadToMyPage}
         secondaryBtnText={ButtonText.sendViaPost}
         secondaryBtnPath={Paths.selectForm}
+        validate={false}
       />
     </>
   );

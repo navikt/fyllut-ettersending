@@ -1,6 +1,6 @@
 import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import { NavUnit, UserData, userDataInit, FormData } from "../../api/domain";
+import { NavUnit, UserData, FormData, SubmissionType, initUserData } from "../../api/domain";
 
 interface Props {
   userdata?: UserData;
@@ -9,20 +9,14 @@ interface Props {
   navUnits?: NavUnit[] | undefined;
 }
 
-enum SubmissionType {
-  hasSocialNumber = "has-social-number",
-  noSocialNumber = "no-social-number",
-  other = "other",
-}
-
 const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => {
   const [beenInContactWithNAV, setBeenInContactWithNAV] = useState("nei");
-  const [userdata, setUserData] = useState<UserData>(userDataInit);
+  const [userdata, setUserData] = useState<UserData>(initUserData());
 
   useEffect(() => {
     updateFormData("userData", userdata);
   }, [userdata]);
-
+ 
   const handleUserDataInputChange = (evt: any) => {
     const target = evt.target as HTMLInputElement;
     setUserData({
@@ -40,14 +34,15 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
           onChange={(value) => updateFormData("submissionInvolves", value)}
           value={formData.submissionInvolves}
           name="submissionInvolves"
+          error={formData.errors?.submissionInvolves}
         >
-          <Radio name="submissionInvolves" value={SubmissionType.hasSocialNumber}>
+          <Radio name={SubmissionType.hasSocialNumber} value={SubmissionType.hasSocialNumber}>
             En person som har fødselsnummer eller D-nummer
           </Radio>
-          <Radio name="submissionInvolves" value={SubmissionType.noSocialNumber}>
+          <Radio name={SubmissionType.noSocialNumber} value={SubmissionType.noSocialNumber}>
             En person som ikke har fødselsnummer eller D-nummer
           </Radio>
-          <Radio name="submissionInvolves" value={SubmissionType.other}>
+          <Radio name={SubmissionType.other} value={SubmissionType.other}>
             Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
           </Radio>
         </RadioGroup>
@@ -78,6 +73,8 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
             onChange={(evt) => updateFormData("socialNo", evt.target.value)}
             placeholder="Skriv inn tekst"
             size="medium"
+            type="number"
+            error={formData.errors?.socialNo}
           />
         </div>
       )}
@@ -86,46 +83,52 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
         <>
           <div className="section">
             <TextField
-              value={userdata.fornavn}
+              value={formData.userData?.fornavn}
               name="fornavn"
               label="Fornavn"
               size="medium"
               onChange={handleUserDataInputChange}
+              error={formData.errors?.userData?.fornavn}
             />
             <TextField
-              value={userdata.etternavn}
+              value={formData.userData?.etternavn}
               name="etternavn"
               label="Etternavn"
               size="medium"
               onChange={handleUserDataInputChange}
+              error={formData.errors?.userData?.etternavn}
             />
             <TextField
               label="Gateadresse"
-              value={userdata.gateAddresse}
+              value={formData.userData?.gateAddresse}
               name="gateAddresse"
               onChange={handleUserDataInputChange}
               size="medium"
+              error={formData.errors?.userData?.gateAddresse}
             />
             <TextField
               label="Postnummer"
-              value={userdata.postnr}
+              value={formData.userData?.postnr}
               name="postnr"
               onChange={handleUserDataInputChange}
               size="medium"
+              error={formData.errors?.userData?.postnr}
             />
             <TextField
               label="Poststed"
-              value={userdata.poststed}
+              value={formData.userData?.poststed}
               name="poststed"
               onChange={handleUserDataInputChange}
               size="medium"
+              error={formData.errors?.userData?.poststed}
             />
             <TextField
               label="Land"
-              value={userdata.land}
+              value={formData.userData?.land}
               name="land"
               onChange={handleUserDataInputChange}
               size="medium"
+              error={formData.errors?.userData?.land}
             />
           </div>
 

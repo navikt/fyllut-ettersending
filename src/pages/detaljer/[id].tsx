@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Detail, Heading } from "@navikt/ds-react";
+import { Button, Detail, Heading } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
@@ -9,6 +9,7 @@ import ButtonGroup from "../../components/button/buttonGroup";
 import SubmissionRadioGroup from "../../components/submission/submissionRadioGroup";
 import { useFormData } from "../../data/appState";
 import { useEffect } from "react";
+
 
 interface Props {
   form: Form;
@@ -52,7 +53,7 @@ const Detaljer: NextPage<Props> = (props) => {
         <Detail spacing>{form.properties.formNumber}</Detail>
       </div>
 
-      <ChooseAttachments form={form} updateFormData={updateFormData} />
+      <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData} />
 
       <SubmissionRadioGroup
         formData={formData}
@@ -60,10 +61,15 @@ const Detaljer: NextPage<Props> = (props) => {
         navUnits={getNavUnitsFromApplicationData(form.properties.navUnitTypes)}
       />
 
+      <Button variant="primary" onClick={() => console.log("formData", formData)} size="medium">
+        Check FormData
+      </Button>
+
       <ButtonGroup
         primaryBtnPath={Paths.downloadPage}
         primaryBtnText={ButtonText.next}
         secondaryBtnText={ButtonText.cancel}
+        validate
       />
     </>
   );

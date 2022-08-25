@@ -21,15 +21,37 @@ interface FormProperties {
   theme?: string;
 }
 
+interface ErrorFormData {
+  attachments?: string;
+  userData?: UserData;
+  socialNo?: string;
+  submissionInvolves?: string;
+  applicationId?: string;
+  subjectOfSubmission?: string;
+  nameOfUploadedDocument?: string;
+  navDeviceToReceiveSubmission?: string;
+}
+
+export enum SubmissionType {
+  hasSocialNumber = "has-social-number",
+  noSocialNumber = "no-social-number",
+  other = "other",
+}
+
+export enum VelgSkjemaSubmissionType {
+  forwardAttachment = "forward-attachment",
+  sendAnotherDoc = "send-another-doc",
+}
+
 interface NavUnit {
-  id: number,
-  name: string,
-  number: string,
-  type: string,
+  id: number;
+  name: string;
+  number: string;
+  type: string;
 }
 
 interface KeyValue {
- [key: string]: string,
+  [key: string]: string;
 }
 
 interface FormData {
@@ -39,11 +61,13 @@ interface FormData {
   attachments: string[];
   userData?: UserData;
   socialNo?: string;
-  submissionInvolves?: string;
+  submissionInvolves?: SubmissionType;
+  velgSkjemaSubmissionType?: VelgSkjemaSubmissionType;
   applicationId?: string;
   subjectOfSubmission?: string;
   nameOfUploadedDocument?: string;
-  navDeviceToReceiveSubmission?: string
+  navDeviceToReceiveSubmission?: string;
+  errors?: ErrorFormData;
 }
 
 interface UserData {
@@ -55,48 +79,55 @@ interface UserData {
   land: string;
 }
 
-export enum Paths {
+enum Paths {
   downloadPage = "/last-ned",
   selectForm = "/velg-skjema",
-  navMyPage = "https://www.nav.no/person/dittnav/"
+  navMyPage = "https://www.nav.no/person/dittnav/",
 }
 
-export enum ButtonText {
+enum ButtonText {
   next = "Neste",
   cancel = "Avbryt",
   uploadToMyPage = "Last opp på Min Side",
-  sendViaPost = "Send i posten"
+  sendViaPost = "Send i posten",
 }
 
-export const userDataInit:UserData = {
+const initUserData = () => {
+  return {
+    fornavn: "",
+    etternavn: "",
+    postnr: "",
+    poststed: "",
+    gateAddresse: "",
+    land: "",
+  };
+};
+
+const userDataInit = {
   fornavn: "",
   etternavn: "",
   postnr: "",
   poststed: "",
   gateAddresse: "",
-  land: ""
+  land: "",
 };
 
-export const userDummyDataInit:UserData =  {
+const userDummyDataInit: UserData = {
   fornavn: "Ola",
   etternavn: "Nordmann",
   postnr: "0001",
   poststed: "Oslo",
   gateAddresse: "Addresse 1",
   land: "Norway",
-}
-
-export const formDataInit: FormData = {
-  attachments: [],
-  userData: userDataInit,
-  socialNo: "",
-  submissionInvolves: ""
 };
 
-export type {
-  Form,
-  NavUnit,
-  KeyValue,
-  UserData,
-  FormData
-}
+const formDataInit: FormData = {
+  attachments: [],
+  userData: initUserData(),
+  socialNo: "",
+  velgSkjemaSubmissionType: VelgSkjemaSubmissionType.forwardAttachment,
+};
+
+export type { Form, NavUnit, KeyValue, UserData, FormData, ErrorFormData };
+
+export { formDataInit, userDummyDataInit, initUserData, Paths, ButtonText };

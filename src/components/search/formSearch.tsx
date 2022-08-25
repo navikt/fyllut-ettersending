@@ -30,6 +30,7 @@ const FormSearch = ({ forms }: Props) => {
     <div className="section">
       <TextField
         label="Søk"
+        name="search"
         onChange={(e) => setSearchInput(e.target.value)}
         size="medium"
       />

@@ -37,19 +37,7 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
 
       <div className="section">
         <Heading level="1" size="medium" spacing>
-          2. Fyll ut og last ned vedleggskjema
-        </Heading>
-        <div>
-          Dette/disse skjemaet/skjemaene må du fylle ut, skrive ut og legge ved i denne innsendingen:
-          <ul>
-            <li>Søknad om førerhund (åpnes i ny fane)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="section">
-        <Heading level="1" size="medium" spacing>
-          3. Disse dokumentene må du skaffe selv
+          2. Disse dokumentene må du skaffe selv
         </Heading>
 
         <ul>
