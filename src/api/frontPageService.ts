@@ -37,6 +37,7 @@ const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
 
 const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
   const title = `${formData.formNumber} ${formData.title}`;
+
   return {
     foerstesidetype: "ETTERSENDELSE",
     navSkjemaId: formData.formNumber!,
@@ -46,7 +47,6 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     tema: formData.theme!,
     vedleggsliste: formData.attachments,
     dokumentlisteFoersteside: [
-      title,
       ...formData.attachments
     ],
     netsPostboks: "1400",

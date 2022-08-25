@@ -4,6 +4,7 @@ import { BodyShort, Button, Heading } from "@navikt/ds-react";
 import { useFormData } from "../data/appState";
 import { download } from "../api/frontPageService";
 import { GetServerSidePropsContext } from "next/types";
+import { useState } from "react";
 
 interface Props {
   url: string;
@@ -11,6 +12,16 @@ interface Props {
 
 const LastNed: NextPage<Props> = ({url}: Props) => {
   const { formData } = useFormData();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const downloadFrontPage = async () => {
+    setLoading(true);
+    try {
+      await download(url, formData);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -30,7 +41,7 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
       </div>
 
       <div className="section">
-        <Button variant="primary" onClick={() => {download(url, formData)}} size="medium">
+        <Button variant="primary" onClick={downloadFrontPage} size="medium" loading={loading}>
           Last ned førsteside
         </Button>
       </div>
