@@ -5,6 +5,7 @@ import FileSaver from "file-saver";
 const download = async (url: string, formData: FormData) => {
   let pdf;
   try {
+    console.log(toFrontPageRequest(formData));
     pdf = await downloadFrontPage(url, toFrontPageRequest(formData));
     saveToFile(pdf.foersteside, `${formData.formNumber}.pdf`);
   } catch (e) {
@@ -36,14 +37,12 @@ const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
 };
 
 const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
-  const title = `${formData.formNumber} ${formData.title}`;
-
   return {
     foerstesidetype: "ETTERSENDELSE",
-    navSkjemaId: formData.formNumber!,
-    spraakkode: "NB", // TODO: Support more languages
-    overskriftstittel: title,
-    arkivtittel: title,
+    navSkjemaId: formData.formNumber || "",
+    spraakkode: "NB",
+    overskriftstittel: getTitle(formData),
+    arkivtittel: getTitle(formData),
     tema: formData.theme!,
     vedleggsliste: formData.attachments,
     dokumentlisteFoersteside: [
@@ -55,6 +54,14 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
   };
 }
+
+const getTitle = (formData: FormData) => {
+  if (formData.formNumber) {
+    return `Ettersendelse til ${formData.formNumber} ${formData.title}`;
+  } else {
+    return `Innsendelsen gjelder: ${formData.theme}`;
+  }
+};
 
 const toFrontPageAddress = (formData: FormData): FrontPageAddress => {
   return {
