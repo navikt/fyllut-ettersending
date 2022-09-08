@@ -1,5 +1,5 @@
 import { downloadFrontPage } from "./apiService";
-import { FormData } from "./domain";
+import { FormData, SubmissionType } from "./domain";
 import FileSaver from "file-saver";
 
 const download = async (url: string, formData: FormData) => {
@@ -7,7 +7,7 @@ const download = async (url: string, formData: FormData) => {
   try {
     console.log(toFrontPageRequest(formData));
     pdf = await downloadFrontPage(url, toFrontPageRequest(formData));
-    saveToFile(pdf.foersteside, `${formData.formNumber}.pdf`);
+    saveToFile(pdf.foersteside, `${formData.formNumber || "Innsendelse"}.pdf`);
   } catch (e) {
     console.error(e);
   }
@@ -43,12 +43,11 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     spraakkode: "NB",
     overskriftstittel: getTitle(formData),
     arkivtittel: getTitle(formData),
-    tema: formData.theme!,
+    tema: formData.theme,
     vedleggsliste: formData.attachments,
     dokumentlisteFoersteside: [
       ...formData.attachments
     ],
-    netsPostboks: "1400",
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
@@ -63,12 +62,16 @@ const getTitle = (formData: FormData) => {
   }
 };
 
-const toFrontPageAddress = (formData: FormData): FrontPageAddress => {
-  return {
-    adresselinje1: formData.userData?.gateAddresse,
-    postnummer: formData.userData?.postnr,
-    poststed: formData.userData?.poststed,
-  } as FrontPageAddress;
+const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
+  if (formData.submissionInvolves === SubmissionType.noSocialNumber) {
+    return {
+      adresselinje1: formData.userData?.gateAddresse,
+      postnummer: formData.userData?.postnr,
+      poststed: formData.userData?.poststed,
+    } as FrontPageAddress;
+  }
+
+  return undefined;
 }
 
 const toFrontPageUser = (formData: FormData): FrontPageUser|undefined => {
@@ -98,7 +101,7 @@ interface FrontPageRequest {
   spraakkode: string;
   overskriftstittel: string;
   arkivtittel: string;
-  tema: string;
+  tema?: string;
   vedleggsliste: string[];
   dokumentlisteFoersteside: string[];
   netsPostboks?: string;
