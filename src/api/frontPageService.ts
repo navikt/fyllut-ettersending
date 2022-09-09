@@ -1,12 +1,13 @@
 import { downloadFrontPage } from "./apiService";
-import { FormData } from "./domain";
+import { FormData, SubmissionType } from "./domain";
 import FileSaver from "file-saver";
 
 const download = async (url: string, formData: FormData) => {
   let pdf;
   try {
+    console.log(toFrontPageRequest(formData));
     pdf = await downloadFrontPage(url, toFrontPageRequest(formData));
-    saveToFile(pdf.foersteside, `${formData.formNumber}.pdf`);
+    saveToFile(pdf.foersteside, `${formData.formNumber || "Innsendelse"}.pdf`);
   } catch (e) {
     console.error(e);
   }
@@ -36,32 +37,41 @@ const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
 };
 
 const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
-  const title = `${formData.formNumber} ${formData.title}`;
-
   return {
     foerstesidetype: "ETTERSENDELSE",
-    navSkjemaId: formData.formNumber!,
-    spraakkode: "NB", // TODO: Support more languages
-    overskriftstittel: title,
-    arkivtittel: title,
-    tema: formData.subjectOfSubmission!,
+    navSkjemaId: formData.formNumber || "",
+    spraakkode: "NB",
+    overskriftstittel: getTitle(formData),
+    arkivtittel: getTitle(formData),
+    tema: formData.theme,
     vedleggsliste: formData.attachments,
     dokumentlisteFoersteside: [
       ...formData.attachments
     ],
-    netsPostboks: "1400",
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
   };
 }
 
-const toFrontPageAddress = (formData: FormData): FrontPageAddress => {
-  return {
-    adresselinje1: formData.userData?.gateAddresse,
-    postnummer: formData.userData?.postnr,
-    poststed: formData.userData?.poststed,
-  } as FrontPageAddress;
+const getTitle = (formData: FormData) => {
+  if (formData.formNumber) {
+    return `Ettersendelse til ${formData.formNumber} ${formData.title}`;
+  } else {
+    return `Innsendelsen gjelder: ${formData.theme}`;
+  }
+};
+
+const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
+  if (formData.submissionInvolves === SubmissionType.noSocialNumber) {
+    return {
+      adresselinje1: formData.userData?.gateAddresse,
+      postnummer: formData.userData?.postnr,
+      poststed: formData.userData?.poststed,
+    } as FrontPageAddress;
+  }
+
+  return undefined;
 }
 
 const toFrontPageUser = (formData: FormData): FrontPageUser|undefined => {
@@ -91,7 +101,7 @@ interface FrontPageRequest {
   spraakkode: string;
   overskriftstittel: string;
   arkivtittel: string;
-  tema: string;
+  tema?: string;
   vedleggsliste: string[];
   dokumentlisteFoersteside: string[];
   netsPostboks?: string;
