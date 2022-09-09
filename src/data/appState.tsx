@@ -1,5 +1,5 @@
 import React, { Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
-import { formDataInit, FormData } from "../api/domain";
+import { FormData, initFormData } from "../api/domain";
 
 interface AppStateType {
   formData: FormData;
@@ -7,7 +7,7 @@ interface AppStateType {
 }
 
 const FormDataContext = React.createContext<AppStateType>({
-  formData: formDataInit,
+  formData: initFormData(),
   setFormData: () => {},
 });
 
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export function FormDataProvider({ children }: Props) {
-  const [formData, setFormData] = useState<FormData>(formDataInit);
+  const [formData, setFormData] = useState<FormData>(initFormData());
 
   return (
     <>

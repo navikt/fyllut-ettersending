@@ -1,15 +1,17 @@
 import "@navikt/ds-css";
-import { Button, Heading, Radio, RadioGroup } from "@navikt/ds-react";
+import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
-import { useState } from "react";
+import { useEffect } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
-import { ButtonText, Form, KeyValue, NavUnit, Paths, VelgSkjemaSubmissionType } from "../api/domain";
+import { ButtonText, Form, initFormData, KeyValue, NavUnit, Paths, VelgSkjemaSubmissionType } from "../api/domain";
 import ButtonGroup from "../components/button/buttonGroup";
 import FormSearch from "../components/search/formSearch";
 import SubjectOfSubmission from "../components/submission/subjectOfSubmission";
 import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
 import { useFormData } from "../data/appState";
+import { validateFormData } from "../utils/validator";
+import { useRouter } from "next/router";
 
 interface Props {
   forms: Form[];
@@ -20,10 +22,38 @@ interface Props {
 const VelgSkjema: NextPage<Props> = (props) => {
   const { forms, archiveSubjects, navUnits } = props;
   const { formData, setFormData } = useFormData();
+  const router = useRouter();
+
+  useEffect(() => {});
 
   const updateFormData = (key: string, data: any) => {
-    console.log("formdatavalue", data);
-    setFormData({ ...formData, [key]: data });
+    let updatedFormData = { ...formData, [key]: data };
+    const errorMsg = validateFormData(updatedFormData);
+    setFormData({ ...formData, [key]: data, errors: errorMsg });
+
+    if (key === "velgSkjemaSubmissionType" && data === VelgSkjemaSubmissionType.sendAnotherDoc) {
+      resetFormData(data);
+    }
+  };
+
+  const onLinkPanelClicked = (clickedFormNumber: string) => {
+    resetFormData(VelgSkjemaSubmissionType.forwardAttachment, clickedFormNumber);
+    router.push(`detaljer/${clickedFormNumber}`);
+  };
+
+  const resetFormData = (_velgSkjemaSubmissionType: VelgSkjemaSubmissionType, clickedFormNumber?: string) => {
+    switch (_velgSkjemaSubmissionType) {
+      case VelgSkjemaSubmissionType.forwardAttachment:
+        if (formData.formNumber && !(formData.formId === clickedFormNumber)) {
+          setFormData({ ...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType });
+        }
+        break;
+      case VelgSkjemaSubmissionType.sendAnotherDoc:
+        if (formData.formId) {
+          setFormData({ ...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType });
+        }
+        break;
+    }
   };
 
   return (
@@ -50,8 +80,9 @@ const VelgSkjema: NextPage<Props> = (props) => {
         </RadioGroup>
       </div>
 
-      {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.forwardAttachment && <FormSearch forms={forms} />}
-
+      {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.forwardAttachment && (
+        <FormSearch forms={forms} onLinkPanelClicked={onLinkPanelClicked} />
+      )}
       {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.sendAnotherDoc && (
         <>
           <SubjectOfSubmission archiveSubjects={archiveSubjects} formData={formData} updateFormData={updateFormData} />

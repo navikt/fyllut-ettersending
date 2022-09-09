@@ -27,7 +27,7 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
       formNumber: form?.properties.skjemanummer,
       submissionType: form?.properties.innsending ?? null,
       navUnitTypes: form?.properties.enhetstyper ?? [],
-      theme: form?.properties.tema,
+      subjectOfSubmission: form?.properties.tema,
     }
   }
 }

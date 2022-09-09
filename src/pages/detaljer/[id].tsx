@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Button, Detail, Heading } from "@navikt/ds-react";
+import { Detail, Heading } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
@@ -22,8 +22,6 @@ const Detaljer: NextPage<Props> = (props) => {
   const { formData, setFormData } = useFormData();
 
   const updateFormData = (key: string, data: any) => {
-    console.log("data", data);
-    console.log("key", key);
     setFormData({ ...formData, [key]: data });
   };
 
@@ -31,12 +29,13 @@ const Detaljer: NextPage<Props> = (props) => {
     return navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     setFormData({
       ...formData,
       formNumber: form.properties.formNumber,
       title: form.title,
       theme: form.properties.theme,
+      formId: id,
     });
   }, [id]);
 
@@ -60,10 +59,6 @@ const Detaljer: NextPage<Props> = (props) => {
         updateFormData={updateFormData}
         navUnits={getNavUnitsFromApplicationData(form.properties.navUnitTypes)}
       />
-
-      <Button variant="primary" onClick={() => console.log("formData", formData)} size="medium">
-        Check FormData
-      </Button>
 
       <ButtonGroup
         primaryBtnPath={Paths.downloadPage}

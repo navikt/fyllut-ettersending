@@ -5,18 +5,19 @@ import { Form } from "../../api/domain";
 
 interface Props {
   forms: Form[];
+  onLinkPanelClicked: any
 }
 
-const FormSearch = ({ forms }: Props) => {
+const FormSearch = ({ forms, onLinkPanelClicked }: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState<Form[]>([]);
 
   useEffect(() => {
-    const result = forms.filter((e) => e.title.includes(searchInput));
+    const result = forms.filter((e) => e.title.includes(searchInput) || e.path.includes(searchInput));
     setSearchResult(result);
   }, [searchInput, forms]);
 
-  
+
   return (
     <>
     <div className="section">
@@ -38,12 +39,10 @@ const FormSearch = ({ forms }: Props) => {
 
     <div className="form-results">
       {searchResult.map((form, index) => (
-        <Link key={index} href={{ pathname: `detaljer/${form.path}`}}>
-          <LinkPanel className="clickable" key={index} border>
+          <LinkPanel className="clickable" key={index} border onClick={() => onLinkPanelClicked(form.path)}>
             <LinkPanel.Title>{form.title}</LinkPanel.Title>
             <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
           </LinkPanel>
-        </Link>
       ))}
     </div>
   </>

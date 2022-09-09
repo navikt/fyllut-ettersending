@@ -26,7 +26,7 @@ interface ErrorFormData {
   userData?: UserData;
   socialNo?: string;
   submissionInvolves?: string;
-  applicationId?: string;
+  formId?: string;
   subjectOfSubmission?: string;
   nameOfUploadedDocument?: string;
   navDeviceToReceiveSubmission?: string;
@@ -37,6 +37,7 @@ export enum SubmissionType {
   noSocialNumber = "no-social-number",
   other = "other",
 }
+
 
 export enum VelgSkjemaSubmissionType {
   forwardAttachment = "forward-attachment",
@@ -55,19 +56,22 @@ interface KeyValue {
 }
 
 interface FormData {
-  formNumber?: string;
-  title?: string;
-  theme?: string;
+  formId?: string;
   attachments: string[];
-  userData?: UserData;
-  socialNo?: string;
-  submissionInvolves?: SubmissionType;
-  velgSkjemaSubmissionType?: VelgSkjemaSubmissionType;
-  applicationId?: string;
-  subjectOfSubmission?: string;
+  beenInContactPrev?: boolean;
+  errors?: KeyValue;
+  formNumber?: string;
   nameOfUploadedDocument?: string;
-  navDeviceToReceiveSubmission?: string;
-  errors?: ErrorFormData;
+  onSubmitTriggered: boolean;
+  socialSecurityNo?: string;
+  subjectOfSubmission?: string;
+  submissionInvolves?: SubmissionType;
+  navUnitInContactWith: string;
+  navUnitToReceiveSubmission?: string;
+  theme?: string;
+  title?: string;
+  userData: UserData;
+  velgSkjemaSubmissionType?: VelgSkjemaSubmissionType;
 }
 
 interface UserData {
@@ -112,6 +116,34 @@ const userDataInit = {
   land: "",
 };
 
+const ErrorMessages = {
+  socialSecurityNo: "Fødselsnummer er ikke gyldig",
+  socialSecurityNoIsEmpty: "Fødselsnummer må fylles ut",
+  fornavn: "Fornavn må fylles ut",
+  etternavn: "Etternavn må fylles ut",
+  postnr: "Post nummer må fylles ut",
+  poststed: "Post sted må fylles ut",
+  gateAddresse: "Adressen må fylles ut",
+  land: "Land må fylles ut",
+  emptyInput: "Tekstfelt er tom",
+  chooseOne: "Velg en av alternativer",
+  attachments: "Velg minst et vedlegg",
+};
+
+const clearErrorMessages = {
+  socialSecurityNo: "",
+  socialNoEmpty: "",
+  fornavn: "",
+  etternavn: "",
+  postnr: "",
+  poststed: "",
+  gateAddresse: "",
+  land: "",
+  emptyInput: "",
+  submissionInvolves: "",
+  attachments: "",
+}
+
 const userDummyDataInit: UserData = {
   fornavn: "Ola",
   etternavn: "Nordmann",
@@ -121,13 +153,32 @@ const userDummyDataInit: UserData = {
   land: "Norway",
 };
 
+const initFormData = () => {
+  return {
+    attachments: [],
+    userData: initUserData(),
+    socialSecurityNo: "",
+    velgSkjemaSubmissionType: VelgSkjemaSubmissionType.forwardAttachment,
+    onSubmitTriggered: false,
+    beenInContactPrev: false,
+    navUnitToReceiveSubmission: "",
+    navUnitInContactWith: "",
+    errors: {},
+  };
+}
+
 const formDataInit: FormData = {
   attachments: [],
   userData: initUserData(),
-  socialNo: "",
+  socialSecurityNo: "",
   velgSkjemaSubmissionType: VelgSkjemaSubmissionType.forwardAttachment,
+  onSubmitTriggered: false,
+  beenInContactPrev: false,
+  navUnitToReceiveSubmission: "",
+  navUnitInContactWith: "",
+  errors: {},
 };
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, ErrorFormData };
 
-export { formDataInit, userDummyDataInit, initUserData, Paths, ButtonText };
+export { formDataInit, userDummyDataInit, initUserData, initFormData, userDataInit, Paths, ButtonText, ErrorMessages };

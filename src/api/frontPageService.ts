@@ -44,7 +44,7 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     spraakkode: "NB", // TODO: Support more languages
     overskriftstittel: title,
     arkivtittel: title,
-    tema: formData.theme!,
+    tema: formData.subjectOfSubmission!,
     vedleggsliste: formData.attachments,
     dokumentlisteFoersteside: [
       ...formData.attachments
@@ -65,16 +65,16 @@ const toFrontPageAddress = (formData: FormData): FrontPageAddress => {
 }
 
 const toFrontPageUser = (formData: FormData): FrontPageUser|undefined => {
-  if (formData.socialNo) {
+  if (formData.socialSecurityNo) {
     return {
-      brukerId: formData.socialNo,
+      brukerId: formData.socialSecurityNo,
       brukerType: "PERSON",
     } as FrontPageUser;
   }
 }
 
 const toUnknownAddressInfo = (formData: FormData): string|undefined => {
-  if (formData.socialNo && formData.userData?.gateAddresse) {
+  if (formData.socialSecurityNo && formData.userData?.gateAddresse) {
     return `${formData.userData?.fornavn} ${formData.userData?.etternavn}, ` +
       `${formData.userData?.gateAddresse}, ` +
       `${formData.userData?.postnr} ${formData.userData?.poststed}, ` +

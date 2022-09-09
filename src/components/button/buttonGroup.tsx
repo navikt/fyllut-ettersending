@@ -1,9 +1,8 @@
-import { Button, Loader } from "@navikt/ds-react";
+import { Button } from "@navikt/ds-react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { Paths } from "../../api/domain";
+import { useState } from "react";
 import { useFormData } from "../../data/appState";
-import { isEmpty, validateFormDataOnSubmit } from "../../utils/validator";
+import { isEmpty, validateFormData } from "../../utils/validator";
 import styles from "./button.module.css";
 
 interface Props {
@@ -22,13 +21,13 @@ const ButtonGroup = ({ primaryBtnPath, primaryBtnText, secondaryBtnPath, seconda
 
   const validateAndGoToNextPage = () => {
     setPrimaryBtnLoading(true);
-
     if (validate) {
-      const formDataErrors = validateFormDataOnSubmit(formData);
-      if (isEmpty(formDataErrors)) {
+      const updatedFormData = {...formData, onSubmitTriggered: true}
+      const formDataErrors = validateFormData(updatedFormData);
+      if (formDataErrors && isEmpty(formDataErrors)) {
         router.push(primaryBtnPath);
       } else {
-        setFormData({ ...formData, errors: formDataErrors });
+        setFormData({ ...formData, errors: formDataErrors, onSubmitTriggered: true});
       }
     }
 

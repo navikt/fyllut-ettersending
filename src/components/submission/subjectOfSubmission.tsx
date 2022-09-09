@@ -19,11 +19,14 @@ const SubjectOfSubmission = ({ archiveSubjects, updateFormData, formData  }: Pro
       </div>
 
       <div className="section">
-        <Select label="Velg tema for innsendingen" size="medium" name="subjectOfSubmission" value={formData.subjectOfSubmission} onChange={(evt) => updateFormData("subjectOfSubmission", archiveSubjects[evt.target.value])}>
-          {Object.keys(archiveSubjects).map((subject, index) => (
-            <option key={index} value={archiveSubjects[subject]}>{archiveSubjects[subject]}</option>
+        <Select label="Velg tema for innsendingen" size="medium" name="subjectOfSubmission" 
+        value={formData.subjectOfSubmission} 
+        error={formData.errors?.subjectOfSubmission} 
+        onChange={(evt) => {updateFormData("subjectOfSubmission", evt.target.value)}}>
+          <option></option>
+          {Object.keys(archiveSubjects).sort((a, b) => (a > b ? 1 : -1)).map((subject, index) => (
+            <option key={index} value={subject}>{archiveSubjects[subject]}</option>
           ))}
-          <option value="tema">tema</option>
         </Select>
       </div>
     </>
