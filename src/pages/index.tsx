@@ -1,18 +1,22 @@
 import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import { useRouter } from "next/router";
 import ButtonGroup from "../components/button/buttonGroup";
 import { Paths, ButtonText } from "../api/domain";
+import { Components, fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
 
-const Home: NextPage = () => {
-  const router = useRouter();
+interface Props {
+  decorator: Components;
+}
+
+const Home: NextPage<Props> = ({decorator}: Props) => {
 
   return (
     <>
+      <decorator.Header />
       <Heading spacing size="large" level="2">
         Innsendingsvalg
-      </Heading>
+      </Heading>xde
 
       <BodyLong>
         Du kan ettersende dokumentasjonen ved å laste den opp på Min Side / DittNAV eller sende det i posten.
@@ -28,5 +32,16 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+export async function getServerSideProps() {
+
+  const decorator = await fetchDecoratorReact({
+    env: process.env.NODE_ENV === "production" ? "prod" : "dev",
+    simple: true,
+    chatbot: false
+  });
+
+  return { props: { decorator: JSON.parse(JSON.stringify(decorator)) }};
+}
 
 export default Home;
