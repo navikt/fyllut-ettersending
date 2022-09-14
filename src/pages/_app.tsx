@@ -4,13 +4,11 @@ import Head from "next/head";
 import Layout from "../components/layout/layout";
 import { FormDataProvider } from "../data/appState";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <FormDataProvider>
       <Head>
         <title>FyllUt :: Ettersending</title>
-        <meta name="description" content="Ettersending dokumentasjon"/>
-        <link rel="icon" href="/favicon.ico"/>
       </Head>
       <Layout>
         <Component {...pageProps} />
