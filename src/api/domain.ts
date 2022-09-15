@@ -180,5 +180,4 @@ const formDataInit: FormData = {
 };
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, ErrorFormData };
-
 export { formDataInit, userDummyDataInit, initUserData, initFormData, userDataInit, Paths, ButtonText, ErrorMessages };
