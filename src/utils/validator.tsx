@@ -25,10 +25,6 @@ const validate = {
   navUnitToReceiveSubmission: (formData: FormData) => formData.submissionInvolves === SubmissionType.other && !formData.navUnitToReceiveSubmission,
 };
 
-const keepOnlyVlauesFromSlectedSubmissionType = () => {
-
-}
-
 const validateFormData = (formData: FormData) => {
   let formErrors: KeyValue = {};
   if (formData.onSubmitTriggered) {

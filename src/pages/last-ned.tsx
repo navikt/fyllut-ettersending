@@ -5,12 +5,13 @@ import { useFormData } from "../data/appState";
 import { download } from "../api/frontPageService";
 import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
+import Section from "../components/section/section";
 
 interface Props {
   url: string;
 }
 
-const LastNed: NextPage<Props> = ({url}: Props) => {
+const LastNed: NextPage<Props> = ({ url }: Props) => {
   const { formData } = useFormData();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,51 +22,52 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="section">
-        <Heading spacing size="large" level="2">
+      <Section>
+        <Heading size="large" level="2">
           Sende dokumentasjon i posten
         </Heading>
-      </div>
+      </Section>
 
-      <div className="section">
+      <Section>
         <Heading level="1" size="medium" spacing>
           1. Last ned førsteside til saken din
         </Heading>
         <BodyShort spacing>
           Førstesiden inneholder viktig informasjon som NAV trenger. Den skal sendes inn sammen med dokumentene dine.
         </BodyShort>
-      </div>
+      </Section>
 
-      <div className="section">
+      <Section>
         <Button variant="primary" onClick={downloadFrontPage} size="medium" loading={loading}>
           Last ned førsteside
         </Button>
-      </div>
+      </Section>
 
-      <div className="section">
+      <Section>
         <Heading level="1" size="medium" spacing>
           2. Disse dokumentene må du skaffe selv
         </Heading>
-
         <ul>
-          <li>Vedlegg B</li>
-          <li>Vedlegg X</li>
+          {formData.attachments.map((attachment, index) => (
+            <li key={index}>{attachment}</li>
+          ))}
         </ul>
-      </div>
+      </Section>
 
-      <div className="section">
+      <div className="lastSection">
         <Heading level="1" size="medium" spacing>
           4. Send dokumentene til NAV i posten
         </Heading>
+      
 
-        <BodyShort spacing>
-          Samle alle vedleggene fra punkt 2 og 3. Legg førstesidearket fra punkt 1 øverst. Send det hele til adressen på
-          førstesidearket.
-        </BodyShort>
+      <BodyShort spacing >
+        Samle alle vedleggene fra punkt 2 og 3. Legg førstesidearket fra punkt 1 øverst. Send det hele til adressen på
+        førstesidearket.
+      </BodyShort>
       </div>
     </>
   );

@@ -9,7 +9,8 @@ import ButtonGroup from "../../components/button/buttonGroup";
 import SubmissionRadioGroup from "../../components/submission/submissionRadioGroup";
 import { useFormData } from "../../data/appState";
 import { useEffect } from "react";
-
+import Section from "../../components/section/section";
+import { validateFormData } from "../../utils/validator";
 
 interface Props {
   form: Form;
@@ -21,15 +22,18 @@ const Detaljer: NextPage<Props> = (props) => {
   const { form, navUnits, id } = props;
   const { formData, setFormData } = useFormData();
 
+
   const updateFormData = (key: string, data: any) => {
-    setFormData({ ...formData, [key]: data });
+    let updatedFormData = { ...formData, [key]: data };
+    const errorMsg = validateFormData(updatedFormData);
+    setFormData({ ...formData, [key]: data, errors: errorMsg });
   };
 
   const getNavUnitsFromApplicationData = (deviceTypes: string[] | undefined) => {
     return navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     setFormData({
       ...formData,
       formNumber: form.properties.formNumber,
@@ -45,12 +49,12 @@ const Detaljer: NextPage<Props> = (props) => {
         Sende dokumentasjon i posten
       </Heading>
 
-      <div className="section">
+      <Section>
         <Heading level="1" size="small">
           {form.title}
         </Heading>
         <Detail spacing>{form.properties.formNumber}</Detail>
-      </div>
+      </Section>
 
       <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData} />
 

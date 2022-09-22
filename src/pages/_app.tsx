@@ -14,7 +14,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Component {...pageProps} />
       </Layout>
     </FormDataProvider>
-  );
+  )
 }
 
 export default MyApp

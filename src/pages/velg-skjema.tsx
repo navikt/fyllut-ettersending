@@ -12,6 +12,7 @@ import SubmissionRadioGroup from "../components/submission/submissionRadioGroup"
 import { useFormData } from "../data/appState";
 import { validateFormData } from "../utils/validator";
 import { useRouter } from "next/router";
+import Section from "../components/section/section";
 
 interface Props {
   forms: Form[];
@@ -58,13 +59,13 @@ const VelgSkjema: NextPage<Props> = (props) => {
 
   return (
     <>
-      <div className="section">
+      <Section>
         <Heading spacing size="large" level="2">
           Sende dokumentasjon i posten
         </Heading>
-      </div>
+      </Section>
 
-      <div className="section">
+      <Section>
         <RadioGroup
           legend="Hva gjelder innsendingen?"
           size="medium"
@@ -78,7 +79,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
             Jeg skal sende annen dokumentasjon til NAV
           </Radio>
         </RadioGroup>
-      </div>
+      </Section>
 
       {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.forwardAttachment && (
         <FormSearch forms={forms} onLinkPanelClicked={onLinkPanelClicked} />

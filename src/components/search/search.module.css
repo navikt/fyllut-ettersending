@@ -1,0 +1,15 @@
+.clickable{
+    cursor: pointer;
+  }
+
+.results{
+}
+
+.results a{
+  background-color: #F1F1F1;
+  margin-bottom: 1.5rem;
+}
+
+.results a:hover{
+  background-color: #E6F0FF;
+}

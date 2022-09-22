@@ -1,6 +1,8 @@
 import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { NavUnit, UserData, FormData, SubmissionType, initUserData } from "../../api/domain";
+import Section from "../section/section";
+import styles from "./submission.module.css";
 
 interface Props {
   userdata?: UserData;
@@ -26,7 +28,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
 
   return (
     <>
-      <div className="section">
+      <Section>
         <RadioGroup
           legend="Hvem gjelder innsendelsen for?"
           size="medium"
@@ -45,10 +47,10 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
             Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
           </Radio>
         </RadioGroup>
-      </div>
+      </Section>
 
       {formData.submissionInvolves === SubmissionType.hasSocialNumber && (
-        <div className="section">
+        <Section>
           <TextField
             value={formData.socialSecurityNo}
             name="socialSecurityNo"
@@ -59,12 +61,12 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
             type="number"
             error={formData.errors?.socialSecurityNo}
           />
-        </div>
+        </Section>
       )}
 
       {formData.submissionInvolves === SubmissionType.noSocialNumber && (
         <>
-          <div className="section">
+          <Section>
             <TextField
               value={formData.userData?.fornavn}
               name="fornavn"
@@ -72,6 +74,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               size="medium"
               onChange={handleUserDataInputChange}
               error={formData.errors?.fornavn}
+              className={styles.input}
             />
             <TextField
               value={formData.userData?.etternavn}
@@ -80,6 +83,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               size="medium"
               onChange={handleUserDataInputChange}
               error={formData.errors?.etternavn}
+              className={styles.input}
             />
             <TextField
               label="Gateadresse"
@@ -88,6 +92,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               onChange={handleUserDataInputChange}
               size="medium"
               error={formData.errors?.gateAddresse}
+              className={styles.input}
             />
             <TextField
               label="Postnummer"
@@ -97,6 +102,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               size="medium"
               type="number"
               error={formData.errors?.postnr}
+              className={styles.input}
             />
             <TextField
               label="Poststed"
@@ -105,6 +111,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               onChange={handleUserDataInputChange}
               size="medium"
               error={formData.errors?.poststed}
+              className={styles.input}
             />
             <TextField
               label="Land"
@@ -113,42 +120,47 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               onChange={handleUserDataInputChange}
               size="medium"
               error={formData.errors?.land}
+              className={styles.input}
             />
-          </div>
+          </Section>
 
-          <RadioGroup
-            legend="Har du vært i kontakt med NAV om denne saken tidligere?"
-            size="medium"
-            onChange={(val: boolean) => updateFormData("beenInContactPrev", val)}
-            value={formData.beenInContactPrev}
-            name={"beenInContactPrev"}
-          >
-            <Radio value={true}>Ja</Radio>
-            <Radio value={false}>Nei</Radio>
-          </RadioGroup>
+          <Section>
+            <RadioGroup
+              legend="Har du vært i kontakt med NAV om denne saken tidligere?"
+              size="medium"
+              onChange={(val: boolean) => updateFormData("beenInContactPrev", val)}
+              value={formData.beenInContactPrev}
+              name={"beenInContactPrev"}
+            >
+              <Radio value={true}>Ja</Radio>
+              <Radio value={false}>Nei</Radio>
+            </RadioGroup>
+          </Section>
 
           {formData?.beenInContactPrev && (
-            <Select
-              label="Hvilken NAV-enhet har du vært i kontakt med?"
-              size="medium"
-              onChange={(evt) => updateFormData("navUnitInContactWith", evt.target.value)}
-              value={formData?.navUnitInContactWith}
-              error={formData?.errors?.navUnitInContactWith}
-            >
-              <option></option>
-              {navUnits
-                ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-                .map((navUnit, index) => (
-                  <option key={index} value={navUnit.name}>
-                    {navUnit.name}
-                  </option>
-                ))}
-            </Select>
+            <Section>
+              <Select
+                label="Hvilken NAV-enhet har du vært i kontakt med?"
+                size="medium"
+                onChange={(evt) => updateFormData("navUnitInContactWith", evt.target.value)}
+                value={formData?.navUnitInContactWith}
+                error={formData?.errors?.navUnitInContactWith}
+              >
+                <option></option>
+                {navUnits
+                  ?.sort((a, b) => (a.name > b.name ? 1 : -1))
+                  .map((navUnit, index) => (
+                    <option key={index} value={navUnit.name}>
+                      {navUnit.name}
+                    </option>
+                  ))}
+              </Select>
+            </Section>
           )}
         </>
       )}
 
-      <div className="section">
+      <Section>
         {formData.submissionInvolves === SubmissionType.other && (
           <Select
             label="Velg hvilken NAV-enhet som skal motta innsendingen"
@@ -167,7 +179,7 @@ const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => 
               ))}
           </Select>
         )}
-      </div>
+      </Section>
     </>
   );
 };

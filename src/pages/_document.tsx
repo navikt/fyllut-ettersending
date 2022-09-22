@@ -7,8 +7,7 @@ const decoratorParams: Props = {
   simple: true,
 };
 
-class _Document extends Document<{ Decorator: Components }>  {
-
+class _Document extends Document<{ Decorator: Components }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     const Decorator = await fetchDecoratorReact(decoratorParams);
@@ -17,7 +16,7 @@ class _Document extends Document<{ Decorator: Components }>  {
 
   render() {
     const { Styles, Scripts, Header, Footer } = this.props.Decorator;
-  
+
     return (
       <Html>
         <Head>
@@ -28,7 +27,9 @@ class _Document extends Document<{ Decorator: Components }>  {
         <Scripts />
         <body>
           <Header />
-          <Main />
+          <main className="main">
+            <Main />
+          </main>
           <Footer />
           <NextScript />
         </body>

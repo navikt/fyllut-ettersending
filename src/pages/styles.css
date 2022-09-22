@@ -1,27 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap");
+
+html{
+  height:100%;
+}
+
+:root {
+  --margin-btm: 2.75rem;
+}
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+  height: 100%;
+  display:flex; 
+  flex-direction:column; 
+}
+
+footer {
+  margin-top:auto; 
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+/** Remove counter in input fields where type is number 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
   margin: 0;
 }
 
-
-.form-results{
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
-.form-results a{
-  background-color: #F1F1F1;
-  margin-bottom: 1rem;
-}
-
-.form-results a:hover{
-  background-color: #E6F0FF;
-}
-
-.section{
-  margin-bottom: 2rem;
-}
-
-.clickable{
-  cursor: pointer;
+.lastSection {
+  margin-bottom: 3.75rem;
 }

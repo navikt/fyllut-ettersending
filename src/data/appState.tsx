@@ -24,7 +24,7 @@ export function FormDataProvider({ children }: Props) {
 
   return (
     <>
-      <FormDataContext.Provider value={{ formData, setFormData }}>{children}</FormDataContext.Provider>;
+      <FormDataContext.Provider value={{ formData, setFormData }}>{children}</FormDataContext.Provider>
     </>
   );
 }
