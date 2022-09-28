@@ -15,7 +15,11 @@ const FormSearch = ({ forms, onLinkPanelClicked }: Props) => {
   const [searchResult, setSearchResult] = useState<Form[]>([]);
 
   useEffect(() => {
-    const result = forms.filter((e) => e.title.includes(searchInput) || e.path.includes(searchInput));
+    const lcSearchInput = searchInput.toLowerCase();
+    const result = forms.filter((form) => 
+    form.title.toLowerCase().includes(lcSearchInput) || 
+    form.path.toLowerCase().includes(lcSearchInput) || 
+    form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput));
     setSearchResult(result);
   }, [searchInput, forms]);
 
@@ -24,7 +28,7 @@ const FormSearch = ({ forms, onLinkPanelClicked }: Props) => {
       <Section>
         <TextField
           label="Hvilket skjema vil du ettersende dokumentasjon til?"
-          description="Søk på skjemanavn, skjemanummer eller stikkord. Velg søknad / skjema i søkeresultatet."
+          description="Søk på skjemanavn, skjemanummer eller stikkord (for eksempel: dagpenger, stønad, tiltak, pensjon, e.l.). Velg søknad / skjema i søkeresultatet"
           name="search"
           onChange={(e) => setSearchInput(e.target.value)}
           size="medium"
