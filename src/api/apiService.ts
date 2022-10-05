@@ -66,7 +66,7 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
   try {
     subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
   } catch (e) {
-    logger.error("Failed to load arhcive subjects", {e});
+    logger.error("Failed to load archive subjects", {e});
   }
 
   return subjects;
