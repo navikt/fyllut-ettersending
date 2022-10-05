@@ -11,8 +11,13 @@ interface Props {
   url: string;
 }
 
-const LastNed: NextPage<Props> = ({url}: Props) => {
-  const {formData} = useFormData();
+const attachmentsHeader = {
+  single: "2. Dette dokumentet må du skaffe selv",
+  multiple: "2. Disse dokumentene må du skaffe selv"
+};
+
+const LastNed: NextPage<Props> = ({ url }: Props) => {
+  const { formData } = useFormData();
   const [loading, setLoading] = useState<boolean>(false);
 
   const downloadFrontPage = async () => {
@@ -49,7 +54,7 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
 
       <Section>
         <Heading level="1" size="medium" spacing>
-          2. Disse dokumentene må du skaffe selv
+          {formData.attachments.length > 1 ? attachmentsHeader.multiple : attachmentsHeader.single }
         </Heading>
         <ul>
           {formData.attachments.map((attachment, index) => (
@@ -63,7 +68,6 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
           4. Send dokumentene til NAV i posten
         </Heading>
 
-
         <BodyShort spacing>
           Samle alle vedleggene fra punkt 2 og 3. Legg førstesidearket fra punkt 1 øverst. Send det hele til adressen på
           førstesidearket.
@@ -75,7 +79,7 @@ const LastNed: NextPage<Props> = ({url}: Props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
-    props: {url: process.env.FYLLUT_BASE_URL},
+    props: { url: process.env.FYLLUT_BASE_URL },
   };
 }
 

@@ -1,5 +1,4 @@
-import { BodyShort, Label, LinkPanel, TextField } from "@navikt/ds-react";
-import Link from "next/link";
+import { LinkPanel, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
 import { Form } from "../../api/domain";
 import Section from "../section/section";

@@ -130,20 +130,6 @@ const ErrorMessages = {
   attachments: "Velg minst et vedlegg",
 };
 
-const clearErrorMessages = {
-  socialSecurityNo: "",
-  socialNoEmpty: "",
-  fornavn: "",
-  etternavn: "",
-  postnr: "",
-  poststed: "",
-  gateAddresse: "",
-  land: "",
-  emptyInput: "",
-  submissionInvolves: "",
-  attachments: "",
-}
-
 const userDummyDataInit: UserData = {
   fornavn: "Ola",
   etternavn: "Nordmann",

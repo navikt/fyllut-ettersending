@@ -1,6 +1,6 @@
-import Document, { DocumentInitialProps, Head, Html, Main, NextScript } from "next/document";
-import { DocumentContext } from "next/dist/pages/_document";
 import { Components, fetchDecoratorReact, Props } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { DocumentContext } from "next/dist/pages/_document";
+import Document, { Head, Html, Main, NextScript } from "next/document";
 
 const decoratorParams: Props = {
   env: process.env.NODE_ENV === "production" ? "prod" : "dev",

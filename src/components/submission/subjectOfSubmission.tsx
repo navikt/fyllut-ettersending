@@ -1,4 +1,4 @@
-import { Label, Select, TextField } from "@navikt/ds-react";
+import { Select, TextField } from "@navikt/ds-react";
 import { FormData, KeyValue } from "../../api/domain";
 import Section from "../section/section";
 
