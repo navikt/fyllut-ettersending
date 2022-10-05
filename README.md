@@ -1,21 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ettersendelse av dokumentasjon til en søknad.
+Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.dev.intern.nav.no
 
-## Getting Started
+## Utvikling
 
-First, create local configuration in `.env.local`:
+### Konfigurasjon
+Man kan lage en lokal konfigurasjonsfil på `.env.local`:
+```
+FYLLUT_BASE_URL=https://fyllut-experimental.dev.nav.no/fyllut
+LOGLEVEL=debug
+```
 
-    FYLLUT_BASE_URL=https://fyllut-experimental.dev.nav.no/fyllut
-
-Then, run the development server:
-
+### Lokal server
 ```bash
 yarn dev
 ```
 
-Open [http://localhost:3002](http://localhost:3002) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3002/api/hello](http://localhost:3002/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Serveren kjører på http://localhost:3002.

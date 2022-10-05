@@ -1,24 +1,29 @@
 import { get, post } from "./http";
 import { Form, KeyValue, NavUnit } from "./domain";
 import { FrontPageRequest } from "./frontPageService";
+import { logger } from "../utils/logger";
 
 const getForms = async (): Promise<Form[]> => {
+  logger.debug("Load forms");
+
   let forms = [];
   try {
     forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
   } catch (e) {
-    console.error(e);
+    logger.error("Failed to load forms", {e});
   }
 
   return forms;
 }
 
-const getForm = async (formPath: string): Promise<Form|undefined> => {
+const getForm = async (formPath: string): Promise<Form | undefined> => {
+  logger.info(`Load form ${formPath}`);
+
   let form;
   try {
     form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited`);
   } catch (e) {
-    console.error(e);
+    logger.error(`Failed to load form ${formPath}`, {e});
   }
 
   return {
@@ -33,11 +38,13 @@ const getForm = async (formPath: string): Promise<Form|undefined> => {
 }
 
 const getNavUnits = async (): Promise<NavUnit[]> => {
+  logger.debug("Load nav units (enhetsliste)");
+
   let units: any[] = [];
   try {
     units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
   } catch (e) {
-    console.error(e);
+    logger.error("Failed to load nav units", {e});
   }
 
   return units
@@ -53,22 +60,26 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
 }
 
 const getArchiveSubjects = async (): Promise<KeyValue> => {
+  logger.debug("Load archive subjects");
+
   let subjects = {};
   try {
     subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
   } catch (e) {
-    console.error(e);
+    logger.error("Failed to load arhcive subjects", {e});
   }
 
   return subjects;
 }
 
 const downloadFrontPage = async (url: string, data: FrontPageRequest) => {
+  logger.debug("Download front page");
+
   try {
     // TODO: Find out why process.env.FYLLUT_BASE_URL do not work and we have to send url.
     return post(`${url}/api/foersteside`, JSON.stringify(data));
   } catch (e) {
-    console.error(e);
+    logger.error("Failed to download front page", {e});
   }
 }
 
