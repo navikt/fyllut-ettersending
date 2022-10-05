@@ -21,16 +21,17 @@ interface Props {
 }
 
 const VelgSkjema: NextPage<Props> = (props) => {
-  const { forms, archiveSubjects, navUnits } = props;
-  const { formData, setFormData } = useFormData();
+  const {forms, archiveSubjects, navUnits} = props;
+  const {formData, setFormData} = useFormData();
   const router = useRouter();
 
-  useEffect(() => {});
+  useEffect(() => {
+  });
 
   const updateFormData = (key: string, data: any) => {
-    let updatedFormData = { ...formData, [key]: data };
+    let updatedFormData = {...formData, [key]: data};
     const errorMsg = validateFormData(updatedFormData);
-    setFormData({ ...formData, [key]: data, errors: errorMsg });
+    setFormData({...formData, [key]: data, errors: errorMsg});
 
     if (key === "velgSkjemaSubmissionType" && data === VelgSkjemaSubmissionType.sendAnotherDoc) {
       resetFormData(data);
@@ -44,16 +45,16 @@ const VelgSkjema: NextPage<Props> = (props) => {
 
   const resetFormData = (_velgSkjemaSubmissionType: VelgSkjemaSubmissionType, clickedFormNumber?: string) => {
     switch (_velgSkjemaSubmissionType) {
-      case VelgSkjemaSubmissionType.forwardAttachment:
-        if (formData.formNumber && !(formData.formId === clickedFormNumber)) {
-          setFormData({ ...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType });
-        }
-        break;
-      case VelgSkjemaSubmissionType.sendAnotherDoc:
-        if (formData.formId) {
-          setFormData({ ...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType });
-        }
-        break;
+    case VelgSkjemaSubmissionType.forwardAttachment:
+      if (formData.formNumber && !(formData.formId === clickedFormNumber)) {
+        setFormData({...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType});
+      }
+      break;
+    case VelgSkjemaSubmissionType.sendAnotherDoc:
+      if (formData.formId) {
+        setFormData({...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType});
+      }
+      break;
     }
   };
 
@@ -82,12 +83,12 @@ const VelgSkjema: NextPage<Props> = (props) => {
       </Section>
 
       {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.forwardAttachment && (
-        <FormSearch forms={forms} onLinkPanelClicked={onLinkPanelClicked} />
+        <FormSearch forms={forms} onLinkPanelClicked={onLinkPanelClicked}/>
       )}
       {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.sendAnotherDoc && (
         <>
-          <SubjectOfSubmission archiveSubjects={archiveSubjects} formData={formData} updateFormData={updateFormData} />
-          <SubmissionRadioGroup updateFormData={updateFormData} formData={formData} navUnits={navUnits} />
+          <SubjectOfSubmission archiveSubjects={archiveSubjects} formData={formData} updateFormData={updateFormData}/>
+          <SubmissionRadioGroup updateFormData={updateFormData} formData={formData} navUnits={navUnits}/>
 
           <ButtonGroup
             primaryBtnPath={Paths.downloadPage}
@@ -107,7 +108,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const navUnits = await getNavUnits();
 
   return {
-    props: { forms, archiveSubjects, navUnits },
+    props: {forms, archiveSubjects, navUnits},
   };
 }
 

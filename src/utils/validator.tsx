@@ -6,11 +6,11 @@ import {
 const validate = {
   isSendAnotherDocSubmissionType: (formData: FormData) => formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.sendAnotherDoc ? true : false,
   hasSubmissionInvolves: (formData: FormData) =>
-  formData.submissionInvolves && Object.values(SubmissionType).includes(formData.submissionInvolves),
+    formData.submissionInvolves && Object.values(SubmissionType).includes(formData.submissionInvolves),
   nameOfUploadedDocument: (formData: FormData) =>
-  validate.isSendAnotherDocSubmissionType(formData)
-    ? !formData.nameOfUploadedDocument
-    : false,
+    validate.isSendAnotherDocSubmissionType(formData)
+      ? !formData.nameOfUploadedDocument
+      : false,
   subjectOfSubmission: (formData: FormData) => validate.isSendAnotherDocSubmissionType(formData) && !formData.subjectOfSubmission,
   socialSecurityNo: (formData: FormData) =>
     formData.submissionInvolves === SubmissionType.hasSocialNumber && formData.socialSecurityNo
@@ -44,7 +44,7 @@ const validateFormData = (formData: FormData) => {
       formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
     }
 
-    if(validate.subjectOfSubmission(formData)) {
+    if (validate.subjectOfSubmission(formData)) {
       formErrors.subjectOfSubmission = ErrorMessages.chooseOne;
     }
 
@@ -57,11 +57,11 @@ const validateFormData = (formData: FormData) => {
       });
     }
 
-    if(validate.navUnitInContactWith(formData)){
+    if (validate.navUnitInContactWith(formData)) {
       formErrors.navUnitInContactWith = ErrorMessages.chooseOne;
     }
 
-    if(validate.navUnitToReceiveSubmission(formData)){
+    if (validate.navUnitToReceiveSubmission(formData)) {
       formErrors.navUnitToReceiveSubmission = ErrorMessages.chooseOne;
     }
 

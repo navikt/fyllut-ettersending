@@ -19,14 +19,14 @@ interface Props {
 }
 
 const Detaljer: NextPage<Props> = (props) => {
-  const { form, navUnits, id } = props;
-  const { formData, setFormData } = useFormData();
+  const {form, navUnits, id} = props;
+  const {formData, setFormData} = useFormData();
 
 
   const updateFormData = (key: string, data: any) => {
-    let updatedFormData = { ...formData, [key]: data };
+    let updatedFormData = {...formData, [key]: data};
     const errorMsg = validateFormData(updatedFormData);
-    setFormData({ ...formData, [key]: data, errors: errorMsg });
+    setFormData({...formData, [key]: data, errors: errorMsg});
   };
 
   const getNavUnitsFromApplicationData = (deviceTypes: string[] | undefined) => {
@@ -56,7 +56,7 @@ const Detaljer: NextPage<Props> = (props) => {
         <Detail spacing>{form.properties.formNumber}</Detail>
       </Section>
 
-      <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData} />
+      <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData}/>
 
       <SubmissionRadioGroup
         formData={formData}
@@ -80,7 +80,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const navUnits = await getNavUnits();
 
   return {
-    props: { form, navUnits, id },
+    props: {form, navUnits, id},
   };
 }
 

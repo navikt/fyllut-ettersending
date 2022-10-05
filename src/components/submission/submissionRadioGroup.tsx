@@ -1,6 +1,6 @@
 import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
 import { useEffect, useState } from "react";
-import { NavUnit, UserData, FormData, SubmissionType, initUserData } from "../../api/domain";
+import { FormData, initUserData, NavUnit, SubmissionType, UserData } from "../../api/domain";
 import Section from "../section/section";
 import styles from "./submission.module.css";
 
@@ -11,7 +11,7 @@ interface Props {
   navUnits?: NavUnit[] | undefined;
 }
 
-const SubmissionRadioGroup = ({ navUnits, updateFormData, formData }: Props) => {
+const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
   const [userdata, setUserData] = useState<UserData>(initUserData());
 
   useEffect(() => {

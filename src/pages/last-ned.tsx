@@ -11,8 +11,8 @@ interface Props {
   url: string;
 }
 
-const LastNed: NextPage<Props> = ({ url }: Props) => {
-  const { formData } = useFormData();
+const LastNed: NextPage<Props> = ({url}: Props) => {
+  const {formData} = useFormData();
   const [loading, setLoading] = useState<boolean>(false);
 
   const downloadFrontPage = async () => {
@@ -62,12 +62,12 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
         <Heading level="1" size="medium" spacing>
           4. Send dokumentene til NAV i posten
         </Heading>
-      
 
-      <BodyShort spacing >
-        Samle alle vedleggene fra punkt 2 og 3. Legg førstesidearket fra punkt 1 øverst. Send det hele til adressen på
-        førstesidearket.
-      </BodyShort>
+
+        <BodyShort spacing>
+          Samle alle vedleggene fra punkt 2 og 3. Legg førstesidearket fra punkt 1 øverst. Send det hele til adressen på
+          førstesidearket.
+        </BodyShort>
       </div>
     </>
   );
@@ -75,7 +75,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
-    props: { url: process.env.FYLLUT_BASE_URL },
+    props: {url: process.env.FYLLUT_BASE_URL},
   };
 }
 

@@ -9,9 +9,9 @@ const Section = ({children}: Props) => {
 
   return (
     <div className={styles.section}>
-        <main>
-          {children}
-        </main>
+      <main>
+        {children}
+      </main>
     </div>
   );
 }

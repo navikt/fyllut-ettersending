@@ -10,16 +10,16 @@ interface Props {
   onLinkPanelClicked: any;
 }
 
-const FormSearch = ({ forms, onLinkPanelClicked }: Props) => {
+const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState<Form[]>([]);
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
-    const result = forms.filter((form) => 
-    form.title.toLowerCase().includes(lcSearchInput) || 
-    form.path.toLowerCase().includes(lcSearchInput) || 
-    form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput));
+    const result = forms.filter((form) =>
+      form.title.toLowerCase().includes(lcSearchInput) ||
+      form.path.toLowerCase().includes(lcSearchInput) ||
+      form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput));
     setSearchResult(result);
   }, [searchInput, forms]);
 
