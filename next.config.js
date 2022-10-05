@@ -1,20 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    outputStandalone: true,
-  },
+  output: "standalone",
 }
 
 webpack: (config, { isServer }) => {
   // Fixes npm packages that depend on `fs` module
   if (!isServer) {
     config.node = {
-      fs: 'empty'
+      fs: "empty"
     }
   }
 
   return config
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;
