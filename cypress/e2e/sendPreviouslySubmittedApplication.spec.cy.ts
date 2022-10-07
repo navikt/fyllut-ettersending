@@ -5,11 +5,11 @@ describe.only(
   },
   () => {
     before(() => {
-      cy.visit("http://localhost:3002/");
+      cy.visit("/");
     });
 
     it('clicks "send i posten" button', () => {
-      cy.get("button").eq(1).click();
+      cy.get("button").contains("Send i posten").click();
       cy.url().should("include", "/velg-skjema");
       cy.get('[name="search"]').click().type("førerhund");
       cy.get(".clickable").parent().click();
@@ -17,7 +17,7 @@ describe.only(
       cy.get('[type="checkbox"]').first().check();
       cy.get('[type="radio"]').check("has-social-number");
       cy.get('[name="socialSecurityNo"]').click().type("28119135003");
-      cy.get("button").eq(0).click();
+      cy.get("button").contains('Neste').click();
       cy.url().should("include", "/last-ned");
     });
   }

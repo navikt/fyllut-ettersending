@@ -23,10 +23,7 @@ const Layout = ({children}: Props) => {
 
       <div className={styles.content}>
         <Link href="#" onClick={() => router.back()} className={styles.backLink}>Tilbake</Link>
-
-        <main>
           {children}
-        </main>
       </div>
     </div>
   );

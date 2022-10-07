@@ -14,10 +14,6 @@ body {
   flex-direction:column; 
 }
 
-footer {
-  margin-top:auto; 
-}
-
 .main {
   flex: 1 0 auto;
 }
