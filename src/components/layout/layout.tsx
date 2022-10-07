@@ -8,7 +8,7 @@ interface Props {
   children: ReactNode;
 }
 
-const Layout = ({children}: Props) => {
+const Layout = ({ children }: Props) => {
   const router = useRouter();
 
   return (
@@ -22,11 +22,13 @@ const Layout = ({children}: Props) => {
       <hr className={styles.hr} />
 
       <div className={styles.content}>
-        <Link href="#" onClick={() => router.back()} className={styles.backLink}>Tilbake</Link>
-          {children}
+        <Link href="#" onClick={() => router.back()} className={styles.backLink}>
+          Tilbake
+        </Link>
+        {children}
       </div>
     </div>
   );
-}
+};
 
 export default Layout;
