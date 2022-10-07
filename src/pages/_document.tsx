@@ -18,7 +18,7 @@ class _Document extends Document<{ Decorator: Components }> {
     const { Styles, Scripts, Header, Footer } = this.props.Decorator;
 
     return (
-      <Html>
+      <Html lang="no">
         <Head>
           <meta name="description" content="Ettersending dokumentasjon" />
           <link rel="icon" href="/favicon.ico" />

@@ -5,11 +5,11 @@ describe(
   },
   () => {
     before(() => {
-      cy.visit("http://localhost:3002/");
+      cy.visit("/");
     });
 
     it('clicks "send i posten" button', () => {
-      cy.get("button").eq(1).click();
+      cy.get("button").contains("Send i posten").click();
       cy.url().should("include", "/velg-skjema");
 
       //Populate velg skjema page
@@ -23,11 +23,11 @@ describe(
       cy.get('[name="postnr"]').click().type("0001");
       cy.get('[name="poststed"]').click().type("Oslo");
       cy.get('[name="land"]').click().type("Norway");
-      cy.get("button").eq(0).click();
+      cy.get("button").contains("Neste").click();
 
-      //Last ned page
+      //Download page
       cy.url().should("include", "/last-ned");
-      cy.get("button").eq(0).click();
+      cy.get("button").contains("Last ned førsteside").click();
     });
   }
 );
