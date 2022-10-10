@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "16.17.1"
-      - name: "Bootstrap"
-        run: yarn bootstrap
+      - name: "Install"
+        run: yarn install
       - name: "Cypress tests"
         uses: cypress-io/github-action@v2
         with:
