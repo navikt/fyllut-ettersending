@@ -6,7 +6,7 @@ on:
 env:
   "IMAGE": "ghcr.io/${{ github.repository }}:${{ github.sha }}"
 jobs:
-  build:
+  buildAndTest:
     name: "build"
     runs-on: ubuntu-latest
     steps:
@@ -35,8 +35,8 @@ jobs:
       run: "docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}"
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: "build"
-    runs-on: "ubuntu-18.04"
+    needs: "buildAndTest"
+    runs-on: ubuntu-latest
     steps:
     - uses: "actions/checkout@v2"
     - name: "Deploy to DEV"
