@@ -18,6 +18,13 @@ jobs:
       run: "yarn install --frozen-lockfile"
     - name: "build application"
       run: "yarn build"
+    - name: "Cypress tests"
+      uses: "cypress-io/github-action@v2"
+      with:
+        install: false
+        start: "yarn run start"
+        wait-on: "http://localhost:3002, http://localhost:3002/internal/isready"
+        config: "video=false"
     - name: "Login to GitHub Docker Registry"
       uses: "docker/login-action@v1"
       with:
