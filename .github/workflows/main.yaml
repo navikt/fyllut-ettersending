@@ -18,8 +18,8 @@ jobs:
       run: "yarn install --frozen-lockfile"
     - name: "build application"
       run: "yarn build"
-    - name: "Test"
-      run: "yarn test"
+    - name: "Test Cypress"
+      run: "yarn cypress"
     - name: "Login to GitHub Docker Registry"
       uses: "docker/login-action@v1"
       with:
