@@ -25,6 +25,7 @@ jobs:
         start: "yarn run start"
         wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
         config: "video=false"
+        config-file: cypress.config.ts
     - name: "Login to GitHub Docker Registry"
       uses: "docker/login-action@v1"
       with:
