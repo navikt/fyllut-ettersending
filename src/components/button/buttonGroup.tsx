@@ -46,17 +46,22 @@ const ButtonGroup = ({ primaryBtnPath, primaryBtnText, secondaryBtnPath, seconda
         {primaryBtnText}
       </Button>
 
-      <Button
-        className={styles.button}
-        variant="secondary"
-        onClick={() =>
-          secondaryBtnPath ? (router.push(secondaryBtnPath), setSecondaryLoading(true)) : console.log("secondaryBtnPath", secondaryBtnPath)
-        }
-        size="medium"
-        loading={secondaryLoading}
-      >
-        {secondaryBtnText}
-      </Button>
+      {
+        secondaryBtnPath && (
+          <Button
+            className={styles.button}
+            variant="secondary"
+            onClick={() => {
+              setSecondaryLoading(true);
+              router.push("/");
+            }}
+            size="medium"
+            loading={secondaryLoading}
+          >
+            {secondaryBtnText}
+          </Button>
+        )
+      }
     </div>
   );
 };

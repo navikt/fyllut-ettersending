@@ -5,11 +5,9 @@ import FileSaver from "file-saver";
 const download = async (url: string, formData: FormData) => {
   let pdf;
   try {
-    console.log(toFrontPageRequest(formData));
     pdf = await downloadFrontPage(url, toFrontPageRequest(formData));
     saveToFile(pdf.foersteside, `${formData.formNumber || "Innsendelse"}.pdf`);
   } catch (e) {
-    console.error(e);
   }
 }
 

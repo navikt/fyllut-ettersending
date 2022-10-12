@@ -94,6 +94,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
             primaryBtnPath={Paths.downloadPage}
             primaryBtnText={ButtonText.next}
             secondaryBtnText={ButtonText.cancel}
+            secondaryBtnPath={"/"}
             validate
           />
         </>

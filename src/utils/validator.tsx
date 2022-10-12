@@ -27,8 +27,6 @@ const validate = {
 const validateFormData = (formData: FormData) => {
   let formErrors: KeyValue = {};
   if (formData.onSubmitTriggered) {
-    console.log("validate form data:", formData);
-
     if (!validate.hasSubmissionInvolves(formData)) {
       formErrors.submissionInvolves = ErrorMessages.chooseOne;
     }
