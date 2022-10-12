@@ -53,7 +53,7 @@ const ButtonGroup = ({ primaryBtnPath, primaryBtnText, secondaryBtnPath, seconda
             variant="secondary"
             onClick={() => {
               setSecondaryLoading(true);
-              router.push("/");
+              router.push(secondaryBtnPath);
             }}
             size="medium"
             loading={secondaryLoading}
