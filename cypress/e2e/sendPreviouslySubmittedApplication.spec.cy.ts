@@ -12,7 +12,7 @@ describe.only(
       cy.get("button").contains("Send i posten").click();
       cy.url().should("include", "/velg-skjema");
       cy.get("[name=\"search\"]").click().type("førerhund");
-      cy.findAllByRole("link").first().click();
+      cy.findAllByRole("link").eq(1).click();
       cy.url().should("include", "/detaljer");
       cy.get("[type=\"checkbox\"]").first().check();
       cy.get("[type=\"radio\"]").check("has-social-number");
