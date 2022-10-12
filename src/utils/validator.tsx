@@ -20,7 +20,6 @@ const validate = {
     formData.submissionInvolves === SubmissionType.noSocialNumber ? formData.userData : false,
   hasNoAttachments: (formData: FormData) => formData.formId && formData.attachments.length === 0,
   velgSkjemaSubmissionType: (value: string) => ["forward-attachment", "send-another-doc"].includes(value),
-  isForwardDocSubmissionType: (value: string | undefined) => (value ? "forward-attachment".includes(value) : false),
   navUnitInContactWith: (formData: FormData) => formData.submissionInvolves === SubmissionType.noSocialNumber && formData.beenInContactPrev && !formData.navUnitInContactWith,
   navUnitToReceiveSubmission: (formData: FormData) => formData.submissionInvolves === SubmissionType.other && !formData.navUnitToReceiveSubmission,
 };

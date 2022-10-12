@@ -10,7 +10,18 @@ const decoratorParams: Props = {
 class _Document extends Document<{ Decorator: Components }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    const Decorator = await fetchDecoratorReact(decoratorParams);
+    let Decorator;
+    if (process.env.NODE_ENV === "development") {
+      Decorator = {
+        Styles: () => {},
+        Scripts: () => {},
+        Header: () => {},
+        Footer: () => {},
+      };
+    } else {
+      Decorator = await fetchDecoratorReact(decoratorParams);
+    }
+
     return { ...initialProps, Decorator };
   }
 

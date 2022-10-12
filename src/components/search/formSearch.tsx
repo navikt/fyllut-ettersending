@@ -36,7 +36,13 @@ const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
 
       <div className={styles.results}>
         {searchResult.map((form, index) => (
-          <LinkPanel className={styles.clickable} key={index} border onClick={() => onLinkPanelClicked(form.path)}>
+          <LinkPanel
+            href="#"
+            className={styles.clickable}
+            key={index}
+            border
+            onClick={() => onLinkPanelClicked(form.path)}
+          >
             <LinkPanel.Title>{form.title}</LinkPanel.Title>
             <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
           </LinkPanel>

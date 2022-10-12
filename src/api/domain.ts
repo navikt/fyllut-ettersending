@@ -21,17 +21,6 @@ interface FormProperties {
   theme?: string;
 }
 
-interface ErrorFormData {
-  attachments?: string;
-  userData?: UserData;
-  socialNo?: string;
-  submissionInvolves?: string;
-  formId?: string;
-  subjectOfSubmission?: string;
-  nameOfUploadedDocument?: string;
-  navDeviceToReceiveSubmission?: string;
-}
-
 export enum SubmissionType {
   hasSocialNumber = "has-social-number",
   noSocialNumber = "no-social-number",
@@ -107,15 +96,6 @@ const initUserData = () => {
   };
 };
 
-const userDataInit = {
-  fornavn: "",
-  etternavn: "",
-  postnr: "",
-  poststed: "",
-  gateAddresse: "",
-  land: "",
-};
-
 const ErrorMessages = {
   socialSecurityNo: "Fødselsnummer er ikke gyldig",
   socialSecurityNoIsEmpty: "Fødselsnummer må fylles ut",
@@ -128,15 +108,6 @@ const ErrorMessages = {
   emptyInput: "Tekstfelt er tom",
   chooseOne: "Velg en av alternativer",
   attachments: "Velg minst et vedlegg",
-};
-
-const userDummyDataInit: UserData = {
-  fornavn: "Ola",
-  etternavn: "Nordmann",
-  postnr: "0001",
-  poststed: "Oslo",
-  gateAddresse: "Addresse 1",
-  land: "Norway",
 };
 
 const initFormData = () => {
@@ -153,17 +124,5 @@ const initFormData = () => {
   };
 }
 
-const formDataInit: FormData = {
-  attachments: [],
-  userData: initUserData(),
-  socialSecurityNo: "",
-  velgSkjemaSubmissionType: VelgSkjemaSubmissionType.forwardAttachment,
-  onSubmitTriggered: false,
-  beenInContactPrev: false,
-  navUnitToReceiveSubmission: "",
-  navUnitInContactWith: "",
-  errors: {},
-};
-
-export type { Form, NavUnit, KeyValue, UserData, FormData, ErrorFormData };
-export { formDataInit, userDummyDataInit, initUserData, initFormData, userDataInit, Paths, ButtonText, ErrorMessages };
+export type { Form, NavUnit, KeyValue, UserData, FormData };
+export { initUserData, initFormData, Paths, ButtonText, ErrorMessages };

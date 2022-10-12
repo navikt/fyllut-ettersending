@@ -5,7 +5,6 @@
   "rules": {
     "quotes": ["error", "double"],
     "indent": ["error", 2],
-    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-    "no-unused-expressions": "error"
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }]
   }
 }

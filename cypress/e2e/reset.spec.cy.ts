@@ -8,18 +8,17 @@ describe("velgskjema.tsx", () => {
       defaultCommandTimeout: 10000,
     },
     () => {
-      cy.get('[name="search"]').click().type("nav150002");
-      cy.get(".clickable").parent().click();
+      cy.findAllByRole("textbox").focus().type("nav131705");
+      cy.findAllByRole("link").eq(1).click();
       cy.url().should("include", "/detaljer");
-      cy.get('[type="checkbox"]').first().check();
-      cy.get('[type="checkbox"]').check("Avtale om delt bosted");
-      cy.get("a").click();
+      cy.findAllByRole("checkbox").first().check();
+      cy.findByRole("link").click();
       cy.url().should("include", "/velg-skjema");
-      cy.get('[name="search"]').click().type("nav100750");
-      cy.get(".clickable").parent().click();
+      cy.findAllByRole("textbox").click().type("nav100750");
+      cy.findAllByRole("link").eq(1).click();
       cy.url().should("include", "/detaljer");
-      cy.get('[type="checkbox"]').should("not.be.checked");
-      cy.get('[type="checkbox"]').each(($el) => {
+      cy.findAllByRole("checkbox").should("not.be.checked");
+      cy.findAllByRole("checkbox").each(($el) => {
         cy.wrap($el).should("have.not.attr", "checked");
       });
     }

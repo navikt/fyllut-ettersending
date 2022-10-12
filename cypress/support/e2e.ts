@@ -14,10 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-
-import { ByRoleOptions } from "@testing-library/cypress";
-import { ByRoleMatcher } from "@testing-library/dom";
+import "./commands"
 import "cypress-axe";
 
 // Alternatively you can use CommonJS syntax:
