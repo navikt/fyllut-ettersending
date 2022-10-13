@@ -5,12 +5,10 @@ describe.only(
   },
   () => {
     before(() => {
-      cy.visit("/");
+      cy.visit("/velg-skjema");
     });
 
-    it("clicks \"send i posten\" button", () => {
-      cy.get("button").contains("Send i posten").click();
-      cy.url().should("include", "/velg-skjema");
+    it("fill out send documentation", () => {
       cy.get("[name=\"search\"]").click().type("førerhund");
       cy.findAllByRole("link").eq(1).click();
       cy.url().should("include", "/detaljer");

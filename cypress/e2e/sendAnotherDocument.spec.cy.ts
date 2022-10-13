@@ -5,13 +5,10 @@ describe(
   },
   () => {
     before(() => {
-      cy.visit("/");
+      cy.visit("/velg-skjema");
     });
 
-    it("clicks \"send i posten\" button", () => {
-      cy.get("button").contains("Send i posten").click();
-      cy.url().should("include", "/velg-skjema");
-
+    it("send another document", () => {
       //Populate velg skjema page
       cy.get("[type=\"radio\"]").eq(1).check();
       cy.get("[name=\"nameOfUploadedDocument\"]").click().type("Application for parental leave");

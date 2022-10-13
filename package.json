@@ -8,6 +8,7 @@
   "scripts": {
     "clean": "rimraf node_modules .next",
     "dev": "next dev -p 3002",
+    "dev:mock": "cross-env MOCK=true next dev -p 3002",
     "build": "next build",
     "start": "next start -p 3002",
     "start:mock": "cross-env MOCK=true next start -p 3002",

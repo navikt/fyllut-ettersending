@@ -11,7 +11,7 @@ class _Document extends Document<{ Decorator: Components }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     let Decorator;
-    if (process.env.NODE_ENV === "development") {
+    if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
       Decorator = {
         Styles: () => {},
         Scripts: () => {},
