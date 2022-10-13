@@ -22,7 +22,7 @@ jobs:
       uses: "cypress-io/github-action@v4"
       with:
         install: false
-        start: "yarn MOCK=true start"
+        start: "yarn run start:mock"
         wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
         config-file: cypress.config.ts
     - name: "Login to GitHub Docker Registry"
