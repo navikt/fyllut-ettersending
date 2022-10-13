@@ -8,7 +8,11 @@ const getForms = async (): Promise<Form[]> => {
 
   let forms = [];
   try {
-    forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
+    if (isMock()) {
+      forms = require("../mock/forms.json");
+    } else {
+      forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
+    }
   } catch (e) {
     logger.error("Failed to load forms", {e});
   }
@@ -21,7 +25,11 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
 
   let form;
   try {
-    form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited`);
+    if (isMock()) {
+      form = require(`../mock/${formPath}.json`) ?? {};
+    } else {
+      form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited`);
+    }
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, {e});
   }
@@ -29,10 +37,10 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
   return {
     ...form,
     properties: {
-      formNumber: form?.properties.skjemanummer,
+      formNumber: form?.properties.skjemanummer ?? null,
       submissionType: form?.properties.innsending ?? null,
       navUnitTypes: form?.properties.enhetstyper ?? [],
-      subjectOfSubmission: form?.properties.tema,
+      subjectOfSubmission: form?.properties.tema ?? null,
     }
   }
 }
@@ -42,7 +50,11 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
 
   let units: any[] = [];
   try {
-    units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
+    if (isMock()) {
+      units = require("../mock/navUnits.json");
+    } else {
+      units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
+    }
   } catch (e) {
     logger.error("Failed to load nav units", {e});
   }
@@ -64,7 +76,11 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
 
   let subjects = {};
   try {
-    subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
+    if (isMock()) {
+      subjects = require("../mock/archiveSubjects.json");
+    } else {
+      subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
+    }
   } catch (e) {
     logger.error("Failed to load archive subjects", {e});
   }
@@ -81,6 +97,10 @@ const downloadFrontPage = async (url: string, data: FrontPageRequest) => {
   } catch (e) {
     logger.error("Failed to download front page", {e});
   }
+}
+
+const isMock = () => {
+  return !!process.env.MOCK;
 }
 
 export {

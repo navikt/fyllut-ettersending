@@ -20,7 +20,7 @@ const ChooseAttachments = ({ form, updateFormData, formData }: Props) => {
           size="medium"
           error={formData.errors?.attachments}
         >
-          {form.attachments.map((attachment) => (
+          {form.attachments?.map((attachment) => (
             <Checkbox key={attachment.key} value={attachment.label} name={attachment.label}>
               {attachment.label}
             </Checkbox>

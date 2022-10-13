@@ -27,7 +27,6 @@ describe(
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.get("button").contains("Last ned førsteside").click();
     });
   }
 );

@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   video: false,
-  chromeWebSecurity: false,
+  screenshotOnRunFailure: false,
   component: {
     viewportWidth: 1200,
     viewportHeight: 1000,

@@ -1,0 +1,23 @@
+{
+  "_id": "6332d4a61c23e6dea56309e9",
+  "title": "Testskjema",
+  "path": "test",
+  "modified": "2022-10-12T14:22:13.762Z",
+  "properties": {
+    "skjemanummer": "Testnummer",
+    "tema": "HJE",
+    "innsending": "PAPIR_OG_DIGITAL",
+    "enhetstyper": [
+      "YTA"
+    ]
+  },
+  "attachments": [
+    {
+      "label": "Annen dokumentasjon",
+      "key": "annenDokumentasjon",
+      "description": "Har du noen annen dokumentasjon du ønsker å legge ved?",
+      "attachmentTitle": "Annet",
+      "attachmentCode": "N6"
+    }
+  ]
+}

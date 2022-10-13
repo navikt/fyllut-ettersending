@@ -57,7 +57,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
           {formData.attachments.length > 1 ? attachmentsHeader.multiple : attachmentsHeader.single }
         </Heading>
         <ul>
-          {formData.attachments.map((attachment, index) => (
+          {formData.attachments?.map((attachment, index) => (
             <li key={index}>{attachment}</li>
           ))}
         </ul>
