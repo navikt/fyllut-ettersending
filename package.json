@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start -p 3002",
     "lint": "next lint",
-    "cypress": "cross-env MOCK=true cypress run",
+    "cypress": "cypress run",
     "cypress:open": "cypress open"
   },
   "dependencies": {
