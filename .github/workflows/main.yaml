@@ -10,8 +10,8 @@ jobs:
     name: "build"
     runs-on: ubuntu-latest
     steps:
-    - uses: "actions/checkout@v2"
-    - uses: "actions/setup-node@v1"
+    - uses: "actions/checkout@v3"
+    - uses: "actions/setup-node@v3"
       with:
         node-version: "16.17.1"
     - name: "install dependencies"
@@ -19,15 +19,14 @@ jobs:
     - name: "build application"
       run: "yarn build"
     - name: "Cypress tests"
-      uses: "cypress-io/github-action@v2"
+      uses: "cypress-io/github-action@v4"
       with:
         install: false
-        start: "yarn run start"
+        start: "yarn MOCK=true start"
         wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
-        config: "MOCK=true"
         config-file: cypress.config.ts
     - name: "Login to GitHub Docker Registry"
-      uses: "docker/login-action@v1"
+      uses: "docker/login-action@v2"
       with:
         "registry": "ghcr.io"
         "username": "${{ github.actor }}"
@@ -39,7 +38,7 @@ jobs:
     needs: "buildAndTest"
     runs-on: ubuntu-latest
     steps:
-    - uses: "actions/checkout@v2"
+    - uses: "actions/checkout@v3"
     - name: "Deploy to DEV"
       uses: "nais/deploy/actions/deploy@v1"
       env:
