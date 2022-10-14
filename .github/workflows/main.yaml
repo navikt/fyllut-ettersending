@@ -2,47 +2,47 @@ name: "Build and deploy fyllut-ettersending"
 on:
   push:
     branches:
-    - "main"
+    - main
 env:
-  "IMAGE": "ghcr.io/${{ github.repository }}:${{ github.sha }}"
+  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
 jobs:
   buildAndTest:
-    name: "build"
+    name: "Build"
     runs-on: ubuntu-latest
     steps:
-    - uses: "actions/checkout@v3"
-    - uses: "actions/setup-node@v3"
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: "16.17.1"
     - name: "install dependencies"
-      run: "yarn install --frozen-lockfile"
-    - name: "build application"
-      run: "yarn build"
+      run: yarn install --frozen-lockfile
+    - name: "Build application"
+      run: yarn build
     - name: "Cypress tests"
-      uses: "cypress-io/github-action@v4"
+      uses: cypress-io/github-action@v4
       with:
         install: false
         start: "yarn run start:mock"
         wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
-        config-file: cypress.config.ts
+        config-file: "cypress.config.ts"
     - name: "Login to GitHub Docker Registry"
-      uses: "docker/login-action@v2"
+      uses: docker/login-action@v2
       with:
-        "registry": "ghcr.io"
-        "username": "${{ github.actor }}"
-        "password": "${{ secrets.GITHUB_TOKEN }}"
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: "Build and push the Docker image"
-      run: "docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}"
+      run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: "buildAndTest"
+    needs: buildAndTest
     runs-on: ubuntu-latest
     steps:
-    - uses: "actions/checkout@v3"
+    - uses: actions/checkout@v3
     - name: "Deploy to DEV"
-      uses: "nais/deploy/actions/deploy@v1"
+      uses: nais/deploy/actions/deploy@v1
       env:
-        "APIKEY": "${{ secrets.NAIS_DEPLOY_APIKEY }}"
-        "CLUSTER": "dev-gcp"
-        "RESOURCE": ".nais/nais.yaml"
-        "VARS": ".nais/dev.yaml"
+        APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+        CLUSTER: dev-gcp
+        RESOURCE: .nais/nais.yaml
+        VARS: .nais/dev.yaml
