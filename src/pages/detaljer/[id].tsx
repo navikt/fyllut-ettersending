@@ -22,7 +22,6 @@ const Detaljer: NextPage<Props> = (props) => {
   const {form, navUnits, id} = props;
   const {formData, setFormData} = useFormData();
 
-
   const updateFormData = (key: string, data: any) => {
     let updatedFormData = {...formData, [key]: data};
     const errorMsg = validateFormData(updatedFormData);
@@ -41,6 +40,7 @@ const Detaljer: NextPage<Props> = (props) => {
       theme: form.properties.theme,
       formId: id,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
@@ -65,11 +65,15 @@ const Detaljer: NextPage<Props> = (props) => {
       />
 
       <ButtonGroup
-        primaryBtnPath={Paths.downloadPage}
-        primaryBtnText={ButtonText.next}
-        secondaryBtnText={ButtonText.cancel}
-        secondaryBtnPath={"/"}
-        validate
+        buttons={[{
+          text: ButtonText.next,
+          path: Paths.downloadPage,
+          validateForm: true
+        }, {
+          text: ButtonText.cancel,
+          path: "/",
+          variant: "tertiary"
+        }]}
       />
     </>
   );

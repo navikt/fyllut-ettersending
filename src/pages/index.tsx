@@ -19,11 +19,14 @@ const Home: NextPage = () => {
       </Section>
 
       <ButtonGroup
-        primaryBtnPath={Paths.navMyPage}
-        primaryBtnText={ButtonText.uploadToMyPage}
-        secondaryBtnText={ButtonText.sendViaPost}
-        secondaryBtnPath={Paths.selectForm}
-        validate={false}
+        buttons={[{
+          text: ButtonText.uploadToMyPage,
+          path: Paths.navMyPage,
+        }, {
+          text: ButtonText.sendViaPost,
+          path: Paths.selectForm,
+          variant: "tertiary"
+        }]}
       />
     </>
   );

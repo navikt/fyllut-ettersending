@@ -91,11 +91,15 @@ const VelgSkjema: NextPage<Props> = (props) => {
           <SubmissionRadioGroup updateFormData={updateFormData} formData={formData} navUnits={navUnits}/>
 
           <ButtonGroup
-            primaryBtnPath={Paths.downloadPage}
-            primaryBtnText={ButtonText.next}
-            secondaryBtnText={ButtonText.cancel}
-            secondaryBtnPath={"/"}
-            validate
+            buttons={[{
+              text: ButtonText.next,
+              path: Paths.downloadPage,
+              validateForm: true
+            }, {
+              text: ButtonText.cancel,
+              path: "/",
+              variant: "tertiary"
+            }]}
           />
         </>
       )}

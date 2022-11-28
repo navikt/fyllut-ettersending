@@ -16,7 +16,7 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
 
   useEffect(() => {
     updateFormData("userData", userdata);
-  }, [userdata]);
+  }, [updateFormData, userdata]);
 
   const handleUserDataInputChange = (evt: any) => {
     const target = evt.target as HTMLInputElement;
