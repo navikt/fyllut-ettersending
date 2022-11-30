@@ -16,7 +16,8 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
 
   useEffect(() => {
     updateFormData("userData", userdata);
-  }, [updateFormData, userdata]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userdata]);
 
   const handleUserDataInputChange = (evt: any) => {
     const target = evt.target as HTMLInputElement;
@@ -166,7 +167,7 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
             label="Velg hvilken NAV-enhet som skal motta innsendingen"
             size="medium"
             onChange={(evt) => updateFormData("navUnitToReceiveSubmission", evt.target.value)}
-            value={formData?.navUnitToReceiveSubmission}
+            value={formData?.navUnitToReceiveSubmission ?? ""}
             error={formData.errors?.navUnitToReceiveSubmission}
           >
             <option></option>

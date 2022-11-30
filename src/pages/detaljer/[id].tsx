@@ -80,6 +80,12 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { res } = context;
+  res.setHeader(
+    "Cache-Control",
+    "public, maxage=1800"
+  );
+
   const id = context.params?.id as string;
   const form = await getForm(id);
   const navUnits = await getNavUnits();

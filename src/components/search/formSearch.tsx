@@ -1,5 +1,5 @@
 import { LinkPanel, TextField } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "../../api/domain";
 import Section from "../section/section";
 import styles from "./search.module.css";
@@ -41,7 +41,10 @@ const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
             className={styles.clickable}
             key={index}
             border
-            onClick={() => onLinkPanelClicked(form.path)}
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.preventDefault()
+              onLinkPanelClicked(form.path);
+            }}
           >
             <LinkPanel.Title>{form.title}</LinkPanel.Title>
             <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>

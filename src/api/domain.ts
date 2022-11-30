@@ -115,7 +115,7 @@ const initFormData = () => {
     attachments: [],
     userData: initUserData(),
     socialSecurityNo: "",
-    velgSkjemaSubmissionType: VelgSkjemaSubmissionType.forwardAttachment,
+    velgSkjemaSubmissionType: undefined,
     onSubmitTriggered: false,
     beenInContactPrev: false,
     navUnitToReceiveSubmission: "",
