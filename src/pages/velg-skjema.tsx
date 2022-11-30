@@ -108,6 +108,12 @@ const VelgSkjema: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { res } = context;
+  res.setHeader(
+    "Cache-Control",
+    "public, maxage=1800"
+  );
+
   const forms = await getForms();
   const archiveSubjects = await getArchiveSubjects();
   const navUnits = await getNavUnits();

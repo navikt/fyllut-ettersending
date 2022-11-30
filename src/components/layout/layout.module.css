@@ -25,8 +25,23 @@
   padding-right: 1.5rem ;
 }
 
-.backLink {
-  display: block;
+a.backLink {
   margin-top: 2.75rem;
   margin-bottom: 1.75rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.backLink svg.backLinkIcon {
+  margin-right: 0.2rem;
+  color: #000000;
+}
+
+a.backLink:focus svg.backLinkIcon,
+a.backLink:active svg.backLinkIcon {
+  color: #ffffff;
+}
+
+a.backLink:hover svg.backLinkIcon {
+  margin-right: 0.2rem;
 }
