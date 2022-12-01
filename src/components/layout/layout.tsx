@@ -23,7 +23,10 @@ const Layout = ({ children }: Props) => {
       <hr className={styles.hr} />
 
       <div className={styles.content}>
-        <Link href="#" onClick={() => router.back()} className={styles.backLink}>
+        <Link href="#" onClick={(e) => {
+          router.back();
+          e.currentTarget.blur();
+        }} className={styles.backLink}>
           <Left className={styles.backLinkIcon} />Gå tilbake
         </Link>
         {children}

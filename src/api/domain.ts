@@ -97,16 +97,16 @@ const initUserData = () => {
 };
 
 const ErrorMessages = {
-  socialSecurityNo: "Fødselsnummer er ikke gyldig",
-  socialSecurityNoIsEmpty: "Fødselsnummer må fylles ut",
-  fornavn: "Fornavn må fylles ut",
-  etternavn: "Etternavn må fylles ut",
-  postnr: "Post nummer må fylles ut",
-  poststed: "Post sted må fylles ut",
-  gateAddresse: "Adressen må fylles ut",
-  land: "Land må fylles ut",
-  emptyInput: "Tekstfelt er tom",
-  chooseOne: "Velg en av alternativer",
+  socialSecurityNo: "Fødselsnummer / D-nummer er ikke gyldig",
+  socialSecurityNoIsEmpty: "Du må fylle ut fødselsnummer / D-nummer",
+  fornavn: "Du må fylle ut fornavn",
+  etternavn: "Du må fylle ut etternavn",
+  postnr: "Du må fylle ut postnummer",
+  poststed: "Du må fylle ut poststed",
+  gateAddresse: "Du må fylle ut gateadresse",
+  land: "Du må fylle ut land",
+  nameOfUploadedDocument: "Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
+  chooseOne: "Velg ett alternativ",
   attachments: "Velg minst et vedlegg",
 };
 

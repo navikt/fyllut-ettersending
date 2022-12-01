@@ -85,7 +85,7 @@ describe("validator.tsx", () => {
       _formData.subjectOfSubmission = "";
       const formErrors = validateFormData(_formData);
       _formData.errors = formErrors;
-      expect(_formData.errors?.nameOfUploadedDocument).to.eq(ErrorMessages.emptyInput);
+      expect(_formData.errors?.nameOfUploadedDocument).to.eq(ErrorMessages.nameOfUploadedDocument);
       expect(_formData.errors?.subjectOfSubmission).to.eq(ErrorMessages.chooseOne);
     });
   });

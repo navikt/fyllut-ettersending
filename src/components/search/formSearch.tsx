@@ -26,8 +26,9 @@ const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
     <>
       <Section>
         <TextField
+          autoComplete="off"
           label="Hvilket skjema vil du ettersende dokumentasjon til?"
-          description="Søk på skjemanavn, skjemanummer eller stikkord (for eksempel: dagpenger, stønad, tiltak, pensjon, e.l.). Velg søknad / skjema i søkeresultatet"
+          description="Søk på skjemanavn, skjemanummer eller stikkord (for eksempel: dagpenger, stønad, tiltak, foreldrepenger). Velg søknad / skjema i søkeresultatet."
           name="search"
           onChange={(e) => setSearchInput(e.target.value)}
           size="medium"

@@ -32,7 +32,7 @@ const validateFormData = (formData: FormData) => {
     }
 
     if (validate.nameOfUploadedDocument(formData)) {
-      formErrors.nameOfUploadedDocument = ErrorMessages.emptyInput;
+      formErrors.nameOfUploadedDocument = ErrorMessages.nameOfUploadedDocument;
     }
 
     if (validate.socialSecurityNo(formData)) {

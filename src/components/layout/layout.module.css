@@ -15,6 +15,7 @@
   width: 100%;
   background-color: #99C4DD;
   margin: 0;
+  border: 0;
 }
 
 .content {
@@ -34,12 +35,6 @@ a.backLink {
 
 a.backLink svg.backLinkIcon {
   margin-right: 0.2rem;
-  color: #000000;
-}
-
-a.backLink:focus svg.backLinkIcon,
-a.backLink:active svg.backLinkIcon {
-  color: #ffffff;
 }
 
 a.backLink:hover svg.backLinkIcon {
