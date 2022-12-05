@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FormData, initUserData, NavUnit, SubmissionType, UserData } from "../../api/domain";
 import Section from "../section/section";
 import styles from "./submission.module.css";
+import SocialSecurityNo from "../form/socialSecurityNo";
 
 interface Props {
   userdata?: UserData;
@@ -34,7 +35,7 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
           legend="Hvem gjelder innsendelsen for?"
           size="medium"
           onChange={(value) => updateFormData("submissionInvolves", value)}
-          value={formData.submissionInvolves}
+          value={formData.submissionInvolves ?? ""}
           name="submissionInvolves"
           error={formData.errors?.submissionInvolves}
         >
@@ -52,14 +53,12 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
 
       {formData.submissionInvolves === SubmissionType.hasSocialNumber && (
         <Section>
-          <TextField
+          <SocialSecurityNo
             value={formData.socialSecurityNo}
             name="socialSecurityNo"
             label="Fødselsnummer / D-nummer"
-            onChange={(evt) => updateFormData("socialSecurityNo", evt.target.value)}
+            onChange={value => updateFormData("socialSecurityNo", value)}
             placeholder="Skriv inn tekst"
-            size="medium"
-            type="number"
             error={formData.errors?.socialSecurityNo}
           />
         </Section>
@@ -186,3 +185,5 @@ const SubmissionRadioGroup = ({navUnits, updateFormData, formData}: Props) => {
 };
 
 export default SubmissionRadioGroup;
+
+
