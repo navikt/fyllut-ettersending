@@ -47,7 +47,7 @@ const Detaljer: NextPage<Props> = (props) => {
   return (
     <Layout title="Ettersende dokumentasjon i posten">
       <Section>
-        <Heading spacing size="large" level="2">
+        <Heading size="large" level="2">
           {form.title}
         </Heading>
         <Ingress>{form.properties.formNumber}</Ingress>

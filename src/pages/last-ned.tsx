@@ -33,13 +33,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
   return (
     <Layout title="Ettersende dokumentasjon i posten">
       <Section>
-        <Heading size="large" level="2">
-          Sende dokumentasjon i posten
-        </Heading>
-      </Section>
-
-      <Section>
-        <Heading level="1" size="medium" spacing>
+        <Heading level="2" size="medium" spacing>
           1. Last ned førsteside til saken din
         </Heading>
         <BodyShort spacing>
@@ -54,7 +48,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
       </Section>
 
       <Section>
-        <Heading level="1" size="medium" spacing>
+        <Heading level="2" size="medium" spacing>
           {formData.attachments.length > 1 ? attachmentsHeader.multiple : attachmentsHeader.single }
         </Heading>
         <ul>
@@ -65,8 +59,8 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
       </Section>
 
       <div className="lastSection">
-        <Heading level="1" size="medium" spacing>
-          4. Send dokumentene til NAV i posten
+        <Heading level="2" size="medium" spacing>
+          3. Send dokumentene til NAV i posten
         </Heading>
 
         <BodyShort spacing>
