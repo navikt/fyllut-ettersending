@@ -6,17 +6,18 @@ import classNames from "classnames";
 import { Left } from "@navikt/ds-icons";
 
 interface Props {
+  title?: string;
   children: ReactNode;
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ title, children }: Props) => {
   const router = useRouter();
 
   return (
     <div className={styles.layout}>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          Ettersende dokumentasjon
+          { title ?? "Ettersende dokumentasjon" }
         </Heading>
       </header>
 

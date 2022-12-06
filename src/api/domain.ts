@@ -4,10 +4,10 @@ interface Form {
   path: string;
   title: string;
   properties: FormProperties;
-  attachments: Attachments[];
+  attachments: Attachment[];
 }
 
-interface Attachments {
+interface Attachment {
   label: string;
   key: string;
   description: string;
@@ -124,5 +124,5 @@ const initFormData = () => {
   };
 }
 
-export type { Form, NavUnit, KeyValue, UserData, FormData };
+export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
 export { initUserData, initFormData, Paths, ButtonText, ErrorMessages };

@@ -4,10 +4,11 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import ButtonGroup from "../components/button/buttonGroup";
 import { ButtonText, Paths } from "../api/domain";
 import Section from "../components/section/section";
+import Layout from "../components/layout/layout";
 
 const Home: NextPage = () => {
   return (
-    <>
+    <Layout>
       <Heading spacing size="large" level="2">
         Innsendingsvalg
       </Heading>
@@ -28,7 +29,7 @@ const Home: NextPage = () => {
           variant: "tertiary"
         }]}
       />
-    </>
+    </Layout>
   );
 };
 

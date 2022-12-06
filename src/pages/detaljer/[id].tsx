@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Detail, Heading } from "@navikt/ds-react";
+import { Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
@@ -11,6 +11,7 @@ import { useFormData } from "../../data/appState";
 import { useEffect } from "react";
 import Section from "../../components/section/section";
 import { validateFormData } from "../../utils/validator";
+import Layout from "../../components/layout/layout";
 
 interface Props {
   form: Form;
@@ -44,16 +45,12 @@ const Detaljer: NextPage<Props> = (props) => {
   }, [id]);
 
   return (
-    <>
-      <Heading spacing size="large" level="2">
-        Sende dokumentasjon i posten
-      </Heading>
-
+    <Layout title="Ettersende dokumentasjon i posten">
       <Section>
-        <Heading level="1" size="small">
+        <Heading spacing size="large" level="2">
           {form.title}
         </Heading>
-        <Detail spacing>{form.properties.formNumber}</Detail>
+        <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
       <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData}/>
@@ -75,7 +72,7 @@ const Detaljer: NextPage<Props> = (props) => {
           variant: "tertiary"
         }]}
       />
-    </>
+    </Layout>
   );
 };
 

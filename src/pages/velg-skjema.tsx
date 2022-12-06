@@ -13,6 +13,7 @@ import { useFormData } from "../data/appState";
 import { validateFormData } from "../utils/validator";
 import { useRouter } from "next/router";
 import Section from "../components/section/section";
+import Layout from "../components/layout/layout";
 
 interface Props {
   forms: Form[];
@@ -59,13 +60,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
   };
 
   return (
-    <>
-      <Section>
-        <Heading spacing size="large" level="2">
-          Sende dokumentasjon i posten
-        </Heading>
-      </Section>
-
+    <Layout title="Ettersende dokumentasjon i posten">
       <Section>
         <RadioGroup
           legend="Hva gjelder innsendingen?"
@@ -103,7 +98,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
           />
         </>
       )}
-    </>
+    </Layout>
   );
 };
 

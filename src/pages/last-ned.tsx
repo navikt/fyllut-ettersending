@@ -6,6 +6,7 @@ import { download } from "../api/frontPageService";
 import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
 import Section from "../components/section/section";
+import Layout from "../components/layout/layout";
 
 interface Props {
   url: string;
@@ -30,7 +31,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
   };
 
   return (
-    <>
+    <Layout title="Ettersende dokumentasjon i posten">
       <Section>
         <Heading size="large" level="2">
           Sende dokumentasjon i posten
@@ -73,7 +74,7 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
           førstesidearket.
         </BodyShort>
       </div>
-    </>
+    </Layout>
   );
 };
 
