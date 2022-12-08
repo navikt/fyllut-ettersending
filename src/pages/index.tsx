@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyLong, Heading } from "@navikt/ds-react";
 import ButtonGroup from "../components/button/buttonGroup";
-import { ButtonText, Paths } from "../api/domain";
+import { ButtonText, Paths } from "../data/domain";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 

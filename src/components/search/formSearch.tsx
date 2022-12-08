@@ -1,17 +1,18 @@
 import { LinkPanel, TextField } from "@navikt/ds-react";
 import React, { useEffect, useState } from "react";
-import { Form } from "../../api/domain";
+import { Form, Paths } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./search.module.css";
+import { useRouter } from "next/router";
 
 interface Props {
   forms: Form[];
-  onLinkPanelClicked: any;
 }
 
-const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
+const FormSearch = ({forms}: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState<Form[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
@@ -28,9 +29,11 @@ const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
         <TextField
           autoComplete="off"
           label="Hvilket skjema vil du ettersende dokumentasjon til?"
-          description="Søk på skjemanavn, skjemanummer eller stikkord (for eksempel: dagpenger, stønad, tiltak, foreldrepenger). Velg søknad / skjema i søkeresultatet."
+          description="Søk på skjemanavn, skjemanummer eller stikkord
+            (for eksempel: dagpenger, stønad, tiltak, foreldrepenger).
+            Velg søknad / skjema i søkeresultatet."
           name="search"
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={e => setSearchInput(e.target.value)}
           size="medium"
         />
       </Section>
@@ -42,9 +45,9 @@ const FormSearch = ({forms, onLinkPanelClicked}: Props) => {
             className={styles.clickable}
             key={index}
             border
-            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+            onClick={async e => {
               e.preventDefault()
-              onLinkPanelClicked(form.path);
+              await router.push(`${Paths.details}/${form.path}`);
             }}
           >
             <LinkPanel.Title>{form.title}</LinkPanel.Title>

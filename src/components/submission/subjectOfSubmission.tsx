@@ -1,25 +1,26 @@
 import { Select, TextField } from "@navikt/ds-react";
-import { FormData, KeyValue } from "../../api/domain";
+import { KeyValue } from "../../data/domain";
 import Section from "../section/section";
+import { useFormState } from "../../data/appState";
 
 interface Props {
   archiveSubjects: KeyValue;
-  updateFormData: any;
-  formData: FormData;
 }
 
-const SubjectOfSubmission = ({ archiveSubjects, updateFormData, formData }: Props) => {
+const SubjectOfSubmission = ({archiveSubjects}: Props) => {
+  const {formData, updateFormData, errors} = useFormState();
+
   return (
     <>
       <Section>
         <TextField
           label="Hvilken dokumentasjon vil du sende til NAV?"
           description="Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
-          name="nameOfUploadedDocument"
-          value={formData.nameOfUploadedDocument}
+          name="otherDocumentationTitle"
+          value={formData.otherDocumentationTitle}
           size="medium"
-          onChange={(evt) => updateFormData("nameOfUploadedDocument", evt.target.value)}
-          error={formData.errors?.nameOfUploadedDocument}
+          onChange={(evt) => updateFormData({"otherDocumentationTitle": evt.target.value})}
+          error={errors.otherDocumentation}
         />
       </Section>
 
@@ -29,9 +30,9 @@ const SubjectOfSubmission = ({ archiveSubjects, updateFormData, formData }: Prop
           size="medium"
           name="subjectOfSubmission"
           value={formData.subjectOfSubmission}
-          error={formData.errors?.subjectOfSubmission}
+          error={errors.subjectOfSubmission}
           onChange={(evt) => {
-            updateFormData("subjectOfSubmission", evt.target.value);
+            updateFormData({"subjectOfSubmission": evt.target.value});
           }}
         >
           <option></option>

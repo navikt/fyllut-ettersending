@@ -5,7 +5,7 @@ interface Props {
   value?: string;
   name: string;
   label: string;
-  onChange: (value: string) => {};
+  onChange: (value: string) => void;
   placeholder: string;
   error?: string;
 }

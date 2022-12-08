@@ -1,6 +1,7 @@
 import { downloadFrontPage } from "./apiService";
-import { FormData, SubmissionType } from "./domain";
+import { FormData } from "../data/domain";
 import FileSaver from "file-saver";
+import { isPersonNoSocialSecurityNumber } from "../utils/formDataUtil";
 
 const download = async (url: string, formData: FormData) => {
   let pdf;
@@ -42,10 +43,8 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     overskriftstittel: getTitle(formData),
     arkivtittel: getTitle(formData),
     tema: formData.theme,
-    vedleggsliste: formData.attachments,
-    dokumentlisteFoersteside: [
-      ...formData.attachments
-    ],
+    vedleggsliste: formData.attachments?.map(attachment => attachment.attachmentTitle) ?? [],
+    dokumentlisteFoersteside: formData.attachments?.map(attachment => attachment.label) ?? [],
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
@@ -61,7 +60,7 @@ const getTitle = (formData: FormData) => {
 };
 
 const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
-  if (formData.submissionInvolves === SubmissionType.noSocialNumber) {
+  if (isPersonNoSocialSecurityNumber(formData)) {
     return {
       adresselinje1: formData.userData?.gateAddresse,
       postnummer: formData.userData?.postnr,

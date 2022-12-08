@@ -11,6 +11,9 @@ interface Attachment {
   label: string;
   key: string;
   description: string;
+  otherDocumentation: boolean;
+  attachmentTitle: string;
+  attachmentCode: string,
 }
 
 interface FormProperties {
@@ -19,18 +22,6 @@ interface FormProperties {
   submissionType?: string;
   navUnitTypes?: string[];
   theme?: string;
-}
-
-export enum SubmissionType {
-  hasSocialNumber = "has-social-number",
-  noSocialNumber = "no-social-number",
-  other = "other",
-}
-
-
-export enum VelgSkjemaSubmissionType {
-  forwardAttachment = "forward-attachment",
-  sendAnotherDoc = "send-another-doc",
 }
 
 interface NavUnit {
@@ -46,33 +37,34 @@ interface KeyValue {
 
 interface FormData {
   formId?: string;
-  attachments: string[];
+  attachments?: Attachment[];
   beenInContactPrev?: boolean;
-  errors?: KeyValue;
   formNumber?: string;
-  nameOfUploadedDocument?: string;
-  onSubmitTriggered: boolean;
-  socialSecurityNo?: string;
+  otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
-  submissionInvolves?: SubmissionType;
-  navUnitInContactWith: string;
-  navUnitToReceiveSubmission?: string;
   theme?: string;
   title?: string;
-  userData: UserData;
-  velgSkjemaSubmissionType?: VelgSkjemaSubmissionType;
+  userData?: UserData;
+
+  socialSecurityNo?: string;
+  navUnitInContactWith?: string;
+  navUnitToReceiveSubmission?: string;
 }
 
 interface UserData {
-  fornavn: string;
-  etternavn: string;
-  postnr: string;
-  poststed: string;
-  gateAddresse: string;
-  land: string;
+  fornavn?: string;
+  etternavn?: string;
+  postnr?: string;
+  poststed?: string;
+  gateAddresse?: string;
+  land?: string;
+  socialSecurityNo?: string;
+  navUnit?: string;
 }
 
 enum Paths {
+  base = "/",
+  details = "/detaljer",
   downloadPage = "/last-ned",
   selectForm = "/velg-skjema",
   navMyPage = "https://www.nav.no/person/dittnav/",
@@ -85,17 +77,6 @@ enum ButtonText {
   sendViaPost = "Send i posten",
 }
 
-const initUserData = () => {
-  return {
-    fornavn: "",
-    etternavn: "",
-    postnr: "",
-    poststed: "",
-    gateAddresse: "",
-    land: "",
-  };
-};
-
 const ErrorMessages = {
   socialSecurityNo: "Fødselsnummer / D-nummer er ikke gyldig",
   socialSecurityNoIsEmpty: "Du må fylle ut fødselsnummer / D-nummer",
@@ -105,24 +86,11 @@ const ErrorMessages = {
   poststed: "Du må fylle ut poststed",
   gateAddresse: "Du må fylle ut gateadresse",
   land: "Du må fylle ut land",
-  nameOfUploadedDocument: "Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
+  otherDocumentation: "Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
   chooseOne: "Velg ett alternativ",
   attachments: "Velg minst et vedlegg",
 };
 
-const initFormData = () => {
-  return {
-    attachments: [],
-    userData: initUserData(),
-    socialSecurityNo: "",
-    velgSkjemaSubmissionType: undefined,
-    onSubmitTriggered: false,
-    beenInContactPrev: false,
-    navUnitToReceiveSubmission: "",
-    navUnitInContactWith: "",
-    errors: {},
-  };
-}
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
-export { initUserData, initFormData, Paths, ButtonText, ErrorMessages };
+export { Paths, ButtonText, ErrorMessages };

@@ -1,5 +1,5 @@
 import { get, post } from "./http";
-import { Form, KeyValue, NavUnit } from "./domain";
+import { Attachment, Form, KeyValue, NavUnit } from "../data/domain";
 import { FrontPageRequest } from "./frontPageService";
 import { logger } from "../utils/logger";
 
@@ -33,6 +33,18 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, {e});
   }
+
+
+  form.attachments
+    .sort((a: Attachment, b: Attachment) => {
+      // TODO: Change this when otherDocumentation is available
+      if (b.key === "annenDokumentasjon") {
+        return -1;
+      } else if (a.key === "annenDokumentasjon") {
+        return 1;
+      }
+      return (a.label > b.label ? 1 : -1)
+    });
 
   return {
     ...form,

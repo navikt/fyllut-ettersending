@@ -1,19 +1,15 @@
 import "@navikt/ds-css";
-import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
+import { Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
-import { ButtonText, Form, initFormData, KeyValue, NavUnit, Paths, VelgSkjemaSubmissionType } from "../api/domain";
-import ButtonGroup from "../components/button/buttonGroup";
+import { Form, KeyValue, NavUnit } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
-import SubjectOfSubmission from "../components/submission/subjectOfSubmission";
-import SubmissionRadioGroup from "../components/submission/submissionRadioGroup";
-import { useFormData } from "../data/appState";
-import { validateFormData } from "../utils/validator";
-import { useRouter } from "next/router";
+import { useFormState } from "../data/appState";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
+import OtherDocumentation from "../components/other-documentation/other-documentation";
 
 interface Props {
   forms: Form[];
@@ -21,43 +17,19 @@ interface Props {
   navUnits: NavUnit[];
 }
 
+enum SubmissionType {
+  documentationToForm = "documentationToForm",
+  otherDocumentation = "otherDocumentation",
+}
+
 const VelgSkjema: NextPage<Props> = (props) => {
   const {forms, archiveSubjects, navUnits} = props;
-  const {formData, setFormData} = useFormData();
-  const router = useRouter();
+  const [submissionType, setSubmissionType] = useState<SubmissionType>();
+  const {resetFormData} = useFormState();
 
   useEffect(() => {
-  });
-
-  const updateFormData = (key: string, data: any) => {
-    let updatedFormData = {...formData, [key]: data};
-    const errorMsg = validateFormData(updatedFormData);
-    setFormData({...formData, [key]: data, errors: errorMsg});
-
-    if (key === "velgSkjemaSubmissionType" && data === VelgSkjemaSubmissionType.sendAnotherDoc) {
-      resetFormData(data);
-    }
-  };
-
-  const onLinkPanelClicked = (clickedFormNumber: string) => {
-    resetFormData(VelgSkjemaSubmissionType.forwardAttachment, clickedFormNumber);
-    router.push(`detaljer/${clickedFormNumber}`);
-  };
-
-  const resetFormData = (_velgSkjemaSubmissionType: VelgSkjemaSubmissionType, clickedFormNumber?: string) => {
-    switch (_velgSkjemaSubmissionType) {
-    case VelgSkjemaSubmissionType.forwardAttachment:
-      if (formData.formNumber && !(formData.formId === clickedFormNumber)) {
-        setFormData({...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType});
-      }
-      break;
-    case VelgSkjemaSubmissionType.sendAnotherDoc:
-      if (formData.formId) {
-        setFormData({...initFormData(), velgSkjemaSubmissionType: _velgSkjemaSubmissionType});
-      }
-      break;
-    }
-  };
+    resetFormData();
+  }, []);
 
   return (
     <Layout title="Ettersende dokumentasjon i posten">
@@ -65,38 +37,22 @@ const VelgSkjema: NextPage<Props> = (props) => {
         <RadioGroup
           legend="Hva gjelder innsendingen?"
           size="medium"
-          onChange={(value) => updateFormData("velgSkjemaSubmissionType", value)}
-          value={formData.velgSkjemaSubmissionType}
+          onChange={(value) => setSubmissionType(value)}
         >
-          <Radio name={VelgSkjemaSubmissionType.forwardAttachment} value={VelgSkjemaSubmissionType.forwardAttachment}>
+          <Radio name={SubmissionType.documentationToForm} value={SubmissionType.documentationToForm}>
             Jeg skal ettersende vedlegg til en tidligere innsendt søknad
           </Radio>
-          <Radio name={VelgSkjemaSubmissionType.sendAnotherDoc} value={VelgSkjemaSubmissionType.sendAnotherDoc}>
+          <Radio name={SubmissionType.otherDocumentation} value={SubmissionType.otherDocumentation}>
             Jeg skal sende annen dokumentasjon til NAV
           </Radio>
         </RadioGroup>
       </Section>
 
-      {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.forwardAttachment && (
-        <FormSearch forms={forms} onLinkPanelClicked={onLinkPanelClicked}/>
+      {submissionType === SubmissionType.documentationToForm && (
+        <FormSearch forms={forms} />
       )}
-      {formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.sendAnotherDoc && (
-        <>
-          <SubjectOfSubmission archiveSubjects={archiveSubjects} formData={formData} updateFormData={updateFormData}/>
-          <SubmissionRadioGroup updateFormData={updateFormData} formData={formData} navUnits={navUnits}/>
-
-          <ButtonGroup
-            buttons={[{
-              text: ButtonText.next,
-              path: Paths.downloadPage,
-              validateForm: true
-            }, {
-              text: ButtonText.cancel,
-              path: "/",
-              variant: "tertiary"
-            }]}
-          />
-        </>
+      {submissionType === SubmissionType.otherDocumentation && (
+        <OtherDocumentation archiveSubjects={archiveSubjects} navUnits={navUnits} />
       )}
     </Layout>
   );

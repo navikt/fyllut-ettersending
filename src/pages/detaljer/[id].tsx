@@ -3,14 +3,13 @@ import { Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
-import { ButtonText, Form, NavUnit, Paths } from "../../api/domain";
+import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
-import SubmissionRadioGroup from "../../components/submission/submissionRadioGroup";
-import { useFormData } from "../../data/appState";
+import ChooseUser from "../../components/submission/chooseUser";
+import { useFormState } from "../../data/appState";
 import { useEffect } from "react";
 import Section from "../../components/section/section";
-import { validateFormData } from "../../utils/validator";
 import Layout from "../../components/layout/layout";
 
 interface Props {
@@ -21,28 +20,25 @@ interface Props {
 
 const Detaljer: NextPage<Props> = (props) => {
   const {form, navUnits, id} = props;
-  const {formData, setFormData} = useFormData();
+  const {formData, resetFormData} = useFormState();
 
-  const updateFormData = (key: string, data: any) => {
-    let updatedFormData = {...formData, [key]: data};
-    const errorMsg = validateFormData(updatedFormData);
-    setFormData({...formData, [key]: data, errors: errorMsg});
-  };
-
-  const getNavUnitsFromApplicationData = (deviceTypes: string[] | undefined) => {
-    return navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
+  const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
+    const navUnitsConnectedToForm = navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
+    return navUnitsConnectedToForm || navUnits;
   };
 
   useEffect(() => {
-    setFormData({
-      ...formData,
-      formNumber: form.properties.formNumber,
-      title: form.title,
-      theme: form.properties.theme,
-      formId: id,
-    });
+    if (id !== formData.formId) {
+      console.log("reset", id, formData.formId, formData);
+      resetFormData({
+        formNumber: form.properties.formNumber,
+        title: form.title,
+        theme: form.properties.theme,
+        formId: id,
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, formData]);
 
   return (
     <Layout title="Ettersende dokumentasjon i posten">
@@ -53,13 +49,9 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
-      <ChooseAttachments form={form} formData={formData} updateFormData={updateFormData}/>
+      <ChooseAttachments form={form} />
 
-      <SubmissionRadioGroup
-        formData={formData}
-        updateFormData={updateFormData}
-        navUnits={getNavUnitsFromApplicationData(form.properties.navUnitTypes)}
-      />
+      <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
 
       <ButtonGroup
         buttons={[{

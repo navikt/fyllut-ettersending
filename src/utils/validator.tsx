@@ -1,72 +1,46 @@
 import fnrValidator from "@navikt/fnrvalidator";
+import { ErrorMessages, FormData, KeyValue } from "../data/domain";
 import {
-  ErrorMessages, FormData, KeyValue, SubmissionType, VelgSkjemaSubmissionType
-} from "../api/domain";
-
-const validate = {
-  isSendAnotherDocSubmissionType: (formData: FormData) => formData.velgSkjemaSubmissionType === VelgSkjemaSubmissionType.sendAnotherDoc ? true : false,
-  hasSubmissionInvolves: (formData: FormData) =>
-    formData.submissionInvolves && Object.values(SubmissionType).includes(formData.submissionInvolves),
-  nameOfUploadedDocument: (formData: FormData) =>
-    validate.isSendAnotherDocSubmissionType(formData)
-      ? !formData.nameOfUploadedDocument
-      : false,
-  subjectOfSubmission: (formData: FormData) => validate.isSendAnotherDocSubmissionType(formData) && !formData.subjectOfSubmission,
-  socialSecurityNo: (formData: FormData) =>
-    formData.submissionInvolves === SubmissionType.hasSocialNumber && formData.socialSecurityNo
-      ? fnrValidator.idnr(formData.socialSecurityNo).status === "invalid"
-      : false,
-  hasUserData: (formData: FormData) =>
-    formData.submissionInvolves === SubmissionType.noSocialNumber ? formData.userData : false,
-  hasNoAttachments: (formData: FormData) => formData.formId && formData.attachments.length === 0,
-  velgSkjemaSubmissionType: (value: string) => ["forward-attachment", "send-another-doc"].includes(value),
-  navUnitInContactWith: (formData: FormData) => formData.submissionInvolves === SubmissionType.noSocialNumber && formData.beenInContactPrev && !formData.navUnitInContactWith,
-  navUnitToReceiveSubmission: (formData: FormData) => formData.submissionInvolves === SubmissionType.other && !formData.navUnitToReceiveSubmission,
-};
+  hasOtherAttachment,
+  isPersonGroup,
+  isPersonNoSocialSecurityNumber,
+  isPersonSocialSecurityNumber
+} from "./formDataUtil";
 
 const validateFormData = (formData: FormData) => {
   let formErrors: KeyValue = {};
-  if (formData.onSubmitTriggered) {
-    if (!validate.hasSubmissionInvolves(formData)) {
-      formErrors.submissionInvolves = ErrorMessages.chooseOne;
-    }
 
-    if (validate.nameOfUploadedDocument(formData)) {
-      formErrors.nameOfUploadedDocument = ErrorMessages.nameOfUploadedDocument;
-    }
-
-    if (validate.socialSecurityNo(formData)) {
-      formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
-    } else if (formData.submissionInvolves === SubmissionType.hasSocialNumber && !formData.socialSecurityNo) {
-      formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
-    }
-
-    if (validate.subjectOfSubmission(formData)) {
-      formErrors.subjectOfSubmission = ErrorMessages.chooseOne;
-    }
-
-    if (validate.hasUserData(formData)) {
-
-      Object.keys(formData.userData).forEach((key) => {
-        if (!formData.userData[key as keyof typeof formData.userData]) {
-          formErrors[key as keyof typeof formErrors] = ErrorMessages[key as keyof typeof ErrorMessages];
-        }
-      });
-    }
-
-    if (validate.navUnitInContactWith(formData)) {
-      formErrors.navUnitInContactWith = ErrorMessages.chooseOne;
-    }
-
-    if (validate.navUnitToReceiveSubmission(formData)) {
-      formErrors.navUnitToReceiveSubmission = ErrorMessages.chooseOne;
-    }
-
-    if (validate.hasNoAttachments(formData)) {
-      formErrors.attachments = ErrorMessages.attachments;
-    }
-    return formErrors;
+  if (hasOtherAttachment(formData) && !formData.otherDocumentationTitle) {
+    formErrors.otherDocumentation = ErrorMessages.otherDocumentation;
   }
+
+  if (isPersonSocialSecurityNumber(formData)) {
+    if (!formData.userData?.socialSecurityNo
+      || fnrValidator.idnr(formData.userData.socialSecurityNo).status === "invalid") {
+      formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
+    }
+  } else if (isPersonNoSocialSecurityNumber(formData)) {
+
+  } else if (isPersonGroup(formData)) {
+
+  }
+
+  /*
+  if (validate.socialSecurityNo(formData)) {
+    formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
+  } else if (formData.submissionInvolves === SubmissionType.hasSocialNumber && !formData.socialSecurityNo) {
+    formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
+  }*/
+
+  /*if (!formData.userData?.navUnit) {
+    formErrors.navUnitInContactWith = ErrorMessages.chooseOne;
+  }*/
+
+  if (formData.attachments?.length === 0) {
+    formErrors.attachments = ErrorMessages.attachments;
+  }
+
+  return isEmpty(formErrors) ? undefined : formErrors;
 };
 
 const isEmpty = (obj: {}) => {

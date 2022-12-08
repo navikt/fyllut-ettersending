@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
-import { useFormData } from "../data/appState";
+import { useFormState } from "../data/appState";
 import { download } from "../api/frontPageService";
 import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
@@ -14,11 +14,11 @@ interface Props {
 
 const attachmentsHeader = {
   single: "2. Dette dokumentet må du skaffe selv",
-  multiple: "2. Disse dokumentene må du skaffe selv"
+  plural: "2. Disse dokumentene må du skaffe selv"
 };
 
 const LastNed: NextPage<Props> = ({ url }: Props) => {
-  const { formData } = useFormData();
+  const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
 
   const downloadFrontPage = async () => {
@@ -47,16 +47,22 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
         </Button>
       </Section>
 
-      <Section>
-        <Heading level="2" size="medium" spacing>
-          {formData.attachments.length > 1 ? attachmentsHeader.multiple : attachmentsHeader.single }
-        </Heading>
-        <ul>
-          {formData.attachments?.map((attachment, index) => (
-            <li key={index}>{attachment}</li>
-          ))}
-        </ul>
-      </Section>
+      {
+        formData.attachments && (
+          <Section>
+            <Heading level="2" size="medium" spacing>
+              {formData.attachments.length > 1 ? attachmentsHeader.plural : attachmentsHeader.single }
+            </Heading>
+            <ul>
+              {formData.attachments.map((attachment) => (
+                <li key={attachment.key}>
+                  {attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label}
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )
+      }
 
       <div className="lastSection">
         <Heading level="2" size="medium" spacing>

@@ -1,8 +1,7 @@
 import { Button } from "@navikt/ds-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useFormData } from "../../data/appState";
-import { isEmpty, validateFormData } from "../../utils/validator";
+import { useFormState } from "../../data/appState";
 import styles from "./button.module.css";
 
 export interface Props {
@@ -19,24 +18,22 @@ export interface ButtonType {
 const ButtonGroupElement = ({ type }: Props) => {
   const router = useRouter();
   const { text, path, variant, validateForm } = type;
-  const { formData, setFormData } = useFormData();
+  const { setValidate } = useFormState();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
-    if (validateForm) {
-      const updatedFormData = {...formData, onSubmitTriggered: true}
-      const formDataErrors = validateFormData(updatedFormData);
-      if (formDataErrors && isEmpty(formDataErrors)) {
-        await router.push(path);
-      } else {
-        setFormData({ ...formData, errors: formDataErrors, onSubmitTriggered: true});
-      }
 
-      setLoading(false);
+    if (validateForm) {
+      const valid = setValidate(true);
+      if (valid) {
+        await router.push(path);
+      }
     } else {
       await router.push(path);
     }
+
+    setLoading(false);
   };
 
   return (

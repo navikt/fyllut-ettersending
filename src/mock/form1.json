@@ -13,11 +13,47 @@
   },
   "attachments": [
     {
+      "label": "Veldig gammel dokumentasjon",
+      "key": "test1",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
       "label": "Annen dokumentasjon",
       "key": "annenDokumentasjon",
       "description": "Har du noen annen dokumentasjon du ønsker å legge ved?",
+      "otherDocumentation": true,
       "attachmentTitle": "Annet",
       "attachmentCode": "N6"
+    },
+    {
+      "label": "Test dokumentasjon",
+      "key": "test2",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Spennende dokumentasjon",
+      "key": "test3",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Gammel dokumentasjon",
+      "key": "test4",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Ny dokumentasjon",
+      "key": "test5",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
     }
   ]
 }
