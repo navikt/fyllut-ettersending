@@ -1,7 +1,6 @@
 import { downloadFrontPage } from "./apiService";
-import { FormData } from "../data/domain";
+import { FormData, UserType } from "../data/domain";
 import FileSaver from "file-saver";
-import { isPersonNoSocialSecurityNumber } from "../utils/formDataUtil";
 
 const download = async (url: string, formData: FormData) => {
   let pdf;
@@ -60,11 +59,11 @@ const getTitle = (formData: FormData) => {
 };
 
 const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
-  if (isPersonNoSocialSecurityNumber(formData)) {
+  if (formData.userData?.type === UserType.noSocialNumber) {
     return {
-      adresselinje1: formData.userData?.gateAddresse,
-      postnummer: formData.userData?.postnr,
-      poststed: formData.userData?.poststed,
+      adresselinje1: formData.userData?.streetName,
+      postnummer: formData.userData?.postalCode,
+      poststed: formData.userData?.city,
     } as FrontPageAddress;
   }
 
@@ -72,20 +71,20 @@ const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
 }
 
 const toFrontPageUser = (formData: FormData): FrontPageUser|undefined => {
-  if (formData.socialSecurityNo) {
+  if (formData.userData?.socialSecurityNo) {
     return {
-      brukerId: formData.socialSecurityNo,
+      brukerId: formData.userData?.socialSecurityNo,
       brukerType: "PERSON",
     } as FrontPageUser;
   }
 }
 
 const toUnknownAddressInfo = (formData: FormData): string|undefined => {
-  if (formData.socialSecurityNo && formData.userData?.gateAddresse) {
-    return `${formData.userData?.fornavn} ${formData.userData?.etternavn}, ` +
-      `${formData.userData?.gateAddresse}, ` +
-      `${formData.userData?.postnr} ${formData.userData?.poststed}, ` +
-      `${formData.userData?.land}.`;
+  if (!formData.userData?.socialSecurityNo && formData.userData?.streetName) {
+    return `${formData.userData?.firstName} ${formData.userData?.lastName}, ` +
+      `${formData.userData?.streetName}, ` +
+      `${formData.userData?.postalCode} ${formData.userData?.city}, ` +
+      `${formData.userData?.country}.`;
   }
 }
 

@@ -1,35 +1,16 @@
 import { Radio, RadioGroup, Select } from "@navikt/ds-react";
-import { useEffect, useState } from "react";
-import { NavUnit } from "../../data/domain";
+import { NavUnit, UserType } from "../../data/domain";
 import Section from "../section/section";
 import SocialSecurityNo from "../form/socialSecurityNo";
 import { useFormState } from "../../data/appState";
-import { isPersonGroup, isPersonNoSocialSecurityNumber, isPersonSocialSecurityNumber } from "../../utils/formDataUtil";
 import ContactInformation from "./contactInformation";
 
 interface Props {
   navUnits?: NavUnit[] | undefined;
 }
 
-enum SubmissionType {
-  hasSocialNumber = "hasSocialNumber",
-  noSocialNumber = "noSocialNumber",
-  other = "other",
-}
-
 const ChooseUser = ({navUnits}: Props) => {
   const {formData, updateFormData, updateUserData, errors} = useFormState();
-  const [personType, setPersonType] = useState<SubmissionType>();
-
-  useEffect(() => {
-    if (isPersonSocialSecurityNumber(formData)) {
-      setPersonType(SubmissionType.hasSocialNumber);
-    } else  if (isPersonNoSocialSecurityNumber(formData)) {
-      setPersonType(SubmissionType.noSocialNumber);
-    } else if (isPersonGroup(formData)) {
-      setPersonType(SubmissionType.other);
-    }
-  }, []);
 
   return (
     <>
@@ -37,27 +18,30 @@ const ChooseUser = ({navUnits}: Props) => {
         <RadioGroup
           legend="Hvem gjelder innsendelsen for?"
           size="medium"
-          onChange={(value) => {
-            updateFormData({userData: undefined});
-            setPersonType(value);
+          onChange={(type) => {
+            updateFormData({
+              userData: {
+                type
+              },
+            });
           }}
-          name="submissionInvolves"
-          error={errors.submissionInvolves}
-          value={personType ?? ""}
+          name="userType"
+          error={errors.userType}
+          value={formData.userData?.type ?? ""}
         >
-          <Radio name={SubmissionType.hasSocialNumber} value={SubmissionType.hasSocialNumber}>
+          <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
             En person som har fødselsnummer eller D-nummer
           </Radio>
-          <Radio name={SubmissionType.noSocialNumber} value={SubmissionType.noSocialNumber}>
+          <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
             En person som ikke har fødselsnummer eller D-nummer
           </Radio>
-          <Radio name={SubmissionType.other} value={SubmissionType.other}>
+          <Radio name={UserType.other} value={UserType.other}>
             Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
           </Radio>
         </RadioGroup>
       </Section>
 
-      {personType === SubmissionType.hasSocialNumber && (
+      {formData.userData?.type === UserType.hasSocialNumber && (
         <Section>
           <SocialSecurityNo
             value={formData.userData?.socialSecurityNo ?? ""}
@@ -70,12 +54,12 @@ const ChooseUser = ({navUnits}: Props) => {
         </Section>
       )}
 
-      {personType === SubmissionType.noSocialNumber && (
-        <ContactInformation navUnits={navUnits} />
+      {formData.userData?.type === UserType.noSocialNumber && (
+        <ContactInformation navUnits={navUnits}/>
       )}
 
-      <Section>
-        {personType === SubmissionType.other && (
+      {formData.userData?.type === UserType.other && (
+        <Section>
           <Select
             label="Velg hvilken NAV-enhet som skal motta innsendingen"
             size="medium"
@@ -92,8 +76,8 @@ const ChooseUser = ({navUnits}: Props) => {
                 </option>
               ))}
           </Select>
-        )}
-      </Section>
+        </Section>
+      )}
     </>
   );
 };

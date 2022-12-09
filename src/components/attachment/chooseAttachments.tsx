@@ -58,6 +58,7 @@ const ChooseAttachments = ({form}: Props) => {
                   size="medium"
                   onChange={e => updateFormData({otherDocumentationTitle: e.target.value})}
                   className={styles.input}
+                  error={errors.otherDocumentation}
                 />
               )
             }

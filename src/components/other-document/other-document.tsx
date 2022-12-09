@@ -10,7 +10,7 @@ interface Props {
   navUnits: NavUnit[];
 }
 
-const OtherDocumentation: NextPage<Props> = (props) => {
+const OtherDocument: NextPage<Props> = (props) => {
   const {archiveSubjects, navUnits} = props;
 
   return (
@@ -33,4 +33,4 @@ const OtherDocumentation: NextPage<Props> = (props) => {
   );
 };
 
-export default OtherDocumentation;
+export default OtherDocument;

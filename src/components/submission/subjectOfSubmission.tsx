@@ -17,7 +17,7 @@ const SubjectOfSubmission = ({archiveSubjects}: Props) => {
           label="Hvilken dokumentasjon vil du sende til NAV?"
           description="Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
           name="otherDocumentationTitle"
-          value={formData.otherDocumentationTitle}
+          value={formData.otherDocumentationTitle ?? ""}
           size="medium"
           onChange={(evt) => updateFormData({"otherDocumentationTitle": evt.target.value})}
           error={errors.otherDocumentation}

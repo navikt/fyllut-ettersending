@@ -11,74 +11,66 @@ interface Props {
 
 const ContactInformation = ({navUnits}: Props) => {
   const {formData,  updateUserData, errors} = useFormState();
-  const [navUnitState, setNavUnitState] = useState<boolean>(false);
 
   const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
     updateUserData({[e.target.name]: e.target.value});
   };
 
-  useEffect(() => {
-    if (formData.userData?.navUnit) {
-      setNavUnitState(true);
-    }
-  }, []);
-
   return (
     <>
       <Section>
         <TextField
-          value={formData.userData?.fornavn ?? ""}
-          name="fornavn"
           label="Fornavn"
-          size="medium"
+          value={formData.userData?.firstName ?? ""}
+          name="firstName"
           onChange={handleUserDataInputChange}
-          error={errors.fornavn}
+          size="medium"
+          error={errors.firstName}
           className={styles.input}
         />
         <TextField
-          value={formData.userData?.etternavn ?? ""}
-          name="etternavn"
           label="Etternavn"
-          size="medium"
+          value={formData.userData?.lastName ?? ""}
+          name="lastName"
           onChange={handleUserDataInputChange}
-          error={errors.etternavn}
+          size="medium"
+          error={errors.lastName}
           className={styles.input}
         />
         <TextField
           label="Gateadresse"
-          value={formData.userData?.gateAddresse ?? ""}
-          name="gateAddresse"
+          value={formData.userData?.streetName ?? ""}
+          name="streetName"
           onChange={handleUserDataInputChange}
           size="medium"
-          error={errors.gateAddresse}
+          error={errors.streetName}
           className={styles.input}
         />
         <TextField
           label="Postnummer"
-          value={formData.userData?.postnr ?? ""}
-          name="postnr"
+          value={formData.userData?.postalCode ?? ""}
+          name="postalCode"
           onChange={handleUserDataInputChange}
           size="medium"
-          type="number"
-          error={errors.postnr}
+          error={errors.postalCode}
           className={styles.input}
         />
         <TextField
           label="Poststed"
-          value={formData.userData?.poststed ?? ""}
-          name="poststed"
+          value={formData.userData?.city ?? ""}
+          name="city"
           onChange={handleUserDataInputChange}
           size="medium"
-          error={errors.poststed}
+          error={errors.city}
           className={styles.input}
         />
         <TextField
           label="Land"
-          value={formData.userData?.land ?? ""}
-          name="land"
+          value={formData.userData?.country ?? ""}
+          name="country"
           onChange={handleUserDataInputChange}
           size="medium"
-          error={errors.land}
+          error={errors.country}
           className={styles.input}
         />
       </Section>
@@ -87,22 +79,24 @@ const ContactInformation = ({navUnits}: Props) => {
         <RadioGroup
           legend="Har du vært i kontakt med NAV om denne saken tidligere?"
           size="medium"
-          onChange={value => setNavUnitState(value)}
-          value={formData.beenInContactPrev}
-          name="navUnitState"
+          onChange={value => updateUserData({navUnitContact: value})}
+          value={formData.userData?.navUnitContact ?? ""}
+          name="navUnitContact"
+          error={errors.navUnitContact}
         >
           <Radio value={true}>Ja</Radio>
           <Radio value={false}>Nei</Radio>
         </RadioGroup>
       </Section>
 
-      {navUnitState && (
+      {formData.userData?.navUnitContact && (
         <Section>
           <Select
             label="Hvilken NAV-enhet har du vært i kontakt med?"
             size="medium"
             onChange={handleUserDataInputChange}
             value={formData.userData?.navUnit ?? ""}
+            name="navUnit"
             error={errors.navUnit}
           >
             <option></option>

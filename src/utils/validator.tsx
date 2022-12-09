@@ -1,50 +1,64 @@
 import fnrValidator from "@navikt/fnrvalidator";
-import { ErrorMessages, FormData, KeyValue } from "../data/domain";
-import {
-  hasOtherAttachment,
-  isPersonGroup,
-  isPersonNoSocialSecurityNumber,
-  isPersonSocialSecurityNumber
-} from "./formDataUtil";
+import { ErrorMessages, FormData, KeyValue, UserType } from "../data/domain";
+import { hasOtherAttachment } from "./formDataUtil";
 
 const validateFormData = (formData: FormData) => {
   let formErrors: KeyValue = {};
 
-  if (hasOtherAttachment(formData) && !formData.otherDocumentationTitle) {
+  if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
     formErrors.otherDocumentation = ErrorMessages.otherDocumentation;
   }
 
-  if (isPersonSocialSecurityNumber(formData)) {
-    if (!formData.userData?.socialSecurityNo
-      || fnrValidator.idnr(formData.userData.socialSecurityNo).status === "invalid") {
+  if (!formData.userData?.type) {
+    formErrors.userType = ErrorMessages.userType;
+  } else if (formData.userData?.type === UserType.hasSocialNumber) {
+    if (!formData.userData?.socialSecurityNo) {
+      formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
+    } else if (fnrValidator.idnr(formData.userData.socialSecurityNo).status === "invalid") {
       formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
     }
-  } else if (isPersonNoSocialSecurityNumber(formData)) {
+  } else if (formData.userData?.type === UserType.noSocialNumber) {
+    if (!formData.userData?.firstName) {
+      formErrors.firstName = ErrorMessages.firstName;
+    }
+    if (!formData.userData?.lastName) {
+      formErrors.lastName = ErrorMessages.lastName;
+    }
+    if (!formData.userData?.streetName) {
+      formErrors.streetName = ErrorMessages.streetName;
+    }
+    if (!formData.userData?.postalCode) {
+      formErrors.postalCode = ErrorMessages.postalCode;
+    }
+    if (!formData.userData?.city) {
+      formErrors.city = ErrorMessages.city;
+    }
+    if (!formData.userData?.country) {
+      formErrors.country = ErrorMessages.country;
+    }
 
-  } else if (isPersonGroup(formData)) {
-
+    if (formData.userData?.navUnitContact === undefined) {
+      formErrors.navUnitContact = ErrorMessages.navUnitContact;
+    } else if (formData.userData?.navUnitContact && !formData.userData?.navUnit) {
+      formErrors.navUnit = ErrorMessages.navUnitContactSelect;
+    }
+  } else if (formData.userData?.type === UserType.other) {
+    if (!formData.userData?.navUnit) {
+      formErrors.navUnit = ErrorMessages.navUnit;
+    }
   }
 
-  /*
-  if (validate.socialSecurityNo(formData)) {
-    formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
-  } else if (formData.submissionInvolves === SubmissionType.hasSocialNumber && !formData.socialSecurityNo) {
-    formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
-  }*/
+  if (!formData.formId && !formData.subjectOfSubmission) {
+    formErrors.subjectOfSubmission = ErrorMessages.subjectOfSubmission;
+  }
 
-  /*if (!formData.userData?.navUnit) {
-    formErrors.navUnitInContactWith = ErrorMessages.chooseOne;
-  }*/
-
-  if (formData.attachments?.length === 0) {
+  if (formData.formId && (!formData.attachments || formData.attachments.length === 0)) {
     formErrors.attachments = ErrorMessages.attachments;
   }
 
-  return isEmpty(formErrors) ? undefined : formErrors;
+  console.log(formData, formErrors);
+
+  return Object.keys(formErrors).length === 0 ? undefined : formErrors;
 };
 
-const isEmpty = (obj: {}) => {
-  return Object.keys(obj).length === 0;
-};
-
-export { isEmpty, validateFormData };
+export { validateFormData };

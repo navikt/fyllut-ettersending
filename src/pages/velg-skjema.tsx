@@ -9,7 +9,7 @@ import FormSearch from "../components/search/formSearch";
 import { useFormState } from "../data/appState";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
-import OtherDocumentation from "../components/other-documentation/other-documentation";
+import OtherDocument from "../components/other-document/other-document";
 
 interface Props {
   forms: Form[];
@@ -25,11 +25,16 @@ enum SubmissionType {
 const VelgSkjema: NextPage<Props> = (props) => {
   const {forms, archiveSubjects, navUnits} = props;
   const [submissionType, setSubmissionType] = useState<SubmissionType>();
-  const {resetFormData} = useFormState();
+  const {resetFormData, formData} = useFormState();
 
   useEffect(() => {
-    resetFormData();
-  }, []);
+    if (formData.formId) {
+      resetFormData();
+      setSubmissionType(SubmissionType.documentationToForm);
+    } else if (Object.keys(formData).length !== 0) {
+      setSubmissionType(SubmissionType.otherDocumentation);
+    }
+  }, [formData.formId]);
 
   return (
     <Layout title="Ettersende dokumentasjon i posten">
@@ -38,6 +43,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
           legend="Hva gjelder innsendingen?"
           size="medium"
           onChange={(value) => setSubmissionType(value)}
+          value={submissionType ?? ""}
         >
           <Radio name={SubmissionType.documentationToForm} value={SubmissionType.documentationToForm}>
             Jeg skal ettersende vedlegg til en tidligere innsendt søknad
@@ -52,7 +58,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
         <FormSearch forms={forms} />
       )}
       {submissionType === SubmissionType.otherDocumentation && (
-        <OtherDocumentation archiveSubjects={archiveSubjects} navUnits={navUnits} />
+        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} />
       )}
     </Layout>
   );

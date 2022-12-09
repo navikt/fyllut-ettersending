@@ -2,7 +2,7 @@ import { Components, fetchDecoratorReact, Props } from "@navikt/nav-dekoratoren-
 import { DocumentContext } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-const decoratorParams: Props = {
+const decoratorProps: Props = {
   env: process.env.NODE_ENV === "production" ? "prod" : "dev",
   simple: true,
 };
@@ -11,6 +11,7 @@ class _Document extends Document<{ Decorator: Components }> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     let Decorator;
+    console.log(process.env.MOCK, !!process.env.MOCK);
     if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
       Decorator = {
         Styles: () => {},
@@ -19,7 +20,7 @@ class _Document extends Document<{ Decorator: Components }> {
         Footer: () => {},
       };
     } else {
-      Decorator = await fetchDecoratorReact(decoratorParams);
+      Decorator = await fetchDecoratorReact(decoratorProps);
     }
 
     return { ...initialProps, Decorator };

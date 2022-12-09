@@ -5,30 +5,32 @@ describe("validator.tsx", () => {
   let formData: FormData;
 
   beforeEach(() => {
-    formData = {};
+    formData = {
+      userData: {},
+    };
   });
 
   describe("validator - submissionRadioGroup component", () => {
     it("should give an invalid error when social security number is invalid", () => {
-      formData.socialSecurityNo = "01010122222";
+      formData.userData!.socialSecurityNo = "01010122222";
       const errors = validateFormData(formData);
       expect(errors!.socialSecurityNo).to.eq(ErrorMessages.socialSecurityNo);
     });
 
     it("should give an empty input error when social security number is empty", () => {
-      formData.socialSecurityNo = "";
+      formData.userData!.socialSecurityNo = "";
       const errors = validateFormData(formData);
       expect(errors?.socialSecurityNo).to.eq(ErrorMessages.socialSecurityNoIsEmpty);
     });
 
     it("should validate userdata when user has no social number and give error if input fields is empty", () => {
       const errors = validateFormData(formData);
-      expect(errors?.fornavn).to.eq(ErrorMessages.fornavn);
-      expect(errors?.etternavn).to.eq(ErrorMessages.etternavn);
-      expect(errors?.postnr).to.eq(ErrorMessages.postnr);
-      expect(errors?.poststed).to.eq(ErrorMessages.poststed);
-      expect(errors?.gateAddresse).to.eq(ErrorMessages.gateAddresse);
-      expect(errors?.land).to.eq(ErrorMessages.land);
+      expect(errors?.firstName).to.eq(ErrorMessages.firstName);
+      expect(errors?.lastName).to.eq(ErrorMessages.lastName);
+      expect(errors?.postalCode).to.eq(ErrorMessages.postalCode);
+      expect(errors?.city).to.eq(ErrorMessages.city);
+      expect(errors?.streetName).to.eq(ErrorMessages.streetName);
+      expect(errors?.city).to.eq(ErrorMessages.city);
     });
 
     it("should validate navUnitInContactWith when submissionType is noSocialNo && beenInContactPrev is true and give an error if value is empty", () => {
