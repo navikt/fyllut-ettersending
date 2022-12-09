@@ -34,6 +34,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
     } else if (Object.keys(formData).length !== 0) {
       setSubmissionType(SubmissionType.otherDocumentation);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.formId]);
 
   return (

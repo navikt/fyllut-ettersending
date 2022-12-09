@@ -19,6 +19,7 @@ const ChooseAttachments = ({form}: Props) => {
     if (formAttachmentKeys && formAttachmentKeys.length > 0) {
       setAttachmentKeys(formAttachmentKeys);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

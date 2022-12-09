@@ -1,5 +1,5 @@
 import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import { NavUnit } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./submission.module.css";
