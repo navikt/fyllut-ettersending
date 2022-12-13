@@ -8,6 +8,7 @@ describe("velgskjema.tsx", () => {
       defaultCommandTimeout: 10000,
     },
     () => {
+      cy.findAllByRole("radio").eq(0).check();
       cy.findAllByRole("textbox").focus().type("test");
       cy.findAllByRole("link").eq(1).click();
       cy.url().should("include", "/detaljer");

@@ -38,7 +38,7 @@ interface KeyValue {
 interface FormData {
   formId?: string;
   attachments?: Attachment[];
-  beenInContactPrev?: boolean;
+  navUnitContact?: boolean;
   formNumber?: string;
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;

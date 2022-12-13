@@ -1,7 +1,7 @@
 import { validateFormData } from "../../src/utils/validator";
-import { ErrorMessages, FormData } from "../../src/data/domain";
+import { ErrorMessages, FormData, UserType } from "../../src/data/domain";
 
-describe("validator.tsx", () => {
+describe("validator", () => {
   let formData: FormData;
 
   beforeEach(() => {
@@ -10,54 +10,71 @@ describe("validator.tsx", () => {
     };
   });
 
-  describe("validator - submissionRadioGroup component", () => {
-    it("should give an invalid error when social security number is invalid", () => {
-      formData.userData!.socialSecurityNo = "01010122222";
-      const errors = validateFormData(formData);
-      expect(errors!.socialSecurityNo).to.eq(ErrorMessages.socialSecurityNo);
-    });
-
+  describe("subjectOfSubmission", () => {
     it("should give an empty input error when social security number is empty", () => {
       formData.userData!.socialSecurityNo = "";
+      formData.userData!.type = UserType.hasSocialNumber;
       const errors = validateFormData(formData);
       expect(errors?.socialSecurityNo).to.eq(ErrorMessages.socialSecurityNoIsEmpty);
     });
 
-    it("should validate userdata when user has no social number and give error if input fields is empty", () => {
-      const errors = validateFormData(formData);
-      expect(errors?.firstName).to.eq(ErrorMessages.firstName);
-      expect(errors?.lastName).to.eq(ErrorMessages.lastName);
-      expect(errors?.postalCode).to.eq(ErrorMessages.postalCode);
-      expect(errors?.city).to.eq(ErrorMessages.city);
-      expect(errors?.streetName).to.eq(ErrorMessages.streetName);
-      expect(errors?.city).to.eq(ErrorMessages.city);
+    describe("type hasSocialNumber", () => {
+      it("validate socialSecurityNo is set", () => {
+        formData.userData!.type = UserType.hasSocialNumber;
+        const errors = validateFormData(formData);
+        expect(errors?.socialSecurityNo).to.eq(ErrorMessages.socialSecurityNoIsEmpty);
+      });
     });
 
-    it("should validate navUnitInContactWith when submissionType is noSocialNo && beenInContactPrev is true and give an error if value is empty", () => {
-      formData.beenInContactPrev = true;
-      const errors = validateFormData(formData);
-      expect(errors?.navUnitInContactWith).to.eq(ErrorMessages.chooseOne);
+    describe("type noSocialNumber", () => {
+
+      it("validate userdata", () => {
+        formData.userData!.type = UserType.noSocialNumber;
+        const errors = validateFormData(formData);
+        expect(errors?.firstName).to.eq(ErrorMessages.firstName);
+        expect(errors?.lastName).to.eq(ErrorMessages.lastName);
+        expect(errors?.postalCode).to.eq(ErrorMessages.postalCode);
+        expect(errors?.city).to.eq(ErrorMessages.city);
+        expect(errors?.streetName).to.eq(ErrorMessages.streetName);
+        expect(errors?.city).to.eq(ErrorMessages.city);
+      });
+
+      it("validate navUnitContact undefined", () => {
+        formData.userData!.type = UserType.noSocialNumber;
+        const errors = validateFormData(formData);
+        expect(errors?.navUnitContact).to.eq(ErrorMessages.navUnitContact);
+      });
+
+      it("validate navUnitContact true", () => {
+        formData.userData!.type = UserType.noSocialNumber;
+        formData.userData!.navUnitContact = true;
+        const errors = validateFormData(formData);
+        expect(errors?.navUnit).to.eq(ErrorMessages.navUnitContactSelect);
+      });
+
+      it("do not validate navUnitContact true", () => {
+        formData.userData!.type = UserType.noSocialNumber;
+        formData.userData!.navUnitContact = false;
+        const errors = validateFormData(formData);
+        expect(errors?.navUnitContact).to.be.undefined;
+      });
     });
 
-    it("should not validate navUnitInContactWith when submissionType is noSocialNo && beenInContactPrev is false", () => {
-      formData.beenInContactPrev = false;
-      const errors = validateFormData(formData);
-      expect(errors?.navUnitInContactWith).to.be.undefined;
-    });
+    describe("type other", () => {
+      it("validate navUnit is set", () => {
+        formData.userData!.type = UserType.other;
+        const errors = validateFormData(formData);
+        expect(errors?.navUnit).to.eq(ErrorMessages.navUnit);
+      });
 
-    it("should validate navUnitToReceiveSubmission if submissiontype is other and give an error if navUnitToReceiveSubmission is not set", () => {
-      const errors = validateFormData(formData);
-      expect(errors?.navUnitToReceiveSubmission).to.eq(ErrorMessages.chooseOne);
-    });
-  });
-
-  describe("validator - velg skjema", () => {
-    it("should validate nameOfUploadedDocument, subjectOfSubmission & submissionInvolves when velgSkjemaSubmissionType is ´other document´ and give error when description of upload document is not filled", () => {
-      formData.otherDocumentationTitle = "";
-      formData.subjectOfSubmission = "";
-      const errors = validateFormData(formData);
-      // expect(errors?.otherDocumentationTitle).to.eq(ErrorMessages.otherDocumentationTitle);
-      expect(errors?.subjectOfSubmission).to.eq(ErrorMessages.chooseOne);
+      it("should validate otherDocumentationTitle and subjectOfSubmission", () => {
+        formData.userData!.type = UserType.other;
+        formData.otherDocumentationTitle = "";
+        formData.subjectOfSubmission = "";
+        const errors = validateFormData(formData);
+        expect(errors?.otherDocumentation).to.eq(ErrorMessages.otherDocumentation);
+        expect(errors?.subjectOfSubmission).to.eq(ErrorMessages.subjectOfSubmission);
+      });
     });
   });
 

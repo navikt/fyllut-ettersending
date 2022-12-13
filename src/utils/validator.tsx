@@ -14,7 +14,7 @@ const validateFormData = (formData: FormData) => {
   } else if (formData.userData?.type === UserType.hasSocialNumber) {
     if (!formData.userData?.socialSecurityNo) {
       formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
-    } else if (fnrValidator.idnr(formData.userData.socialSecurityNo).status === "invalid") {
+    } else if (fnrValidator?.idnr(formData.userData.socialSecurityNo).status === "invalid") {
       formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
     }
   } else if (formData.userData?.type === UserType.noSocialNumber) {

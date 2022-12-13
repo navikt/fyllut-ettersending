@@ -28,7 +28,7 @@ const Layout = ({ title, children }: Props) => {
           router.back();
           e.currentTarget.blur();
         }} className={styles.backLink}>
-          <Left className={styles.backLinkIcon} />Gå tilbake
+          <Left className={styles.backLinkIcon} aria-hidden={true} />Gå tilbake
         </Link>
         {children}
       </div>
