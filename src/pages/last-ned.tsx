@@ -66,7 +66,9 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
 
       <div className="lastSection">
         <Heading level="2" size="medium" spacing>
-          3. Send dokumentene til NAV i posten
+          {
+            formData.attachments ? "3" : "2"
+          }. Send dokumentene til NAV i posten
         </Heading>
 
         <BodyShort spacing>
