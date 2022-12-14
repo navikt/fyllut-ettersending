@@ -1,9 +1,30 @@
-import ecsFormat from "@elastic/ecs-winston-format";
-import { createLogger, transports } from "winston";
+const info = (message: string, details?: string) => {
+  log("info", message, details);
+};
 
-export const logger = createLogger({
-  level: process.env.LOGLEVEL || "info",
-  silent: process.env.NODE_ENV === "test",
-  format: ecsFormat({ apmIntegration: false }),
-  transports: [new transports.Console()],
-});
+const debug = (message: string, details?: string) => {
+  log("debug", message, details);
+};
+
+const error = (message: string, details?: string) => {
+  log("error", message, details);
+};
+
+// Winston logging was problematic since in nextjs sometimes logging is frontend and sometimes backend.
+// Created a custom winston inspired format instead.
+const log = (level: "debug" | "error" | "info", message: string, details?: string) => {
+  console.log(JSON.stringify({
+    "@timestamp": Date.now(),
+    level,
+    message,
+    details,
+  }));
+};
+
+const logger = {
+  info,
+  debug,
+  error,
+};
+
+export default logger;
