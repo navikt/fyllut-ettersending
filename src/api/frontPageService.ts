@@ -41,7 +41,7 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     spraakkode: "NB",
     overskriftstittel: getTitle(formData),
     arkivtittel: getTitle(formData),
-    tema: formData.theme,
+    tema: formData.subjectOfSubmission,
     vedleggsliste: formData.attachments?.map(attachment => attachment.attachmentTitle) ?? [],
     dokumentlisteFoersteside: formData.attachments?.map(attachment => attachment.label) ?? [],
     adresse: toFrontPageAddress(formData),
@@ -54,7 +54,7 @@ const getTitle = (formData: FormData) => {
   if (formData.formNumber) {
     return `Ettersendelse til ${formData.formNumber} ${formData.title}`;
   } else {
-    return `Innsendelsen gjelder: ${formData.theme}`;
+    return `Innsendelsen gjelder: ${formData.subjectOfSubmission}`;
   }
 };
 

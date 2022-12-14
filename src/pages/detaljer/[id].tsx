@@ -29,11 +29,10 @@ const Detaljer: NextPage<Props> = (props) => {
 
   useEffect(() => {
     if (id !== formData.formId) {
-      console.log("reset", id, formData.formId, formData);
       resetFormData({
         formNumber: form.properties.formNumber,
         title: form.title,
-        theme: form.properties.theme,
+        subjectOfSubmission: form.properties.subjectOfSubmission,
         formId: id,
       });
     }
