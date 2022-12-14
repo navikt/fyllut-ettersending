@@ -56,8 +56,6 @@ const validateFormData = (formData: FormData) => {
     formErrors.attachments = ErrorMessages.attachments;
   }
 
-  console.log(formData, formErrors);
-
   return Object.keys(formErrors).length === 0 ? undefined : formErrors;
 };
 
