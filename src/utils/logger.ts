@@ -1,24 +1,20 @@
 const info = (message: string, details?: string) => {
-  log("info", message, details);
+  console.info(createLog("info", message, details));
 };
 
 const debug = (message: string, details?: string) => {
-  log("debug", message, details);
+  console.debug(createLog("debug", message, details));
 };
 
 const error = (message: string, details?: string) => {
-  log("error", message, details);
+  console.error(createLog("error", message, details));
 };
 
-// Winston logging was problematic since in nextjs sometimes logging is frontend and sometimes backend.
-// Created a custom winston inspired format instead.
-const log = (level: "debug" | "error" | "info", message: string, details?: string) => {
-  console.log(JSON.stringify({
-    "@timestamp": Date.now(),
-    level,
+const createLog = (level: "debug" | "error" | "info", message: string, details?: string) => {
+  return JSON.stringify({
     message,
     details,
-  }));
+  });
 };
 
 const logger = {

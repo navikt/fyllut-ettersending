@@ -7,7 +7,6 @@ Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.dev.
 Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 ```
 FYLLUT_BASE_URL=https://fyllut-experimental.dev.nav.no/fyllut
-LOGLEVEL=debug
 ```
 
 ### Lokal server
