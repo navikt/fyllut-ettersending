@@ -1,7 +1,6 @@
 import "@navikt/ds-css";
 import { Heading, Ingress } from "@navikt/ds-react";
 import type { GetStaticPropsContext, NextPage } from "next";
-import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
