@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import { Radio, RadioGroup } from "@navikt/ds-react";
-import type { NextPage } from "next";
+import type { GetStaticPropsContext, NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { useEffect, useState } from "react";
 import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
@@ -65,19 +65,14 @@ const VelgSkjema: NextPage<Props> = (props) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { res } = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, maxage=1800"
-  );
-
+export async function getStaticProps () {
   const forms = await getForms();
   const archiveSubjects = await getArchiveSubjects();
   const navUnits = await getNavUnits();
 
   return {
     props: {forms, archiveSubjects, navUnits},
+    revalidate: 60,
   };
 }
 

@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import { Heading, Ingress } from "@navikt/ds-react";
-import type { NextPage } from "next";
+import type { GetStaticPropsContext, NextPage } from "next";
 import { GetServerSidePropsContext } from "next/types";
 import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
@@ -67,13 +67,7 @@ const Detaljer: NextPage<Props> = (props) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { res } = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, maxage=1800"
-  );
-
+export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params?.id as string;
   const form = await getForm(id);
   const navUnits = await getNavUnits();
