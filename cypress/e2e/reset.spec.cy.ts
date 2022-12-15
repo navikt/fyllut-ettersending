@@ -1,6 +1,7 @@
 describe("velgskjema.tsx", () => {
   before(() => {
     cy.visit("/velg-skjema");
+    cy.wait(1000);
   });
 
   it("resets formData when a different form is selected than the one previously selected",

@@ -13,6 +13,7 @@ export default defineConfig({
   },
   e2e: {
     baseUrl: "http://localhost:3002",
+    chromeWebSecurity: false,
     viewportWidth: 1500,
     viewportHeight: 1200,
     setupNodeEvents(on, config) {}

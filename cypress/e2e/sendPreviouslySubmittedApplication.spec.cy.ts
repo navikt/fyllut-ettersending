@@ -6,6 +6,7 @@ describe.only(
   () => {
     before(() => {
       cy.visit("/velg-skjema");
+      cy.wait(1000);
     });
 
     it("fill out send documentation", () => {
