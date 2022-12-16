@@ -1,7 +1,6 @@
 import "@navikt/ds-css";
 import { Heading, Ingress } from "@navikt/ds-react";
-import type { NextPage } from "next";
-import { GetServerSidePropsContext } from "next/types";
+import type { GetStaticPropsContext, NextPage } from "next";
 import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
@@ -67,12 +66,7 @@ const Detaljer: NextPage<Props> = (props) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { res } = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, maxage=1800"
-  );
+export async function getStaticProps (context: GetStaticPropsContext) {
 
   const id = context.params?.id as string;
   const form = await getForm(id);
@@ -80,6 +74,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {form, navUnits, id},
+    revalidate: 900, // Revalidate every 15 min
   };
 }
 
