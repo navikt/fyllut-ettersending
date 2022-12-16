@@ -66,6 +66,13 @@ const Detaljer: NextPage<Props> = (props) => {
   );
 };
 
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  }
+}
+
 export async function getStaticProps (context: GetStaticPropsContext) {
 
   const id = context.params?.id as string;
