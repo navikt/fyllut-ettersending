@@ -1,13 +1,11 @@
-describe("velgskjema.tsx", () => {
+describe("reset", () => {
+  const startUrl = "/velg-skjema";
   before(() => {
-    cy.visit("/velg-skjema");
-    cy.wait(1000);
+    cy.visit(startUrl);
+    cy.url().should("include", startUrl)
   });
 
   it("resets formData when a different form is selected than the one previously selected",
-    {
-      defaultCommandTimeout: 10000,
-    },
     () => {
       cy.findAllByRole("radio").eq(0).check();
       cy.findAllByRole("textbox").focus().type("test");

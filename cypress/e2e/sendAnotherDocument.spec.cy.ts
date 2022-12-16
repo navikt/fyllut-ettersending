@@ -1,12 +1,9 @@
-describe(
-  "sendAnotherDocument",
-  {
-    defaultCommandTimeout: 10000,
-  },
+describe("sendAnotherDocument",
   () => {
+    const startUrl = "/velg-skjema";
     before(() => {
-      cy.visit("/velg-skjema");
-      cy.wait(1000);
+      cy.visit(startUrl);
+      cy.url().should("include", startUrl)
     });
 
     it("send another document", () => {
