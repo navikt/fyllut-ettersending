@@ -6,7 +6,26 @@ on:
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
 jobs:
-  buildAndTest:
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16.17.1"
+      - name: "install dependencies"
+        run: yarn install --frozen-lockfile
+      - name: "Build application"
+        run: yarn build:mock
+      - name: "Cypress tests"
+        uses: cypress-io/github-action@v4
+        with:
+          install: false
+          start: "yarn run start:mock"
+          wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
+          config-file: "cypress.config.ts"
+  build:
     name: "Build"
     runs-on: ubuntu-latest
     steps:
@@ -18,13 +37,6 @@ jobs:
       run: yarn install --frozen-lockfile
     - name: "Build application"
       run: yarn build
-    - name: "Cypress tests"
-      uses: cypress-io/github-action@v4
-      with:
-        install: false
-        start: "yarn run start:mock"
-        wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
-        config-file: "cypress.config.ts"
     - name: "Login to GitHub Docker Registry"
       uses: docker/login-action@v2
       with:
@@ -35,7 +47,7 @@ jobs:
       run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: buildAndTest
+    needs: [build, test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
