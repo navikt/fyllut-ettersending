@@ -95,9 +95,12 @@ export const getStaticPaths = async () => {
       },
       revalidate: 30, // Revalidate every 30 sec
     };
-  })
+  });
 
-  return { paths };
+  return {
+    paths,
+    fallback: true,
+  };
 }
 
 export async function getStaticProps (context: GetStaticPropsContext) {
