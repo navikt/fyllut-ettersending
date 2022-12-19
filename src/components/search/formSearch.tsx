@@ -25,6 +25,7 @@ const FormSearch = ({forms}: Props) => {
 
   return (
     <>
+      Antall skjema: {forms?.length}
       <Section>
         <TextField
           autoComplete="off"
