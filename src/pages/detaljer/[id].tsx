@@ -10,6 +10,7 @@ import { useFormState } from "../../data/appState";
 import { useEffect } from "react";
 import Section from "../../components/section/section";
 import Layout from "../../components/layout/layout";
+import { useRouter } from "next/router";
 
 interface Props {
   form: Form;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const Detaljer: NextPage<Props> = (props) => {
+  const router = useRouter()
   const {form, navUnits, id} = props;
   const {formData, resetFormData} = useFormState();
 
@@ -37,6 +39,12 @@ const Detaljer: NextPage<Props> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, formData]);
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
   return (
     <Layout title="Ettersende dokumentasjon i posten">
@@ -69,12 +77,11 @@ const Detaljer: NextPage<Props> = (props) => {
 export const getStaticPaths = async () => {
   return {
     paths: [],
-    fallback: "blocking",
+    fallback: true,
   }
 }
 
 export async function getStaticProps (context: GetStaticPropsContext) {
-
   const id = context.params?.id as string;
   const form = await getForm(id);
   const navUnits = await getNavUnits();
