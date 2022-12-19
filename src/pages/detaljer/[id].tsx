@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 import { Heading, Ingress } from "@navikt/ds-react";
 import type { GetStaticPropsContext, NextPage } from "next";
-import { getForm, getNavUnits } from "../../api/apiService";
+import { getForm, getForms, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
@@ -75,10 +75,29 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: true,
+  if (process.env.TEST) {
+    return {
+      paths: [],
+      fallback: "blocking",
+    }
   }
+  const forms = await getForms();
+  const navUnits = await getNavUnits();
+
+  const paths = forms.map(async f => {
+    const form = await getForm(f.path);
+
+    return {
+      props: {
+        form,
+        navUnits,
+        id: f.path
+      },
+      revalidate: 30, // Revalidate every 30 sec
+    };
+  })
+
+  return { paths };
 }
 
 export async function getStaticProps (context: GetStaticPropsContext) {
