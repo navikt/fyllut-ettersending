@@ -75,7 +75,7 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export const getStaticPaths = async () => {
-  if (process.env.TEST) {
+  if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
     return {
       paths: [],
       fallback: "blocking",
