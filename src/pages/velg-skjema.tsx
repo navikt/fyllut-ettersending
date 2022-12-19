@@ -71,6 +71,7 @@ export async function getStaticProps () {
 
   return {
     props: {forms, archiveSubjects, navUnits},
+    fallback: "blocking",
     revalidate: 30, // Revalidate every 30 sec
   };
 }

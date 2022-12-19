@@ -93,7 +93,6 @@ export const getStaticPaths = async () => {
         navUnits,
         id: f.path
       },
-      revalidate: 30, // Revalidate every 30 sec
     };
   });
 
