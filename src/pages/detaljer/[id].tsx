@@ -81,7 +81,7 @@ export async function getStaticProps (context: GetStaticPropsContext) {
 
   return {
     props: {form, navUnits, id},
-    revalidate: 900, // Revalidate every 15 min
+    revalidate: 30, // Revalidate every 30 sec
   };
 }
 

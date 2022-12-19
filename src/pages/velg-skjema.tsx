@@ -71,7 +71,7 @@ export async function getStaticProps () {
 
   return {
     props: {forms, archiveSubjects, navUnits},
-    revalidate: 900, // Revalidate every 15 min
+    revalidate: 30, // Revalidate every 30 sec
   };
 }
 
