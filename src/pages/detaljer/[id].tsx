@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 import { Heading, Ingress } from "@navikt/ds-react";
-import type { GetStaticPropsContext, NextPage } from "next";
-import { getForm, getForms, getNavUnits } from "../../api/apiService";
+import type { NextPage } from "next";
+import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import Section from "../../components/section/section";
 import Layout from "../../components/layout/layout";
 import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next/types";
 
 interface Props {
   form: Form;
@@ -73,7 +74,7 @@ const Detaljer: NextPage<Props> = (props) => {
     </Layout>
   );
 };
-
+/*
 export const getStaticPaths = async () => {
   if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
     return {
@@ -100,9 +101,15 @@ export const getStaticPaths = async () => {
     paths,
     fallback: "blocking",
   };
-}
+}*/
 
-export async function getStaticProps (context: GetStaticPropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { res } = context;
+  res.setHeader(
+    "Cache-Control",
+    "public, maxage=1800"
+  );
+
   const id = context.params?.id as string;
   const formData = getForm(id);
   const navUnitsData = getNavUnits();
