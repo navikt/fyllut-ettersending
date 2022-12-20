@@ -25,7 +25,7 @@ const ChooseAttachments = ({form}: Props) => {
   return (
     <>
       {
-        form.attachments?.length && (
+        form.attachments?.length > 0 && (
           <Section>
             <CheckboxGroup
               legend="Hvilke vedlegg skal du ettersende?"

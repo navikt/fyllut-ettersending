@@ -74,34 +74,6 @@ const Detaljer: NextPage<Props> = (props) => {
     </Layout>
   );
 };
-/*
-export const getStaticPaths = async () => {
-  if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
-    return {
-      paths: [],
-      fallback: "blocking",
-    }
-  }
-  const forms = await getForms();
-  const navUnits = await getNavUnits();
-
-  const paths = forms.map(async f => {
-    const form = await getForm(f.path);
-
-    return {
-      props: {
-        form,
-        navUnits,
-        id: f.path
-      },
-    };
-  });
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}*/
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res } = context;
