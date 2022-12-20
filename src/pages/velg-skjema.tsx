@@ -64,6 +64,13 @@ const VelgSkjema: NextPage<Props> = (props) => {
   );
 };
 
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+}
+
 export async function getStaticProps () {
   const formsData = getForms();
   const archiveSubjectsData = getArchiveSubjects();
@@ -73,7 +80,7 @@ export async function getStaticProps () {
 
   return {
     props: {forms, archiveSubjects, navUnits},
-    revalidate: 30, // Revalidate every 30 sec
+    revalidate: 60, // Revalidate every 60 sec
   };
 }
 
