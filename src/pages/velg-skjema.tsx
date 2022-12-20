@@ -9,7 +9,6 @@ import { useFormState } from "../data/appState";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
-import { GetServerSidePropsContext } from "next/types";
 
 interface Props {
   forms: Form[];
@@ -65,13 +64,7 @@ const VelgSkjema: NextPage<Props> = (props) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { res } = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, maxage=1800"
-  );
-
+export async function getStaticProps () {
   const formsData = getForms();
   const archiveSubjectsData = getArchiveSubjects();
   const navUnitsData = getNavUnits();
@@ -80,6 +73,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {forms, archiveSubjects, navUnits},
+    revalidate: 30, // Revalidate every 30 sec
   };
 }
 

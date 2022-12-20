@@ -1,5 +1,5 @@
 import "@navikt/ds-css";
-import { Heading, Ingress } from "@navikt/ds-react";
+import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { getForm, getNavUnits } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
@@ -56,21 +56,31 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
-      <ChooseAttachments form={form} />
+      {
+        form.attachments?.length > 0 ? (
+          <>
+            <ChooseAttachments form={form} />
 
-      <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
+            <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
 
-      <ButtonGroup
-        buttons={[{
-          text: ButtonText.next,
-          path: Paths.downloadPage,
-          validateForm: true
-        }, {
-          text: ButtonText.cancel,
-          path: "/",
-          variant: "tertiary"
-        }]}
-      />
+            <ButtonGroup
+              buttons={[{
+                text: ButtonText.next,
+                path: Paths.downloadPage,
+                validateForm: true
+              }, {
+                text: ButtonText.cancel,
+                path: "/",
+                variant: "tertiary"
+              }]}
+            />
+          </>
+        ) : (
+          <Alert variant="info">
+            Dette skjemaet har ingen vedlegg som kan ettersendes.
+          </Alert>
+        )
+      }
     </Layout>
   );
 };
