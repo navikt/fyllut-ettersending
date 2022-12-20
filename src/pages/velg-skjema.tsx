@@ -9,6 +9,7 @@ import { useFormState } from "../data/appState";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
+import { GetServerSidePropsContext } from "next/types";
 
 interface Props {
   forms: Form[];
@@ -64,14 +65,13 @@ const VelgSkjema: NextPage<Props> = (props) => {
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { res } = context;
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=300, stale-while-revalidate=60"
+  );
 
-export async function getStaticProps () {
   const formsData = getForms();
   const archiveSubjectsData = getArchiveSubjects();
   const navUnitsData = getNavUnits();
@@ -80,7 +80,6 @@ export async function getStaticProps () {
 
   return {
     props: {forms, archiveSubjects, navUnits},
-    revalidate: 60, // Revalidate every 60 sec
   };
 }
 

@@ -89,7 +89,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res } = context;
   res.setHeader(
     "Cache-Control",
-    "public, maxage=1800"
+    "public, s-maxage=300, stale-while-revalidate=60"
   );
 
   const id = context.params?.id as string;
