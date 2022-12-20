@@ -118,7 +118,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {form, navUnits, id},
-    revalidate: 30, // Revalidate every 30 sec
   };
 }
 
