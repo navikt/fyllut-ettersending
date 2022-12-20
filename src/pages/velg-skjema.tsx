@@ -65,9 +65,11 @@ const VelgSkjema: NextPage<Props> = (props) => {
 };
 
 export async function getStaticProps () {
-  const forms = await getForms();
-  const archiveSubjects = await getArchiveSubjects();
-  const navUnits = await getNavUnits();
+  const formsData = getForms();
+  const archiveSubjectsData = getArchiveSubjects();
+  const navUnitsData = getNavUnits();
+
+  const [forms, archiveSubjects, navUnits] = await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
 
   return {
     props: {forms, archiveSubjects, navUnits},

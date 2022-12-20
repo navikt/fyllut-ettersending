@@ -104,8 +104,10 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps (context: GetStaticPropsContext) {
   const id = context.params?.id as string;
-  const form = await getForm(id);
-  const navUnits = await getNavUnits();
+  const formData = getForm(id);
+  const navUnitsData = getNavUnits();
+
+  const [form, navUnits] = await Promise.all([formData, navUnitsData]);
 
   return {
     props: {form, navUnits, id},
