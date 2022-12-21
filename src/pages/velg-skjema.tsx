@@ -72,11 +72,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     "public, s-maxage=300, stale-while-revalidate=60"
   );
 
+  /*
   const formsData = getForms();
   const archiveSubjectsData = getArchiveSubjects();
-  const navUnitsData = getNavUnits();
+  const navUnitsData = getNavUnits();*/
 
-  const [forms, archiveSubjects, navUnits] = await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
+  const [forms, archiveSubjects, navUnits] = [[],[],[]]; // await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
 
   return {
     props: {forms, archiveSubjects, navUnits},
