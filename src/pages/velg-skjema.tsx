@@ -10,7 +10,6 @@ import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { GetServerSidePropsContext } from "next/types";
-import { Simulate } from "react-dom/test-utils";
 
 interface Props {
   forms: Form[];

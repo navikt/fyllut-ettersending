@@ -2,8 +2,13 @@ describe("sendAnotherDocument",
   () => {
     const startUrl = "/velg-skjema";
     before(() => {
+      cy.intercept("GET", "/api/forms").as("getForms");
+      cy.intercept("GET", "/api/archive-subjects").as("getArchiveSubjects");
+      cy.intercept("GET", "/api/nav-units").as("getNavUnits");
       cy.visit(startUrl);
-      cy.url().should("include", startUrl)
+      cy.wait("@getForms");
+      cy.wait("@getArchiveSubjects");
+      cy.wait("@getNavUnits");
     });
 
     it("send another document", () => {
