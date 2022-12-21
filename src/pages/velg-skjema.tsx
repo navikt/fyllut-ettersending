@@ -56,17 +56,17 @@ const VelgSkjema: NextPage<Props> = (props) => {
       </Section>
 
       {submissionType === SubmissionType.documentationToForm && (
-        <FormSearch forms={forms} />
+        <FormSearch forms={forms}/>
       )}
       {submissionType === SubmissionType.otherDocumentation && (
-        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} />
+        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
       )}
     </Layout>
   );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { res } = context;
+  const {res} = context;
   res.setHeader(
     "Cache-Control",
     "public, s-maxage=300, stale-while-revalidate=60"
@@ -77,7 +77,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const archiveSubjectsData = getArchiveSubjects();
   const navUnitsData = getNavUnits();*/
 
-  const [forms, archiveSubjects, navUnits] = [[],[],[]]; // await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
+  const [forms, archiveSubjects, navUnits] = [[], [], []]; // await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
 
   return {
     props: {forms, archiveSubjects, navUnits},
