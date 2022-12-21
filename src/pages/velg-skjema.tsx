@@ -2,7 +2,6 @@ import "@navikt/ds-css";
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
 import { Form, KeyValue, NavUnit } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import { useFormState } from "../data/appState";
