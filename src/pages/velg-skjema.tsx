@@ -1,7 +1,8 @@
 import "@navikt/ds-css";
-import { Radio, RadioGroup } from "@navikt/ds-react";
+import { Loader, Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
 import { Form, KeyValue, NavUnit } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import { useFormState } from "../data/appState";
@@ -9,6 +10,7 @@ import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { GetServerSidePropsContext } from "next/types";
+import { Simulate } from "react-dom/test-utils";
 
 interface Props {
   forms: Form[];
@@ -21,10 +23,45 @@ enum SubmissionType {
   otherDocumentation = "otherDocumentation",
 }
 
-const VelgSkjema: NextPage<Props> = (props) => {
-  const {forms, archiveSubjects, navUnits} = props;
+const fetchForms = async () => {
+  const response = await fetch("/api/forms");
+  return response.json();
+}
+
+const fetchArchiveSubjects = async (): Promise<KeyValue> => {
+  const response = await fetch("/api/archive-subjects");
+  return response.json();
+}
+
+const fetchNavUnits = async (): Promise<NavUnit[]> => {
+  const response = await fetch("/api/nav-units");
+  return response.json();
+}
+
+const VelgSkjema: NextPage<Props> = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [submissionType, setSubmissionType] = useState<SubmissionType>();
+  const [forms, setForms] = useState<Form[]>([]);
+  const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
+  const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const {resetFormData, formData} = useFormState();
+
+  const fetchData = useCallback(async () => {
+    const [formsResponse, archiveSubjectsResponse, navUnitsResponse] = await Promise.all([
+      fetchForms(),
+      fetchArchiveSubjects(),
+      fetchNavUnits(),
+    ]);
+    setForms(formsResponse);
+    setArchiveSubjects(archiveSubjectsResponse);
+    setNavUnits(navUnitsResponse);
+  }, [])
+
+  useEffect(() => {
+    console.log("Start fetching data.");
+    fetchData()
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (formData.formId) {
@@ -53,13 +90,24 @@ const VelgSkjema: NextPage<Props> = (props) => {
           </Radio>
         </RadioGroup>
       </Section>
+      {
+        loading ? (
+          <div className="loader">
+            <Loader size="xlarge" title="Henter data..." />
+          </div>
+        ) : (
+          <>
 
-      {submissionType === SubmissionType.documentationToForm && (
-        <FormSearch forms={forms}/>
-      )}
-      {submissionType === SubmissionType.otherDocumentation && (
-        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
-      )}
+
+            {submissionType === SubmissionType.documentationToForm && (
+              <FormSearch forms={forms}/>
+            )}
+            {submissionType === SubmissionType.otherDocumentation && (
+              <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
+            )}
+          </>
+        )
+      }
     </Layout>
   );
 };
@@ -71,12 +119,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     "public, s-maxage=300, stale-while-revalidate=60"
   );
 
-  /*
   const formsData = getForms();
   const archiveSubjectsData = getArchiveSubjects();
-  const navUnitsData = getNavUnits();*/
+  const navUnitsData = getNavUnits();
 
-  const [forms, archiveSubjects, navUnits] = [[], [], []]; // await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
+  const [forms, archiveSubjects, navUnits] = await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
 
   return {
     props: {forms, archiveSubjects, navUnits},

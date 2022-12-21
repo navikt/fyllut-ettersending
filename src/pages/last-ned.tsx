@@ -3,7 +3,6 @@ import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
 import { useFormState } from "../data/appState";
 import { download } from "../api/frontPageService";
-import { GetServerSidePropsContext } from "next/types";
 import { useState } from "react";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
@@ -17,14 +16,14 @@ const attachmentsHeader = {
   plural: "2. Disse dokumentene må du skaffe selv"
 };
 
-const LastNed: NextPage<Props> = ({ url }: Props) => {
+const LastNed: NextPage<Props> = () => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
 
   const downloadFrontPage = async () => {
     setLoading(true);
     try {
-      await download(url, formData);
+      await download(formData);
     } finally {
       setLoading(false);
     }
@@ -79,11 +78,5 @@ const LastNed: NextPage<Props> = ({ url }: Props) => {
     </Layout>
   );
 };
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: { url: process.env.FYLLUT_BASE_URL },
-  };
-}
 
 export default LastNed;

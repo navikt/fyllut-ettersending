@@ -2,10 +2,10 @@ import { downloadFrontPage } from "./apiService";
 import { FormData, UserType } from "../data/domain";
 import FileSaver from "file-saver";
 
-const download = async (url: string, formData: FormData) => {
+const download = async (formData: FormData) => {
   let pdf;
   try {
-    pdf = await downloadFrontPage(url, toFrontPageRequest(formData));
+    pdf = await downloadFrontPage(process.env.FYLLUT_BASE_URL!, toFrontPageRequest(formData));
     saveToFile(pdf.foersteside, `${formData.formNumber || "Innsendelse"}.pdf`);
   } catch (e) {
   }

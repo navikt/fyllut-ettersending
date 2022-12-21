@@ -18,6 +18,10 @@ body {
   flex: 1 0 auto;
 }
 
+.loader {
+  text-align: center;
+}
+
 /** Remove counter in input fields where type is number 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
