@@ -1,5 +1,5 @@
 ingresses:
-- "https://fyllut-ettersending.dev.intern.nav.no"
+- "https://fyllut-ettersending.dev.intern.nav.no/fyllut-ettersending"
 accessPolicy:
   outbound:
     rules:
@@ -8,4 +8,4 @@ accessPolicy:
       - application: skjemautfylling-delingslenke
 env:
   - name: FYLLUT_BASE_URL
-    value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut
+    value: http://skjemautfylling/fyllut

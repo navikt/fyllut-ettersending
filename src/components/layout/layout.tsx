@@ -1,3 +1,4 @@
+import "@navikt/ds-css";
 import styles from "./layout.module.css";
 import { ReactNode } from "react";
 import { Heading, Link } from "@navikt/ds-react";

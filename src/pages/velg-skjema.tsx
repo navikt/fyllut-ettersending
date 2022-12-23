@@ -57,7 +57,6 @@ const VelgSkjema: NextPage<Props> = () => {
   }, [])
 
   useEffect(() => {
-    console.log("Start fetching data.");
     fetchData()
     setLoading(false);
   }, []);

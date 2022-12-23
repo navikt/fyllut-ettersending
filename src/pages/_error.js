@@ -1,8 +1,9 @@
 import { Heading } from "@navikt/ds-react";
+import Layout from "../components/layout/layout";
 
 const Error = ({ statusCode }) => {
   return (
-    <>
+    <Layout>
       <Heading spacing size="large" level="2">
         Feilmelding
       </Heading>
@@ -13,7 +14,7 @@ const Error = ({ statusCode }) => {
           <p>En feil har oppstått. Vennligst prøv igjen senere</p>
         )
       }
-    </>
+    </Layout>
   )
 }
 

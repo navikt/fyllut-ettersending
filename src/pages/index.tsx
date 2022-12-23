@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import "@navikt/ds-css";
 import { BodyLong, Heading } from "@navikt/ds-react";
 import ButtonGroup from "../components/button/buttonGroup";
 import { ButtonText, Paths } from "../data/domain";

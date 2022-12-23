@@ -1,38 +1,16 @@
 import { downloadFrontPage } from "./apiService";
 import { FormData, UserType } from "../data/domain";
-import FileSaver from "file-saver";
+import logger from "../utils/logger";
 
 const download = async (formData: FormData) => {
   let pdf;
   try {
     pdf = await downloadFrontPage(process.env.FYLLUT_BASE_URL!, toFrontPageRequest(formData));
-    saveToFile(pdf.foersteside, `${formData.formNumber || "Innsendelse"}.pdf`);
-  } catch (e) {
+    return Buffer.from(pdf.foersteside, "base64");
+  } catch (e: any) {
+    logger.error("Failed to download front page", e);
   }
 }
-
-const saveToFile = (b64string: string, filename: string) => {
-  FileSaver.saveAs(b64toBlob(b64string, "application/pdf"), filename);
-}
-
-const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
-  const byteCharacters = atob(b64Data);
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  return new Blob(byteArrays, { type: contentType });
-};
 
 const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
   return {

@@ -2,10 +2,11 @@ import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
 import { useFormState } from "../data/appState";
-import { download } from "../api/frontPageService";
 import { useState } from "react";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
+import FileSaver from "file-saver";
+import { getFileName } from "../utils/formDataUtil";
 
 interface Props {
   url: string;
@@ -23,7 +24,14 @@ const LastNed: NextPage<Props> = () => {
   const downloadFrontPage = async () => {
     setLoading(true);
     try {
-      await download(formData);
+      const b64 = await fetch("/api/download", {
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json; charset=utf8",
+        },
+        method: "POST",
+      });
+      FileSaver.saveAs(await b64.blob(), getFileName(formData));
     } finally {
       setLoading(false);
     }

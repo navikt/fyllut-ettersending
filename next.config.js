@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/fyllut-ettersending",
   reactStrictMode: true,
   output: "standalone",
   eslint: {
