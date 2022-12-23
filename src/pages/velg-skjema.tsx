@@ -2,14 +2,12 @@ import "@navikt/ds-css";
 import { Loader, Radio, RadioGroup } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
-import { getArchiveSubjects, getForms, getNavUnits } from "../api/apiService";
 import { Form, KeyValue, NavUnit } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import { useFormState } from "../data/appState";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
-import { GetServerSidePropsContext } from "next/types";
 import { fetchArchiveSubjects, fetchForms, fetchNavUnits } from "../api/apiClient";
 
 interface Props {
