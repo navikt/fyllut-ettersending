@@ -23,7 +23,7 @@ jobs:
         with:
           install: false
           start: "yarn run start:mock"
-          wait-on: "http://localhost:3002, http://localhost:3002/api/internal/isready"
+          wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
           config-file: "cypress.config.ts"
   build:
     name: "Build"
