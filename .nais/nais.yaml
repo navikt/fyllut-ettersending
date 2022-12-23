@@ -9,12 +9,12 @@ spec:
   image: {{image}}
   port: 3002
   liveness:
-    path: "/api/internal/isalive"
+    path: "/fyllut-ettersending/api/internal/isalive"
     port: 3002
     initialDelay: 20
     timeout: 60
   readiness:
-    path: "/api/internal/isready"
+    path: "/fyllut-ettersending/api/internal/isready"
     port: 3002
     initialDelay: 20
     timeout: 60
