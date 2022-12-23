@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   e2e: {
-    baseUrl: "http://localhost:3002",
+    baseUrl: "http://localhost:3002/fyllut-ettersending",
     chromeWebSecurity: false,
     viewportWidth: 1500,
     viewportHeight: 1200,

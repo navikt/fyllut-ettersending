@@ -10,6 +10,7 @@ import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { GetServerSidePropsContext } from "next/types";
+import { fetchArchiveSubjects, fetchForms, fetchNavUnits } from "../api/apiClient";
 
 interface Props {
   forms: Form[];
@@ -20,21 +21,6 @@ interface Props {
 enum SubmissionType {
   documentationToForm = "documentationToForm",
   otherDocumentation = "otherDocumentation",
-}
-
-const fetchForms = async () => {
-  const response = await fetch("/api/forms");
-  return response.json();
-}
-
-const fetchArchiveSubjects = async (): Promise<KeyValue> => {
-  const response = await fetch("/api/archive-subjects");
-  return response.json();
-}
-
-const fetchNavUnits = async (): Promise<NavUnit[]> => {
-  const response = await fetch("/api/nav-units");
-  return response.json();
 }
 
 const VelgSkjema: NextPage<Props> = () => {

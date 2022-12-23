@@ -5,8 +5,7 @@ import { useFormState } from "../data/appState";
 import { useState } from "react";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
-import FileSaver from "file-saver";
-import { getFileName } from "../utils/formDataUtil";
+import { downloadFrontpage } from "../api/apiClient";
 
 interface Props {
   url: string;
@@ -21,17 +20,10 @@ const LastNed: NextPage<Props> = () => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const downloadFrontPage = async () => {
+  const download = async () => {
     setLoading(true);
     try {
-      const b64 = await fetch("/api/download", {
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json; charset=utf8",
-        },
-        method: "POST",
-      });
-      FileSaver.saveAs(await b64.blob(), getFileName(formData));
+      await downloadFrontpage(formData);
     } finally {
       setLoading(false);
     }
@@ -49,7 +41,7 @@ const LastNed: NextPage<Props> = () => {
       </Section>
 
       <Section>
-        <Button variant="primary" onClick={downloadFrontPage} size="medium" loading={loading}>
+        <Button variant="primary" onClick={download} size="medium" loading={loading}>
           Last ned førsteside
         </Button>
       </Section>
