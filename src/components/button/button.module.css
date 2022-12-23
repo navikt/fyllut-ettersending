@@ -1,11 +1,13 @@
 .buttonGroup {
-    padding: 1rem 0;
-    display: flex;
-    width: 100%;
-  }
-  
-  .button{
-    width: 14rem;
-    margin-right: 1rem;
-  }
+  padding: 1rem 0;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+button.button{
+  width: 14rem;
+  max-width: 50%;
+  margin-right: 1rem;
+}
   

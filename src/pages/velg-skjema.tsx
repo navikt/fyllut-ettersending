@@ -81,8 +81,6 @@ const VelgSkjema: NextPage<Props> = () => {
           </div>
         ) : (
           <>
-
-
             {submissionType === SubmissionType.documentationToForm && (
               <FormSearch forms={forms}/>
             )}
@@ -95,23 +93,5 @@ const VelgSkjema: NextPage<Props> = () => {
     </Layout>
   );
 };
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const {res} = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=60"
-  );
-
-  const formsData = getForms();
-  const archiveSubjectsData = getArchiveSubjects();
-  const navUnitsData = getNavUnits();
-
-  const [forms, archiveSubjects, navUnits] = await Promise.all([formsData, archiveSubjectsData, navUnitsData]);
-
-  return {
-    props: {forms, archiveSubjects, navUnits},
-  };
-}
 
 export default VelgSkjema;
