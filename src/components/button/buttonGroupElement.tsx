@@ -13,18 +13,21 @@ export interface ButtonType {
   path: string;
   variant?: "primary" | "secondary" | "tertiary";
   validateForm?: boolean;
+  external?: boolean;
 }
 
 const ButtonGroupElement = ({ type }: Props) => {
   const router = useRouter();
-  const { text, path, variant, validateForm } = type;
+  const { text, path, variant, validateForm, external } = type;
   const { setValidate } = useFormState();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
     setLoading(true);
 
-    if (validateForm) {
+    if (external) {
+      window.location.href = path;
+    } else if (validateForm) {
       const valid = setValidate(true);
       if (valid) {
         await router.push(path);

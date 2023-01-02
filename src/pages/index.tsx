@@ -22,6 +22,7 @@ const Home: NextPage = () => {
         buttons={[{
           text: ButtonText.uploadToMyPage,
           path: Paths.navMyPage,
+          external: true,
         }, {
           text: ButtonText.sendViaPost,
           path: Paths.selectForm,
