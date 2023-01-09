@@ -73,7 +73,6 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
   }
 
   return units
-    .filter(unit => unit.status === "Aktiv")
     .map(unit => {
       return {
         id: unit.enhetId,
