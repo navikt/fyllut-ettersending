@@ -38,11 +38,11 @@ const Home: NextPage<Props> = () => {
     setForms(formsResponse);
     setArchiveSubjects(archiveSubjectsResponse);
     setNavUnits(navUnitsResponse);
+    setLoading(false);
   }, [])
 
   useEffect(() => {
     fetchData();
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -73,21 +73,20 @@ const Home: NextPage<Props> = () => {
         </RadioGroup>
       </Section>
       {
-        loading ? (
-          <div className="loader">
-            <Loader size="xlarge" title="Henter data..." />
-          </div>
-        ) : (
-          <>
-            {submissionType === SubmissionType.documentationToForm && (
-              <FormSearch forms={forms}/>
-            )}
-            {submissionType === SubmissionType.otherDocumentation && (
-              <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
-            )}
-          </>
+        submissionType === SubmissionType.documentationToForm && (
+          loading ? (
+            <div className="loader">
+              <Loader size="xlarge" title="Henter data..." />
+            </div>
+          ) : (
+            <FormSearch forms={forms}/>
+          )
         )
       }
+
+      { submissionType === SubmissionType.otherDocumentation && (
+        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
+      )}
     </Layout>
   );
 };
