@@ -38,9 +38,9 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
   form.attachments
     .sort((a: Attachment, b: Attachment) => {
       // TODO: Change this when otherDocumentation is available
-      if (b.key === "annenDokumentasjon") {
+      if (b.otherDocumentation) {
         return -1;
-      } else if (a.key === "annenDokumentasjon") {
+      } else if (a.otherDocumentation) {
         return 1;
       }
       return (a.label > b.label ? 1 : -1)
