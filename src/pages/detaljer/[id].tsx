@@ -26,13 +26,10 @@ const Detaljer: NextPage<Props> = (props) => {
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
 
   const fetchData = useCallback(async () => {
-    const units = await fetchNavUnits();
-    console.log(units);
-    setNavUnits(units);
+    setNavUnits(await fetchNavUnits());
   }, [])
 
   useEffect(() => {
-    console.log(id, "start");
     fetchData();
   }, [id]);
 
