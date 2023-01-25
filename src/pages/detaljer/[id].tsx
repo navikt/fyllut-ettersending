@@ -34,8 +34,10 @@ const Detaljer: NextPage<Props> = (props) => {
   }, [id]);
 
   const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
-    const navUnitsConnectedToForm = navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
-    return navUnitsConnectedToForm || navUnits;
+    const navUnitsConnectedToForm: NavUnit[] = navUnits.filter(navUnit => deviceTypes?.includes(navUnit.type));
+    return navUnitsConnectedToForm && !!Object.keys(navUnitsConnectedToForm).length
+      ? navUnitsConnectedToForm
+      : navUnits;
   };
 
   useEffect(() => {
