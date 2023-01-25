@@ -2,7 +2,7 @@ import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { getForm } from "../../api/apiService";
-import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
+import { Form, NavUnit } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
@@ -13,6 +13,7 @@ import Layout from "../../components/layout/layout";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
+import { ButtonText, Paths } from "../../data/text";
 
 interface Props {
   form: Form;

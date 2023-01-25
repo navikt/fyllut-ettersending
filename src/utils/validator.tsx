@@ -1,6 +1,7 @@
 import fnrValidator from "@navikt/fnrvalidator";
-import { ErrorMessages, FormData, KeyValue, UserType } from "../data/domain";
+import { FormData, KeyValue, UserType } from "../data/domain";
 import { hasOtherAttachment } from "./formDataUtil";
+import { ErrorMessages } from "../data/text";
 
 const validateFormData = (formData: FormData) => {
   let formErrors: KeyValue = {};

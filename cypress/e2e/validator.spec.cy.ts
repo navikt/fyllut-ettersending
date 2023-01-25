@@ -1,5 +1,6 @@
 import { validateFormData } from "../../src/utils/validator";
-import { ErrorMessages, FormData, UserType } from "../../src/data/domain";
+import { FormData, UserType } from "../../src/data/domain";
+import { ErrorMessages } from "../../src/data/text";
 
 describe("validator", () => {
   let formData: FormData;

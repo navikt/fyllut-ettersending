@@ -1,9 +1,10 @@
 import "@navikt/ds-css";
 import type { NextPage } from "next";
-import { ButtonText, KeyValue, NavUnit, Paths } from "../../data/domain";
+import { KeyValue, NavUnit } from "../../data/domain";
 import SubjectOfSubmission from "../submission/subjectOfSubmission";
 import ChooseUser from "../submission/chooseUser";
 import ButtonGroup from "../button/buttonGroup";
+import { Paths, ButtonText } from "../../data/text";
 
 interface Props {
   archiveSubjects: KeyValue;

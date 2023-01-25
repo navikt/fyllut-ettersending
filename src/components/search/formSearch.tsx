@@ -1,9 +1,10 @@
 import { LinkPanel, TextField } from "@navikt/ds-react";
 import React, { useEffect, useState } from "react";
-import { Form, Paths } from "../../data/domain";
+import { Form } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./search.module.css";
 import { useRouter } from "next/router";
+import { Paths } from "../../data/text";
 
 interface Props {
   forms: Form[];
