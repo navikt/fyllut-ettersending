@@ -2,7 +2,7 @@ import FileSaver from "file-saver";
 import { getFileName } from "../utils/formDataUtil";
 import { FormData, KeyValue, NavUnit } from "../data/domain";
 
-const baseUrl = ".";
+const baseUrl = "/fyllut-ettersending";
 
 const fetchForms = async () => {
   const response = await fetch(`${baseUrl}/api/forms`);

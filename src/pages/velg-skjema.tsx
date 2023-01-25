@@ -41,7 +41,7 @@ const VelgSkjema: NextPage<Props> = () => {
   }, [])
 
   useEffect(() => {
-    fetchData()
+    fetchData();
     setLoading(false);
   }, []);
 
@@ -56,7 +56,7 @@ const VelgSkjema: NextPage<Props> = () => {
   }, [formData.formId]);
 
   return (
-    <Layout title="Ettersende dokumentasjon i posten">
+    <Layout title="Sende inn dokumentasjon">
       <Section>
         <RadioGroup
           legend="Hva gjelder innsendingen?"

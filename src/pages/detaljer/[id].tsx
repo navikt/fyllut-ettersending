@@ -1,28 +1,40 @@
 import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { getForm, getNavUnits } from "../../api/apiService";
+import { getForm } from "../../api/apiService";
 import { ButtonText, Form, NavUnit, Paths } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
 import { useFormState } from "../../data/appState";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Section from "../../components/section/section";
 import Layout from "../../components/layout/layout";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
+import { fetchNavUnits } from "../../api/apiClient";
 
 interface Props {
   form: Form;
-  navUnits: NavUnit[];
   id: string;
 }
 
 const Detaljer: NextPage<Props> = (props) => {
   const router = useRouter()
-  const {form, navUnits, id} = props;
+  const {form, id} = props;
   const {formData, resetFormData} = useFormState();
+  const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
+
+  const fetchData = useCallback(async () => {
+    const units = await fetchNavUnits();
+    console.log(units);
+    setNavUnits(units);
+  }, [])
+
+  useEffect(() => {
+    console.log(id, "start");
+    fetchData();
+  }, [id]);
 
   const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
     const navUnitsConnectedToForm = navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
@@ -93,13 +105,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   );
 
   const id = context.params?.id as string;
-  const formData = getForm(id);
-  const navUnitsData = getNavUnits();
-
-  const [form, navUnits] = await Promise.all([formData, navUnitsData]);
+  const form = await getForm(id);
 
   return {
-    props: {form, navUnits, id},
+    props: {form, id},
   };
 }
 
