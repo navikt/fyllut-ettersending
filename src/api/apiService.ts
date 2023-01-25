@@ -37,7 +37,6 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
 
   form.attachments
     .sort((a: Attachment, b: Attachment) => {
-      // TODO: Change this when otherDocumentation is available
       if (b.otherDocumentation) {
         return -1;
       } else if (a.otherDocumentation) {
@@ -101,12 +100,11 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
   return subjects;
 }
 
-const downloadFrontPage = async (url: string, data: FrontPageRequest) => {
+const downloadFrontPage = async (data: FrontPageRequest) => {
   const startTime = Date.now();
 
   try {
-    // TODO: Find out why process.env.FYLLUT_BASE_URL do not work and we have to send url.
-    const frontPage = post(`${url}/api/foersteside`, JSON.stringify(data));
+    const frontPage = post(`${process.env.FYLLUT_BASE_URL}/api/foersteside`, JSON.stringify(data));
     logger.debug(`Download front page (ms: ${Date.now() - startTime})`);
     return frontPage;
   } catch (e: any) {

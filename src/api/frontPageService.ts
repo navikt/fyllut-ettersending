@@ -5,7 +5,7 @@ import logger from "../utils/logger";
 const download = async (formData: FormData) => {
   let pdf;
   try {
-    pdf = await downloadFrontPage(process.env.FYLLUT_BASE_URL!, toFrontPageRequest(formData));
+    pdf = await downloadFrontPage(toFrontPageRequest(formData));
     return Buffer.from(pdf.foersteside, "base64");
   } catch (e: any) {
     logger.error("Failed to download front page", e);
