@@ -1,16 +1,16 @@
 const info = (message: string, details?: string) => {
-  console.info(createLog("info", message, details));
+  console.info(createLog(message, details));
 };
 
 const debug = (message: string, details?: string) => {
-  console.debug(createLog("debug", message, details));
+  console.debug(createLog(message, details));
 };
 
 const error = (message: string, details?: string) => {
-  console.error(createLog("error", message, details));
+  console.error(createLog(message, details));
 };
 
-const createLog = (level: "debug" | "error" | "info", message: string, details?: string) => {
+const createLog = (message: string, details?: string) => {
   return JSON.stringify({
     message,
     details,

@@ -69,6 +69,7 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
       logger.debug(`Loaded ${units.length} nav units (ms: ${Date.now() - startTime})`);
     }
   } catch (e: any) {
+    logger.error(e);
     logger.error("Failed to load nav units", e);
   }
 
