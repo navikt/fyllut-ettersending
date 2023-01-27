@@ -32,6 +32,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
