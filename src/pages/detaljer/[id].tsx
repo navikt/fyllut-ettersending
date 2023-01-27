@@ -21,21 +21,21 @@ interface Props {
 }
 
 const Detaljer: NextPage<Props> = (props) => {
-  const router = useRouter()
-  const {form, id} = props;
-  const {formData, resetFormData} = useFormState();
+  const router = useRouter();
+  const { form, id } = props;
+  const { formData, resetFormData } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchData();
   }, [id]);
 
   const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
-    const navUnitsConnectedToForm: NavUnit[] = navUnits.filter(navUnit => deviceTypes?.includes(navUnit.type));
+    const navUnitsConnectedToForm: NavUnit[] = navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
     return navUnitsConnectedToForm && !!Object.keys(navUnitsConnectedToForm).length
       ? navUnitsConnectedToForm
       : navUnits;
@@ -56,7 +56,7 @@ const Detaljer: NextPage<Props> = (props) => {
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -68,47 +68,43 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
-      {
-        form.attachments?.length > 0 ? (
-          <>
-            <ChooseAttachments form={form} />
+      {form.attachments?.length > 0 ? (
+        <>
+          <ChooseAttachments form={form} />
 
-            <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
+          <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
 
-            <ButtonGroup
-              buttons={[{
+          <ButtonGroup
+            buttons={[
+              {
                 text: ButtonText.next,
                 path: Paths.downloadPage,
-                validateForm: true
-              }, {
+                validateForm: true,
+              },
+              {
                 text: ButtonText.cancel,
                 path: "/",
-                variant: "tertiary"
-              }]}
-            />
-          </>
-        ) : (
-          <Alert variant="info">
-            Dette skjemaet har ingen vedlegg som kan ettersendes.
-          </Alert>
-        )
-      }
+                variant: "tertiary",
+              },
+            ]}
+          />
+        </>
+      ) : (
+        <Alert variant="info">Dette skjemaet har ingen vedlegg som kan ettersendes.</Alert>
+      )}
     </Layout>
   );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res } = context;
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=300, stale-while-revalidate=60"
-  );
+  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
   const id = context.params?.id as string;
   const form = await getForm(id);
 
   return {
-    props: {form, id},
+    props: { form, id },
   };
 }
 

@@ -13,7 +13,7 @@ interface Props {
 
 const attachmentsHeader = {
   single: "2. Dette dokumentet må du skaffe selv",
-  plural: "2. Disse dokumentene må du skaffe selv"
+  plural: "2. Disse dokumentene må du skaffe selv",
 };
 
 const LastNed: NextPage<Props> = () => {
@@ -46,28 +46,24 @@ const LastNed: NextPage<Props> = () => {
         </Button>
       </Section>
 
-      {
-        formData.attachments && (
-          <Section>
-            <Heading level="2" size="medium" spacing>
-              {formData.attachments.length > 1 ? attachmentsHeader.plural : attachmentsHeader.single }
-            </Heading>
-            <ul>
-              {formData.attachments.map((attachment) => (
-                <li key={attachment.key}>
-                  {attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label}
-                </li>
-              ))}
-            </ul>
-          </Section>
-        )
-      }
+      {formData.attachments && (
+        <Section>
+          <Heading level="2" size="medium" spacing>
+            {formData.attachments.length > 1 ? attachmentsHeader.plural : attachmentsHeader.single}
+          </Heading>
+          <ul>
+            {formData.attachments.map((attachment) => (
+              <li key={attachment.key}>
+                {attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       <div className="lastSection">
         <Heading level="2" size="medium" spacing>
-          {
-            formData.attachments ? "3" : "2"
-          }. Send dokumentene til NAV i posten
+          {formData.attachments ? "3" : "2"}. Send dokumentene til NAV i posten
         </Heading>
 
         <BodyShort spacing>

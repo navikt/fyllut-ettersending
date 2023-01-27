@@ -13,7 +13,7 @@ interface Attachment {
   description: string;
   otherDocumentation: boolean;
   attachmentTitle: string;
-  attachmentCode: string,
+  attachmentCode: string;
 }
 
 interface FormProperties {

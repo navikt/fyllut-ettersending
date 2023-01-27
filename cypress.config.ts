@@ -16,6 +16,6 @@ export default defineConfig({
     chromeWebSecurity: false,
     viewportWidth: 1500,
     viewportHeight: 1200,
-    setupNodeEvents(on, config) {}
+    setupNodeEvents(on, config) {},
   },
 });

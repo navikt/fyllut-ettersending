@@ -7,9 +7,7 @@
     "skjemanummer": "Testnummer",
     "tema": "HJE",
     "innsending": "PAPIR_OG_DIGITAL",
-    "enhetstyper": [
-      "YTA"
-    ]
+    "enhetstyper": ["YTA"]
   },
   "attachments": [
     {

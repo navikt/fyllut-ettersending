@@ -7,17 +7,17 @@ const baseUrl = "/fyllut-ettersending";
 const fetchForms = async () => {
   const response = await fetch(`${baseUrl}/api/forms`);
   return response.json();
-}
+};
 
 const fetchArchiveSubjects = async (): Promise<KeyValue> => {
   const response = await fetch(`${baseUrl}/api/archive-subjects`);
   return response.json();
-}
+};
 
 const fetchNavUnits = async (): Promise<NavUnit[]> => {
   const response = await fetch(`${baseUrl}/api/nav-units`);
   return response.json();
-}
+};
 
 const downloadFrontpage = async (formData: FormData) => {
   const b64 = await fetch(`${baseUrl}/api/download`, {
@@ -28,11 +28,6 @@ const downloadFrontpage = async (formData: FormData) => {
     method: "POST",
   });
   FileSaver.saveAs(await b64.blob(), getFileName(formData));
-}
+};
 
-export {
-  fetchForms,
-  fetchArchiveSubjects,
-  fetchNavUnits,
-  downloadFrontpage,
-}
+export { fetchForms, fetchArchiveSubjects, fetchNavUnits, downloadFrontpage };

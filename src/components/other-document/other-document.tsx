@@ -12,23 +12,26 @@ interface Props {
 }
 
 const OtherDocument: NextPage<Props> = (props) => {
-  const {archiveSubjects, navUnits} = props;
+  const { archiveSubjects, navUnits } = props;
 
   return (
     <>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} />
-      <ChooseUser navUnits={navUnits}/>
+      <ChooseUser navUnits={navUnits} />
 
       <ButtonGroup
-        buttons={[{
-          text: ButtonText.next,
-          path: Paths.downloadPage,
-          validateForm: true
-        }, {
-          text: ButtonText.cancel,
-          path: Paths.base,
-          variant: "tertiary"
-        }]}
+        buttons={[
+          {
+            text: ButtonText.next,
+            path: Paths.downloadPage,
+            validateForm: true,
+          },
+          {
+            text: ButtonText.cancel,
+            path: Paths.base,
+            variant: "tertiary",
+          },
+        ]}
       />
     </>
   );

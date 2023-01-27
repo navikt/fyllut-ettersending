@@ -1,5 +1,5 @@
 ingresses:
-- "https://www.nav.no/fyllut-ettersending"
+  - "https://www.nav.no/fyllut-ettersending"
 accessPolicy:
   outbound:
     rules:

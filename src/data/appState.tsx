@@ -29,7 +29,7 @@ export function FormDataProvider({ children }: Props) {
   const updateFormData = (values: FormData) => {
     const data = {
       ...formData,
-      ...values
+      ...values,
     };
     setFormData(data);
     if (validateState) {
@@ -42,8 +42,8 @@ export function FormDataProvider({ children }: Props) {
     const data = {
       ...formData,
       userData: {
-        ...formData.userData ?? {},
-        ...values
+        ...(formData.userData ?? {}),
+        ...values,
       },
     };
     setFormData(data);
@@ -64,7 +64,7 @@ export function FormDataProvider({ children }: Props) {
     }
 
     return true;
-  }
+  };
 
   const resetFormData = (formData?: FormData) => {
     setValidateState(false);
@@ -75,7 +75,7 @@ export function FormDataProvider({ children }: Props) {
     }
 
     setErrors({});
-  }
+  };
 
   return (
     <FormDataContext.Provider value={{ formData, resetFormData, updateFormData, updateUserData, errors, setValidate }}>

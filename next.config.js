@@ -6,7 +6,7 @@ const nextConfig = {
   eslint: {
     dirs: ["src", "cypress"],
   },
-  i18n: {locales: ["no"], defaultLocale: "no"},
+  i18n: { locales: ["no"], defaultLocale: "no" },
   webpack(config) {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -15,6 +15,6 @@ const nextConfig = {
 
     return config;
   },
-}
+};
 
 module.exports = nextConfig;

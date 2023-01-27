@@ -18,7 +18,7 @@ const getForms = async (): Promise<Form[]> => {
   }
 
   return forms;
-}
+};
 
 const getForm = async (formPath: string): Promise<Form | undefined> => {
   const startTime = Date.now();
@@ -35,15 +35,14 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
     logger.error(`Failed to load form ${formPath}`, e);
   }
 
-  form.attachments
-    .sort((a: Attachment, b: Attachment) => {
-      if (b.otherDocumentation) {
-        return -1;
-      } else if (a.otherDocumentation) {
-        return 1;
-      }
-      return (a.label > b.label ? 1 : -1)
-    });
+  form.attachments.sort((a: Attachment, b: Attachment) => {
+    if (b.otherDocumentation) {
+      return -1;
+    } else if (a.otherDocumentation) {
+      return 1;
+    }
+    return a.label > b.label ? 1 : -1;
+  });
 
   return {
     ...form,
@@ -52,9 +51,9 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
       submissionType: form?.properties.innsending ?? null,
       navUnitTypes: form?.properties.enhetstyper ?? [],
       subjectOfSubmission: form?.properties.tema ?? null,
-    }
-  }
-}
+    },
+  };
+};
 
 const getNavUnits = async (): Promise<NavUnit[]> => {
   const startTime = Date.now();
@@ -71,16 +70,15 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
     logger.error("Failed to load nav units", e);
   }
 
-  return units
-    .map(unit => {
-      return {
-        id: unit.enhetId,
-        name: unit.navn,
-        number: unit.enhetNr,
-        type: unit.type,
-      }
-    });
-}
+  return units.map((unit) => {
+    return {
+      id: unit.enhetId,
+      name: unit.navn,
+      number: unit.enhetNr,
+      type: unit.type,
+    };
+  });
+};
 
 const getArchiveSubjects = async (): Promise<KeyValue> => {
   const startTime = Date.now();
@@ -98,7 +96,7 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
   }
 
   return subjects;
-}
+};
 
 const downloadFrontPage = async (data: FrontPageRequest) => {
   const startTime = Date.now();
@@ -110,16 +108,10 @@ const downloadFrontPage = async (data: FrontPageRequest) => {
   } catch (e: any) {
     logger.error("Failed to download front page", e);
   }
-}
+};
 
 const isMock = () => {
   return !!process.env.MOCK;
-}
+};
 
-export {
-  getForms,
-  getForm,
-  getNavUnits,
-  getArchiveSubjects,
-  downloadFrontPage,
-}
+export { getForms, getForm, getNavUnits, getArchiveSubjects, downloadFrontPage };

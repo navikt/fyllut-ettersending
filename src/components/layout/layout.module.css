@@ -14,7 +14,7 @@
 .hr {
   height: 4px;
   width: 100%;
-  background-color: #99C4DD;
+  background-color: #99c4dd;
   margin: 0;
   border: 0;
 }
@@ -23,8 +23,8 @@
   background-color: #ffffff;
   max-width: 640px;
   width: 100%;
-  padding-left: 1.5rem ;
-  padding-right: 1.5rem ;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 a.backLink {

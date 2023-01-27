@@ -7,8 +7,8 @@ interface Props {
   archiveSubjects: KeyValue;
 }
 
-const SubjectOfSubmission = ({archiveSubjects}: Props) => {
-  const {formData, updateFormData, errors} = useFormState();
+const SubjectOfSubmission = ({ archiveSubjects }: Props) => {
+  const { formData, updateFormData, errors } = useFormState();
 
   return (
     <>
@@ -19,7 +19,7 @@ const SubjectOfSubmission = ({archiveSubjects}: Props) => {
           name="otherDocumentationTitle"
           value={formData.otherDocumentationTitle ?? ""}
           size="medium"
-          onChange={(evt) => updateFormData({"otherDocumentationTitle": evt.target.value})}
+          onChange={(evt) => updateFormData({ otherDocumentationTitle: evt.target.value })}
           error={errors.otherDocumentation}
         />
       </Section>
@@ -32,7 +32,7 @@ const SubjectOfSubmission = ({archiveSubjects}: Props) => {
           value={formData.subjectOfSubmission}
           error={errors.subjectOfSubmission}
           onChange={(evt) => {
-            updateFormData({"subjectOfSubmission": evt.target.value});
+            updateFormData({ subjectOfSubmission: evt.target.value });
           }}
         >
           <option></option>

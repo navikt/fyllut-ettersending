@@ -9,11 +9,11 @@ interface Props {
   navUnits?: NavUnit[] | undefined;
 }
 
-const ContactInformation = ({navUnits}: Props) => {
-  const {formData,  updateUserData, errors} = useFormState();
+const ContactInformation = ({ navUnits }: Props) => {
+  const { formData, updateUserData, errors } = useFormState();
 
-  const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
-    updateUserData({[e.target.name]: e.target.value});
+  const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    updateUserData({ [e.target.name]: e.target.value });
   };
 
   return (
@@ -79,7 +79,7 @@ const ContactInformation = ({navUnits}: Props) => {
         <RadioGroup
           legend="Har du vært i kontakt med NAV om denne saken tidligere?"
           size="medium"
-          onChange={value => updateUserData({navUnitContact: value})}
+          onChange={(value) => updateUserData({ navUnitContact: value })}
           value={formData.userData?.navUnitContact ?? ""}
           name="navUnitContact"
           error={errors.navUnitContact}
@@ -115,5 +115,3 @@ const ContactInformation = ({navUnits}: Props) => {
 };
 
 export default ContactInformation;
-
-

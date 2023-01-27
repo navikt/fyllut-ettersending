@@ -3,7 +3,7 @@ const get = async (url: string) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-    }
+    },
   });
 
   return handleResponse(response, url);
@@ -27,9 +27,6 @@ const handleResponse = (response: Response, url: string) => {
   }
 
   return response.json();
-}
+};
 
-export {
-  get,
-  post,
-}
+export { get, post };

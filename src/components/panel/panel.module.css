@@ -1,17 +1,17 @@
 .panel {
-    text-align: center;
-    margin: 1rem;
-    padding: 1rem;
-    background-color: #ffffff;
-    max-width: 640px;
-    display: inline-block;
-  }
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  max-width: 640px;
+  display: inline-block;
+}
 
-  .button-row{
-      display: flex;
-      flex-direction: row;
-  }
+.button-row {
+  display: flex;
+  flex-direction: row;
+}
 
-  .button {
-    margin: 1rem !important;
-  }
+.button {
+  margin: 1rem !important;
+}

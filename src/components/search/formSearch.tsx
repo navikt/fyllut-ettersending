@@ -10,17 +10,19 @@ interface Props {
   forms: Form[];
 }
 
-const FormSearch = ({forms}: Props) => {
+const FormSearch = ({ forms }: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState<Form[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
-    const result = forms.filter((form) =>
-      form.title.toLowerCase().includes(lcSearchInput) ||
-      form.path.toLowerCase().includes(lcSearchInput) ||
-      form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput));
+    const result = forms.filter(
+      (form) =>
+        form.title.toLowerCase().includes(lcSearchInput) ||
+        form.path.toLowerCase().includes(lcSearchInput) ||
+        form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput)
+    );
     setSearchResult(result);
   }, [searchInput, forms]);
 
@@ -34,7 +36,7 @@ const FormSearch = ({forms}: Props) => {
             (for eksempel: dagpenger, stønad, tiltak, foreldrepenger).
             Velg søknad / skjema i søkeresultatet."
           name="search"
-          onChange={e => setSearchInput(e.target.value)}
+          onChange={(e) => setSearchInput(e.target.value)}
           size="medium"
         />
       </Section>
@@ -46,8 +48,8 @@ const FormSearch = ({forms}: Props) => {
             className={styles.clickable}
             key={index}
             border
-            onClick={async e => {
-              e.preventDefault()
+            onClick={async (e) => {
+              e.preventDefault();
               await router.push(`${Paths.details}/${form.path}`);
             }}
           >

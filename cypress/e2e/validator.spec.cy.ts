@@ -28,7 +28,6 @@ describe("validator", () => {
     });
 
     describe("type noSocialNumber", () => {
-
       it("validate userdata", () => {
         formData.userData!.type = UserType.noSocialNumber;
         const errors = validateFormData(formData);
@@ -82,7 +81,7 @@ describe("validator", () => {
   describe("validator - detaljer", () => {
     it("give an error if no attachments are in the list", () => {
       formData.formId = "nav761389";
-      formData.attachments = []
+      formData.attachments = [];
       const errors = validateFormData(formData);
       expect(errors?.attachments).to.eq(ErrorMessages.attachments);
     });

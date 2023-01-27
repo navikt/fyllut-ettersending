@@ -27,7 +27,7 @@ const Home: NextPage<Props> = () => {
   const [forms, setForms] = useState<Form[]>([]);
   const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
-  const {resetFormData, formData} = useFormState();
+  const { resetFormData, formData } = useFormState();
 
   const fetchData = useCallback(async () => {
     const [formsResponse, archiveSubjectsResponse, navUnitsResponse] = await Promise.all([
@@ -39,7 +39,7 @@ const Home: NextPage<Props> = () => {
     setArchiveSubjects(archiveSubjectsResponse);
     setNavUnits(navUnitsResponse);
     setLoading(false);
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -72,20 +72,17 @@ const Home: NextPage<Props> = () => {
           </Radio>
         </RadioGroup>
       </Section>
-      {
-        submissionType === SubmissionType.documentationToForm && (
-          loading ? (
-            <div className="loader">
-              <Loader size="xlarge" title="Henter data..." />
-            </div>
-          ) : (
-            <FormSearch forms={forms}/>
-          )
-        )
-      }
+      {submissionType === SubmissionType.documentationToForm &&
+        (loading ? (
+          <div className="loader">
+            <Loader size="xlarge" title="Henter data..." />
+          </div>
+        ) : (
+          <FormSearch forms={forms} />
+        ))}
 
-      { submissionType === SubmissionType.otherDocumentation && (
-        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits}/>
+      {submissionType === SubmissionType.otherDocumentation && (
+        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} />
       )}
     </Layout>
   );

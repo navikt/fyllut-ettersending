@@ -9,8 +9,8 @@ interface Props {
   navUnits?: NavUnit[] | undefined;
 }
 
-const ChooseUser = ({navUnits}: Props) => {
-  const {formData, updateFormData, updateUserData, errors} = useFormState();
+const ChooseUser = ({ navUnits }: Props) => {
+  const { formData, updateFormData, updateUserData, errors } = useFormState();
 
   return (
     <>
@@ -21,7 +21,7 @@ const ChooseUser = ({navUnits}: Props) => {
           onChange={(type) => {
             updateFormData({
               userData: {
-                type
+                type,
               },
             });
           }}
@@ -47,23 +47,21 @@ const ChooseUser = ({navUnits}: Props) => {
             value={formData.userData?.socialSecurityNo ?? ""}
             name="socialSecurityNo"
             label="Fødselsnummer / D-nummer"
-            onChange={value => updateUserData({socialSecurityNo: value})}
+            onChange={(value) => updateUserData({ socialSecurityNo: value })}
             placeholder="Skriv inn tekst"
             error={errors.socialSecurityNo}
           />
         </Section>
       )}
 
-      {formData.userData?.type === UserType.noSocialNumber && (
-        <ContactInformation navUnits={navUnits}/>
-      )}
+      {formData.userData?.type === UserType.noSocialNumber && <ContactInformation navUnits={navUnits} />}
 
       {formData.userData?.type === UserType.other && (
         <Section>
           <Select
             label="Velg hvilken NAV-enhet som skal motta innsendingen"
             size="medium"
-            onChange={e => updateUserData({navUnit: e.target.value})}
+            onChange={(e) => updateUserData({ navUnit: e.target.value })}
             value={formData.userData?.navUnit ?? ""}
             error={errors.navUnit}
           >
@@ -83,5 +81,3 @@ const ChooseUser = ({navUnits}: Props) => {
 };
 
 export default ChooseUser;
-
-

@@ -10,7 +10,7 @@ const download = async (formData: FormData) => {
   } catch (e: any) {
     logger.error("Failed to download front page", e);
   }
-}
+};
 
 const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
   return {
@@ -20,13 +20,13 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     overskriftstittel: getTitle(formData),
     arkivtittel: getTitle(formData),
     tema: formData.subjectOfSubmission,
-    vedleggsliste: formData.attachments?.map(attachment => attachment.attachmentTitle) ?? [],
-    dokumentlisteFoersteside: formData.attachments?.map(attachment => attachment.label) ?? [],
+    vedleggsliste: formData.attachments?.map((attachment) => attachment.attachmentTitle) ?? [],
+    dokumentlisteFoersteside: formData.attachments?.map((attachment) => attachment.label) ?? [],
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
   };
-}
+};
 
 const getTitle = (formData: FormData) => {
   if (formData.formNumber) {
@@ -36,7 +36,7 @@ const getTitle = (formData: FormData) => {
   }
 };
 
-const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
+const toFrontPageAddress = (formData: FormData): FrontPageAddress | undefined => {
   if (formData.userData?.type === UserType.noSocialNumber) {
     return {
       adresselinje1: formData.userData?.streetName,
@@ -46,25 +46,27 @@ const toFrontPageAddress = (formData: FormData): FrontPageAddress|undefined => {
   }
 
   return undefined;
-}
+};
 
-const toFrontPageUser = (formData: FormData): FrontPageUser|undefined => {
+const toFrontPageUser = (formData: FormData): FrontPageUser | undefined => {
   if (formData.userData?.socialSecurityNo) {
     return {
       brukerId: formData.userData?.socialSecurityNo,
       brukerType: "PERSON",
     } as FrontPageUser;
   }
-}
+};
 
-const toUnknownAddressInfo = (formData: FormData): string|undefined => {
+const toUnknownAddressInfo = (formData: FormData): string | undefined => {
   if (!formData.userData?.socialSecurityNo && formData.userData?.streetName) {
-    return `${formData.userData?.firstName} ${formData.userData?.lastName}, ` +
+    return (
+      `${formData.userData?.firstName} ${formData.userData?.lastName}, ` +
       `${formData.userData?.streetName}, ` +
       `${formData.userData?.postalCode} ${formData.userData?.city}, ` +
-      `${formData.userData?.country}.`;
+      `${formData.userData?.country}.`
+    );
   }
-}
+};
 
 /**
  * Domain for https://github.com/navikt/foerstesidegenerator
@@ -99,10 +101,6 @@ interface FrontPageUser {
   brukerType: string;
 }
 
-export {
-  download,
-}
+export { download };
 
-export type {
-  FrontPageRequest,
-}
+export type { FrontPageRequest };

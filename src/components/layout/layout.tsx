@@ -18,18 +18,23 @@ const Layout = ({ title, children }: Props) => {
     <div className={styles.layout}>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          { title ?? "Ettersende dokumentasjon" }
+          {title ?? "Ettersende dokumentasjon"}
         </Heading>
       </header>
 
       <hr className={styles.hr} />
 
       <div className={styles.content}>
-        <Link href="#" onClick={(e) => {
-          router.back();
-          e.currentTarget.blur();
-        }} className={styles.backLink}>
-          <Left className={styles.backLinkIcon} aria-hidden={true} />Gå tilbake
+        <Link
+          href="#"
+          onClick={(e) => {
+            router.back();
+            e.currentTarget.blur();
+          }}
+          className={styles.backLink}
+        >
+          <Left className={styles.backLinkIcon} aria-hidden={true} />
+          Gå tilbake
         </Link>
         {children}
       </div>

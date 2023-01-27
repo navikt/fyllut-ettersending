@@ -8,9 +8,7 @@ interface Props {
 const ButtonGroup = ({ buttons }: Props) => {
   return (
     <div className={styles.buttonGroup}>
-      {
-        buttons && buttons.map(type => <ButtonGroupElement type={type} key={type.path} />)
-      }
+      {buttons && buttons.map((type) => <ButtonGroupElement type={type} key={type.path} />)}
     </div>
   );
 };

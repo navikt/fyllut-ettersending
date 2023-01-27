@@ -10,7 +10,7 @@ interface Props {
   error?: string;
 }
 
-const SocialSecurityNo = ({value, name, label, onChange, placeholder, error}: Props) => {
+const SocialSecurityNo = ({ value, name, label, onChange, placeholder, error }: Props) => {
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
@@ -38,5 +38,3 @@ const SocialSecurityNo = ({value, name, label, onChange, placeholder, error}: Pr
 };
 
 export default SocialSecurityNo;
-
-

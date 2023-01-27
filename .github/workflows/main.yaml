@@ -2,7 +2,7 @@ name: "Build and deploy fyllut-ettersending"
 on:
   push:
     branches:
-    - main
+      - main
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
 jobs:
@@ -30,35 +30,35 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: "16.17.1"
-    - name: "install dependencies"
-      run: yarn install --frozen-lockfile
-    - name: "Build application"
-      run: yarn build
-    - name: "Login to GitHub Docker Registry"
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: "Build and push the Docker image"
-      run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16.17.1"
+      - name: "install dependencies"
+        run: yarn install --frozen-lockfile
+      - name: "Build application"
+        run: yarn build
+      - name: "Login to GitHub Docker Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Build and push the Docker image"
+        run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
   deployAppToDev:
     name: "Deploy app to dev"
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: "Deploy to DEV"
-      uses: nais/deploy/actions/deploy@v1
-      env:
-        APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-        CLUSTER: dev-gcp
-        RESOURCE: .nais/nais.yaml
-        VARS: .nais/dev.yaml
+      - uses: actions/checkout@v3
+      - name: "Deploy to DEV"
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev.yaml
   deployAppToProd:
     name: "Deploy app to prod"
     needs: [build, test]
