@@ -1,6 +1,6 @@
 # Ettersendelse av dokumentasjon til en søknad.
 
-Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.dev.intern.nav.no
+Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.intern.dev.nav.no
 
 ## Utvikling
 
@@ -9,7 +9,7 @@ Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.dev.
 Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 
 ```
-FYLLUT_BASE_URL=https://fyllut-experimental.dev.nav.no/fyllut
+FYLLUT_BASE_URL=https://fyllut-experimental.internal.dev.nav.no/fyllut
 ```
 
 ### Lokal server
