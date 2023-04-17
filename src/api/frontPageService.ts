@@ -30,7 +30,7 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
 
 const getTitle = (formData: FormData) => {
   if (formData.formNumber) {
-    return `Ettersendelse til ${formData.formNumber} ${formData.title}`;
+    return `Ettersendelse til ${formData.formNumber} ${formData.title} - ${formData.otherDocumentationTitle}`;
   } else {
     return `Innsendelsen gjelder: ${formData.subjectOfSubmission}`;
   }
