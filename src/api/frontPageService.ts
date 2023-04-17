@@ -84,9 +84,15 @@ interface FrontPageRequest {
   adresse?: FrontPageAddress;
   bruker?: FrontPageUser;
   ukjentBrukerPersoninfo?: string;
+  tittel?: string;
+  behandlingstema?: string;
+  "NAV-skjemaID"?: string;
+  enhetsnummer?: string;
+  avsender?: FrontPageSender;
+  arkivsak?: FrontPageArchiveCase
 }
 
-type FrontPageType = "SKJEMA" | "ETTERSENDELSE";
+type FrontPageType = "SKJEMA" | "ETTERSENDELSE" | "LOESPOST";
 
 export interface FrontPageAddress {
   adresselinje1: string;
@@ -99,6 +105,16 @@ export interface FrontPageAddress {
 interface FrontPageUser {
   brukerId: string;
   brukerType: string;
+}
+
+interface FrontPageSender {
+  avsenderID: string;
+  avsenderNavn: string;
+}
+
+interface FrontPageArchiveCase {
+  arkivsaksystem: string;
+  arkivsaksnummer: string;
 }
 
 export { download };
