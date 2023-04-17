@@ -42,7 +42,7 @@ const FormSearch = ({ forms }: Props) => {
       </Section>
 
       <div className={styles.results}>
-        {searchResult.map((form, index) => (
+        {searchResult.sort((a,b) => a.title.trim().localeCompare(b.title.trim())).map((form, index) => (
           <LinkPanel
             href="#"
             className={styles.clickable}
