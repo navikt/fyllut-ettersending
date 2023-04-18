@@ -26,6 +26,10 @@ const FormSearch = ({ forms }: Props) => {
     setSearchResult(result);
   }, [searchInput, forms]);
 
+  const sortForms = (a: Form, b: Form) => {
+    return a.title.trim().localeCompare(b.title.trim());
+  };
+
   return (
     <>
       <Section>
@@ -42,21 +46,23 @@ const FormSearch = ({ forms }: Props) => {
       </Section>
 
       <div className={styles.results}>
-        {searchResult.sort((a,b) => a.title.trim().localeCompare(b.title.trim())).map((form, index) => (
-          <LinkPanel
-            href="#"
-            className={styles.clickable}
-            key={index}
-            border
-            onClick={async (e) => {
-              e.preventDefault();
-              await router.push(`${Paths.details}/${form.path}`);
-            }}
-          >
-            <LinkPanel.Title>{form.title}</LinkPanel.Title>
-            <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
-          </LinkPanel>
-        ))}
+        {searchResult
+          .sort((a, b) => sortForms(a, b))
+          .map((form, index) => (
+            <LinkPanel
+              href="#"
+              className={styles.clickable}
+              key={index}
+              border
+              onClick={async (e) => {
+                e.preventDefault();
+                await router.push(`${Paths.details}/${form.path}`);
+              }}
+            >
+              <LinkPanel.Title>{form.title}</LinkPanel.Title>
+              <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
+            </LinkPanel>
+          ))}
       </div>
     </>
   );
