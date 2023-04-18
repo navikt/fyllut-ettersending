@@ -21,7 +21,7 @@ describe("reset", () => {
     // Gå tilbake
     cy.findAllByRole("link").eq(0).click();
 
-    // Skriv inn "form2" i tekstboksen
+    // Skriv inn "hund" i tekstboksen
     cy.findAllByRole("textbox").click().type("hund");
 
     // Klikk det andre skjemaet
