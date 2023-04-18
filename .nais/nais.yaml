@@ -41,6 +41,10 @@ spec:
       {{#each accessPolicy.outbound.rules}}
         - application: {{this.application}}
       {{/each}}
+      external:
+      {{#each accessPolicy.outbound.external}}
+        - host: {{this.host}}
+      {{/each}}
   env:
   {{#each env}}
     - name: {{this.name}}
