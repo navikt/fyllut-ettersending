@@ -6,10 +6,7 @@ import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { fetchArchiveSubjects, fetchNavUnits } from "../api/apiClient";
 
-interface Props {
-  archiveSubjects: KeyValue;
-  navUnits: NavUnit[];
-}
+interface Props {}
 
 const Lospost: NextPage<Props> = () => {
   const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});

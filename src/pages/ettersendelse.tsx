@@ -7,9 +7,7 @@ import FormSearch from "../components/search/formSearch";
 import Layout from "../components/layout/layout";
 import { fetchForms } from "../api/apiClient";
 
-interface Props {
-  forms: Form[];
-}
+interface Props {}
 
 const Ettersendelse: NextPage<Props> = () => {
   const [loading, setLoading] = useState<boolean>(true);
