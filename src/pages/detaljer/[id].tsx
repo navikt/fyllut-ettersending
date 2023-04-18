@@ -31,7 +31,9 @@ const Detaljer: NextPage<Props> = (props) => {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    if (form.properties.navUnitMustBeSelected) {
+      fetchData();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -73,7 +75,10 @@ const Detaljer: NextPage<Props> = (props) => {
         <>
           <ChooseAttachments form={form} />
 
-          <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
+          <ChooseUser
+            navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+            shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+          />
 
           <ButtonGroup
             buttons={[

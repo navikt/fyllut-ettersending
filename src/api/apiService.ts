@@ -51,6 +51,7 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
       submissionType: form?.properties.innsending ?? null,
       navUnitTypes: form?.properties.enhetstyper ?? [],
       subjectOfSubmission: form?.properties.tema ?? null,
+      navUnitMustBeSelected: form?.properties.enhetMaVelgesVedPapirInnsending ?? null,
     },
   };
 };

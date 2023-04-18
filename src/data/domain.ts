@@ -21,6 +21,7 @@ interface FormProperties {
   skjemanummer?: string;
   submissionType?: string;
   navUnitTypes?: string[];
+  navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
 }
 
@@ -42,6 +43,7 @@ interface FormData {
   formNumber?: string;
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
+  titleOfSubmission?: string;
   title?: string;
   userData?: UserData;
 }
