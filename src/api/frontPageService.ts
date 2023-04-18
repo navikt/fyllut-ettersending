@@ -29,10 +29,11 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
 };
 
 const getTitle = (formData: FormData) => {
+  const otherDocumentationTitle = formData.otherDocumentationTitle ? ` - ${formData.otherDocumentationTitle}` : "";
   if (formData.formNumber) {
-    return `Ettersendelse til ${formData.formNumber} ${formData.title} - ${formData.otherDocumentationTitle}`;
+    return `Ettersendelse til ${formData.formNumber} ${formData.title}` + otherDocumentationTitle;
   } else {
-    return `Innsendelsen gjelder: ${formData.titleOfSubmission} - ${formData.otherDocumentationTitle}`;
+    return `Innsendelsen gjelder: ${formData.titleOfSubmission}` + otherDocumentationTitle;
   }
 };
 
