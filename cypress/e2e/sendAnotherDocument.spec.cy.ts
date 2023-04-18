@@ -1,17 +1,14 @@
 describe("sendAnotherDocument", () => {
   before(() => {
-    cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/archive-subjects`).as("getArchiveSubjects");
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/nav-units`).as("getNavUnits");
-    cy.visit("/");
-    cy.wait("@getForms");
+    cy.visit("/lospost");
     cy.wait("@getArchiveSubjects");
     cy.wait("@getNavUnits");
   });
 
   it("send another document", () => {
     //Populate velg skjema page
-    cy.findAllByRole("radio").eq(1).check();
     cy.get("[name=\"otherDocumentationTitle\"]").click().type("Application for parental leave");
     cy.get("[name=\"subjectOfSubmission\"]").select("Permittering og masseoppsigelser");
     cy.findAllByRole("radio").check("noSocialNumber");

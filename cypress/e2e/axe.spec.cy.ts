@@ -7,7 +7,7 @@ describe("Axe testing for main page", () => {
   it("tests axe for the entire website", () => {
     cy.findByRole("main").should("exist");
     cy.checkA11y(".main");
-    cy.get("[type=\"radio\"]").eq(1).check();
+    cy.contains("button", "Annen dokumentasjon").click()
     cy.get("[name=\"otherDocumentationTitle\"]").click().type("Application for parental leave");
     cy.findByRole("main").should("exist");
     cy.checkA11y(".main");
