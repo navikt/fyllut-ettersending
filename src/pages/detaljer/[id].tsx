@@ -73,7 +73,10 @@ const Detaljer: NextPage<Props> = (props) => {
         <>
           <ChooseAttachments form={form} />
 
-          <ChooseUser navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)} />
+          <ChooseUser
+            navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+            shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+          />
 
           <ButtonGroup
             buttons={[

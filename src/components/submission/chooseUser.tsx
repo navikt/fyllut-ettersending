@@ -7,9 +7,10 @@ import ContactInformation from "./contactInformation";
 
 interface Props {
   navUnits?: NavUnit[] | undefined;
+  shouldRenderNavUnits?: boolean;
 }
 
-const ChooseUser = ({ navUnits }: Props) => {
+const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
 
   return (
@@ -35,9 +36,11 @@ const ChooseUser = ({ navUnits }: Props) => {
           <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
             En person som ikke har fødselsnummer eller D-nummer
           </Radio>
-          <Radio name={UserType.other} value={UserType.other}>
-            Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
-          </Radio>
+          {shouldRenderNavUnits && (
+            <Radio name={UserType.other} value={UserType.other}>
+              Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
+            </Radio>
+          )}
         </RadioGroup>
       </Section>
 
