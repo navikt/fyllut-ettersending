@@ -42,6 +42,7 @@ interface FormData {
   formNumber?: string;
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
+  titleOfSubmission?: string;
   title?: string;
   userData?: UserData;
 }

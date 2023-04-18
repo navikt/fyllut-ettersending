@@ -32,7 +32,10 @@ const SubjectOfSubmission = ({ archiveSubjects }: Props) => {
           value={formData.subjectOfSubmission}
           error={errors.subjectOfSubmission}
           onChange={(evt) => {
-            updateFormData({ subjectOfSubmission: evt.target.value });
+            updateFormData({
+              subjectOfSubmission: evt.target.value,
+              titleOfSubmission: archiveSubjects[evt.target.value],
+            });
           }}
         >
           <option></option>

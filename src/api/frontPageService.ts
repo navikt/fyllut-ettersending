@@ -32,7 +32,7 @@ const getTitle = (formData: FormData) => {
   if (formData.formNumber) {
     return `Ettersendelse til ${formData.formNumber} ${formData.title} - ${formData.otherDocumentationTitle}`;
   } else {
-    return `Innsendelsen gjelder: ${formData.subjectOfSubmission}`;
+    return `Innsendelsen gjelder: ${formData.titleOfSubmission} - ${formData.otherDocumentationTitle}`;
   }
 };
 
