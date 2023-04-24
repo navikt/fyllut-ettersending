@@ -44,8 +44,14 @@ interface FormData {
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
   titleOfSubmission?: string;
+  submissionType?: SubmissionType;
   title?: string;
   userData?: UserData;
+}
+
+enum SubmissionType {
+  digital = "digital",
+  paper = "paper",
 }
 
 enum UserType {
@@ -68,4 +74,4 @@ interface UserData {
 }
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
-export { UserType };
+export { UserType, SubmissionType };

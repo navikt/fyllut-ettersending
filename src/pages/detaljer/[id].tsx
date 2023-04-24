@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { ButtonText, Paths } from "../../data/text";
+import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
 
 interface Props {
   form: Form;
@@ -62,6 +63,23 @@ const Detaljer: NextPage<Props> = (props) => {
     return <div>Loading...</div>;
   }
 
+  const downloadButton = {
+    text: ButtonText.next,
+    path: Paths.downloadPage,
+    validateForm: true,
+  };
+
+  const submissionPath = `https://www.intern.dev.nav.no/sendinn/opprettSoknadResource?erEttersendelse=true&skjemanummer=${encodeURIComponent(
+    form.properties.formNumber || ""
+  )}&sprak=NO_NB&vedleggsIder=${form.attachments?.map(({ attachmentCode }) => attachmentCode)}`; //TODO
+  console.log(submissionPath);
+  const submitButton = {
+    text: ButtonText.next,
+    external: true,
+    path: encodeURIComponent(submissionPath),
+    validateForm: true,
+  };
+
   return (
     <Layout title="Ettersende dokumentasjon i posten">
       <Section>
@@ -75,18 +93,21 @@ const Detaljer: NextPage<Props> = (props) => {
         <>
           <ChooseAttachments form={form} />
 
-          <ChooseUser
-            navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-            shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
-          />
+          {/*TODO: Check on form.properties.submissionType*/}
+          <ChooseSubmissionType />
 
+          {/*TODO: Check on form.properties.submissionType*/}
+          {formData.submissionType === "paper" && ( //
+            <ChooseUser
+              navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+              shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+            />
+          )}
+
+          {/*TODO: Check on form.properties.submissionType*/}
           <ButtonGroup
             buttons={[
-              {
-                text: ButtonText.next,
-                path: Paths.downloadPage,
-                validateForm: true,
-              },
+              formData.submissionType === "digital" ? submitButton : downloadButton,
               {
                 text: ButtonText.cancel,
                 path: "/",
