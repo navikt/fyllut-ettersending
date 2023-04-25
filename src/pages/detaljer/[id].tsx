@@ -15,6 +15,8 @@ import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { ButtonText, Paths } from "../../data/text";
 import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
+import { createSubmissionUrl, isDigitalSubmissionAllowed, isSubmissionTypePaper } from "../../utils/submissionUtil";
+import { ButtonType } from "../../components/button/buttonGroupElement";
 
 interface Props {
   form: Form;
@@ -63,20 +65,16 @@ const Detaljer: NextPage<Props> = (props) => {
     return <div>Loading...</div>;
   }
 
-  const downloadButton = {
+  const downloadButton: ButtonType = {
     text: ButtonText.next,
     path: Paths.downloadPage,
     validateForm: true,
   };
 
-  const submissionPath = `https://www.intern.dev.nav.no/sendinn/opprettSoknadResource?erEttersendelse=true&skjemanummer=${encodeURIComponent(
-    form.properties.formNumber || ""
-  )}&sprak=NO_NB&vedleggsIder=${form.attachments?.map(({ attachmentCode }) => attachmentCode)}`; //TODO
-  console.log(submissionPath);
-  const submitButton = {
+  const submitButton: ButtonType = {
     text: ButtonText.next,
     external: true,
-    path: encodeURIComponent(submissionPath),
+    path: createSubmissionUrl(form, formData),
     validateForm: true,
   };
 
@@ -93,11 +91,9 @@ const Detaljer: NextPage<Props> = (props) => {
         <>
           <ChooseAttachments form={form} />
 
-          {/*TODO: Check on form.properties.submissionType*/}
-          <ChooseSubmissionType />
+          {isDigitalSubmissionAllowed(form) && <ChooseSubmissionType />}
 
-          {/*TODO: Check on form.properties.submissionType*/}
-          {formData.submissionType === "paper" && ( //
+          {isSubmissionTypePaper(form, formData) && (
             <ChooseUser
               navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
               shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
