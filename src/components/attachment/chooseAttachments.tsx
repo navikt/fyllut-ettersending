@@ -1,10 +1,11 @@
 import { Checkbox, CheckboxGroup, TextField } from "@navikt/ds-react";
-import { Form } from "../../data/domain";
+import { Form, SubmissionType } from "../../data/domain";
 import Section from "../section/section";
 import styles from "../attachment/attachment.module.css";
 import { useFormState } from "../../data/appState";
 import { hasOtherAttachment } from "../../utils/formDataUtil";
 import { useEffect, useState } from "react";
+import { isSubmissionTypePaper } from "../../utils/submissionUtil";
 
 interface Props {
   form: Form;
@@ -51,7 +52,8 @@ const ChooseAttachments = ({ form }: Props) => {
               </Checkbox>
             ))}
           </CheckboxGroup>
-          {hasOtherAttachment(formData) && (
+          {/*TODO: Hva med INGEN innsending*/}
+          {hasOtherAttachment(formData) && isSubmissionTypePaper(formData) && (
             <TextField
               value={formData.otherDocumentationTitle ?? ""}
               name="otherDocumentationTitle"

@@ -25,12 +25,14 @@ const ButtonGroupElement = ({ type }: Props) => {
   const handleClick = async () => {
     setLoading(true);
 
-    if (external) {
-      window.location.href = path;
-    } else if (validateForm) {
+    if (validateForm) {
       const valid = setValidate(true);
       if (valid) {
-        await router.push(path);
+        if (external) {
+          window.location.href = path;
+        } else {
+          await router.push(path);
+        }
       }
     } else {
       await router.push(path);
