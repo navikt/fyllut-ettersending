@@ -17,8 +17,11 @@ const createSubmissionUrl = (form: Form, formData: FormData): string => {
   )}&vedleggsIder=${attachmentList}`;
 };
 
+const isSubmissionAllowed = (form: Form) => {
+  return form.attachments?.length > 0 && form.properties.submissionType !== "INGEN";
+};
+
 const areBothSubmissionTypesAllowed = (form: Form) => {
-  console.log(form.properties);
   return form.properties.submissionType === "PAPIR_OG_DIGITAL";
 };
 
@@ -26,4 +29,10 @@ const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === SubmissionType.paper;
 };
 
-export { createSubmissionUrl, areBothSubmissionTypesAllowed, isSubmissionTypePaper, getDefaultSubmissionType };
+export {
+  getDefaultSubmissionType,
+  createSubmissionUrl,
+  isSubmissionAllowed,
+  areBothSubmissionTypesAllowed,
+  isSubmissionTypePaper,
+};

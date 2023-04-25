@@ -20,6 +20,7 @@ import {
   getDefaultSubmissionType,
   areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
+  isSubmissionAllowed,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 
@@ -93,7 +94,7 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
-      {form.attachments?.length > 0 ? (
+      {isSubmissionAllowed(form) ? (
         <>
           <ChooseAttachments form={form} />
 
