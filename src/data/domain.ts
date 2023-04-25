@@ -16,10 +16,12 @@ interface Attachment {
   attachmentCode: string;
 }
 
+type AllowedSubmissionType = "PAPIR_OG_DIGITAL" | "KUN_PAPIR" | "KUN_DIGITAL" | "INGEN";
+
 interface FormProperties {
   formNumber?: string;
   skjemanummer?: string;
-  submissionType?: string;
+  submissionType?: AllowedSubmissionType;
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;

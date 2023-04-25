@@ -1,4 +1,12 @@
-import { Form, FormData } from "../data/domain";
+import { Form, FormData, SubmissionType } from "../data/domain";
+
+const getDefaultSubmissionType = (form: Form): SubmissionType => {
+  const allowedSubmissionType = form.properties.submissionType;
+  if (allowedSubmissionType === "PAPIR_OG_DIGITAL" || allowedSubmissionType === "KUN_DIGITAL") {
+    return SubmissionType.digital;
+  }
+  return SubmissionType.paper;
+};
 
 const createSubmissionUrl = (form: Form, formData: FormData): string => {
   const formNumber = form.properties.formNumber ?? "";
@@ -9,12 +17,13 @@ const createSubmissionUrl = (form: Form, formData: FormData): string => {
   )}&vedleggsIder=${attachmentList}`;
 };
 
-const isDigitalSubmissionAllowed = (form: Form) => {
-  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_DIGITAL";
+const areBothSubmissionTypesAllowed = (form: Form) => {
+  console.log(form.properties);
+  return form.properties.submissionType === "PAPIR_OG_DIGITAL";
 };
 
-const isSubmissionTypePaper = (form: Form, formData: FormData) => {
-  return !isDigitalSubmissionAllowed(form) || formData.submissionType === "paper";
+const isSubmissionTypePaper = (formData: FormData) => {
+  return formData.submissionType === SubmissionType.paper;
 };
 
-export { createSubmissionUrl, isDigitalSubmissionAllowed, isSubmissionTypePaper };
+export { createSubmissionUrl, areBothSubmissionTypesAllowed, isSubmissionTypePaper, getDefaultSubmissionType };

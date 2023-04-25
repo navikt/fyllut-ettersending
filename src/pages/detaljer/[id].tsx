@@ -2,7 +2,7 @@ import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { getForm } from "../../api/apiService";
-import { Form, NavUnit } from "../../data/domain";
+import { Form, NavUnit, SubmissionType } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
@@ -15,7 +15,12 @@ import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { ButtonText, Paths } from "../../data/text";
 import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
-import { createSubmissionUrl, isDigitalSubmissionAllowed, isSubmissionTypePaper } from "../../utils/submissionUtil";
+import {
+  createSubmissionUrl,
+  getDefaultSubmissionType,
+  areBothSubmissionTypesAllowed,
+  isSubmissionTypePaper,
+} from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 
 interface Props {
@@ -53,6 +58,7 @@ const Detaljer: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
+        submissionType: getDefaultSubmissionType(form),
         formId: id,
       });
     }
@@ -91,19 +97,18 @@ const Detaljer: NextPage<Props> = (props) => {
         <>
           <ChooseAttachments form={form} />
 
-          {isDigitalSubmissionAllowed(form) && <ChooseSubmissionType />}
+          {areBothSubmissionTypesAllowed(form) && <ChooseSubmissionType />}
 
-          {isSubmissionTypePaper(form, formData) && (
+          {isSubmissionTypePaper(formData) && (
             <ChooseUser
               navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
               shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
             />
           )}
 
-          {/*TODO: Check on form.properties.submissionType*/}
           <ButtonGroup
             buttons={[
-              formData.submissionType === "digital" ? submitButton : downloadButton,
+              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
               {
                 text: ButtonText.cancel,
                 path: "/",
