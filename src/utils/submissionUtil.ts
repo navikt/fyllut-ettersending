@@ -5,7 +5,7 @@ const getDefaultSubmissionType = (form: Form): SubmissionType => {
   if (allowedSubmissionType === "PAPIR_OG_DIGITAL" || allowedSubmissionType === "KUN_DIGITAL") {
     return SubmissionType.digital;
   }
-  return SubmissionType.paper;
+  return SubmissionType.byMail;
 };
 
 const createSubmissionUrl = (form: Form, formData: FormData): string => {
@@ -26,7 +26,7 @@ const areBothSubmissionTypesAllowed = (form: Form) => {
 };
 
 const isSubmissionTypePaper = (formData: FormData) => {
-  return formData.submissionType === SubmissionType.paper;
+  return formData.submissionType === SubmissionType.byMail;
 };
 
 export {

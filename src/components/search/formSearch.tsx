@@ -45,7 +45,7 @@ const FormSearch = ({ forms }: Props) => {
         />
       </Section>
 
-      <div className={styles.results}>
+      <div className={styles.results} data-cy="searchResults">
         {searchResult
           .sort((a, b) => sortForms(a, b))
           .map((form, index) => (

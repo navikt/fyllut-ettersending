@@ -3,7 +3,9 @@
   "plugins": ["@typescript-eslint"],
   "extends": "next/core-web-vitals",
   "rules": {
-    "quotes": ["error", "double"],
+    "quotes": ["error", "double", {
+      "avoidEscape": true
+    }],
     "indent": ["error", 2],
     "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }]
   }

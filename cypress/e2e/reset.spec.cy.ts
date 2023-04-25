@@ -10,7 +10,7 @@ describe("reset", () => {
     cy.findAllByRole("textbox").focus().type("test");
 
     // Klikk det første skjemaet
-    cy.findAllByRole("link").eq(1).click();
+    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click();
 
     // Sjekk at URLen inneholder "/detaljer"
     cy.url().should("include", "/detaljer");
@@ -19,13 +19,13 @@ describe("reset", () => {
     cy.findAllByRole("checkbox").first().check();
 
     // Gå tilbake
-    cy.findAllByRole("link").eq(0).click();
+    cy.findByRole("link", { name: "Gå tilbake" }).click();
 
     // Skriv inn "hund" i tekstboksen
     cy.findAllByRole("textbox").click().type("hund");
 
     // Klikk det andre skjemaet
-    cy.findAllByRole("link").eq(1).click();
+    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(1).click();
 
     // Sjekk at URLen inneholder "/detaljer"
     cy.url().should("include", "/detaljer");

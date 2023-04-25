@@ -53,7 +53,7 @@ interface FormData {
 
 enum SubmissionType {
   digital = "digital",
-  paper = "paper",
+  byMail = "byMail",
 }
 
 enum UserType {
