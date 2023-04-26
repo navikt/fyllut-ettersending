@@ -5,6 +5,7 @@ describe("reset", () => {
     cy.wait("@getForms");
   });
 
+  // TODO: This test fails due to a known bug (https://trello.com/c/aLlQ7Ntf/1308-valg-av)
   it("resets formData when a different form is selected than the one previously selected", () => {
     // Skriv inn "test" i tekstboksen
     cy.findAllByRole("textbox").focus().type("test");
@@ -29,6 +30,9 @@ describe("reset", () => {
 
     // Sjekk at URLen inneholder "/detaljer"
     cy.url().should("include", "/detaljer");
+
+    // Waiting in order to trigger the bug where attachment checkbox is checked
+    cy.wait(20);
 
     // Sjekk at checkboxen ikke er sjekket
     cy.findAllByRole("checkbox").should("not.be.checked");
