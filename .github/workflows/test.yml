@@ -5,6 +5,8 @@ jobs:
   test:
     name: "Test"
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SENDINN_URL: https://www.test.no/sendinn/opprettSoknadResource
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -17,7 +19,6 @@ jobs:
       - name: "Cypress tests"
         uses: cypress-io/github-action@v4
         with:
-          env: "NEXT_PUBLIC_SENDINN_URL=https://www.test.no/sendinn/opprettSoknadResource"
           install: false
           start: "yarn run start:mock"
           wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
