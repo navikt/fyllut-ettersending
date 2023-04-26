@@ -21,8 +21,8 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.get('[name="search"]').click().type("førerhund");
     cy.get('[data-cy="searchResults"]').findByRole("link", { name: "Søknad om førerhund NAV 10-07.50" }).click();
     cy.url().should("include", "/detaljer");
-    cy.get('[type="checkbox"]').first().check();
-    cy.get('[type="checkbox"]').eq(2).check();
+    cy.findByRole("checkbox", { name: "Legeerklæring om alminnelig helsetilstand" }).check();
+    cy.findByRole("checkbox", { name: "Annen dokumentasjon" }).check();
     cy.get('[type="radio"]').check("digital");
     cy.get("button").contains("Neste").click();
     cy.url().should("include", "/sendinn/opprettSoknadResource?erEttersendelse=true");
