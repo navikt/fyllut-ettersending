@@ -4,7 +4,7 @@ import { useFormState } from "../../data/appState";
 import { SubmissionType } from "../../data/domain";
 
 const ChooseSubmissionType = () => {
-  const { formData, updateFormData, errors } = useFormState();
+  const { formData, updateFormData } = useFormState();
 
   return (
     <Section>
