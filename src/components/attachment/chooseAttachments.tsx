@@ -5,7 +5,7 @@ import styles from "../attachment/attachment.module.css";
 import { useFormState } from "../../data/appState";
 import { hasOtherAttachment } from "../../utils/formDataUtil";
 import { useEffect, useState } from "react";
-import { isSubmissionTypePaper } from "../../utils/submissionUtil";
+import { isSubmissionTypeByMail } from "../../utils/submissionUtil";
 
 interface Props {
   form: Form;
@@ -52,7 +52,7 @@ const ChooseAttachments = ({ form }: Props) => {
               </Checkbox>
             ))}
           </CheckboxGroup>
-          {hasOtherAttachment(formData) && isSubmissionTypePaper(formData) && (
+          {hasOtherAttachment(formData) && isSubmissionTypeByMail(formData) && (
             <TextField
               value={formData.otherDocumentationTitle ?? ""}
               name="otherDocumentationTitle"

@@ -9,7 +9,7 @@ const getDefaultSubmissionType = (form: Form): SubmissionType => {
 };
 
 const createSubmissionUrl = (form: Form, formData: FormData): string => {
-  const formNumber = form.properties.formNumber ?? "";
+  const formNumber = form.properties.formNumber!;
   const attachmentList = formData.attachments?.map(({ attachmentCode }) => attachmentCode);
 
   return `${process.env.NEXT_PUBLIC_SENDINN_URL}?erEttersendelse=true&sprak=NO_NB&skjemanummer=${encodeURIComponent(
@@ -25,7 +25,7 @@ const areBothSubmissionTypesAllowed = (form: Form) => {
   return form.properties.submissionType === "PAPIR_OG_DIGITAL";
 };
 
-const isSubmissionTypePaper = (formData: FormData) => {
+const isSubmissionTypeByMail = (formData: FormData) => {
   return formData.submissionType === SubmissionType.byMail;
 };
 
@@ -34,5 +34,5 @@ export {
   createSubmissionUrl,
   isSubmissionAllowed,
   areBothSubmissionTypesAllowed,
-  isSubmissionTypePaper,
+  isSubmissionTypeByMail,
 };

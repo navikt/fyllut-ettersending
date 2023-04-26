@@ -17,7 +17,6 @@ const ChooseSubmissionType = () => {
           });
         }}
         name="submissionType"
-        error={errors.submissionType}
         value={formData.submissionType ?? ""}
       >
         <Radio name={SubmissionType.digital} value={SubmissionType.digital}>

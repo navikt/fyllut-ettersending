@@ -19,7 +19,7 @@ import {
   createSubmissionUrl,
   getDefaultSubmissionType,
   areBothSubmissionTypesAllowed,
-  isSubmissionTypePaper,
+  isSubmissionTypeByMail,
   isSubmissionAllowed,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
@@ -100,7 +100,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
           <ChooseAttachments form={form} />
 
-          {isSubmissionTypePaper(formData) && (
+          {isSubmissionTypeByMail(formData) && (
             <ChooseUser
               navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
               shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
