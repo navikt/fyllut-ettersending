@@ -18,7 +18,4 @@ export default defineConfig({
     viewportHeight: 1200,
     setupNodeEvents(on, config) {},
   },
-  env: {
-    NEXT_PUBLIC_SENDINN_URL: "https://www.test.no/sendinn/opprettSoknadResource",
-  },
 });
