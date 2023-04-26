@@ -25,7 +25,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.get('[type="checkbox"]').eq(2).check();
     cy.get('[type="radio"]').check("digital");
     cy.get("button").contains("Neste").click();
-    cy.url().should("include", "erEttersendelse=true");
+    cy.url().should("include", "/sendinn/opprettSoknadResource?erEttersendelse=true");
     cy.url({ decode: true }).should("include", "skjemanummer=NAV 10-07.50");
     cy.url().should("include", "vedleggsIder=L9,N6");
   });
