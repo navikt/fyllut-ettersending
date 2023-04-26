@@ -96,9 +96,9 @@ const Detaljer: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          <ChooseAttachments form={form} />
-
           {areBothSubmissionTypesAllowed(form) && <ChooseSubmissionType />}
+
+          <ChooseAttachments form={form} />
 
           {isSubmissionTypePaper(formData) && (
             <ChooseUser
