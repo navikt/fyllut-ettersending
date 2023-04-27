@@ -16,10 +16,12 @@ interface Attachment {
   attachmentCode: string;
 }
 
+type AllowedSubmissionType = "PAPIR_OG_DIGITAL" | "KUN_PAPIR" | "KUN_DIGITAL" | "INGEN";
+
 interface FormProperties {
   formNumber?: string;
   skjemanummer?: string;
-  submissionType?: string;
+  submissionType?: AllowedSubmissionType;
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
@@ -44,8 +46,14 @@ interface FormData {
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
   titleOfSubmission?: string;
+  submissionType?: SubmissionType;
   title?: string;
   userData?: UserData;
+}
+
+enum SubmissionType {
+  digital = "digital",
+  byMail = "byMail",
 }
 
 enum UserType {
@@ -68,4 +76,4 @@ interface UserData {
 }
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
-export { UserType };
+export { UserType, SubmissionType };

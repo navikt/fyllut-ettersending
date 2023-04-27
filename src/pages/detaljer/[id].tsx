@@ -2,7 +2,7 @@ import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
 import { getForm } from "../../api/apiService";
-import { Form, NavUnit } from "../../data/domain";
+import { Form, NavUnit, SubmissionType } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
@@ -14,6 +14,15 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { ButtonText, Paths } from "../../data/text";
+import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
+import {
+  createSubmissionUrl,
+  getDefaultSubmissionType,
+  areBothSubmissionTypesAllowed,
+  isSubmissionTypeByMail,
+  isSubmissionAllowed,
+} from "../../utils/submissionUtil";
+import { ButtonType } from "../../components/button/buttonGroupElement";
 
 interface Props {
   form: Form;
@@ -50,6 +59,7 @@ const Detaljer: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
+        submissionType: getDefaultSubmissionType(form),
         formId: id,
       });
     }
@@ -62,6 +72,19 @@ const Detaljer: NextPage<Props> = (props) => {
     return <div>Loading...</div>;
   }
 
+  const downloadButton: ButtonType = {
+    text: ButtonText.next,
+    path: Paths.downloadPage,
+    validateForm: true,
+  };
+
+  const submitButton: ButtonType = {
+    text: ButtonText.next,
+    external: true,
+    path: createSubmissionUrl(form, formData),
+    validateForm: true,
+  };
+
   return (
     <Layout title="Ettersende dokumentasjon i posten">
       <Section>
@@ -71,22 +94,22 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
 
-      {form.attachments?.length > 0 ? (
+      {isSubmissionAllowed(form) ? (
         <>
+          {areBothSubmissionTypesAllowed(form) && <ChooseSubmissionType />}
+
           <ChooseAttachments form={form} />
 
-          <ChooseUser
-            navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-            shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
-          />
+          {isSubmissionTypeByMail(formData) && (
+            <ChooseUser
+              navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+              shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+            />
+          )}
 
           <ButtonGroup
             buttons={[
-              {
-                text: ButtonText.next,
-                path: Paths.downloadPage,
-                validateForm: true,
-              },
+              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
               {
                 text: ButtonText.cancel,
                 path: "/",
