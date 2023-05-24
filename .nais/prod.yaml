@@ -1,3 +1,6 @@
+env-name: prod-gcp
+logs-url: https://logs.adeo.no/app/r/s/joMHK
+special-type-to-use-in-alertmanager-config: "fyllut-sendinn-alerts"
 ingresses:
   - "https://www.nav.no/fyllut-ettersending"
 accessPolicy:
