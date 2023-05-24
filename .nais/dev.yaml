@@ -1,3 +1,6 @@
+env-name: dev-gcp
+logs-url: https://logs.adeo.no/app/r/s/1n4vb
+special-type-to-use-in-alertmanager-config: "fyllut-sendinn-alerts-dev"
 ingresses:
   - "https://fyllut-ettersending.intern.dev.nav.no/fyllut-ettersending"
 accessPolicy:

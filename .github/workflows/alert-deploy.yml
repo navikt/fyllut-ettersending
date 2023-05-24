@@ -5,6 +5,8 @@ on:
       - master
     paths:
       - ".nais/alerts.yaml"
+      - ".nais/dev.yaml"
+      - ".nais/prod.yaml"
       - ".github/workflows/alert-deploy.yaml"
 jobs:
   apply-alerts:
@@ -18,4 +20,12 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: ".nais/alerts.yaml"
+          RESOURCE: .nais/alerts.yaml
+          VARS: .nais/dev.yaml
+      - name: deploy to prod
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/alerts.yaml
+          VARS: .nais/prod.yaml
