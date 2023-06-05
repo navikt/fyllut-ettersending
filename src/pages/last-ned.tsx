@@ -8,7 +8,7 @@ import Layout from "../components/layout/layout";
 import { downloadFrontpage } from "../api/apiClient";
 import ButtonGroup from "src/components/button/buttonGroup";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
-import { ButtonText, Paths } from "src/data/text";
+import { ButtonText } from "src/data/text";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -105,8 +105,9 @@ const LastNed: NextPage<Props> = () => {
         buttons={[
           {
             text: ButtonText.exit,
-            path: Paths.base,
+            path: process.env.NEXT_PUBLIC_NAV_URL || "https://nav.no",
             variant: "tertiary",
+            external: true,
           },
         ]}
       />

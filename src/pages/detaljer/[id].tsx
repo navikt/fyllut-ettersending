@@ -114,6 +114,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
           <ButtonGroup
             buttons={[
+              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
               {
                 text: ButtonText.previous,
                 variant: "secondary",
@@ -123,7 +124,6 @@ const Detaljer: NextPage<Props> = (props) => {
                   e.currentTarget.blur();
                 },
               },
-              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
             ]}
           />
           <ButtonGroup

@@ -26,6 +26,13 @@ const OtherDocument: NextPage<Props> = (props) => {
       <ButtonGroup
         buttons={[
           {
+            text: ButtonText.next,
+            path: Paths.downloadPage,
+            validateForm: true,
+            icon: <ArrowRightIcon aria-hidden />,
+            iconPosition: "right",
+          },
+          {
             text: ButtonText.previous,
             variant: "secondary",
             icon: <ArrowLeftIcon aria-hidden />,
@@ -33,13 +40,6 @@ const OtherDocument: NextPage<Props> = (props) => {
               router.back();
               e.currentTarget.blur();
             },
-          },
-          {
-            text: ButtonText.next,
-            path: Paths.downloadPage,
-            validateForm: true,
-            icon: <ArrowRightIcon aria-hidden />,
-            iconPosition: "right",
           },
         ]}
       />
