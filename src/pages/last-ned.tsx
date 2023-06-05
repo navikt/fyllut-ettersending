@@ -13,17 +13,17 @@ interface Props {
 
 const texts = {
   title: {
-    formDocumentation: "Ettersende dokumentasjon i posten",
-    otherDocumentation: "Sende inn dokumentasjon",
+    ettersending: "Ettersende dokumentasjon i posten",
+    lospost: "Sende inn dokumentasjon",
   },
   attachmentsHeader: {
     single: "2. Finn frem følgende dokument",
     plural: "2. Finn frem følgende dokumenter",
   },
   lastSectionBody: {
-    formDocumentation:
+    ettersending:
       "Legg førstesidearket fra punkt 1 på toppen av dokumentene. Send det hele til adressen på førstesidearket.",
-    otherDocumentation:
+    lospost:
       "Legg førstesidearket fra punkt 1 på toppen av dokumentene du skal sende. Send det hele til adressen på førstesidearket.",
   },
 };
@@ -32,8 +32,8 @@ const LastNed: NextPage<Props> = () => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const isOtherDocumentation = !formData.formId;
-  const submissionType = isOtherDocumentation ? "otherDocumentation" : "formDocumentation";
+  const isLospost = !formData.formId;
+  const submissionType = isLospost ? "lospost" : "ettersending";
 
   const download = async () => {
     setLoading(true);
