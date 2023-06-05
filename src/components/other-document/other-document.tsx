@@ -5,6 +5,8 @@ import SubjectOfSubmission from "../submission/subjectOfSubmission";
 import ChooseUser from "../submission/chooseUser";
 import ButtonGroup from "../button/buttonGroup";
 import { Paths, ButtonText } from "../../data/text";
+import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
+import { useRouter } from "next/router";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const OtherDocument: NextPage<Props> = (props) => {
+  const router = useRouter();
+
   const { archiveSubjects, navUnits } = props;
 
   return (
@@ -22,10 +26,26 @@ const OtherDocument: NextPage<Props> = (props) => {
       <ButtonGroup
         buttons={[
           {
+            text: ButtonText.previous,
+            variant: "secondary",
+            icon: <ArrowLeftIcon aria-hidden />,
+            onClick: (e) => {
+              router.back();
+              e.currentTarget.blur();
+            },
+          },
+          {
             text: ButtonText.next,
             path: Paths.downloadPage,
             validateForm: true,
+            icon: <ArrowRightIcon aria-hidden />,
+            iconPosition: "right",
           },
+        ]}
+      />
+      <ButtonGroup
+        center
+        buttons={[
           {
             text: ButtonText.cancel,
             path: Paths.base,

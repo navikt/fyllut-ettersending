@@ -23,6 +23,7 @@ import {
   isSubmissionAllowed,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
+import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 
 interface Props {
   form: Form;
@@ -76,6 +77,8 @@ const Detaljer: NextPage<Props> = (props) => {
     text: ButtonText.next,
     path: Paths.downloadPage,
     validateForm: true,
+    icon: <ArrowRightIcon aria-hidden />,
+    iconPosition: "right",
   };
 
   const submitButton: ButtonType = {
@@ -83,6 +86,8 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
     path: createSubmissionUrl(form, formData),
     validateForm: true,
+    icon: <ArrowRightIcon aria-hidden />,
+    iconPosition: "right",
   };
 
   return (
@@ -109,10 +114,24 @@ const Detaljer: NextPage<Props> = (props) => {
 
           <ButtonGroup
             buttons={[
+              {
+                text: ButtonText.previous,
+                variant: "secondary",
+                icon: <ArrowLeftIcon aria-hidden />,
+                onClick: (e) => {
+                  router.back();
+                  e.currentTarget.blur();
+                },
+              },
               formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
+            ]}
+          />
+          <ButtonGroup
+            center
+            buttons={[
               {
                 text: ButtonText.cancel,
-                path: "/",
+                path: Paths.base,
                 variant: "tertiary",
               },
             ]}

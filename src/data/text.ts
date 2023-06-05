@@ -1,8 +1,10 @@
 enum ButtonText {
-  next = "Neste",
+  next = "Gå videre",
+  previous = "Gå tilbake",
   cancel = "Avbryt",
   sendAttachment = "Ettersend vedlegg",
   otherDocumentation = "Annen dokumentasjon",
+  exit = "Avslutt",
 }
 
 const ErrorMessages = {
@@ -29,7 +31,7 @@ enum Paths {
   details = "/detaljer",
   downloadPage = "/last-ned",
   otherDocumentation = "/lospost",
-  formDocumentation = "/ettersendelse"
+  formDocumentation = "/ettersendelse",
 }
 
 export { Paths, ButtonText, ErrorMessages };
