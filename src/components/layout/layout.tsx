@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Heading, Link } from "@navikt/ds-react";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import { Left } from "@navikt/ds-icons";
+import { ArrowLeftIcon } from "@navikt/aksel-icons";
 
 interface Props {
   title?: string;
@@ -33,7 +33,7 @@ const Layout = ({ title, children }: Props) => {
           }}
           className={styles.backLink}
         >
-          <Left className={styles.backLinkIcon} aria-hidden={true} />
+          <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
           Gå tilbake
         </Link>
         {children}
