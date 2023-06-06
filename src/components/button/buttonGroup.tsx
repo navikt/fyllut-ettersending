@@ -1,14 +1,16 @@
+import classNames from "classnames";
 import styles from "./button.module.css";
 import ButtonGroupElement, { ButtonType } from "./buttonGroupElement";
 
 interface Props {
   buttons: ButtonType[];
+  center?: boolean;
 }
 
-const ButtonGroup = ({ buttons }: Props) => {
+const ButtonGroup = ({ buttons, center = false }: Props) => {
   return (
-    <div className={styles.buttonGroup}>
-      {buttons && buttons.map((type) => <ButtonGroupElement type={type} key={type.path} />)}
+    <div className={classNames(styles.buttonGroup, { [styles.center]: center })}>
+      {buttons && buttons.map((type) => <ButtonGroupElement type={type} key={type.text} />)}
     </div>
   );
 };

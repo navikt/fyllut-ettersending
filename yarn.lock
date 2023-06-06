@@ -1138,6 +1138,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@navikt/aksel-icons@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@navikt/aksel-icons/-/aksel-icons-3.3.1.tgz#859b455066f5cf05a7b13847eac1661102e686e4"
+  integrity sha512-nVydAD47iybWm8BXsQs+TbL/FRWOBUMgyov6pUler94FZYyl/tIxqKcTkzoi+MbnfZOxhj/XzisavzkXmUSRxA==
+
 "@navikt/ds-css@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@navikt/ds-css/-/ds-css-2.1.1.tgz#9486b09454b2511d9e840c34f488ec44bf7e3a7f"

@@ -6,6 +6,10 @@ import { useState } from "react";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import { downloadFrontpage } from "../api/apiClient";
+import ButtonGroup from "src/components/button/buttonGroup";
+import { ArrowLeftIcon } from "@navikt/aksel-icons";
+import { ButtonText } from "src/data/text";
+import { useRouter } from "next/router";
 
 interface Props {
   url: string;
@@ -31,6 +35,7 @@ const texts = {
 const LastNed: NextPage<Props> = () => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? "lospost" : "ettersending";
@@ -83,6 +88,29 @@ const LastNed: NextPage<Props> = () => {
 
         <BodyShort spacing>{texts.lastSectionBody[submissionType]}</BodyShort>
       </div>
+      <ButtonGroup
+        buttons={[
+          {
+            text: ButtonText.previous,
+            variant: "secondary",
+            icon: <ArrowLeftIcon aria-hidden />,
+            onClick: (e) => {
+              router.back();
+              e.currentTarget.blur();
+            },
+          },
+        ]}
+      />
+      <ButtonGroup
+        buttons={[
+          {
+            text: ButtonText.exit,
+            path: process.env.NEXT_PUBLIC_NAV_URL || "https://nav.no",
+            variant: "tertiary",
+            external: true,
+          },
+        ]}
+      />
     </Layout>
   );
 };

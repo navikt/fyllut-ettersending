@@ -1,3 +1,5 @@
+import { ButtonText } from "../../src/data/text";
+
 describe.only("sendPreviouslySubmittedApplication", () => {
   beforeEach(() => {
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
@@ -13,7 +15,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.get('[type="radio"]').check("byMail");
     cy.get('[type="radio"]').check("hasSocialNumber");
     cy.get('[name="socialSecurityNo"]').click().type("28119135003");
-    cy.get("button").contains("Neste").click();
+    cy.get("button").contains(ButtonText.next).click();
     cy.url().should("include", "/last-ned");
   });
 
@@ -24,7 +26,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.findByRole("checkbox", { name: "Legeerklæring om alminnelig helsetilstand" }).check();
     cy.findByRole("checkbox", { name: "Annen dokumentasjon" }).check();
     cy.get('[type="radio"]').check("digital");
-    cy.get("button").contains("Neste").click();
+    cy.get("button").contains(ButtonText.next).click();
     cy.url().should("include", "/sendinn/opprettSoknadResource?erEttersendelse=true");
     cy.url({ decode: true }).should("include", "skjemanummer=NAV 10-07.50");
     cy.url().should("include", "vedleggsIder=L9,N6");

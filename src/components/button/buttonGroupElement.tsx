@@ -1,6 +1,6 @@
-import { Button } from "@navikt/ds-react";
+import { Button, ButtonProps } from "@navikt/ds-react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useFormState } from "../../data/appState";
 import styles from "./button.module.css";
 
@@ -8,47 +8,46 @@ export interface Props {
   type: ButtonType;
 }
 
-export interface ButtonType {
+export type ButtonType = {
   text: string;
-  path: string;
-  variant?: "primary" | "secondary" | "tertiary";
+  path?: string;
   validateForm?: boolean;
   external?: boolean;
-}
+} & Omit<ButtonProps, "className" | "loading" | "size" | "children">;
 
 const ButtonGroupElement = ({ type }: Props) => {
   const router = useRouter();
-  const { text, path, variant, validateForm, external } = type;
+  const { text, path, validateForm, external, onClick, ...rest } = type;
   const { setValidate } = useFormState();
   const [loading, setLoading] = useState(false);
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setLoading(true);
 
     if (validateForm) {
       const valid = setValidate(true);
-      if (valid) {
-        if (external) {
-          window.location.href = path;
-        } else {
-          await router.push(path);
-        }
+
+      if (!valid) {
+        setLoading(false);
+        return;
       }
-    } else {
-      await router.push(path);
+    }
+
+    if (onClick) {
+      onClick(e);
+    } else if (path) {
+      if (external) {
+        window.location.href = path;
+      } else {
+        await router.push(path);
+      }
     }
 
     setLoading(false);
   };
 
   return (
-    <Button
-      className={styles.button}
-      variant={variant ?? "primary"}
-      onClick={handleClick}
-      loading={loading}
-      size="medium"
-    >
+    <Button className={styles.button} onClick={handleClick} loading={loading} size="medium" {...rest}>
       {text}
     </Button>
   );
