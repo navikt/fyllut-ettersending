@@ -12,5 +12,3 @@ accessPolicy:
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling/fyllut
-  - name: NEXT_PUBLIC_SENDINN_URL
-    value: https://www.nav.no/sendinn/opprettSoknadResource

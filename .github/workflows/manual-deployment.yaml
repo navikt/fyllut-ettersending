@@ -1,0 +1,56 @@
+name: Manually triggered deployment
+run-name: Manual deploy to ${{ inputs.environment }} [${{ github.ref_name }}]
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - prod
+env:
+  IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.environment }}_${{ github.sha }}
+jobs:
+  test:
+    name: "Test"
+    uses: ./.github/workflows/test.yaml
+
+  build:
+    name: "Build"
+    uses: ./.github/workflows/build-push.yaml
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
+
+  deployAppToProd:
+    name: "Deploy app to prod"
+    needs: [build, test]
+    if: github.event.inputs.environment == 'prod'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Deploy to PROD"
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/prod.yaml
+
+  deployAppToDev:
+    name: "Deploy app to dev"
+    needs: [build, test]
+    if: github.event.inputs.environment == 'dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Deploy to DEV"
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev.yaml

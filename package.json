@@ -11,8 +11,10 @@
     "dev:mock": "cross-env MOCK=true next dev -p 3002",
     "build": "next build",
     "build:mock": "cross-env MOCK=true next build",
+    "build:test": "cross-env NODE_ENV=test next build",
     "start": "next start -p 3002",
     "start:mock": "cross-env MOCK=true next start -p 3002",
+    "start:with:test": "cross-env NODE_ENV=test next start -p 3002",
     "lint": "next lint",
     "cypress": "cypress run",
     "cypress:open": "cypress open"

@@ -1,12 +1,24 @@
 name: "Test"
-on: push
+run-name: "Test [${{ github.event_name }}]"
+on: 
+  workflow_call:
+  push:
+    branches-ignore:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**/**.md'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**/**.md'
 
 jobs:
   test:
     name: "Test"
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_SENDINN_URL: https://www.test.no/sendinn/opprettSoknadResource
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -15,11 +27,11 @@ jobs:
       - name: "install dependencies"
         run: yarn install --frozen-lockfile
       - name: "Build application"
-        run: yarn build:mock
+        run: yarn build:test
       - name: "Cypress tests"
         uses: cypress-io/github-action@v4
         with:
           install: false
-          start: "yarn run start:mock"
+          start: "yarn run start:with:test"
           wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
           config-file: "cypress.config.ts"

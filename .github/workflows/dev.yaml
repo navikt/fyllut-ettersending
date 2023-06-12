@@ -1,4 +1,4 @@
-name: "Build and deploy (prod) fyllut-ettersending"
+name: "Build and deploy (dev) fyllut-ettersending"
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
       - '**.md'
       - '**/**.md'
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:prod_${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}:dev_${{ github.sha }}
 jobs:
   test:
     name: "Test"
@@ -17,19 +17,19 @@ jobs:
     name: "Build"
     uses: ./.github/workflows/build-push.yaml
     with: 
-      environment: prod
+      environment: dev
     secrets: inherit
 
-  deployAppToProd:
-    name: "Deploy app to prod"
+  deployAppToDev:
+    name: "Deploy app to dev"
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: "Deploy to PROD"
+      - name: "Deploy to DEV"
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-gcp
+          CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
-          VARS: .nais/prod.yaml
+          VARS: .nais/dev.yaml
