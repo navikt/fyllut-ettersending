@@ -1,0 +1,32 @@
+name: Build and push Docker container
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+env:
+  IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.environment }}_${{ github.sha }}
+jobs:
+  build-and-push:
+    name: "Build"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16.17.1"
+      - name: "install dependencies"
+        run: yarn install --frozen-lockfile
+      - name: Set environment variables
+        run: cp .env.ci.${{ inputs.environment }} .env
+      - name: "Build application"
+        run: yarn build
+      - name: "Login to GitHub Docker Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Build and push the Docker image"
+        run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}

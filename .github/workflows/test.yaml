@@ -1,5 +1,19 @@
 name: "Test"
-on: push
+run-name: "Test [${{ github.event_name }}]"
+on: 
+  workflow_call:
+  push:
+    branches-ignore:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**/**.md'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '**/**.md'
 
 jobs:
   test:
