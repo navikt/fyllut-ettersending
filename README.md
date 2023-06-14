@@ -6,16 +6,13 @@ Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.inte
 
 ### Installere pakker lokalt 
 
-_(Hentet fra https://github.com/navikt/frontend#installere-pakker-lokalt)_
+For å installere npm-pakker med @navikt-scope må du sette en miljøvariabel `NODE_AUTH_TOKEN` med ditt personlige
+access token. Denne miljøvariabelen brukes i `.npmrc`-filen.
 
-For å installere npm pakker med @navikt-scope trenger du en `.npmrc`-fil med følgende:
+Token genererer du under [developer settings på Github](https://github.com/settings/tokens). 
+Den trenger kun `read:packages`. Husk å enable SSO for navikt-orgen!
 
-```
-//npm.pkg.github.com/:_authToken=TOKEN
-@navikt:registry=https://npm.pkg.github.com
-```
-
-Token genererer du under [developer settings på Github](https://github.com/settings/tokens). Den trenger kun `read:packages`. Husk å enable SSO for navikt-orgen!
+_(Les mer om bruk av Github npm registry i NAV her: https://github.com/navikt/frontend#github-npm-registry)_
 
 ### Konfigurasjon
 
