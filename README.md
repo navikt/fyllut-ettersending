@@ -22,7 +22,7 @@ Token genererer du under [developer settings på Github](https://github.com/sett
 Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 
 ```
-FYLLUT_BASE_URL=https://fyllut-experimental.internal.dev.nav.no/fyllut
+FYLLUT_BASE_URL=https://fyllut-preprod.intern.dev.nav.no/fyllut
 ```
 
 ### Lokal server
