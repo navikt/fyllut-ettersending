@@ -9,8 +9,6 @@ accessPolicy:
       - application: skjemautfylling
       - application: skjemautfylling-experimental
       - application: skjemautfylling-delingslenke
-    external:
-      - host: dekoratoren.ekstern.dev.nav.no
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling/fyllut
