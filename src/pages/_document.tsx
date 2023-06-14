@@ -3,7 +3,7 @@ import { DocumentContext } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 const decoratorProps: DecoratorFetchProps = {
-  env: process.env.NODE_ENV === "production" ? "prod" : "dev",
+  env: process.env.NAIS_CLUSTER_NAME === "dev-gcp" ? "dev" : "prod",
   params: {
     simple: true,
   },
