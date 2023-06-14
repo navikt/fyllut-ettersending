@@ -16,8 +16,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.17.1"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@navikt"
       - name: "install dependencies"
         run: yarn install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set environment variables
         run: cp .env.ci.${{ inputs.environment }} .env
       - name: "Build application"

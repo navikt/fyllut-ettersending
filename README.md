@@ -4,6 +4,19 @@ Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.inte
 
 ## Utvikling
 
+### Installere pakker lokalt 
+
+_(Hentet fra https://github.com/navikt/frontend#installere-pakker-lokalt)_
+
+For å installere npm pakker med @navikt-scope trenger du en `.npmrc`-fil med følgende:
+
+```
+//npm.pkg.github.com/:_authToken=TOKEN
+@navikt:registry=https://npm.pkg.github.com
+```
+
+Token genererer du under [developer settings på Github](https://github.com/settings/tokens). Den trenger kun `read:packages`. Husk å enable SSO for navikt-orgen!
+
 ### Konfigurasjon
 
 Man kan lage en lokal konfigurasjonsfil på `.env.local`:
