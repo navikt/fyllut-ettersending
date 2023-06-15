@@ -1,24 +1,26 @@
 import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps } from "@navikt/nav-dekoratoren-moduler/ssr";
-import { DocumentContext } from "next/dist/pages/_document";
+import { DocumentContext, DocumentInitialProps } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 const decoratorProps: DecoratorFetchProps = {
-  env: process.env.NAIS_CLUSTER_NAME === "dev-gcp" ? "dev" : "prod",
+  env: process.env.NODE_ENV === "production" ? "prod" : "dev",
   params: {
     simple: true,
   },
 };
 
+type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorComponents}
+
 class _Document extends Document<{ Decorator: DecoratorComponents }> {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
     let Decorator;
     if (!!process.env.MOCK || process.env.NODE_ENV === "test") {
       Decorator = {
-        Styles: () => {},
-        Scripts: () => {},
-        Header: () => {},
-        Footer: () => {},
+        Styles: () => <></>,
+        Scripts: () => <></>,
+        Header: () => <></>,
+        Footer: () => <></>,
       };
     } else {
       Decorator = await fetchDecoratorReact(decoratorProps);
