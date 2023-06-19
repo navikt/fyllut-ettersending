@@ -33,4 +33,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: "Build and push the Docker image"
-        run: docker build --pull --build-arg node_auth_token=${{ secrets.GITHUB_TOKEN }} --tag ${IMAGE} . && docker push ${IMAGE}
+        run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
