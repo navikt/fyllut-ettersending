@@ -1,10 +1,9 @@
-Dockerfile
-.dockerignore
-node_modules
-README.md
-.next
-.git
-.idea
-.github
-.nais
-.env*
+# Ignore everything
+*
+
+# Allow files and directories
+!/next.config.js
+!/package.json
+!/yarn.lock
+!/public
+!/.next
