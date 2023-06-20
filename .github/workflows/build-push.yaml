@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18.16.0"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@navikt"
       - name: "install dependencies"
         run: yarn install --frozen-lockfile
         env:
