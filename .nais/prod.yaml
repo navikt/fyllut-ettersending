@@ -7,8 +7,6 @@ accessPolicy:
   outbound:
     rules:
       - application: skjemautfylling
-    external:
-      - host: www.nav.no
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling/fyllut

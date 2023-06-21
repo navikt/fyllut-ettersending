@@ -41,10 +41,8 @@ spec:
       {{#each accessPolicy.outbound.rules}}
         - application: {{this.application}}
       {{/each}}
-      external:
-      {{#each accessPolicy.outbound.external}}
-        - host: {{this.host}}
-      {{/each}}
+        - application: nav-dekoratoren
+          namespace: personbruker
   env:
   {{#each env}}
     - name: {{this.name}}
