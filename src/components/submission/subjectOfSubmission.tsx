@@ -2,7 +2,7 @@ import { Select, TextField } from "@navikt/ds-react";
 import { KeyValue } from "../../data/domain";
 import Section from "../section/section";
 import { useFormState } from "../../data/appState";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -12,12 +12,15 @@ interface Props {
 const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
 
+  const updateSubjectInFormData = useCallback((subject: string) => {
+    updateFormData({subjectOfSubmission: subject, titleOfSubmission: archiveSubjects[subject]});
+  }, [archiveSubjects, updateFormData]);
+
   useEffect(() => {
-    if (subject && Object.keys(archiveSubjects).length > 0) {
-      updateFormData({subjectOfSubmission: subject, titleOfSubmission: archiveSubjects[subject]});
+    if (subject && Object.keys(archiveSubjects).length > 0 && subject !== formData.subjectOfSubmission) {
+      updateSubjectInFormData(subject);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [archiveSubjects, subject])
+  }, [archiveSubjects, formData.subjectOfSubmission, subject, updateSubjectInFormData])
 
   return (
     <>
@@ -41,12 +44,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
             name="subjectOfSubmission"
             value={formData.subjectOfSubmission}
             error={errors.subjectOfSubmission}
-            onChange={(evt) => {
-              updateFormData({
-                subjectOfSubmission: evt.target.value,
-                titleOfSubmission: archiveSubjects[evt.target.value],
-              });
-            }}
+            onChange={(evt) => updateSubjectInFormData(evt.target.value)}
           >
             <option></option>
             {Object.keys(archiveSubjects)
