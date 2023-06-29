@@ -24,7 +24,7 @@ const Lospost: NextPage<Props> = () => {
   }, []);
 
   return (
-    <Layout title="Sende inn dokumentasjon">
+    <Layout title="Sende dokumenter til NAV">
       <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} />
     </Layout>
   );
