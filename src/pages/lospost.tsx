@@ -5,10 +5,13 @@ import { KeyValue, NavUnit } from "../data/domain";
 import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { fetchArchiveSubjects, fetchNavUnits } from "../api/apiClient";
+import {GetServerSidePropsContext} from "next/types";
 
-interface Props {}
+interface Props {
+  tema?: string;
+}
 
-const Lospost: NextPage<Props> = () => {
+const Lospost: NextPage<Props> = ({tema}) => {
   const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
 
@@ -25,9 +28,17 @@ const Lospost: NextPage<Props> = () => {
 
   return (
     <Layout title="Sende dokumenter til NAV">
-      <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} />
+      <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
     </Layout>
   );
 };
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const {tema} = context.query as {tema: string};
+  if (tema) {
+    return {props: {tema}};
+  }
+  return {props: {}};
+}
 
 export default Lospost;

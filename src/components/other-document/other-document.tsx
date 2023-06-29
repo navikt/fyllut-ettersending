@@ -13,12 +13,13 @@ import styles from "./other-document.module.css";
 interface Props {
   archiveSubjects: KeyValue;
   navUnits: NavUnit[];
+  subject?: string;
 }
 
 const OtherDocument: NextPage<Props> = (props) => {
   const router = useRouter();
 
-  const { archiveSubjects, navUnits } = props;
+  const { archiveSubjects, navUnits, subject } = props;
 
   return (
     <>
@@ -27,7 +28,7 @@ const OtherDocument: NextPage<Props> = (props) => {
         Fyll ut feltene nedenfor og klikk <b>Gå videre</b>. På neste side kan du laste ned førsteside
         til innsendingen din. Du trenger ikke ha dokumentene klare for å laste ned førsteside.
       </Ingress>
-      <SubjectOfSubmission archiveSubjects={archiveSubjects} />
+      <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
       <ChooseUser navUnits={navUnits} />
 
       <ButtonGroup
