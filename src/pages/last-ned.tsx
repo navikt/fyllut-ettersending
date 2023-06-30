@@ -62,7 +62,7 @@ const LastNed: NextPage<Props> = () => {
 
       <Section>
         <Button variant="primary" onClick={download} size="medium" loading={loading}>
-          Last ned førsteside
+          {ButtonText.downloadCoverPage}
         </Button>
       </Section>
 

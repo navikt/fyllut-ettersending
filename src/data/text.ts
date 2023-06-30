@@ -5,6 +5,7 @@ enum ButtonText {
   sendAttachment = "Ettersend vedlegg",
   otherDocumentation = "Annen dokumentasjon",
   exit = "Avslutt",
+  downloadCoverPage = "Last ned førsteside",
 }
 
 const ErrorMessages = {
