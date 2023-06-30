@@ -7,6 +7,8 @@ import ButtonGroup from "../button/buttonGroup";
 import { Paths, ButtonText } from "../../data/text";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/router";
+import { Ingress } from "@navikt/ds-react";
+import styles from "./other-document.module.css";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -20,6 +22,11 @@ const OtherDocument: NextPage<Props> = (props) => {
 
   return (
     <>
+      <Ingress className={styles.ingress}>
+        Når du skal sende dokumenter til NAV i posten må du bruke en førsteside for innsending.
+        Fyll ut feltene nedenfor og klikk <b>Gå videre</b>. På neste side kan du laste ned førsteside
+        til innsendingen din. Du trenger ikke ha dokumentene klare for å laste ned førsteside.
+      </Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} />
       <ChooseUser navUnits={navUnits} />
 
