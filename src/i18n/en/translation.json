@@ -1,0 +1,20 @@
+{
+  "test": "This is english",
+  "lospost": {
+    "title": "Submit documents to NAV"
+  },
+  "components": {
+    "otherDocument": {
+
+    },
+    "submission": {
+      "otherDocumentation": {
+        "label": "What documentation do you want to send to NAV?",
+        "description": "Provide a descriptive name of the documentation you will upload."
+      },
+      "subject": {
+        "label": "Choose a subject for the submission"
+      }
+    }
+  }
+}

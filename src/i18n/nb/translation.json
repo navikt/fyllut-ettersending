@@ -1,0 +1,20 @@
+{
+  "test": "Dette er bokmål",
+  "lospost": {
+    "title": "Sende dokumenter til NAV"
+  },
+  "components": {
+    "otherDocument": {
+
+    },
+    "submission": {
+      "otherDocumentation": {
+        "label": "Hvilken dokumentasjon vil du sende til NAV?",
+        "description": "Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
+      },
+      "subject": {
+        "label": "Velg tema for innsendingen"
+      }
+    }
+  }
+}

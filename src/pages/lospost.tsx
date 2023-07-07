@@ -6,6 +6,7 @@ import Layout from "../components/layout/layout";
 import OtherDocument from "../components/other-document/other-document";
 import { fetchArchiveSubjects, fetchNavUnits } from "../api/apiClient";
 import {GetServerSidePropsContext} from "next/types";
+import {useTranslation} from "react-i18next";
 
 interface Props {
   tema?: string;
@@ -14,6 +15,7 @@ interface Props {
 const Lospost: NextPage<Props> = ({tema}) => {
   const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
+  const {t} = useTranslation();
 
   const fetchData = useCallback(async () => {
     const [archiveSubjectsResponse, navUnitsResponse] = await Promise.all([fetchArchiveSubjects(), fetchNavUnits()]);
@@ -27,7 +29,7 @@ const Lospost: NextPage<Props> = ({tema}) => {
   }, []);
 
   return (
-    <Layout title="Sende dokumenter til NAV">
+    <Layout title={t("lospost.title")}>
       <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
     </Layout>
   );
