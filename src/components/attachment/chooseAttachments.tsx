@@ -4,7 +4,6 @@ import Section from "../section/section";
 import styles from "../attachment/attachment.module.css";
 import { useFormState } from "../../data/appState";
 import { hasOtherAttachment } from "../../utils/formDataUtil";
-import { useEffect, useState } from "react";
 import { isSubmissionTypeByMail } from "../../utils/submissionUtil";
 
 interface Props {
@@ -13,15 +12,6 @@ interface Props {
 
 const ChooseAttachments = ({ form }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
-  const [attachmentKeys, setAttachmentKeys] = useState<string[]>([]);
-
-  useEffect(() => {
-    const formAttachmentKeys = formData.attachments?.map((attachment) => attachment.key);
-    if (formAttachmentKeys && formAttachmentKeys.length > 0) {
-      setAttachmentKeys(formAttachmentKeys);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -29,25 +19,16 @@ const ChooseAttachments = ({ form }: Props) => {
         <Section>
           <CheckboxGroup
             legend="Hvilke vedlegg skal du ettersende?"
-            value={attachmentKeys}
-            onChange={(values) => {
-              setAttachmentKeys(values);
-            }}
+            value={formData.attachments ? formData.attachments.map((attachment) => attachment.key) : []}
             size="medium"
+            onChange={(checked) => {
+              const attachments = form.attachments?.filter((attachment) => checked.includes(attachment.key));
+              updateFormData({ attachments });
+            }}
             error={errors.attachments}
           >
             {form.attachments.map((attachment) => (
-              <Checkbox
-                key={attachment.key}
-                value={attachment.key}
-                name={attachment.key}
-                onChange={(e) => {
-                  const attachments = e.target.checked
-                    ? [...(formData.attachments ?? []), attachment]
-                    : formData.attachments?.filter((a) => a.key !== attachment.key);
-                  updateFormData({ attachments });
-                }}
-              >
+              <Checkbox key={attachment.key} value={attachment.key} name={attachment.key}>
                 {attachment.label}
               </Checkbox>
             ))}

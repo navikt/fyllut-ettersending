@@ -69,7 +69,7 @@ export function FormDataProvider({ children }: Props) {
   const resetFormData = (formData?: FormData) => {
     setValidateState(false);
     if (formData) {
-      setFormData(formData);
+      setFormData({ ...formData, attachments: [] });
     } else {
       setFormData({});
     }
