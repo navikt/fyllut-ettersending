@@ -5,7 +5,6 @@ describe("reset", () => {
     cy.wait("@getForms");
   });
 
-  // TODO: This test fails due to a known bug (https://trello.com/c/aLlQ7Ntf/1308-valg-av)
   it("resets formData when a different form is selected than the one previously selected", () => {
     // Skriv inn "test" i tekstboksen
     cy.findAllByRole("textbox").focus().type("test");
