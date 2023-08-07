@@ -29,6 +29,6 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.get("button").contains(ButtonText.next).click();
     cy.url().should("include", "/sendinn/opprettSoknadResource?erEttersendelse=true");
     cy.url({ decode: true }).should("include", "skjemanummer=NAV 10-07.50");
-    cy.url().should("include", "vedleggsIder=L9,N6");
+    cy.url().should("include", "vedleggsIder=N6,L9");
   });
 });
