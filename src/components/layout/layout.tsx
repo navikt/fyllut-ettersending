@@ -14,17 +14,10 @@ interface Props {
 const Layout = ({ title, children }: Props) => {
   const router = useRouter();
 
-  return (
-    <div className={styles.layout}>
-      <header className={classNames(styles.header, styles.content)}>
-        <Heading size="xlarge" level="1">
-          {title ?? "Ettersende dokumentasjon"}
-        </Heading>
-      </header>
-
-      <hr className={styles.hr} />
-
-      <div className={styles.content}>
+  // Only show back link if we are not on the front page
+  const backLink = () => {
+    if (router.route !== "/") {
+      return (
         <Link
           href="#"
           onClick={(e) => {
@@ -36,7 +29,22 @@ const Layout = ({ title, children }: Props) => {
           <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
           Gå tilbake
         </Link>
-        {children}
+      );
+    }
+  };
+
+  return (
+    <div className={styles.layout}>
+      <header className={classNames(styles.header, styles.content)}>
+        <Heading size="xlarge" level="1">
+          {title ?? "Ettersende dokumentasjon"}
+        </Heading>
+      </header>
+
+      <hr className={styles.hr} />
+      <div className={styles.content}>
+        {backLink()}
+        <div className={styles.children}>{children}</div>
       </div>
     </div>
   );
