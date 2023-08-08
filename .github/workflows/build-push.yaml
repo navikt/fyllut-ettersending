@@ -10,6 +10,9 @@ jobs:
   build-and-push:
     name: "Build"
     runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
