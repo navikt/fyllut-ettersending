@@ -4,11 +4,12 @@ import { KeyValue, NavUnit } from "../../data/domain";
 import SubjectOfSubmission from "../submission/subjectOfSubmission";
 import ChooseUser from "../submission/chooseUser";
 import ButtonGroup from "../button/buttonGroup";
-import { Paths, ButtonText } from "../../data/text";
+import { Paths } from "../../data/text";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/router";
 import { Ingress } from "@navikt/ds-react";
 import styles from "./other-document.module.css";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -18,15 +19,15 @@ interface Props {
 
 const OtherDocument: NextPage<Props> = (props) => {
   const router = useRouter();
+  const { t } = useTranslation("lospost");
+  const { t: tCommon } = useTranslation("common");
 
   const { archiveSubjects, navUnits, subject } = props;
 
   return (
     <>
       <Ingress className={styles.ingress}>
-        Når du skal sende dokumenter til NAV i posten må du bruke en førsteside for innsending.
-        Fyll ut feltene nedenfor og klikk <b>Gå videre</b>. På neste side kan du laste ned førsteside
-        til innsendingen din. Du trenger ikke ha dokumentene klare for å laste ned førsteside.
+        {t("ingress", {interpolation: {escapeValue: false}})}
       </Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
       <ChooseUser navUnits={navUnits} />
@@ -34,14 +35,14 @@ const OtherDocument: NextPage<Props> = (props) => {
       <ButtonGroup
         buttons={[
           {
-            text: ButtonText.next,
+            text: tCommon("button.next"),
             path: Paths.downloadPage,
             validateForm: true,
             icon: <ArrowRightIcon aria-hidden />,
             iconPosition: "right",
           },
           {
-            text: ButtonText.previous,
+            text: tCommon("button.previous"),
             variant: "secondary",
             icon: <ArrowLeftIcon aria-hidden />,
             onClick: (e) => {
@@ -55,7 +56,7 @@ const OtherDocument: NextPage<Props> = (props) => {
         center
         buttons={[
           {
-            text: ButtonText.cancel,
+            text: tCommon("button.cancel"),
             path: Paths.base,
             variant: "tertiary",
           },

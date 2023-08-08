@@ -1,0 +1,11 @@
+{
+  "title": "Sende dokumenter til NAV",
+  "ingress": "Når du skal sende dokumenter til NAV i posten må du bruke en førsteside for innsending. Fyll ut feltene nedenfor og klikk \"Gå videre\". På neste side kan du laste ned førsteside til innsendingen din. Du trenger ikke ha dokumentene klare for å laste ned førsteside.",
+  "other-documentation-title": {
+    "label": "Hvilken dokumentasjon vil du sende til NAV?",
+    "description": "Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
+  },
+  "subject-of-submission": {
+    "label": "Velg tema for innsendingen"
+  }
+}

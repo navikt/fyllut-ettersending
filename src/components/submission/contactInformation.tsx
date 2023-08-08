@@ -4,6 +4,7 @@ import { NavUnit } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./submission.module.css";
 import { useFormState } from "../../data/appState";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   navUnits?: NavUnit[] | undefined;
@@ -11,6 +12,7 @@ interface Props {
 
 const ContactInformation = ({ navUnits }: Props) => {
   const { formData, updateUserData, errors } = useFormState();
+  const { t } = useTranslation("common");
 
   const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateUserData({ [e.target.name]: e.target.value });
@@ -20,7 +22,7 @@ const ContactInformation = ({ navUnits }: Props) => {
     <>
       <Section>
         <TextField
-          label="Fornavn"
+          label={t("choose-user.contact-information.first-name")}
           value={formData.userData?.firstName ?? ""}
           name="firstName"
           onChange={handleUserDataInputChange}
@@ -29,7 +31,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           className={styles.input}
         />
         <TextField
-          label="Etternavn"
+          label={t("choose-user.contact-information.last-name")}
           value={formData.userData?.lastName ?? ""}
           name="lastName"
           onChange={handleUserDataInputChange}
@@ -38,7 +40,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           className={styles.input}
         />
         <TextField
-          label="Gateadresse"
+          label={t("choose-user.contact-information.street-name")}
           value={formData.userData?.streetName ?? ""}
           name="streetName"
           onChange={handleUserDataInputChange}
@@ -47,7 +49,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           className={styles.input}
         />
         <TextField
-          label="Postnummer"
+          label={t("choose-user.contact-information.postal-code")}
           value={formData.userData?.postalCode ?? ""}
           name="postalCode"
           onChange={handleUserDataInputChange}
@@ -56,7 +58,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           className={styles.input}
         />
         <TextField
-          label="Poststed"
+          label={t("choose-user.contact-information.city")}
           value={formData.userData?.city ?? ""}
           name="city"
           onChange={handleUserDataInputChange}
@@ -65,7 +67,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           className={styles.input}
         />
         <TextField
-          label="Land"
+          label={t("choose-user.contact-information.country")}
           value={formData.userData?.country ?? ""}
           name="country"
           onChange={handleUserDataInputChange}
@@ -77,22 +79,22 @@ const ContactInformation = ({ navUnits }: Props) => {
 
       <Section>
         <RadioGroup
-          legend="Har du vært i kontakt med NAV om denne saken tidligere?"
+          legend={t("choose-user.contact-information.nav-unit-contact-legend")}
           size="medium"
           onChange={(value) => updateUserData({ navUnitContact: value })}
           value={formData.userData?.navUnitContact ?? ""}
           name="navUnitContact"
           error={errors.navUnitContact}
         >
-          <Radio value={true}>Ja</Radio>
-          <Radio value={false}>Nei</Radio>
+          <Radio value={true}>{t("yes")}</Radio>
+          <Radio value={false}>{t("no")}</Radio>
         </RadioGroup>
       </Section>
 
       {formData.userData?.navUnitContact && (
         <Section>
           <Select
-            label="Hvilken NAV-enhet har du vært i kontakt med?"
+            label={t("choose-user.contact-information.nav-unit-select-label")}
             size="medium"
             onChange={handleUserDataInputChange}
             value={formData.userData?.navUnit ?? ""}

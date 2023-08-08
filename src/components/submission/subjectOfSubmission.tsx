@@ -3,6 +3,7 @@ import { KeyValue } from "../../data/domain";
 import Section from "../section/section";
 import { useFormState } from "../../data/appState";
 import {useCallback, useEffect} from "react";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -11,6 +12,7 @@ interface Props {
 
 const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
+  const { t } = useTranslation("lospost");
 
   const updateSubjectInFormData = useCallback((subject: string) => {
     updateFormData({subjectOfSubmission: subject, titleOfSubmission: archiveSubjects[subject]});
@@ -26,8 +28,8 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
     <>
       <Section>
         <TextField
-          label="Hvilken dokumentasjon vil du sende til NAV?"
-          description="Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
+          label={t("other-documentation-title.label")}
+          description={t("other-documentation-title.description")}
           name="otherDocumentationTitle"
           value={formData.otherDocumentationTitle ?? ""}
           size="medium"
@@ -39,7 +41,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
       { !subject &&
         <Section>
           <Select
-            label="Velg tema for innsendingen"
+            label={t("subject-of-submission.label")}
             size="medium"
             name="subjectOfSubmission"
             value={formData.subjectOfSubmission}

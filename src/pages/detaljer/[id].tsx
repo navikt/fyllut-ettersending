@@ -24,6 +24,7 @@ import {
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
+import { getServerSideTranslations } from "../../utils/i18nUtil";
 
 interface Props {
   form: Form;
@@ -150,9 +151,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const id = context.params?.id as string;
   const form = await getForm(id);
+  const translations = await getServerSideTranslations(context.locale, ["common"]);
 
   return {
-    props: { form, id },
+    props: { form, id, ...translations },
   };
 }
 

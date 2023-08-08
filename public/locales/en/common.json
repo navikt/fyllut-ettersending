@@ -2,7 +2,34 @@
   "test": "This is english",
   "button": {
     "next": "Next",
-    "back": "Previous",
+    "previous": "Previous",
     "cancel": "Cancel"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "choose-user": {
+    "user-type": {
+      "legend": "(en) Hvem gjelder innsendelsen for?",
+      "choice-has-ssn": "(en) En person som har fødselsnummer eller D-nummer",
+      "choice-no-ssn": "(en) En person som ikke har fødselsnummer eller D-nummer",
+      "choice-other": "(en) Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
+    },
+    "ssn-input": {
+      "label": "(en) Fødselsnummer / D-nummer",
+      "placeholder": "(en) Skriv inn tekst"
+    },
+    "contact-information": {
+      "first-name": "(en) Fornavn",
+      "last-name": "(en) Etternavn",
+      "street-name": "(en) Gateadresse",
+      "postal-code": "(en) Postnummer",
+      "city": "(en) Poststed",
+      "country": "(en) Land",
+      "nav-unit-contact-legend": "(en) Har du vært i kontakt med NAV om denne saken tidligere?",
+      "nav-unit-select-label": "(en) Hvilken NAV-enhet har du vært i kontakt med?"
+    },
+    "nav-unit-input": {
+      "label": "(en) Velg hvilken NAV-enhet som skal motta innsendingen"
+    }
   }
 }
