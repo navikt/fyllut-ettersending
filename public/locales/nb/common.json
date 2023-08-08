@@ -1,0 +1,8 @@
+{
+  "test": "Dette er bokmål",
+  "button": {
+    "next": "Gå videre",
+    "back": "Gå tilbake",
+    "cancel": "Avbryt"
+  }
+}

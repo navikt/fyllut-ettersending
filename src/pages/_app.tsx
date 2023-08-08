@@ -1,6 +1,8 @@
 import type { AppProps } from "next/app";
 import "./styles.css";
 import Head from "next/head";
+import { appWithTranslation } from "next-i18next";
+
 import { FormDataProvider } from "../data/appState";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -14,4 +16,4 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);

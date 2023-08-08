@@ -1,0 +1,12 @@
+{
+  "title": "(en) Sende inn dokumentasjon",
+  "heading": "(en) Hva gjelder innsendingen?",
+  "attachments": {
+    "description": "(en) Velg \"Ettersend vedlegg\" hvis du skal ettersende dokumentasjon til en søknad du har sendt tidligere.",
+    "button-text": "(en) Ettersend vedlegg"
+  },
+  "other-documentation": {
+    "description": "(en) Velg \"Annen dokumentasjon\" hvis du vil sende dokumentasjon som ikke er knyttet til en søknad.",
+    "button-text": "(en) Annen dokumentasjon"
+  }
+}

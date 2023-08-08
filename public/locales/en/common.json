@@ -1,0 +1,8 @@
+{
+  "test": "This is english",
+  "button": {
+    "next": "Next",
+    "back": "Previous",
+    "cancel": "Cancel"
+  }
+}
