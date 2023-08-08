@@ -1,6 +1,10 @@
 name: Build and push Docker container
 on:
   workflow_call:
+    outputs:
+      image:
+        description: "The docker image"
+        value: ${{ jobs.build-and-push.outputs.image }}
     inputs:
       environment:
         required: true
