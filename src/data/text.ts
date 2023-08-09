@@ -1,13 +1,3 @@
-enum ButtonText {
-  next = "Gå videre",
-  previous = "Gå tilbake",
-  cancel = "Avbryt",
-  sendAttachment = "Ettersend vedlegg",
-  otherDocumentation = "Annen dokumentasjon",
-  exit = "Avslutt",
-  downloadCoverPage = "Last ned førsteside",
-}
-
 const ErrorMessages = {
   userType: "Du må velge hvem gjelder innsendelsen for",
   socialSecurityNo: "Fødselsnummer / D-nummer er ikke gyldig",
@@ -35,4 +25,4 @@ enum Paths {
   formDocumentation = "/ettersendelse",
 }
 
-export { Paths, ButtonText, ErrorMessages };
+export { Paths, ErrorMessages };

@@ -1,4 +1,4 @@
-import { ButtonText } from "../../src/data/text";
+import {TestButtonText} from "./testUtils";
 
 describe("sendAnotherDocument", () => {
 
@@ -39,11 +39,11 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="country"]').click().type("Norway");
       cy.findAllByRole("radio").check("false");
 
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", {name: ButtonText.downloadCoverPage}).should("exist").click();
+      cy.findByRole("button", {name: TestButtonText.downloadCoverPage}).should("exist").click();
     });
 
   });
@@ -67,11 +67,11 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="subjectOfSubmission"]').should("not.exist");
       cy.findAllByRole("radio").check("hasSocialNumber");
       cy.get('[name="socialSecurityNo"]').click().type("16020256145");
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", {name: ButtonText.downloadCoverPage}).should("exist").click();
+      cy.findByRole("button", {name: TestButtonText.downloadCoverPage}).should("exist").click();
     });
 
   });
