@@ -13,7 +13,7 @@ import Layout from "../../components/layout/layout";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
-import { ButtonText, Paths } from "../../data/text";
+import { Paths } from "../../data/text";
 import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
 import {
   createSubmissionUrl,
@@ -25,6 +25,7 @@ import {
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 import { getServerSideTranslations } from "../../utils/i18nUtil";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   form: Form;
@@ -36,6 +37,8 @@ const Detaljer: NextPage<Props> = (props) => {
   const { form, id } = props;
   const { formData, resetFormData } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
+  const { t } = useTranslation("detaljer");
+  const { t: tCommon } = useTranslation("common");
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -71,11 +74,11 @@ const Detaljer: NextPage<Props> = (props) => {
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div>{t("loading-text")}</div>;
   }
 
   const downloadButton: ButtonType = {
-    text: ButtonText.next,
+    text: tCommon("button.next"),
     path: Paths.downloadPage,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
@@ -83,7 +86,7 @@ const Detaljer: NextPage<Props> = (props) => {
   };
 
   const submitButton: ButtonType = {
-    text: ButtonText.next,
+    text: tCommon("button.next"),
     external: true,
     path: createSubmissionUrl(form, formData),
     validateForm: true,
@@ -92,7 +95,7 @@ const Detaljer: NextPage<Props> = (props) => {
   };
 
   return (
-    <Layout title="Ettersende dokumentasjon i posten">
+    <Layout title={t("title")}>
       <Section>
         <Heading size="large" level="2">
           {form.title}
@@ -117,7 +120,7 @@ const Detaljer: NextPage<Props> = (props) => {
             buttons={[
               formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
               {
-                text: ButtonText.previous,
+                text: tCommon("button.previous"),
                 variant: "secondary",
                 icon: <ArrowLeftIcon aria-hidden />,
                 onClick: (e) => {
@@ -131,7 +134,7 @@ const Detaljer: NextPage<Props> = (props) => {
             center
             buttons={[
               {
-                text: ButtonText.cancel,
+                text: tCommon("button.cancel"),
                 path: Paths.base,
                 variant: "tertiary",
               },
@@ -139,7 +142,7 @@ const Detaljer: NextPage<Props> = (props) => {
           />
         </>
       ) : (
-        <Alert variant="info">Dette skjemaet har ingen vedlegg som kan ettersendes.</Alert>
+        <Alert variant="info">{t("no-attachments-alert")}</Alert>
       )}
     </Layout>
   );
@@ -151,7 +154,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const id = context.params?.id as string;
   const form = await getForm(id);
-  const translations = await getServerSideTranslations(context.locale, ["common"]);
+  const translations = await getServerSideTranslations(context.locale, ["common", "detaljer"]);
 
   return {
     props: { form, id, ...translations },
