@@ -3,7 +3,8 @@
   "button": {
     "next": "Gå vidare",
     "previous": "Gå tilbake",
-    "cancel": "Avbryt"
+    "cancel": "Avbryt",
+    "exit": "Avslutt"
   },
   "yes": "Ja",
   "no": "Nei",

@@ -3,7 +3,8 @@
   "button": {
     "next": "Next",
     "previous": "Previous",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "exit": "Exit"
   },
   "yes": "Yes",
   "no": "No",
