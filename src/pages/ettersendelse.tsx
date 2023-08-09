@@ -8,12 +8,14 @@ import Layout from "../components/layout/layout";
 import { fetchForms } from "../api/apiClient";
 import { getServerSideTranslations } from "../utils/i18nUtil";
 import { GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
 
 interface Props {}
 
 const Ettersendelse: NextPage<Props> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [forms, setForms] = useState<Form[]>([]);
+  const { t } = useTranslation("ettersendelse");
 
   const fetchData = useCallback(async () => {
     const [formsResponse] = await Promise.all([fetchForms()]);
@@ -27,10 +29,10 @@ const Ettersendelse: NextPage<Props> = () => {
   }, []);
 
   return (
-    <Layout title="Ettersende dokumentasjon">
+    <Layout title={t("title")}>
       {loading ? (
         <div className="loader">
-          <Loader size="xlarge" title="Henter data..." />
+          <Loader size="xlarge" title={t("loading-text")} />
         </div>
       ) : (
         <FormSearch forms={forms} />
@@ -40,7 +42,7 @@ const Ettersendelse: NextPage<Props> = () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
-  const translations = await getServerSideTranslations(locale, ["common"]);
+  const translations = await getServerSideTranslations(locale, ["common", "ettersendelse"]);
   return {props: {...translations}};
 }
 
