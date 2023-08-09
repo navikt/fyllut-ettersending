@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext, useState } from "react";
 import { FormData, KeyValue, UserData } from "./domain";
 import { validateFormData } from "../utils/validator";
+import { useTranslation } from "next-i18next";
 
 interface AppStateType {
   formData: FormData;
@@ -25,6 +26,7 @@ export function FormDataProvider({ children }: Props) {
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
+  const {t} = useTranslation("validator");
 
   const updateFormData = (values: FormData) => {
     const data = {
@@ -33,7 +35,7 @@ export function FormDataProvider({ children }: Props) {
     };
     setFormData(data);
     if (validateState) {
-      const errorMessages = validateFormData(data);
+      const errorMessages = validateFormData(data, t);
       setErrors(errorMessages ?? {});
     }
   };
@@ -48,7 +50,7 @@ export function FormDataProvider({ children }: Props) {
     };
     setFormData(data);
     if (validateState) {
-      const errorMessages = validateFormData(data);
+      const errorMessages = validateFormData(data, t);
       setErrors(errorMessages ?? {});
     }
   };
@@ -56,7 +58,7 @@ export function FormDataProvider({ children }: Props) {
   const setValidate = (validate: boolean) => {
     setValidateState(validate);
     if (validate) {
-      const errorMessages = validateFormData(formData);
+      const errorMessages = validateFormData(formData, t);
       setErrors(errorMessages ?? {});
       return !errorMessages;
     } else {

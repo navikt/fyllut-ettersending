@@ -154,7 +154,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const id = context.params?.id as string;
   const form = await getForm(id);
-  const translations = await getServerSideTranslations(context.locale, ["common", "detaljer"]);
+  const translations = await getServerSideTranslations(context.locale, ["common", "detaljer", "validator"]);
 
   return {
     props: { form, id, ...translations },

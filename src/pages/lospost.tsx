@@ -38,7 +38,7 @@ const Lospost: NextPage<Props> = ({tema}) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const {tema} = context.query as {tema: string};
-  const translations = await getServerSideTranslations(context.locale, ["lospost", "common"]);
+  const translations = await getServerSideTranslations(context.locale, ["lospost", "common", "validator"]);
   if (tema) {
     return {props: {tema, ...translations}};
   }

@@ -1,61 +1,61 @@
 import fnrValidator from "@navikt/fnrvalidator";
+import { TFunction } from "next-i18next";
 import { FormData, KeyValue, SubmissionType, UserType } from "../data/domain";
 import { hasOtherAttachment } from "./formDataUtil";
-import { ErrorMessages } from "../data/text";
 
-const validateFormData = (formData: FormData) => {
+const validateFormData = (formData: FormData, t: TFunction) => {
   let formErrors: KeyValue = {};
 
   if (formData.formId && (!formData.attachments || formData.attachments.length === 0)) {
-    formErrors.attachments = ErrorMessages.attachments;
+    formErrors.attachments = t("attachments");
   }
 
   if (formData.submissionType !== SubmissionType.digital) {
     if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
-      formErrors.otherDocumentation = ErrorMessages.otherDocumentation;
+      formErrors.otherDocumentation = t("otherDocumentation");
     }
 
     if (!formData.userData?.type) {
-      formErrors.userType = ErrorMessages.userType;
+      formErrors.userType = t("userType");
     } else if (formData.userData?.type === UserType.hasSocialNumber) {
       if (!formData.userData?.socialSecurityNo) {
-        formErrors.socialSecurityNo = ErrorMessages.socialSecurityNoIsEmpty;
+        formErrors.socialSecurityNo = t("socialSecurityNoIsEmpty");
       } else if (fnrValidator?.idnr(formData.userData.socialSecurityNo).status === "invalid") {
-        formErrors.socialSecurityNo = ErrorMessages.socialSecurityNo;
+        formErrors.socialSecurityNo = t("socialSecurityNo");
       }
     } else if (formData.userData?.type === UserType.noSocialNumber) {
       if (!formData.userData?.firstName) {
-        formErrors.firstName = ErrorMessages.firstName;
+        formErrors.firstName = t("firstName");
       }
       if (!formData.userData?.lastName) {
-        formErrors.lastName = ErrorMessages.lastName;
+        formErrors.lastName = t("lastName");
       }
       if (!formData.userData?.streetName) {
-        formErrors.streetName = ErrorMessages.streetName;
+        formErrors.streetName = t("streetName");
       }
       if (!formData.userData?.postalCode) {
-        formErrors.postalCode = ErrorMessages.postalCode;
+        formErrors.postalCode = t("postalCode");
       }
       if (!formData.userData?.city) {
-        formErrors.city = ErrorMessages.city;
+        formErrors.city = t("city");
       }
       if (!formData.userData?.country) {
-        formErrors.country = ErrorMessages.country;
+        formErrors.country = t("country");
       }
 
       if (formData.userData?.navUnitContact === undefined) {
-        formErrors.navUnitContact = ErrorMessages.navUnitContact;
+        formErrors.navUnitContact = t("navUnitContact");
       } else if (formData.userData?.navUnitContact && !formData.userData?.navUnit) {
-        formErrors.navUnit = ErrorMessages.navUnitContactSelect;
+        formErrors.navUnit = t("navUnitContactSelect");
       }
     } else if (formData.userData?.type === UserType.other) {
       if (!formData.userData?.navUnit) {
-        formErrors.navUnit = ErrorMessages.navUnit;
+        formErrors.navUnit = t("navUnit");
       }
     }
 
     if (!formData.formId && !formData.subjectOfSubmission) {
-      formErrors.subjectOfSubmission = ErrorMessages.subjectOfSubmission;
+      formErrors.subjectOfSubmission = t("subjectOfSubmission");
     }
   }
 

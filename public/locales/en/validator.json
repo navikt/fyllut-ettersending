@@ -1,0 +1,18 @@
+{
+  "userType": "(en) Du må velge hvem gjelder innsendelsen for",
+  "socialSecurityNo": "(en) Fødselsnummer / D-nummer er ikke gyldig",
+  "socialSecurityNoIsEmpty": "(en) Du må fylle ut fødselsnummer / D-nummer",
+  "firstName": "(en) Du må fylle ut fornavn",
+  "lastName": "(en) Du må fylle ut etternavn",
+  "streetName": "(en) Du må fylle ut gateadresse",
+  "postalCode": "(en) Du må fylle ut postnummer",
+  "city": "(en) Du må fylle ut poststed",
+  "country": "(en) Du må fylle ut land",
+  "otherDocumentation": "(en) Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
+  "subjectOfSubmission": "(en) Du må velge tema for innsendingen",
+  "navUnitContact": "(en) Du må oppgi om du vært i kontakt med NAV om denne saken tidligere",
+  "navUnitContactSelect": "(en) Du må velge hvilken NAV-enhet har du vært i kontakt med",
+  "navUnit": "(en) Du må velge hvilken NAV-enhet som skal motta innsendingen",
+  "chooseOne": "(en) Velg ett alternativ",
+  "attachments": "(en) Velg minst et vedlegg"
+}
