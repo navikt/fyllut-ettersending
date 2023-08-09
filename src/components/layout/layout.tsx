@@ -10,15 +10,16 @@ import { useTranslation } from "next-i18next";
 interface Props {
   title?: string;
   children: ReactNode;
+  showBackLink?: boolean;
 }
 
-const Layout = ({ title, children }: Props) => {
+const Layout = ({ title, children, showBackLink = true }: Props) => {
   const router = useRouter();
   const {t} = useTranslation("common");
 
   // Only show back link if we are not on the front page
   const backLink = () => {
-    if (router.route !== "/") {
+    if (router.route !== "/" && showBackLink) {
       return (
         <Link
           href="#"
