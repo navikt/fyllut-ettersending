@@ -5,6 +5,7 @@ import { Heading, Link } from "@navikt/ds-react";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   title?: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const Layout = ({ title, children }: Props) => {
   const router = useRouter();
+  const {t} = useTranslation("common");
 
   // Only show back link if we are not on the front page
   const backLink = () => {
@@ -27,7 +29,7 @@ const Layout = ({ title, children }: Props) => {
           className={styles.backLink}
         >
           <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
-          Gå tilbake
+          {t("button.previous")}
         </Link>
       );
     }
@@ -37,7 +39,7 @@ const Layout = ({ title, children }: Props) => {
     <div className={styles.layout}>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          {title ?? "Ettersende dokumentasjon"}
+          {title ?? t("heading.default-title")}
         </Heading>
       </header>
 

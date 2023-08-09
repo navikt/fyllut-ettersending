@@ -10,6 +10,8 @@ import ButtonGroup from "src/components/button/buttonGroup";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import { ButtonText } from "src/data/text";
 import { useRouter } from "next/router";
+import { getServerSideTranslations } from "../utils/i18nUtil";
+import { GetStaticProps } from "next";
 
 interface Props {
   url: string;
@@ -114,5 +116,10 @@ const LastNed: NextPage<Props> = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+  const translations = await getServerSideTranslations(locale, ["common"]);
+  return {props: {...translations}};
+}
 
 export default LastNed;

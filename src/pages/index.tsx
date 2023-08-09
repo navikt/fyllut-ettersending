@@ -46,11 +46,8 @@ const Home: NextPage<Props> = () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
-  return {
-    props: {
-      ...await getServerSideTranslations(locale, ["home"]),
-    }
-  }
+  const translations = await getServerSideTranslations(locale, ["common", "home"]);
+  return {props: {...translations}};
 }
 
 export default Home;

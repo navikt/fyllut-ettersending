@@ -6,6 +6,8 @@ import { Form } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import Layout from "../components/layout/layout";
 import { fetchForms } from "../api/apiClient";
+import { getServerSideTranslations } from "../utils/i18nUtil";
+import { GetStaticProps } from "next";
 
 interface Props {}
 
@@ -36,5 +38,10 @@ const Ettersendelse: NextPage<Props> = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+  const translations = await getServerSideTranslations(locale, ["common"]);
+  return {props: {...translations}};
+}
 
 export default Ettersendelse;
