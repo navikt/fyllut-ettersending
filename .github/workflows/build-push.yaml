@@ -1,16 +1,23 @@
 name: Build and push Docker container
 on:
   workflow_call:
+    outputs:
+      image:
+        description: "The docker image"
+        value: ${{ jobs.build-and-push.outputs.image }}
     inputs:
       environment:
         required: true
         type: string
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.environment }}_${{ github.sha }}
+
 jobs:
   build-and-push:
     name: "Build"
     runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
+      packages: "read"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,11 +33,13 @@ jobs:
         run: cp .env.ci.${{ inputs.environment }} .env
       - name: "Build application"
         run: yarn build
-      - name: "Login to GitHub Docker Registry"
-        uses: docker/login-action@v2
+      - name: Build and push Docker image
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Build and push the Docker image"
-        run: docker build --pull --tag ${IMAGE} . && docker push ${IMAGE}
+          team: skjemadigitalisering
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: ${{ inputs.environment }}
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}

@@ -11,15 +11,14 @@ on:
         options:
           - dev
           - prod
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.environment }}_${{ github.sha }}
+
 jobs:
   test:
     name: "Test"
     uses: ./.github/workflows/test.yaml
 
-  build:
-    name: "Build"
+  build-and-push:
+    name: "Build and push"
     uses: ./.github/workflows/build-push.yaml
     with:
       environment: ${{ inputs.environment }}
@@ -27,7 +26,7 @@ jobs:
 
   deployAppToProd:
     name: "Deploy app to prod"
-    needs: [build, test]
+    needs: [build-and-push, test]
     if: github.event.inputs.environment == 'prod'
     runs-on: ubuntu-latest
     steps:
@@ -39,10 +38,11 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/prod.yaml
+          VAR: image=${{ needs.build-and-push.outputs.image }}
 
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: [build, test]
+    needs: [build-and-push, test]
     if: github.event.inputs.environment == 'dev'
     runs-on: ubuntu-latest
     steps:
@@ -54,3 +54,4 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/dev.yaml
+          VAR: image=${{ needs.build-and-push.outputs.image }}

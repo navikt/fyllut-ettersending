@@ -4,25 +4,24 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - '**/**.md'
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:prod_${{ github.sha }}
+      - "**.md"
+      - "**/**.md"
+
 jobs:
   test:
     name: "Test"
     uses: ./.github/workflows/test.yaml
-  
-  build:
+
+  build-and-push:
     name: "Build"
     uses: ./.github/workflows/build-push.yaml
-    with: 
+    with:
       environment: prod
     secrets: inherit
 
   deployAppToProd:
     name: "Deploy app to prod"
-    needs: [build, test]
+    needs: [build-and-push, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,3 +32,4 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/prod.yaml
+          VAR: image=${{ needs.build-and-push.outputs.image }}
