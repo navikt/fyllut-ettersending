@@ -33,7 +33,7 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
     const { Styles, Scripts, Header, Footer } = this.props.Decorator;
 
     return (
-      <Html lang="no">
+      <Html lang={this.props.locale}>
         <Head>
           <meta name="description" content="Ettersending dokumentasjon" />
           <link rel="icon" href="/favicon.ico" />

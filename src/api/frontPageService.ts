@@ -1,24 +1,34 @@
 import { downloadFrontPage } from "./apiService";
-import { FormData, UserType } from "../data/domain";
+import {DownloadCoverPageRequestBody, FormData, UserType} from "../data/domain";
 import logger from "../utils/logger";
 
-const download = async (formData: FormData) => {
+const download = async (body: DownloadCoverPageRequestBody, acceptLanguage: string | undefined) => {
   let pdf;
   try {
-    pdf = await downloadFrontPage(toFrontPageRequest(formData));
+    const spraakkode = toSpraakkode(acceptLanguage);
+    pdf = await downloadFrontPage(toFrontPageRequest(body, spraakkode));
     return Buffer.from(pdf.foersteside, "base64");
   } catch (e: any) {
     logger.error("Failed to download front page", e);
   }
 };
 
-const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
+const VALID_LANGUAGES = ["nb", "nn", "en"];
+const toSpraakkode = (acceptLanguage: string | undefined): string => {
+  if (acceptLanguage && VALID_LANGUAGES.includes(acceptLanguage)) {
+    return acceptLanguage.toUpperCase();
+  }
+  return "NB";
+}
+
+const toFrontPageRequest = (body: DownloadCoverPageRequestBody, spraakkode: string): FrontPageRequest => {
+  const {formData, title} = body;
   return {
     foerstesidetype: "ETTERSENDELSE",
     navSkjemaId: formData.formNumber || "",
-    spraakkode: "NB",
-    overskriftstittel: getTitle(formData),
-    arkivtittel: getTitle(formData),
+    spraakkode,
+    overskriftstittel: title,
+    arkivtittel: title,
     tema: formData.subjectOfSubmission,
     vedleggsliste: formData.attachments?.map((attachment) => attachment.attachmentTitle) ?? [],
     dokumentlisteFoersteside: formData.attachments?.map((attachment) => attachment.label) ?? [],
@@ -26,15 +36,6 @@ const toFrontPageRequest = (formData: FormData): FrontPageRequest => {
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
   };
-};
-
-const getTitle = (formData: FormData) => {
-  const otherDocumentationTitle = formData.otherDocumentationTitle ? ` - ${formData.otherDocumentationTitle}` : "";
-  if (formData.formNumber) {
-    return `Ettersendelse til ${formData.formNumber} ${formData.title}` + otherDocumentationTitle;
-  } else {
-    return `Innsendelsen gjelder: ${formData.titleOfSubmission}` + otherDocumentationTitle;
-  }
 };
 
 const toFrontPageAddress = (formData: FormData): FrontPageAddress | undefined => {

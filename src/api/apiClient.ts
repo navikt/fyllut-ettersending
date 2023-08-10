@@ -1,6 +1,6 @@
 import FileSaver from "file-saver";
 import { getFileName } from "../utils/formDataUtil";
-import { FormData, KeyValue, NavUnit } from "../data/domain";
+import {DownloadCoverPageRequestBody, FormData, KeyValue, NavUnit} from "../data/domain";
 
 const baseUrl = "/fyllut-ettersending";
 
@@ -19,11 +19,16 @@ const fetchNavUnits = async (): Promise<NavUnit[]> => {
   return response.json();
 };
 
-const downloadFrontpage = async (formData: FormData) => {
+const downloadFrontpage = async (formData: FormData, title: string, lang: string) => {
+  const jsonBody: DownloadCoverPageRequestBody = {
+    formData,
+    title
+  };
   const b64 = await fetch(`${baseUrl}/api/download`, {
-    body: JSON.stringify(formData),
+    body: JSON.stringify(jsonBody),
     headers: {
       "Content-Type": "application/json; charset=utf8",
+      "Accept-Language": lang,
     },
     method: "POST",
   });

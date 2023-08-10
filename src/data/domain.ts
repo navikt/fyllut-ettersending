@@ -51,6 +51,11 @@ interface FormData {
   userData?: UserData;
 }
 
+interface DownloadCoverPageRequestBody {
+  formData: FormData;
+  title: string;
+}
+
 enum SubmissionType {
   digital = "digital",
   byMail = "byMail",
@@ -75,5 +80,5 @@ interface UserData {
   navUnit?: string;
 }
 
-export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
+export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, DownloadCoverPageRequestBody };
 export { UserType, SubmissionType };

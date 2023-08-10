@@ -22,5 +22,9 @@
   },
   "button": {
     "download-cover-page": "(en) Last ned førsteside"
+  },
+  "cover-page-title": {
+    "ettersendelse": "(en) Ettersendelse til {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "(en) Innsendelsen gjelder: {{titleOfSubmission}}{{extraInfo}}"
   }
 }

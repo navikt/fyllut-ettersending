@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
 import "@navikt/ds-css";
 import { BodyShort, Button, Heading } from "@navikt/ds-react";
+import { GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
 import { useFormState } from "../data/appState";
 import { useState } from "react";
 import Section from "../components/section/section";
@@ -10,8 +12,7 @@ import ButtonGroup from "src/components/button/buttonGroup";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/router";
 import { getServerSideTranslations } from "../utils/i18nUtil";
-import { GetStaticProps } from "next";
-import {useTranslation} from "next-i18next";
+import { getCoverPageTitle } from "../utils/lastNedUtil";
 
 interface Props {
   url: string;
@@ -29,8 +30,9 @@ const LastNed: NextPage<Props> = () => {
 
   const download = async () => {
     setLoading(true);
+    const title = getCoverPageTitle(formData, t);
     try {
-      await downloadFrontpage(formData);
+      await downloadFrontpage(formData, title, document.documentElement.lang);
     } finally {
       setLoading(false);
     }

@@ -22,5 +22,9 @@
   },
   "button": {
     "download-cover-page": "(nn) Last ned førsteside"
+  },
+  "cover-page-title": {
+    "ettersendelse": "(nn) Ettersendelse til {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "(nn) Innsendelsen gjelder: {{titleOfSubmission}}{{extraInfo}}"
   }
 }
