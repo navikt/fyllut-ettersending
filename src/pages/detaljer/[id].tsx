@@ -91,7 +91,7 @@ const Detaljer: NextPage<Props> = (props) => {
   };
 
   return (
-    <Layout title="Ettersende dokumentasjon i posten">
+    <Layout title="Ettersende dokumentasjon">
       <Section>
         <Heading size="large" level="2">
           {form.title}
