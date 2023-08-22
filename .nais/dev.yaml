@@ -9,6 +9,10 @@ accessPolicy:
       - application: skjemautfylling
       - application: skjemautfylling-experimental
       - application: skjemautfylling-delingslenke
+      - application: innsending-api
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling/fyllut
+  - name: INNSENDING_API_AUDIENCE
+    value: "dev-gcp:team-soknad:innsending-api"
+

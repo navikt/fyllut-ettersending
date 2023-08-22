@@ -1,7 +1,6 @@
 import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { getForm } from "../../api/apiService";
 import { Form, NavUnit, SubmissionType } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
@@ -24,6 +23,8 @@ import {
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
+import { shouldRedirectToLogin } from "src/api/loginRedirect";
+import { getForm } from "src/api/apiService";
 
 interface Props {
   form: Form;
@@ -146,9 +147,22 @@ const Detaljer: NextPage<Props> = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res } = context;
+
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
+  const loginRedirect = await shouldRedirectToLogin(context);
+  if (loginRedirect) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/oauth2/login?redirect=${context.resolvedUrl}`,
+      },
+      props: {},
+    };
+  }
+
   const id = context.params?.id as string;
+
   const form = await getForm(id);
 
   return {

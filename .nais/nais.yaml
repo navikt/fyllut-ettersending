@@ -24,6 +24,14 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: false
+  idporten:
+    enabled: true
+    accessTokenLifetime: 3600
+    sessionLifetime: 7200
+    sidecar:
+      enabled: true
+      autoLogin: false
+      level: Level4
   resources:
     limits:
       cpu: "200m"

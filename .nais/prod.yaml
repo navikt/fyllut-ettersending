@@ -7,6 +7,9 @@ accessPolicy:
   outbound:
     rules:
       - application: skjemautfylling
+      - application: innsending-api
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling/fyllut
+  - name: INNSENDING_API_AUDIENCE
+    value: "prod-gcp:team-soknad:innsending-api"
