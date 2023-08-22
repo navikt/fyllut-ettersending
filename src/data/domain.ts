@@ -1,3 +1,4 @@
+class UnauthenticatedError extends Error {}
 interface Form {
   _id: string;
   modified: string;
@@ -76,4 +77,4 @@ interface UserData {
 }
 
 export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
-export { UserType, SubmissionType };
+export { UnauthenticatedError, UserType, SubmissionType };

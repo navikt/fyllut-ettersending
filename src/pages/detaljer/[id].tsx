@@ -1,7 +1,7 @@
 import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { Form, NavUnit, SubmissionType } from "../../data/domain";
+import { Form, NavUnit, SubmissionType, UnauthenticatedError } from "../../data/domain";
 import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
@@ -23,12 +23,13 @@ import {
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { shouldRedirectToLogin } from "src/api/loginRedirect";
+import { fetchEttersendinger } from "src/api/loginRedirect";
 import { getForm } from "src/api/apiService";
 
 interface Props {
   form: Form;
   id: string;
+  ettersendinger: any;
 }
 
 const Detaljer: NextPage<Props> = (props) => {
@@ -54,6 +55,8 @@ const Detaljer: NextPage<Props> = (props) => {
       ? navUnitsConnectedToForm
       : navUnits;
   };
+
+  console.log(props.ettersendinger);
 
   useEffect(() => {
     if (id !== formData.formId) {
@@ -150,24 +153,31 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
-  const loginRedirect = await shouldRedirectToLogin(context);
-  if (loginRedirect) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `/oauth2/login?redirect=/fyllut-ettersending/${context.resolvedUrl}`,
-      },
-      props: {},
-    };
+  let eksisterendeEttersendinger = [];
+  try {
+    eksisterendeEttersendinger = await fetchEttersendinger(context);
+  } catch (ex) {
+    if (ex instanceof UnauthenticatedError) {
+      redirectToLogin(context);
+    }
   }
 
   const id = context.params?.id as string;
-
   const form = await getForm(id);
 
   return {
-    props: { form, id },
+    props: { form, ettersendinger: eksisterendeEttersendinger, id },
   };
 }
+
+const redirectToLogin = (context: GetServerSidePropsContext) => {
+  return {
+    redirect: {
+      permanent: false,
+      destination: `/oauth2/login?redirect=/fyllut-ettersending${context.resolvedUrl}`,
+    },
+    props: {},
+  };
+};
 
 export default Detaljer;
