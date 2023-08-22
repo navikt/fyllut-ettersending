@@ -24,6 +24,8 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: false
+  tokenx:
+    enabled: true
   idporten:
     enabled: true
     accessTokenLifetime: 3600
