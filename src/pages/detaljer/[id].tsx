@@ -155,7 +155,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: `/fyllut-ettersending/oauth2/login?redirect=${context.resolvedUrl}`,
+        destination: `/oauth2/login?redirect=/fyllut-ettersending/${context.resolvedUrl}`,
       },
       props: {},
     };
