@@ -23,7 +23,7 @@ import {
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { fetchEttersendinger } from "src/api/loginRedirect";
+import { fetchEttersendinger, verifyToken } from "src/api/loginRedirect";
 import { getForm } from "src/api/apiService";
 
 interface Props {
@@ -150,35 +150,37 @@ const Detaljer: NextPage<Props> = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   console.log("getServerSideProps");
-  const { res } = context;
 
+  const { res } = context;
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
-  let existingEttersendinger = [];
+  let idportenToken: string = "";
   try {
-    existingEttersendinger = await fetchEttersendinger(context);
+    idportenToken = (await verifyToken(context)) as string;
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
       return redirectToLogin(context);
     }
   }
 
-  console.log("existingEttersendinger", existingEttersendinger);
-
-  if (existingEttersendinger.length === 1) {
-    res.setHeader("Location", `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
-    res.statusCode = 302;
-    return {};
-  }
-
-  if (existingEttersendinger.length > 1) {
-    res.setHeader("Location", `${process.env.MIN_SIDE_URL}/varsler`);
-    res.statusCode = 302;
-    return {};
-  }
-
   const id = context.params?.id as string;
   const form = await getForm(id);
+  console.log("form:", form);
+
+  let existingEttersendinger: any[] = [];
+  if (idportenToken && form?.properties.formNumber) {
+    existingEttersendinger = await fetchEttersendinger(idportenToken, form.properties.formNumber);
+
+    if (existingEttersendinger.length === 1) {
+      res.setHeader("Location", `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
+      res.statusCode = 302;
+    }
+
+    if (existingEttersendinger.length > 1) {
+      res.setHeader("Location", `${process.env.MIN_SIDE_URL}/varsler`);
+      res.statusCode = 302;
+    }
+  }
 
   return {
     props: { form, existingEttersendinger, id },
