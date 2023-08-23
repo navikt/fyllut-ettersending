@@ -163,14 +163,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
   }
 
+  console.log("existingEttersendinger", existingEttersendinger);
+
   if (existingEttersendinger.length === 1) {
-    res.setHeader("Location", "https://www.google.com");
+    res.setHeader("Location", `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
     res.statusCode = 302;
     return {};
   }
 
   if (existingEttersendinger.length > 1) {
-    res.setHeader("Location", "https://www.google.com");
+    res.setHeader("Location", `${process.env.MIN_SIDE_URL}/varsler`);
     res.statusCode = 302;
     return {};
   }
@@ -179,7 +181,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const form = await getForm(id);
 
   return {
-    props: { form, existingEttersendinger: existingEttersendinger, id },
+    props: { form, existingEttersendinger, id },
   };
 }
 

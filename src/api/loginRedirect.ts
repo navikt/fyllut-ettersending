@@ -30,13 +30,15 @@ const fetchEttersendinger = async (context: GetServerSidePropsContext) => {
         process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
       );
 
+      console.log("tokenXToken", tokenxToken);
+
       logger.info(`Fetching ettersendinger for ${id}`);
       const response = await fetch(
         `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
         { headers: { Authorization: `Bearer ${tokenxToken}` } }
       );
 
-      return response.json();
+      return await response.json();
     } catch (ex: any) {
       logger.info("Could not fetch ettersendinger", ex);
     }

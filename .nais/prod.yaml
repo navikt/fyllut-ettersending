@@ -15,3 +15,7 @@ env:
     value: "prod-gcp:team-soknad:innsending-api"
   - name: INNSENDING_API_URL
     value: "http://innsending-api.team-soknad"
+  - name: SEND_INN_FRONTEND_URL
+    value: "https://www.nav.no/sendinn"
+  - name: MIN_SIDE_URL
+    value: "https://www.nav.no/minside"
