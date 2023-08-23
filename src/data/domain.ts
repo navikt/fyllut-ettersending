@@ -76,5 +76,50 @@ interface UserData {
   navUnit?: string;
 }
 
-export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment };
+type MimeType = "application/pdf" | "application/json" | "image/png" | "image/jpeg";
+
+interface ApplicationAttachment {
+  id?: number;
+  vedleggsnr: string;
+  tittel: string;
+  label: string;
+  beskrivelse: string;
+  uuid: string;
+  mimetype: MimeType;
+  document?: string;
+  erHoveddokument: boolean;
+  erVariant: boolean;
+  erPdfa: boolean;
+  erPakrevd: boolean;
+  skjemaurl?: string;
+  opplastingsStatus: "IkkeValgt" | "LastetOpp" | "Innsendt" | "SendSenere" | "SendesAvAndre" | "SendesIkke";
+  opprettetdato: string;
+  innsendtdato?: string;
+  formioId?: string;
+}
+
+interface EttersendelseApplication {
+  id?: number;
+  innsendingsId: string;
+  ettersendingsId: string;
+  brukerId: string;
+  skjemanr: string;
+  tittel: string;
+  spraak: string;
+  status: "Opprettet" | "Utfylt" | "Innsendt" | "SlettetAvBruker" | "AutomatiskSlettet";
+  endretDato: string;
+  opprettetDato: string;
+  innsendtDato?: string;
+  vedleggsListe: ApplicationAttachment[];
+  visningsSteg?: number;
+  visningsType?: "fyllUt" | "dokumentinnsending" | "ettersending";
+  innsendingsFristDato?: string;
+  forsteInnsendingsDato?: string;
+  fristForEttersendelse?: number;
+  arkiveringsStatus?: "IkkeSatt" | "Arkivert" | "ArkiveringFeilet";
+  erSystemGenerert?: boolean;
+  soknadstype?: "soknad" | "ettersendelse";
+}
+
+export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, EttersendelseApplication };
 export { UnauthenticatedError, UserType, SubmissionType };
