@@ -53,6 +53,8 @@ spec:
       {{/each}}
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: innsending-api
+          namespace: team-soknad
   env:
   {{#each env}}
     - name: {{this.name}}
