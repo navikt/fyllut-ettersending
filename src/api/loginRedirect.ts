@@ -24,18 +24,22 @@ const fetchEttersendinger = async (context: GetServerSidePropsContext) => {
       throw new UnauthenticatedError("Could not validate idporten token");
     }
 
-    const tokenxToken = await getTokenxToken(
-      idportenToken,
-      process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
-    );
+    try {
+      const tokenxToken = await getTokenxToken(
+        idportenToken,
+        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
+      );
 
-    logger.info(`Fetching ettersendinger for ${id}`);
-    const response = await fetch(
-      `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
-      { headers: { Authorization: `Bearer ${tokenxToken}` } }
-    );
+      logger.info(`Fetching ettersendinger for ${id}`);
+      const response = await fetch(
+        `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
+        { headers: { Authorization: `Bearer ${tokenxToken}` } }
+      );
 
-    return response.json();
+      return response.json();
+    } catch (ex: any) {
+      logger.info("Could not fetch ettersendinger", ex);
+    }
   } else if (sub === "digital") {
     logger.info("Missing jwt");
     throw new UnauthenticatedError("Missing jwt");

@@ -16,5 +16,5 @@ env:
   - name: INNSENDING_API_AUDIENCE
     value: "dev-gcp:team-soknad:innsending-api"
   - name: INNSENDING_API_URL
-    value: "https://innsending-api.team-soknad"
+    value: "http://innsending-api.team-soknad"
 

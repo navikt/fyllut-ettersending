@@ -29,7 +29,7 @@ import { getForm } from "src/api/apiService";
 interface Props {
   form: Form;
   id: string;
-  ettersendinger: any;
+  existingEttersendinger: any;
 }
 
 const Detaljer: NextPage<Props> = (props) => {
@@ -56,7 +56,7 @@ const Detaljer: NextPage<Props> = (props) => {
       : navUnits;
   };
 
-  console.log(props.ettersendinger);
+  console.log(props.existingEttersendinger);
 
   useEffect(() => {
     if (id !== formData.formId) {
@@ -154,20 +154,32 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
-  let eksisterendeEttersendinger = [];
+  let existingEttersendinger = [];
   try {
-    eksisterendeEttersendinger = await fetchEttersendinger(context);
+    existingEttersendinger = await fetchEttersendinger(context);
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
       return redirectToLogin(context);
     }
   }
 
+  if (existingEttersendinger.length === 1) {
+    res.setHeader("Location", "https://www.google.com");
+    res.statusCode = 302;
+    return {};
+  }
+
+  if (existingEttersendinger.length > 1) {
+    res.setHeader("Location", "https://www.google.com");
+    res.statusCode = 302;
+    return {};
+  }
+
   const id = context.params?.id as string;
   const form = await getForm(id);
 
   return {
-    props: { form, ettersendinger: eksisterendeEttersendinger, id },
+    props: { form, existingEttersendinger: existingEttersendinger, id },
   };
 }
 
