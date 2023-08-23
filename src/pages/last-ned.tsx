@@ -17,7 +17,7 @@ interface Props {
 
 const texts = {
   title: {
-    ettersending: "Ettersende dokumentasjon i posten",
+    ettersending: "Ettersende dokumentasjon",
     lospost: "Sende inn dokumentasjon",
   },
   attachmentsHeader: {
