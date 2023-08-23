@@ -1,13 +1,6 @@
-import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps, DecoratorLocale } from "@navikt/nav-dekoratoren-moduler/ssr";
 import { DocumentContext, DocumentInitialProps } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
-
-const decoratorProps: DecoratorFetchProps = {
-  env: process.env.NODE_ENV === "production" ? "prod" : "dev",
-  params: {
-    simple: true,
-  },
-};
 
 type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorComponents}
 
@@ -23,6 +16,14 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
         Footer: () => <></>,
       };
     } else {
+      const { locale} = ctx;
+      const decoratorProps: DecoratorFetchProps = {
+        env: process.env.NODE_ENV === "production" ? "prod" : "dev",
+        params: {
+          simple: true,
+          language: locale as DecoratorLocale || "nb",
+        },
+      };
       Decorator = await fetchDecoratorReact(decoratorProps);
     }
 
