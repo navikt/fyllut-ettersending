@@ -149,6 +149,7 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  console.log("getServerSideProps");
   const { res } = context;
 
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
@@ -158,7 +159,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     eksisterendeEttersendinger = await fetchEttersendinger(context);
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
-      redirectToLogin(context);
+      return redirectToLogin(context);
     }
   }
 
@@ -171,6 +172,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
+  console.log("redirectToLogin");
   return {
     redirect: {
       permanent: false,
