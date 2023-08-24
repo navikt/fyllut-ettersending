@@ -2,14 +2,15 @@ import { verifyIdportenAccessToken } from "src/auth/verifyIdPortenToken";
 import logger from "../utils/logger";
 import { GetServerSidePropsContext } from "next/types";
 import { getTokenxToken } from "src/auth/getTokenXToken";
-import { UnauthenticatedError } from "src/data/domain";
+import { SubmissionType, UnauthenticatedError } from "src/data/domain";
 
 const isDevelopment = () => {
   return process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
 };
 
-const verifyToken = async (context: GetServerSidePropsContext) => {
-  const sub = context.query?.sub as string | undefined;
+const getIdPortenToken = async (context: GetServerSidePropsContext) => {
+  // If query param sub=digital, the user will be logged in and redirected based on existing ettersendelse applications
+  const sub = context.query?.sub;
   const authHeader = context.req.headers.authorization;
 
   if (isDevelopment()) {
@@ -23,9 +24,9 @@ const verifyToken = async (context: GetServerSidePropsContext) => {
       throw new UnauthenticatedError("Could not validate idporten token");
     }
     return idportenToken;
-  } else if (sub === "digital") {
-    logger.info("Missing jwt");
-    throw new UnauthenticatedError("Missing jwt");
+  } else if (sub === SubmissionType.digital) {
+    logger.info("Missing jwt for digital submission");
+    throw new UnauthenticatedError("Missing jwt for digital submission");
   }
 };
 
@@ -51,4 +52,4 @@ const fetchEttersendinger = async (idportenToken: string, id: string) => {
   }
 };
 
-export { verifyToken, fetchEttersendinger };
+export { getIdPortenToken, fetchEttersendinger };

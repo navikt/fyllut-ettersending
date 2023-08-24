@@ -18,12 +18,13 @@ import {
   createSubmissionUrl,
   getDefaultSubmissionType,
   areBothSubmissionTypesAllowed,
-  isSubmissionTypeByMail,
+  isSubmissionTypePaper,
   isSubmissionAllowed,
+  isSubmissionParamSet,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { fetchEttersendinger, verifyToken } from "src/api/loginRedirect";
+import { fetchEttersendinger, getIdPortenToken } from "src/api/loginRedirect";
 import { getForm } from "src/api/apiService";
 import { ServerResponse } from "http";
 
@@ -65,7 +66,7 @@ const Detaljer: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
-        submissionType: getDefaultSubmissionType(form),
+        submissionType: getDefaultSubmissionType(form, router),
         formId: id,
       });
     }
@@ -106,11 +107,11 @@ const Detaljer: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          {areBothSubmissionTypesAllowed(form) && <ChooseSubmissionType />}
+          {areBothSubmissionTypesAllowed(form) && !isSubmissionParamSet(router) && <ChooseSubmissionType />}
 
           <ChooseAttachments form={form} />
 
-          {isSubmissionTypeByMail(formData) && (
+          {isSubmissionTypePaper(formData) && (
             <ChooseUser
               navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
               shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
@@ -154,10 +155,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res } = context;
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
-  // Attempt to verify the token
-  let idportenToken: string = "";
+  // Attempt to verify the token and redirect to login if necessary
+  let idportenToken = "";
   try {
-    idportenToken = (await verifyToken(context)) as string;
+    idportenToken = (await getIdPortenToken(context)) as string;
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
       return redirectToLogin(context);
