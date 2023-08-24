@@ -14,6 +14,7 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
 
   if (isDevelopment()) {
     logger.info("Mocking idporten jwt and pid");
+    return "mock";
   } else if (authHeader) {
     const [, idportenToken] = authHeader.split(" ");
     try {
@@ -31,10 +32,15 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
 
 const fetchEttersendinger = async (idportenToken: string, id: string) => {
   try {
-    const tokenxToken = await getTokenxToken(
-      idportenToken,
-      process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
-    );
+    let tokenxToken = "";
+    if (isDevelopment()) {
+      tokenxToken = "mock";
+    } else {
+      tokenxToken = (await getTokenxToken(
+        idportenToken,
+        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
+      )) as string;
+    }
 
     const response = await fetch(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,

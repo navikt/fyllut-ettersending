@@ -1,0 +1,6 @@
+[
+  {
+    "id": "base",
+    "routes": ["get-ettersendingssoknader:none", "get-send-inn-frontend:success"]
+  }
+]

@@ -17,7 +17,9 @@
     "start:with:test": "cross-env NODE_ENV=test next start -p 3002",
     "lint": "next lint",
     "cypress": "cypress run",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "mocks": "mocks-server",
+    "mocks:no-cli": "mocks-server --no-plugins.inquirerCli.enabled"
   },
   "dependencies": {
     "@navikt/aksel-icons": "^3.3.1",
@@ -31,10 +33,13 @@
     "next": "13.1.5",
     "openid-client": "^5.4.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wait-on": "^7.0.1"
   },
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
+    "@mocks-server/cypress-commands": "^6.1.1",
+    "@mocks-server/main": "^4.1.0",
     "@testing-library/cypress": "^9.0.0",
     "@types/file-saver": "^2.0.5",
     "@types/node": "18.11.18",
