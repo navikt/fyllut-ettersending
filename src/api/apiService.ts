@@ -2,6 +2,8 @@ import { get, post } from "./http";
 import { Attachment, Form, KeyValue, NavUnit } from "../data/domain";
 import { FrontPageRequest } from "./frontPageService";
 import logger from "../utils/logger";
+import { getTokenxToken } from "src/auth/getTokenXToken";
+import { isLocalDevelopment } from "src/utils/utils";
 
 const getForms = async (): Promise<Form[]> => {
   const startTime = Date.now();
@@ -111,8 +113,30 @@ const downloadFrontPage = async (data: FrontPageRequest) => {
   }
 };
 
+const getEttersendinger = async (idportenToken: string, id: string) => {
+  try {
+    let tokenxToken = "mock-tokenx-token";
+    if (!isLocalDevelopment()) {
+      tokenxToken = (await getTokenxToken(
+        idportenToken,
+        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
+      )) as string;
+    }
+
+    const response = await fetch(
+      `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
+      { headers: { Authorization: `Bearer ${tokenxToken}` } }
+    );
+
+    return await response.json();
+  } catch (ex: any) {
+    logger.error("Could not fetch ettersendinger", ex);
+    return [];
+  }
+};
+
 const isMock = () => {
   return !!process.env.MOCK;
 };
 
-export { getForms, getForm, getNavUnits, getArchiveSubjects, downloadFrontPage };
+export { getForms, getForm, getNavUnits, getArchiveSubjects, downloadFrontPage, getEttersendinger };

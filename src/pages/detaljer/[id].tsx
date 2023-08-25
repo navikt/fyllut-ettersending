@@ -24,8 +24,8 @@ import {
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { fetchEttersendinger, getIdPortenToken } from "src/api/loginRedirect";
-import { getForm } from "src/api/apiService";
+import { getIdPortenToken } from "src/api/loginRedirect";
+import { getEttersendinger, getForm } from "src/api/apiService";
 import { ServerResponse } from "http";
 
 interface Props {
@@ -170,7 +170,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Fetch existing ettersendinger and redirect if necessary
   let existingEttersendinger: EttersendelseApplication[] = [];
   if (idportenToken && form?.properties.formNumber) {
-    existingEttersendinger = await fetchEttersendinger(idportenToken, form.properties.formNumber);
+    existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
     redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
   }
 
