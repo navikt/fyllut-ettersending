@@ -1,3 +1,10 @@
+beforeEach(() => {
+  cy.mocksRestoreRouteVariants();
+});
+afterEach(() => {
+  cy.mocksRestoreRouteVariants();
+});
+
 describe("shows submission type correctly", () => {
   it("should show submission type without sub query param", () => {
     cy.visit("/detaljer/form2");
