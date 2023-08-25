@@ -5,7 +5,6 @@ import { getTokenxToken } from "src/auth/getTokenXToken";
 import { SubmissionType, UnauthenticatedError } from "src/data/domain";
 
 const isDevelopment = () => {
-  console.log("process.env.APP_ENV", process.env.APP_ENV);
   return process.env.APP_ENV !== "development" && process.env.APP_ENV !== "production";
 };
 
@@ -15,7 +14,7 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
 
   if (isDevelopment()) {
     logger.info("Mocking idporten jwt and pid");
-    return "mock";
+    return "mock-idporten-token";
   } else if (authHeader) {
     const [, idportenToken] = authHeader.split(" ");
     try {
@@ -33,10 +32,8 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
 
 const fetchEttersendinger = async (idportenToken: string, id: string) => {
   try {
-    let tokenxToken = "";
-    if (isDevelopment()) {
-      tokenxToken = "mock";
-    } else {
+    let tokenxToken = "mock-tokenx-token";
+    if (!isDevelopment()) {
       tokenxToken = (await getTokenxToken(
         idportenToken,
         process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
@@ -50,7 +47,7 @@ const fetchEttersendinger = async (idportenToken: string, id: string) => {
 
     return await response.json();
   } catch (ex: any) {
-    logger.info("Could not fetch ettersendinger", ex);
+    logger.error("Could not fetch ettersendinger", ex);
     return [];
   }
 };

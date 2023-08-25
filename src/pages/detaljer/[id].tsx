@@ -58,8 +58,6 @@ const Detaljer: NextPage<Props> = (props) => {
       : navUnits;
   };
 
-  console.log(props.existingEttersendinger);
-
   useEffect(() => {
     if (id !== formData.formId) {
       resetFormData({

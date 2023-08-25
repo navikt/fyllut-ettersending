@@ -11,6 +11,11 @@ describe("shows submission type correctly", () => {
     cy.get('[type="radio"]').should("exist");
   });
 
+  it("should show submission type with sub query param other than digital/paper", () => {
+    cy.visit("/detaljer/form2?sub=other");
+    cy.get('[type="radio"]').should("exist");
+  });
+
   it("should not show submission type with sub query param equal to paper", () => {
     cy.visit("/detaljer/form2?sub=paper");
     cy.get('[type="radio"]').should("not.exist");

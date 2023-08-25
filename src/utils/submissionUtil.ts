@@ -1,11 +1,11 @@
 import { NextRouter } from "next/router";
-import { Form, FormData, SubmissionType } from "../data/domain";
+import { Form, FormData, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
 
 const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
 
   if (isSubmissionParamSet(router)) {
-    const submissionType: SubmissionType = SubmissionType[router.query.sub as keyof typeof SubmissionType];
+    const submissionType: SubmissionType = getSubmissionTypeFromString(router.query.sub as string);
     return submissionType;
   }
 
