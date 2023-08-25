@@ -5,8 +5,8 @@ import { getTokenxToken } from "src/auth/getTokenXToken";
 import { SubmissionType, UnauthenticatedError } from "src/data/domain";
 
 const isDevelopment = () => {
-  console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-  return process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
+  console.log("process.env.APP_ENV", process.env.APP_ENV);
+  return process.env.APP_ENV !== "development" && process.env.APP_ENV !== "production";
 };
 
 const getIdPortenToken = async (context: GetServerSidePropsContext) => {
