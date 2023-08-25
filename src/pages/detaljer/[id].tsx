@@ -191,7 +191,7 @@ const redirectBasedOnExistingEttersendinger = (
   }
 
   if (existingEttersendinger.length > 1) {
-    res.setHeader("Location", `${process.env.MIN_SIDE_URL}/varsler`);
+    res.setHeader("Location", `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`);
     res.statusCode = 302;
   }
 };

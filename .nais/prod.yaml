@@ -17,7 +17,7 @@ env:
     value: "http://innsending-api.team-soknad"
   - name: SEND_INN_FRONTEND_URL
     value: "https://www.nav.no/sendinn"
-  - name: MIN_SIDE_URL
+  - name: MIN_SIDE_FRONTEND_URL
     value: "https://www.nav.no/minside"
   - name: APP_ENV
     value: production

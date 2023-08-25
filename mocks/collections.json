@@ -1,6 +1,6 @@
 [
   {
     "id": "base",
-    "routes": ["get-ettersendingssoknader:none", "get-send-inn-frontend:success"]
+    "routes": ["get-ettersendingssoknader:none", "get-send-inn-frontend:success", "get-min-side-frontend:success"]
   }
 ]

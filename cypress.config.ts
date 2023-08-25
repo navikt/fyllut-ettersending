@@ -20,6 +20,7 @@ export default defineConfig({
     env: {
       INNSENDING_API_URL: "http://127.0.0.1:3100",
       SEND_INN_FRONTEND_URL: "http://127.0.0.1:3100/send-inn-frontend",
+      MIN_SIDE_FRONTEND_URL: "http://127.0.0.1:3100/min-side-frontend",
     },
   },
 });
