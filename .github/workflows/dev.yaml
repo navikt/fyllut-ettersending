@@ -4,19 +4,18 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - '**/**.md'
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:dev_${{ github.sha }}
+      - "**.md"
+      - "**/**.md"
+
 jobs:
   test:
     name: "Test"
     uses: ./.github/workflows/test.yaml
-  
+
   build:
     name: "Build"
     uses: ./.github/workflows/build-push.yaml
-    with: 
+    with:
       environment: dev
     secrets: inherit
 
