@@ -1,11 +1,19 @@
-import { Form, FormData, SubmissionType } from "../data/domain";
+import { NextRouter } from "next/router";
+import { Form, FormData, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
 
-const getDefaultSubmissionType = (form: Form): SubmissionType => {
+const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
+
+  if (isSubmissionParamSet(router)) {
+    const submissionType: SubmissionType = getSubmissionTypeFromString(router.query.sub as string);
+    return submissionType;
+  }
+
   if (allowedSubmissionType === "PAPIR_OG_DIGITAL" || allowedSubmissionType === "KUN_DIGITAL") {
     return SubmissionType.digital;
   }
-  return SubmissionType.byMail;
+
+  return SubmissionType.paper;
 };
 
 const createSubmissionUrl = (form: Form, formData: FormData): string => {
@@ -25,8 +33,13 @@ const areBothSubmissionTypesAllowed = (form: Form) => {
   return form.properties.submissionType === "PAPIR_OG_DIGITAL";
 };
 
-const isSubmissionTypeByMail = (formData: FormData) => {
-  return formData.submissionType === SubmissionType.byMail;
+const isSubmissionParamSet = (router: NextRouter) => {
+  const submissionValues = Object.values(SubmissionType) as string[];
+  return !!router.query.sub && submissionValues.includes(router.query.sub as string);
+};
+
+const isSubmissionTypePaper = (formData: FormData) => {
+  return formData.submissionType === SubmissionType.paper;
 };
 
 export {
@@ -34,5 +47,6 @@ export {
   createSubmissionUrl,
   isSubmissionAllowed,
   areBothSubmissionTypesAllowed,
-  isSubmissionTypeByMail,
+  isSubmissionParamSet,
+  isSubmissionTypePaper,
 };

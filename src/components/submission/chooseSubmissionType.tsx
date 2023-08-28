@@ -22,7 +22,7 @@ const ChooseSubmissionType = () => {
         <Radio name={SubmissionType.digital} value={SubmissionType.digital}>
           Send digitalt
         </Radio>
-        <Radio name={SubmissionType.byMail} value={SubmissionType.byMail}>
+        <Radio name={SubmissionType.paper} value={SubmissionType.paper}>
           Send i posten
         </Radio>
       </RadioGroup>

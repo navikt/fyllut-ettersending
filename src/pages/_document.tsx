@@ -6,10 +6,11 @@ const decoratorProps: DecoratorFetchProps = {
   env: process.env.NODE_ENV === "production" ? "prod" : "dev",
   params: {
     simple: true,
+    logoutWarning: true,
   },
 };
 
-type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorComponents}
+type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponents };
 
 class _Document extends Document<{ Decorator: DecoratorComponents }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
