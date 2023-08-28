@@ -28,8 +28,6 @@ spec:
     enabled: true
   idporten:
     enabled: true
-    accessTokenLifetime: 3600
-    sessionLifetime: 7200
     sidecar:
       enabled: true
       autoLogin: false
