@@ -39,13 +39,13 @@ describe("redirects correctly based on existing ettersendelse applications", () 
     cy.mocksSetCollection("base");
     cy.mocksUseRouteVariant("get-ettersendingssoknader:one");
     cy.visit("/detaljer/form2?sub=digital");
-    cy.url().should("include", "/bd86463d-ad04-43e8-a80a-9ecd22bae7c0");
+    cy.url().should("equal", `${Cypress.env("SEND_INN_FRONTEND_URL")}/bd86463d-ad04-43e8-a80a-9ecd22bae7c0/`);
   });
 
   it("should redirect to min-side varsler with 2 or more applications", () => {
     cy.mocksSetCollection("base");
     cy.mocksUseRouteVariant("get-ettersendingssoknader:two");
     cy.visit("/detaljer/form2?sub=digital");
-    cy.url().should("include", "/varsler");
+    cy.url().should("equal", `${Cypress.env("MIN_SIDE_FRONTEND_URL")}/varsler/`);
   });
 });
