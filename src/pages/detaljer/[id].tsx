@@ -27,6 +27,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 import { getIdPortenToken } from "src/api/loginRedirect";
 import { getEttersendinger, getForm } from "src/api/apiService";
 import { ServerResponse } from "http";
+import { useReffererPage } from "src/hooks/useReferrerPage";
 
 interface Props {
   form: Form;
@@ -39,6 +40,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const { form, id } = props;
   const { formData, resetFormData } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
+  const referrerPage = useReffererPage();
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -92,8 +94,16 @@ const Detaljer: NextPage<Props> = (props) => {
     iconPosition: "right",
   };
 
+  const previousButton: ButtonType = {
+    text: ButtonText.previous,
+    variant: "secondary",
+    icon: <ArrowLeftIcon aria-hidden />,
+    path: referrerPage,
+    external: true,
+  };
+
   return (
-    <Layout title="Ettersende dokumentasjon">
+    <Layout title="Ettersende dokumentasjon" backUrl={referrerPage}>
       <Section>
         <Heading size="large" level="2">
           {form.title}
@@ -117,19 +127,11 @@ const Detaljer: NextPage<Props> = (props) => {
           <ButtonGroup
             buttons={[
               formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
-              {
-                text: ButtonText.previous,
-                variant: "secondary",
-                icon: <ArrowLeftIcon aria-hidden />,
-                onClick: (e) => {
-                  router.back();
-                  e.currentTarget.blur();
-                },
-              },
+              ...(referrerPage ? [previousButton] : []),
             ]}
           />
           <ButtonGroup
-            center
+            center={!!referrerPage}
             buttons={[
               {
                 text: ButtonText.cancel,
