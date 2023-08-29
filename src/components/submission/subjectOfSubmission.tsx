@@ -55,7 +55,6 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
       <UNSAFE_Combobox
         label="Velg tema for innsendingen"
         options={options}
-        size="medium"
         name="subjectOfSubmission"
         error={errors.subjectOfSubmission}
         isMultiSelect={false}
@@ -86,9 +85,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
           error={errors.otherDocumentation}
         />
       </Section>
-
       <Section>{renderCombobox()}</Section>
-      <button onClick={() => console.log("HALLA", formData, errors)}>clickme</button>
     </>
   );
 };
