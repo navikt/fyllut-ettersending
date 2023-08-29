@@ -195,10 +195,13 @@ const redirectBasedOnExistingEttersendinger = (
 };
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
+  const querySeparator = context.resolvedUrl.includes("?") ? "&" : "?";
+  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : "";
+  const redirect = encodeURIComponent("/fyllut-ettersending" + context.resolvedUrl + referrerQuery);
   return {
     redirect: {
       permanent: false,
-      destination: `/oauth2/login?redirect=/fyllut-ettersending${context.resolvedUrl}`,
+      destination: `/oauth2/login?redirect=${redirect}`,
     },
     props: {},
   };
