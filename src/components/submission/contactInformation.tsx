@@ -1,4 +1,4 @@
-import { Radio, RadioGroup, Select, TextField, UNSAFE_Combobox } from "@navikt/ds-react";
+import { Radio, RadioGroup, TextField, UNSAFE_Combobox } from "@navikt/ds-react";
 import { ChangeEvent, useMemo } from "react";
 import { NavUnit } from "../../data/domain";
 import Section from "../section/section";

@@ -33,7 +33,7 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="otherDocumentationTitle"]').click().type("Application for parental leave");
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
 
-      // Hvem gjelder innsendingen for?
+      // "Hvem gjelder innsendingen for?"
       cy.findAllByRole("radio").check("noSocialNumber");
 
       cy.get('[name="firstName"]').click().type("Ola");
@@ -43,7 +43,7 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="city"]').click().type("Oslo");
       cy.get('[name="country"]').click().type("Norway");
 
-      // Har du vært i kontakt med NAV før?
+      // "Har du vært i kontakt med NAV før?"
       cy.findAllByRole("radio").check("true");
       cy.get('[name="contactInformationNavUnit"]').click().type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
@@ -60,10 +60,10 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="otherDocumentationTitle"]').click().type("Application for parental leave");
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
 
-      // Hvem gjelder innsendingen for?
+      // "Hvem gjelder innsendingen for?"
       cy.findAllByRole("radio").check("other");
 
-      // Velg hvilken NAV-enhet som skal motta innsendingen
+      // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click().type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
       cy.get("button").contains(ButtonText.next).click();
