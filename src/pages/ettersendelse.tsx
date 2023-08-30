@@ -6,6 +6,7 @@ import { Form } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import Layout from "../components/layout/layout";
 import { fetchForms } from "../api/apiClient";
+import { Paths } from "src/data/text";
 
 interface Props {}
 
@@ -25,7 +26,7 @@ const Ettersendelse: NextPage<Props> = () => {
   }, []);
 
   return (
-    <Layout title="Ettersende dokumentasjon">
+    <Layout title="Ettersende dokumentasjon" backUrl={Paths.base}>
       {loading ? (
         <div className="loader">
           <Loader size="xlarge" title="Henter data..." />
