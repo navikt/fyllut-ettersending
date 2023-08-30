@@ -45,9 +45,7 @@ const Detaljer: NextPage<Props> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (form.properties.navUnitMustBeSelected) {
-      fetchData();
-    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -181,7 +179,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const redirectBasedOnExistingEttersendinger = (
   existingEttersendinger: EttersendelseApplication[],
-  res: ServerResponse
+  res: ServerResponse,
 ) => {
   if (existingEttersendinger.length === 1) {
     res.setHeader("Location", `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
