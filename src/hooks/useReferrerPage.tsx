@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-const validateReferrer = (ref: string) => {
+const validateReferrer = (referrer: string) => {
   if (typeof window !== "undefined") {
-    const refUrl = new URL(ref);
-    return refUrl.origin === location.origin;
+    // Matches the root domain (eg nav.no, or localhost:3000), not including subdomains (www.nav.no would result in this match: nav.no)
+    const rootDomainRegex = /(?=[^\.]+\.)?[^\.]+$/;
+    const [rootDomain] = location.host.match(rootDomainRegex) || [];
+    return !!rootDomain && referrer.includes(rootDomain);
   }
   return false;
 };
 
 export const useReffererPage = () => {
+  // Referrer query param is used when the client is redirected to authentication page (idporten), since document.referrer will refer to the auth page
   const searchParams = useSearchParams();
   const referrerParam = searchParams.get("referrer");
   const [referrerPage, setReferrerPage] = useState("");

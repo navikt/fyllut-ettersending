@@ -18,7 +18,17 @@ describe("Testing layout component", () => {
   });
 
   it("Should show back button when qs referrer exists", () => {
-    cy.visit("/lospost?referrer=" + Cypress.config("baseUrl"));
+    cy.visit("/lospost?referrer=" + encodeURIComponent(Cypress.config("baseUrl")!));
     cy.findByRole("link", { name: "Gå tilbake" }).should("exist");
+  });
+
+  it("Should show back button when qs referrer exists, and subdomain doesn't match", () => {
+    cy.visit("/lospost?referrer=" + encodeURIComponent("www." + Cypress.config("baseUrl")));
+    cy.findByRole("link", { name: "Gå tilbake" }).should("exist");
+  });
+
+  it("Should not show back button when referrer doesn't match", () => {
+    cy.visit("/lospost?referrer=" + encodeURIComponent("https://nrk.no"));
+    cy.findByRole("link", { name: "Gå tilbake" }).should("not.exist");
   });
 });
