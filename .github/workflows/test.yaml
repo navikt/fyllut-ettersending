@@ -35,7 +35,7 @@ jobs:
       - name: "Run mock server"
         run: yarn mocks:no-cli &
       - name: "Cypress tests"
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           install: false
           start: "yarn run start:with:test"
