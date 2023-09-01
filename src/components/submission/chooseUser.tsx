@@ -72,6 +72,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
             name="chooseUserNavUnit"
             error={errors.navUnit}
             isMultiSelect={false}
+            selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
             onToggleSelected={(option, isSelected) => {
               if (isSelected) {
                 updateUserData({ navUnit: option });

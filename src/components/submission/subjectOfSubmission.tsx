@@ -58,6 +58,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
         name="subjectOfSubmission"
         error={errors.subjectOfSubmission}
         isMultiSelect={false}
+        selectedOptions={formData.titleOfSubmission ? [formData.titleOfSubmission] : []}
         onToggleSelected={(option, isSelected) => {
           if (isSelected) {
             updateFormData({
