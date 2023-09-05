@@ -23,6 +23,10 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
     secrets: inherit
+    permissions:
+      contents: "read"
+      id-token: "write"
+      packages: "read"
 
   deployAppToProd:
     name: "Deploy app to prod"
