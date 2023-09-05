@@ -101,6 +101,7 @@ const ContactInformation = ({ navUnits }: Props) => {
             name="contactInformationNavUnit"
             error={errors.navUnit}
             isMultiSelect={false}
+            selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
             onToggleSelected={(option, isSelected) => {
               if (isSelected) {
                 updateUserData({ navUnit: option });

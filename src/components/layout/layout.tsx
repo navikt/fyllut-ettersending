@@ -13,7 +13,6 @@ interface Props {
 }
 
 const Layout = ({ title, children, backUrl }: Props) => {
-  // Only show back link if we are not on the front page
   const backLink = () => {
     if (backUrl) {
       return (
