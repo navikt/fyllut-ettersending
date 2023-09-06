@@ -169,8 +169,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Fetch the form
   const id = context.params?.id as string;
-  const form = await getForm(id);
-  const translations = await getServerSideTranslations(context.locale, ["common", "detaljer", "validator"]);
+  const { locale } = context;
+  const form = await getForm(id, locale);
+  const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
 
   // Fetch existing ettersendinger and redirect if necessary
   let existingEttersendinger: EttersendelseApplication[] = [];

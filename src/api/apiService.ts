@@ -22,7 +22,7 @@ const getForms = async (): Promise<Form[]> => {
   return forms;
 };
 
-const getForm = async (formPath: string): Promise<Form | undefined> => {
+const getForm = async (formPath: string, language: string = "nb"): Promise<Form | undefined> => {
   const startTime = Date.now();
   let form;
 
@@ -30,7 +30,7 @@ const getForm = async (formPath: string): Promise<Form | undefined> => {
     if (isMock()) {
       form = require(`../mock/${formPath}.json`) ?? {};
     } else {
-      form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited`);
+      form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
       logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
     }
   } catch (e: any) {
