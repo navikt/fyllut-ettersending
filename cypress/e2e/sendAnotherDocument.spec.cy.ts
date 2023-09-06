@@ -24,7 +24,7 @@ describe("sendAnotherDocument", () => {
       cy.intercept("POST", `${Cypress.config("baseUrl")}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
-        expect(req.body.title).to.equal("Innsendelsen gjelder: Permittering og masseoppsigelser - Application for parental leave");
+        expect(req.body.title).to.equal("Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave");
         req.reply("mock-pdf");
       }).as("downloadForsteside");
     });
@@ -84,7 +84,7 @@ describe("sendAnotherDocument", () => {
       cy.intercept("POST", `${Cypress.config("baseUrl")}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
-        expect(req.body.title).to.equal("Innsendelsen gjelder: Permittering og masseoppsigelser - Application for parental leave");
+        expect(req.body.title).to.equal("Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave");
         req.reply("mock-pdf");
       }).as("downloadForsteside");
     });

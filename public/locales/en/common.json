@@ -13,19 +13,19 @@
   },
   "choose-user": {
     "user-type": {
-      "legend": "(en) Hvem gjelder innsendelsen for?",
-      "choice-has-ssn": "(en) En person som har fødselsnummer eller D-nummer",
-      "choice-no-ssn": "(en) En person som ikke har fødselsnummer eller D-nummer",
+      "legend": "(en) Hvem gjelder innsendingen for?",
+      "choice-has-ssn": "(en) Jeg har fødselsnummer eller d-nummer",
+      "choice-no-ssn": "(en) Jeg har ikke fødselsnummer eller d-nummer",
       "choice-other": "(en) Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
     },
     "ssn-input": {
-      "label": "(en) Fødselsnummer / D-nummer",
+      "label": "(en) Fødselsnummer / d-nummer",
       "placeholder": "(en) Skriv inn tekst"
     },
     "contact-information": {
       "first-name": "(en) Fornavn",
       "last-name": "(en) Etternavn",
-      "street-name": "(en) Gateadresse",
+      "street-name": "(en) Vegadresse",
       "postal-code": "(en) Postnummer",
       "city": "(en) Poststed",
       "country": "(en) Land",

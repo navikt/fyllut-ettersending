@@ -7,8 +7,8 @@
     "choice-by-mail": "Send i posten"
   },
   "attachments-checkbox": {
-    "legend": "Hvilke vedlegg skal du ettersende?",
-    "other-documentation-label": "Hvilken annen dokumentasjon skal du sende?"
+    "legend": "Hvilke dokumenter skal du ettersende?",
+    "other-documentation-label": "Gi dokumentet et beskrivende navn"
   },
-  "no-attachments-alert": "Dette skjemaet har ingen vedlegg som kan ettersendes."
+  "no-attachments-alert": "Dette skjemaet har ingen vedlegg"
 }
