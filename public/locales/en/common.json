@@ -8,31 +8,31 @@
   "yes": "Yes",
   "no": "No",
   "heading": {
-    "default-title": "(en) Ettersende dokumentasjon"
+    "default-title": "Forward documentation"
   },
   "choose-user": {
     "user-type": {
-      "legend": "(en) Hvem gjelder innsendingen for?",
-      "choice-has-ssn": "(en) Jeg har fødselsnummer eller d-nummer",
-      "choice-no-ssn": "(en) Jeg har ikke fødselsnummer eller d-nummer",
-      "choice-other": "(en) Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
+      "legend": "Who is the submission for?",
+      "choice-has-ssn": "I have a Norwegian national identification number or d-number",
+      "choice-no-ssn": "I do not have a Norwegian national identification number or d-number",
+      "choice-other": "Several people at the same time or workplace scheme organizers, course organizers and other businesses"
     },
     "ssn-input": {
-      "label": "(en) Fødselsnummer / d-nummer",
-      "placeholder": "(en) Skriv inn tekst"
+      "label": "Norwegian national identification number / d-number",
+      "placeholder": "Enter text"
     },
     "contact-information": {
-      "first-name": "(en) Fornavn",
-      "last-name": "(en) Etternavn",
-      "street-name": "(en) Vegadresse",
-      "postal-code": "(en) Postnummer",
-      "city": "(en) Poststed",
-      "country": "(en) Land",
-      "nav-unit-contact-legend": "(en) Har du vært i kontakt med NAV om denne saken tidligere?",
-      "nav-unit-select-label": "(en) Hvilken NAV-enhet har du vært i kontakt med?"
+      "first-name": "First name",
+      "last-name": "Last name",
+      "street-name": "Street address",
+      "postal-code": "Zip code",
+      "city": "City",
+      "country": "Country",
+      "nav-unit-contact-legend": "Have you been in contact with NAV about this case earlier?",
+      "nav-unit-select-label": "Which NAV unit have you been in contact with?"
     },
     "nav-unit-input": {
-      "label": "(en) Velg hvilken NAV-enhet som skal motta innsendingen"
+      "label": "Select which NAV unit that should receive your documents"
     }
   }
 }

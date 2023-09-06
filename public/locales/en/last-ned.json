@@ -1,30 +1,30 @@
 {
   "title": {
-    "ettersending": "(en) Ettersende dokumentasjon i posten",
-    "lospost": "(en) Sende inn dokumentasjon"
+    "ettersending": "Send additional documentation by post",
+    "lospost": "Submit documentation"
   },
   "section-top": {
-    "title": "(en) 1. Last ned førsteside til saken din",
-    "description": "(en) Førstesiden inneholder viktig informasjon som NAV trenger. Den skal sendes inn sammen med dokumentene dine."
+    "title": "1. Download the cover sheet for your submission",
+    "description": "The cover sheet contains important information that NAV needs. It must be submitted with your documents."
   },
   "section-attachments": {
     "title": {
-      "single": "(en) 2. Finn frem følgende dokument",
-      "plural": "(en) 2. Finn frem følgende dokumenter"
+      "single": "2. Find the following document",
+      "plural": "2. Find the following documents"
     }
   },
   "section-last": {
-    "title": "(en) {{step}}. Send dokumentene til NAV i posten",
+    "title": "{{step}}. Send the documents to NAV by post",
     "description": {
-      "ettersending": "(en) Legg førstesidearket fra punkt 1 på toppen av dokumentene. Send det hele til adressen på førstesidearket.",
-      "lospost": "(en) Legg førstesidearket fra punkt 1 på toppen av dokumentene du skal sende. Send det hele til adressen på førstesidearket."
+      "ettersending": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet.",
+      "lospost": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet."
     }
   },
   "button": {
-    "download-cover-page": "(en) Last ned førsteside"
+    "download-cover-page": "Download cover sheet"
   },
   "cover-page-title": {
-    "ettersendelse": "(en) Ettersending til {{formNumber}} {{title}}{{extraInfo}}",
-    "innsendelse": "(en) Innsendingen gjelder: {{titleOfSubmission}}{{extraInfo}}"
+    "ettersendelse": "Additional documentation for {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "Submission regarding: {{titleOfSubmission}}{{extraInfo}}"
   }
 }

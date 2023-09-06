@@ -1,12 +1,12 @@
 {
-  "title": "(nn) Sende inn dokumentasjon",
-  "heading": "(nn) Hva gjelder innsendingen?",
+  "title": "Senda inn dokumentasjonen",
+  "heading": "Kva gjeld innsendinga?",
   "attachments": {
-    "description": "(nn) Velg \"Ettersend vedlegg\" hvis du skal ettersende dokumentasjon til en søknad du har sendt tidligere.",
-    "button-text": "(nn) Ettersend vedlegg"
+    "description": "Vel \"Ettersend vedlegg\" viss du skal ettersenda dokumentasjon til ein søknad du har sendt tidlegare.",
+    "button-text": "Ettersend vedlegg"
   },
   "other-documentation": {
-    "description": "(nn) Velg \"Annen dokumentasjon\" hvis du vil sende dokumentasjon som ikke er knyttet til en søknad.",
-    "button-text": "(nn) Annen dokumentasjon"
+    "description": "Vel \"Annan dokumentasjon\" viss du vil senda dokumentasjon som ikkje er knytt til ein søknad.",
+    "button-text": "Annan dokumentasjon"
   }
 }

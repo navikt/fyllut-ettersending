@@ -1,30 +1,30 @@
 {
   "title": {
-    "ettersending": "(nn) Ettersende dokumentasjon i posten",
-    "lospost": "(nn) Sende inn dokumentasjon"
+    "ettersending": "Ettersenda dokumentasjon i posten",
+    "lospost": "Senda inn dokumentasjon"
   },
   "section-top": {
-    "title": "(nn) 1. Last ned førsteside til saken din",
-    "description": "(nn) Førstesiden inneholder viktig informasjon som NAV trenger. Den skal sendes inn sammen med dokumentene dine."
+    "title": "1. Last ned førsteside til di sak",
+    "description": "Førstesida inneheld viktig informasjon som NAV treng. Den skal sendast inn saman med dokumenta dine."
   },
   "section-attachments": {
     "title": {
-      "single": "(nn) 2. Finn frem følgende dokument",
-      "plural": "(nn) 2. Finn frem følgende dokumenter"
+      "single": "2. Finn fram følgjande dokument",
+      "plural": "2. Finn fram følgjande dokument"
     }
   },
   "section-last": {
-    "title": "(nn) {{step}}. Send dokumentene til NAV i posten",
+    "title": "{{step}}. Send dokumenta til NAV i posten",
     "description": {
-      "ettersending": "(nn) Legg førstesidearket fra punkt 1 på toppen av dokumentene. Send det hele til adressen på førstesidearket.",
-      "lospost": "(nn) Legg førstesidearket fra punkt 1 på toppen av dokumentene du skal sende. Send det hele til adressen på førstesidearket."
+      "ettersending": "Legg førstesidearket frå punkt 1 på toppen av dokumenta. Send det heile til adressa på førstesidearket.",
+      "lospost": "Legg førstesidearket frå punkt 1 på toppen av dokumenta du skal senda. Send det heile til adressa på førstesidearket."
     }
   },
   "button": {
-    "download-cover-page": "(nn) Last ned førsteside"
+    "download-cover-page": "Last ned førsteside"
   },
   "cover-page-title": {
-    "ettersendelse": "(nn) Ettersending til {{formNumber}} {{title}}{{extraInfo}}",
-    "innsendelse": "(nn) Innsendingen gjelder: {{titleOfSubmission}}{{extraInfo}}"
+    "ettersendelse": "Ettersending til {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "Innsendinga gjeld: {{titleOfSubmission}}{{extraInfo}}"
   }
 }

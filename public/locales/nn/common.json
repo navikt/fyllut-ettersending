@@ -8,31 +8,31 @@
   "yes": "Ja",
   "no": "Nei",
   "heading": {
-    "default-title": "(nn) Ettersende dokumentasjon"
+    "default-title": "Ettersenda dokumentasjon"
   },
   "choose-user": {
     "user-type": {
-      "legend": "(nn) Hvem gjelder innsendingen for?",
-      "choice-has-ssn": "(nn) Jeg har fødselsnummer eller d-nummer",
-      "choice-no-ssn": "(nn) Jeg har ikke fødselsnummer eller d-nummer",
-      "choice-other": "(nn) Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
+      "legend": "Kven gjeld innsendinga for?",
+      "choice-has-ssn": "Eg har fødselsnummer eller d-nummer",
+      "choice-no-ssn": "Eg har ikkje fødselsnummer eller d-nummer",
+      "choice-other": "Fleire personar samtidig eller tiltaksbedrifter, kursarrangørar og andre verksemder"
     },
     "ssn-input": {
-      "label": "(nn) Fødselsnummer / d-nummer",
-      "placeholder": "(nn) Skriv inn tekst"
+      "label": "Fødselsnummer / d-nummer",
+      "placeholder": "Skriv inn tekst"
     },
     "contact-information": {
-      "first-name": "(nn) Fornavn",
-      "last-name": "(nn) Etternavn",
-      "street-name": "(nn) Vegadresse",
-      "postal-code": "(nn) Postnummer",
-      "city": "(nn) Poststed",
-      "country": "(nn) Land",
-      "nav-unit-contact-legend": "(nn) Har du vært i kontakt med NAV om denne saken tidligere?",
-      "nav-unit-select-label": "(nn) Hvilken NAV-enhet har du vært i kontakt med?"
+      "first-name": "Fornamn",
+      "last-name": "Etternamn",
+      "street-name": "Vegadresse",
+      "postal-code": "Postnummer",
+      "city": "Poststad",
+      "country": "Land",
+      "nav-unit-contact-legend": "Har du vore i kontakt med NAV om denne saka tidlegare?",
+      "nav-unit-select-label": "Kva NAV-eining har du vore i kontakt med?"
     },
     "nav-unit-input": {
-      "label": "(nn) Velg hvilken NAV-enhet som skal motta innsendingen"
+      "label": "Vel kva NAV-eining som skal ta imot innsendinga"
     }
   }
 }

@@ -1,14 +1,14 @@
 {
-  "title": "(en) Ettersende dokumentasjon i posten",
-  "loading-text": "(en) Laster...",
+  "title": "Send documentation by post",
+  "loading-text": "Loading...",
   "submission-type-radio": {
-    "legend": "(en) Vil du sende dokumentasjonen digitalt eller i posten?",
-    "choice-digital": "(en) Send digitalt",
-    "choice-by-mail": "(en) Send i posten"
+    "legend": "Do you want to send the documentation digitally or by post?",
+    "choice-digital": "Submit digitally",
+    "choice-by-mail": "Send by post"
   },
   "attachments-checkbox": {
-    "legend": "(en) Hvilke dokumenter skal du ettersende?",
-    "other-documentation-label": "(en) Gi dokumentet et beskrivende navn"
+    "legend": "Which documents do you wish to submit?",
+    "other-documentation-label": "Give the document a descriptive name"
   },
-  "no-attachments-alert": "(en) Dette skjemaet har ingen vedlegg"
+  "no-attachments-alert": "This form has no attachments"
 }

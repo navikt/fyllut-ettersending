@@ -1,8 +1,8 @@
 {
-  "title": "(en) Ettersende dokumentasjon",
-  "loading-text": "(en) Henter data...",
+  "title": "Submit documentation",
+  "loading-text": "Loading data...",
   "search-input": {
-    "label": "(en) Hvilket skjema vil du ettersende dokumentasjon til?",
-    "description": "(en) Søk på skjemanavn, skjemanummer eller stikkord (for eksempel: dagpenger, stønad, tiltak, foreldrepenger). Velg søknad / skjema i søkeresultatet."
+    "label": "Which application do you want to submit additional documentation to?",
+    "description": "Search by form name, form number or keyword (for example: unemployment benefit, benefit, measures, parental allowance). Select application / form in the search result."
   }
 }

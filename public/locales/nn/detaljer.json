@@ -1,14 +1,14 @@
 {
-  "title": "(nn) Ettersende dokumentasjon i posten",
-  "loading-text": "(nn) Laster...",
+  "title": "Ettersenda dokumentasjon i posten",
+  "loading-text": "Laster...",
   "submission-type-radio": {
-    "legend": "(nn) Vil du sende dokumentasjonen digitalt eller i posten?",
-    "choice-digital": "(nn) Send digitalt",
-    "choice-by-mail": "(nn) Send i posten"
+    "legend": "Vil du senda dokumentasjonen digitalt eller i posten?",
+    "choice-digital": "Send digitalt",
+    "choice-by-mail": "Send i posten"
   },
   "attachments-checkbox": {
-    "legend": "(nn) Hvilke dokumenter skal du ettersende?",
-    "other-documentation-label": "(nn) Gi dokumentet et beskrivende navn"
+    "legend": "Kva dokument skal du ettersenda?",
+    "other-documentation-label": "Gje dokumentet eit beskrivande namn"
   },
-  "no-attachments-alert": "(nn) Dette skjemaet har ingen vedlegg"
+  "no-attachments-alert": "Dette skjemaet har ingen vedlegg"
 }
