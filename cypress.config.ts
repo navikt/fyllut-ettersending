@@ -17,5 +17,10 @@ export default defineConfig({
     viewportWidth: 1500,
     viewportHeight: 1200,
     setupNodeEvents(on, config) {},
+    env: {
+      INNSENDING_API_URL: "http://127.0.0.1:3200",
+      SEND_INN_FRONTEND_URL: "http://127.0.0.1:3200/send-inn-frontend",
+      MIN_SIDE_FRONTEND_URL: "http://127.0.0.1:3200/min-side-frontend",
+    },
   },
 });

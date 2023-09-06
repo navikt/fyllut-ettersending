@@ -24,6 +24,14 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: false
+  tokenx:
+    enabled: true
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      autoLogin: false
+      level: Level4
   resources:
     limits:
       cpu: "200m"
@@ -43,6 +51,8 @@ spec:
       {{/each}}
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: innsending-api
+          namespace: team-soknad
   env:
   {{#each env}}
     - name: {{this.name}}

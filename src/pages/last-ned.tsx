@@ -10,7 +10,7 @@ import Layout from "../components/layout/layout";
 import { downloadFrontpage } from "../api/apiClient";
 import ButtonGroup from "src/components/button/buttonGroup";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
-import { useRouter } from "next/router";
+import { Paths } from "src/data/text";
 import { getServerSideTranslations } from "../utils/i18nUtil";
 import { getCoverPageTitle } from "../utils/lastNedUtil";
 
@@ -21,12 +21,13 @@ interface Props {
 const LastNed: NextPage<Props> = () => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
   const { t } = useTranslation("last-ned");
   const { t: tCommon } = useTranslation("common");
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? "lospost" : "ettersending";
+
+  const previousPath = isLospost ? Paths.otherDocumentation : Paths.details + "/" + formData.formId;
 
   const download = async () => {
     setLoading(true);
@@ -39,7 +40,7 @@ const LastNed: NextPage<Props> = () => {
   };
 
   return (
-    <Layout title={t(`title.${submissionType}`)}>
+    <Layout title={t(`title.${submissionType}`)} backUrl={previousPath}>
       <Section>
         <Heading level="2" size="medium" spacing>
           {t("section-top.title")}
@@ -83,10 +84,7 @@ const LastNed: NextPage<Props> = () => {
             text: tCommon("button.previous"),
             variant: "secondary",
             icon: <ArrowLeftIcon aria-hidden />,
-            onClick: (e) => {
-              router.back();
-              e.currentTarget.blur();
-            },
+            path: previousPath,
           },
         ]}
       />

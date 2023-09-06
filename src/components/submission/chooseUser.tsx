@@ -1,9 +1,10 @@
-import { Radio, RadioGroup, Select } from "@navikt/ds-react";
+import { Radio, RadioGroup, UNSAFE_Combobox } from "@navikt/ds-react";
 import { NavUnit, UserType } from "../../data/domain";
 import Section from "../section/section";
 import SocialSecurityNo from "../form/socialSecurityNo";
 import { useFormState } from "../../data/appState";
 import ContactInformation from "./contactInformation";
+import { useMemo } from "react";
 import {useTranslation} from "next-i18next";
 
 interface Props {
@@ -14,6 +15,10 @@ interface Props {
 const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const {t} = useTranslation("common");
+
+  const navUnitOptions = useMemo(() => {
+    return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
+  }, [navUnits]);
 
   return (
     <>
@@ -63,22 +68,21 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
 
       {formData.userData?.type === UserType.other && (
         <Section>
-          <Select
+          <UNSAFE_Combobox
             label={t("choose-user.nav-unit-input.label")}
-            size="medium"
-            onChange={(e) => updateUserData({ navUnit: e.target.value })}
-            value={formData.userData?.navUnit ?? ""}
+            options={navUnitOptions}
+            name="chooseUserNavUnit"
             error={errors.navUnit}
-          >
-            <option></option>
-            {navUnits
-              ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-              .map((navUnit, index) => (
-                <option key={index} value={navUnit.name}>
-                  {navUnit.name}
-                </option>
-              ))}
-          </Select>
+            isMultiSelect={false}
+            selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
+            onToggleSelected={(option, isSelected) => {
+              if (isSelected) {
+                updateUserData({ navUnit: option });
+              } else {
+                updateUserData({ navUnit: undefined });
+              }
+            }}
+          />
         </Section>
       )}
     </>

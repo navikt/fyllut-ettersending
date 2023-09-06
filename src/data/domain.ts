@@ -1,3 +1,4 @@
+class UnauthenticatedError extends Error {}
 interface Form {
   _id: string;
   modified: string;
@@ -58,8 +59,15 @@ interface DownloadCoverPageRequestBody {
 
 enum SubmissionType {
   digital = "digital",
-  byMail = "byMail",
+  paper = "paper",
 }
+
+const getSubmissionTypeFromString = (string: string): SubmissionType => {
+  if (!Object.values(SubmissionType).includes(string as SubmissionType)) {
+    throw new Error(`Invalid submission type: ${string}`);
+  }
+  return SubmissionType[string as keyof typeof SubmissionType];
+};
 
 enum UserType {
   hasSocialNumber = "hasSocialNumber",
@@ -80,5 +88,54 @@ interface UserData {
   navUnit?: string;
 }
 
-export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, DownloadCoverPageRequestBody };
-export { UserType, SubmissionType };
+type MimeType = "application/pdf" | "application/json" | "image/png" | "image/jpeg";
+type UploadStatus = "IkkeValgt" | "LastetOpp" | "Innsendt" | "SendSenere" | "SendesAvAndre" | "SendesIkke";
+type ApplicationStatus = "Opprettet" | "Utfylt" | "Innsendt" | "SlettetAvBruker" | "AutomatiskSlettet";
+type ArchivingStatus = "IkkeSatt" | "Arkivert" | "ArkiveringFeilet";
+type ApplicationType = "soknad" | "ettersendelse";
+type ApplicationDisplayType = "fyllUt" | "dokumentinnsending" | "ettersending";
+interface ApplicationAttachment {
+  id?: number;
+  vedleggsnr: string;
+  tittel: string;
+  label: string;
+  beskrivelse: string;
+  uuid: string;
+  mimetype: MimeType;
+  document?: string;
+  erHoveddokument: boolean;
+  erVariant: boolean;
+  erPdfa: boolean;
+  erPakrevd: boolean;
+  skjemaurl?: string;
+  opplastingsStatus: UploadStatus;
+  opprettetdato: string;
+  innsendtdato?: string;
+  formioId?: string;
+}
+
+interface EttersendelseApplication {
+  id?: number;
+  innsendingsId: string;
+  ettersendingsId: string;
+  brukerId: string;
+  skjemanr: string;
+  tittel: string;
+  spraak: string;
+  status: ApplicationStatus;
+  endretDato: string;
+  opprettetDato: string;
+  innsendtDato?: string;
+  vedleggsListe: ApplicationAttachment[];
+  visningsSteg?: number;
+  visningsType?: ApplicationDisplayType;
+  innsendingsFristDato?: string;
+  forsteInnsendingsDato?: string;
+  fristForEttersendelse?: number;
+  arkiveringsStatus?: ArchivingStatus;
+  erSystemGenerert?: boolean;
+  soknadstype?: ApplicationType;
+}
+
+export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, EttersendelseApplication, DownloadCoverPageRequestBody };
+export { UnauthenticatedError, UserType, SubmissionType, getSubmissionTypeFromString };

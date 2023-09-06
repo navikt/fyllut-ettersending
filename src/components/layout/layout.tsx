@@ -1,36 +1,30 @@
 import "@navikt/ds-css";
 import styles from "./layout.module.css";
 import { ReactNode } from "react";
-import { Heading, Link } from "@navikt/ds-react";
-import { useRouter } from "next/router";
+import { Heading, Link as NavLink } from "@navikt/ds-react";
 import classNames from "classnames";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
+import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 interface Props {
   title?: string;
   children: ReactNode;
+  backUrl?: string;
   showBackLink?: boolean;
 }
 
-const Layout = ({ title, children, showBackLink = true }: Props) => {
-  const router = useRouter();
+const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
   const {t} = useTranslation("common");
 
-  // Only show back link if we are not on the front page
   const backLink = () => {
-    if (router.route !== "/" && showBackLink) {
+    if (backUrl && showBackLink) {
       return (
-        <Link
-          href="#"
-          onClick={(e) => {
-            router.back();
-            e.currentTarget.blur();
-          }}
-          className={styles.backLink}
-        >
-          <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
-          {t("button.previous")}
+        <Link href={backUrl} passHref legacyBehavior>
+          <NavLink className={styles.backLink}>
+            <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
+            {t("button.previous")}
+          </NavLink>
         </Link>
       );
     }

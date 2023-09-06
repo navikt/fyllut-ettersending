@@ -1,19 +1,19 @@
 name: "Test"
 run-name: "Test [${{ github.event_name }}]"
-on: 
+on:
   workflow_call:
   push:
     branches-ignore:
       - main
     paths-ignore:
-      - '**.md'
-      - '**/**.md'
+      - "**.md"
+      - "**/**.md"
   pull_request:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - '**/**.md'
+      - "**.md"
+      - "**/**.md"
 
 jobs:
   test:
@@ -32,8 +32,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "Build application"
         run: yarn build:test
+      - name: "Run mock server"
+        run: yarn mocks:no-cli &
       - name: "Cypress tests"
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           install: false
           start: "yarn run start:with:test"

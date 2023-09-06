@@ -24,7 +24,7 @@ const ChooseSubmissionType = () => {
         <Radio name={SubmissionType.digital} value={SubmissionType.digital}>
           {t("submission-type-radio.choice-digital")}
         </Radio>
-        <Radio name={SubmissionType.byMail} value={SubmissionType.byMail}>
+        <Radio name={SubmissionType.paper} value={SubmissionType.paper}>
           {t("submission-type-radio.choice-by-mail")}
         </Radio>
       </RadioGroup>

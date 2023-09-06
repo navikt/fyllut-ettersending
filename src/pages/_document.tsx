@@ -22,6 +22,7 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
         params: {
           simple: true,
           language: locale as DecoratorLocale || "nb",
+          logoutWarning: true,
         },
       };
       Decorator = await fetchDecoratorReact(decoratorProps);

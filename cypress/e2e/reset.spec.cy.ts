@@ -3,7 +3,15 @@ import {TestButtonText} from "./testUtils";
 describe("reset", () => {
   before(() => {
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
-    cy.visit("/ettersendelse");
+    cy.visit("/ettersendelse", {
+      onBeforeLoad(win) {
+        Object.defineProperty(win.document, "referrer", {
+          get() {
+            return Cypress.config("baseUrl") + "/ettersendelse";
+          },
+        });
+      },
+    });
     cy.wait("@getForms");
   });
 

@@ -1,5 +1,5 @@
-import { Radio, RadioGroup, Select, TextField } from "@navikt/ds-react";
-import { ChangeEvent } from "react";
+import { Radio, RadioGroup, TextField, UNSAFE_Combobox } from "@navikt/ds-react";
+import { ChangeEvent, useMemo } from "react";
 import { NavUnit } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./submission.module.css";
@@ -17,6 +17,10 @@ const ContactInformation = ({ navUnits }: Props) => {
   const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateUserData({ [e.target.name]: e.target.value });
   };
+
+  const navUnitOptions = useMemo(() => {
+    return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
+  }, [navUnits]);
 
   return (
     <>
@@ -93,23 +97,21 @@ const ContactInformation = ({ navUnits }: Props) => {
 
       {formData.userData?.navUnitContact && (
         <Section>
-          <Select
+          <UNSAFE_Combobox
             label={t("choose-user.contact-information.nav-unit-select-label")}
-            size="medium"
-            onChange={handleUserDataInputChange}
-            value={formData.userData?.navUnit ?? ""}
-            name="navUnit"
+            options={navUnitOptions}
+            name="contactInformationNavUnit"
             error={errors.navUnit}
-          >
-            <option></option>
-            {navUnits
-              ?.sort((a, b) => (a.name > b.name ? 1 : -1))
-              .map((navUnit, index) => (
-                <option key={index} value={navUnit.name}>
-                  {navUnit.name}
-                </option>
-              ))}
-          </Select>
+            isMultiSelect={false}
+            selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
+            onToggleSelected={(option, isSelected) => {
+              if (isSelected) {
+                updateUserData({ navUnit: option });
+              } else {
+                updateUserData({ navUnit: undefined });
+              }
+            }}
+          />
         </Section>
       )}
     </>

@@ -12,7 +12,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
     cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click();
     cy.url().should("include", "/detaljer");
     cy.get('[type="checkbox"]').first().check();
-    cy.get('[type="radio"]').check("byMail");
+    cy.get('[type="radio"]').check("paper");
     cy.get('[type="radio"]').check("hasSocialNumber");
     cy.get('[name="socialSecurityNo"]').click().type("28119135003");
     cy.get("button").contains(TestButtonText.next).click();

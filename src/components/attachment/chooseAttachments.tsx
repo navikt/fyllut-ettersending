@@ -4,7 +4,7 @@ import Section from "../section/section";
 import styles from "../attachment/attachment.module.css";
 import { useFormState } from "../../data/appState";
 import { hasOtherAttachment } from "../../utils/formDataUtil";
-import { isSubmissionTypeByMail } from "../../utils/submissionUtil";
+import { isSubmissionTypePaper } from "../../utils/submissionUtil";
 import { useTranslation } from "next-i18next";
 
 interface Props {
@@ -35,7 +35,7 @@ const ChooseAttachments = ({ form }: Props) => {
               </Checkbox>
             ))}
           </CheckboxGroup>
-          {hasOtherAttachment(formData) && isSubmissionTypeByMail(formData) && (
+          {hasOtherAttachment(formData) && isSubmissionTypePaper(formData) && (
             <TextField
               value={formData.otherDocumentationTitle ?? ""}
               name="otherDocumentationTitle"

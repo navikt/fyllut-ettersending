@@ -4,25 +4,28 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - '**/**.md'
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:dev_${{ github.sha }}
+      - "**.md"
+      - "**/**.md"
+
 jobs:
   test:
     name: "Test"
     uses: ./.github/workflows/test.yaml
-  
-  build:
+
+  build-and-push:
     name: "Build"
     uses: ./.github/workflows/build-push.yaml
-    with: 
+    with:
       environment: dev
     secrets: inherit
+    permissions:
+      contents: "read"
+      id-token: "write"
+      packages: "read"
 
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: [build, test]
+    needs: [build-and-push, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,3 +36,4 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/dev.yaml
+          VAR: image=${{ needs.build-and-push.outputs.image }}
