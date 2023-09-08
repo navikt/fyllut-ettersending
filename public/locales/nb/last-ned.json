@@ -1,0 +1,30 @@
+{
+  "title": {
+    "ettersending": "Ettersende dokumentasjon i posten",
+    "lospost": "Sende inn dokumentasjon"
+  },
+  "section-top": {
+    "title": "1. Last ned førsteside til saken din",
+    "description": "Førstesiden inneholder viktig informasjon som NAV trenger. Den skal sendes inn sammen med dokumentene dine."
+  },
+  "section-attachments": {
+    "title": {
+      "single": "2. Finn frem følgende dokument",
+      "plural": "2. Finn frem følgende dokumenter"
+    }
+  },
+  "section-last": {
+    "title": "{{step}}. Send dokumentene til NAV i posten",
+    "description": {
+      "ettersending": "Legg førstesidearket fra punkt 1 på toppen av dokumentene. Send det hele til adressen på førstesidearket.",
+      "lospost": "Legg førstesidearket fra punkt 1 på toppen av dokumentene du skal sende. Send det hele til adressen på førstesidearket."
+    }
+  },
+  "button": {
+    "download-cover-page": "Last ned førsteside"
+  },
+  "cover-page-title": {
+    "ettersendelse": "Ettersending til {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "Innsendingen gjelder: {{titleOfSubmission}}{{extraInfo}}"
+  }
+}

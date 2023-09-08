@@ -5,6 +5,7 @@ import SubjectOfSubmission from "../submission/subjectOfSubmission";
 import ChooseUser from "../submission/chooseUser";
 import { Ingress } from "@navikt/ds-react";
 import styles from "./other-document.module.css";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -13,14 +14,14 @@ interface Props {
 }
 
 const OtherDocument: NextPage<Props> = (props) => {
+  const { t } = useTranslation("lospost");
+
   const { archiveSubjects, navUnits, subject } = props;
 
   return (
     <>
       <Ingress className={styles.ingress}>
-        Når du skal sende dokumenter til NAV i posten må du bruke en førsteside for innsending. Fyll ut feltene nedenfor
-        og klikk <b>Gå videre</b>. På neste side kan du laste ned førsteside til innsendingen din. Du trenger ikke ha
-        dokumentene klare for å laste ned førsteside.
+        {t("ingress", {interpolation: {escapeValue: false}})}
       </Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
       <ChooseUser navUnits={navUnits} />

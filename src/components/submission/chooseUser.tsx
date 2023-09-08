@@ -5,6 +5,7 @@ import SocialSecurityNo from "../form/socialSecurityNo";
 import { useFormState } from "../../data/appState";
 import ContactInformation from "./contactInformation";
 import { useMemo } from "react";
+import {useTranslation} from "next-i18next";
 
 interface Props {
   navUnits?: NavUnit[] | undefined;
@@ -13,6 +14,7 @@ interface Props {
 
 const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
+  const {t} = useTranslation("common");
 
   const navUnitOptions = useMemo(() => {
     return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
@@ -22,7 +24,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
     <>
       <Section>
         <RadioGroup
-          legend="Hvem gjelder innsendelsen for?"
+          legend={t("choose-user.user-type.legend")}
           size="medium"
           onChange={(type) => {
             updateFormData({
@@ -36,14 +38,14 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
           value={formData.userData?.type ?? ""}
         >
           <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
-            En person som har fødselsnummer eller D-nummer
+            {t("choose-user.user-type.choice-has-ssn")}
           </Radio>
           <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
-            En person som ikke har fødselsnummer eller D-nummer
+            {t("choose-user.user-type.choice-no-ssn")}
           </Radio>
           {shouldRenderNavUnits && (
             <Radio name={UserType.other} value={UserType.other}>
-              Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter
+              {t("choose-user.user-type.choice-other")}
             </Radio>
           )}
         </RadioGroup>
@@ -54,9 +56,9 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
           <SocialSecurityNo
             value={formData.userData?.socialSecurityNo ?? ""}
             name="socialSecurityNo"
-            label="Fødselsnummer / D-nummer"
+            label={t("choose-user.ssn-input.label")}
             onChange={(value) => updateUserData({ socialSecurityNo: value })}
-            placeholder="Skriv inn tekst"
+            placeholder={t("choose-user.ssn-input.placeholder")}
             error={errors.socialSecurityNo}
           />
         </Section>
@@ -67,7 +69,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
       {formData.userData?.type === UserType.other && (
         <Section>
           <UNSAFE_Combobox
-            label="Velg hvilken NAV-enhet som skal motta innsendingen"
+            label={t("choose-user.nav-unit-input.label")}
             options={navUnitOptions}
             name="chooseUserNavUnit"
             error={errors.navUnit}

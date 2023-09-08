@@ -4,6 +4,7 @@ import Section from "../section/section";
 import { useFormState } from "../../data/appState";
 import { useEffect, useMemo } from "react";
 import { UNSAFE_Combobox } from "@navikt/ds-react";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   archiveSubjects: KeyValue;
@@ -23,6 +24,7 @@ const findKeyByValue = (obj: KeyValueMap, value: string): string | undefined => 
 // If subject is not in query param -> render combobox
 const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
+  const { t } = useTranslation("lospost");
 
   const options = useMemo(() => {
     return Object.values(archiveSubjects).sort((a, b) => (a > b ? 1 : -1));
@@ -53,7 +55,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
   const combobox = () => {
     return (
       <UNSAFE_Combobox
-        label="Velg tema for innsendingen"
+        label={t("subject-of-submission.label")}
         options={options}
         name="subjectOfSubmission"
         error={errors.subjectOfSubmission}
@@ -77,8 +79,8 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
     <>
       <Section>
         <TextField
-          label="Hvilken dokumentasjon vil du sende til NAV?"
-          description="Gi et beskrivende navn på dokumentasjonen du ønsker å laste opp."
+          label={t("other-documentation-title.label")}
+          description={t("other-documentation-title.description")}
           name="otherDocumentationTitle"
           value={formData.otherDocumentationTitle ?? ""}
           size="medium"

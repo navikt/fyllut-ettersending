@@ -1,0 +1,8 @@
+{
+  "title": "Ettersenda dokumentasjon",
+  "loading-text": "Hentar data...",
+  "search-input": {
+    "label": "Kva skjema vil du ettersenda dokumentasjon til?",
+    "description": "Søk på skjemanamn, skjemanummer eller stikkord (til dømes: dagpengar, stønad, tiltak, foreldrepengar). Vel søknad / skjema i søkjeresultatet."
+  }
+}

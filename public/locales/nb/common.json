@@ -1,0 +1,38 @@
+{
+  "button": {
+    "next": "Gå videre",
+    "previous": "Gå tilbake",
+    "cancel": "Avbryt",
+    "exit": "Avslutt"
+  },
+  "yes": "Ja",
+  "no": "Nei",
+  "heading": {
+    "default-title": "Ettersende dokumentasjon"
+  },
+  "choose-user": {
+    "user-type": {
+      "legend": "Hvem gjelder innsendingen for?",
+      "choice-has-ssn": "Jeg har fødselsnummer eller d-nummer",
+      "choice-no-ssn": "Jeg har ikke fødselsnummer eller d-nummer",
+      "choice-other": "Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
+    },
+    "ssn-input": {
+      "label": "Fødselsnummer / d-nummer",
+      "placeholder": "Skriv inn tekst"
+    },
+    "contact-information": {
+      "first-name": "Fornavn",
+      "last-name": "Etternavn",
+      "street-name": "Vegadresse",
+      "postal-code": "Postnummer",
+      "city": "Poststed",
+      "country": "Land",
+      "nav-unit-contact-legend": "Har du vært i kontakt med NAV om denne saken tidligere?",
+      "nav-unit-select-label": "Hvilken NAV-enhet har du vært i kontakt med?"
+    },
+    "nav-unit-input": {
+      "label": "Velg hvilken NAV-enhet som skal motta innsendingen"
+    }
+  }
+}

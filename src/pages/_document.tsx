@@ -1,16 +1,8 @@
-import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps, DecoratorLocale } from "@navikt/nav-dekoratoren-moduler/ssr";
 import { DocumentContext, DocumentInitialProps } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-const decoratorProps: DecoratorFetchProps = {
-  env: process.env.NODE_ENV === "production" ? "prod" : "dev",
-  params: {
-    simple: true,
-    logoutWarning: true,
-  },
-};
-
-type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponents };
+type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorComponents}
 
 class _Document extends Document<{ Decorator: DecoratorComponents }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
@@ -24,6 +16,15 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
         Footer: () => <></>,
       };
     } else {
+      const { locale} = ctx;
+      const decoratorProps: DecoratorFetchProps = {
+        env: process.env.NODE_ENV === "production" ? "prod" : "dev",
+        params: {
+          simple: true,
+          language: locale as DecoratorLocale || "nb",
+          logoutWarning: true,
+        },
+      };
       Decorator = await fetchDecoratorReact(decoratorProps);
     }
 
@@ -34,7 +35,7 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
     const { Styles, Scripts, Header, Footer } = this.props.Decorator;
 
     return (
-      <Html lang="no">
+      <Html lang={this.props.locale}>
         <Head>
           <meta name="description" content="Ettersending dokumentasjon" />
           <link rel="icon" href="/favicon.ico" />

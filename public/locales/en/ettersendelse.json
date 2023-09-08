@@ -1,0 +1,8 @@
+{
+  "title": "Submit documentation",
+  "loading-text": "Loading data...",
+  "search-input": {
+    "label": "Which application do you want to submit additional documentation to?",
+    "description": "Search by form name, form number or keyword (for example: unemployment benefit, benefit, measures, parental allowance). Select application / form in the search result."
+  }
+}

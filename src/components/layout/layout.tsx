@@ -5,21 +5,25 @@ import { Heading, Link as NavLink } from "@navikt/ds-react";
 import classNames from "classnames";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   title?: string;
   children: ReactNode;
   backUrl?: string;
+  showBackLink?: boolean;
 }
 
-const Layout = ({ title, children, backUrl }: Props) => {
+const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
+  const {t} = useTranslation("common");
+
   const backLink = () => {
-    if (backUrl) {
+    if (backUrl && showBackLink) {
       return (
         <Link href={backUrl} passHref legacyBehavior>
           <NavLink className={styles.backLink}>
             <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
-            Gå tilbake
+            {t("button.previous")}
           </NavLink>
         </Link>
       );
@@ -30,7 +34,7 @@ const Layout = ({ title, children, backUrl }: Props) => {
     <div className={styles.layout}>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          {title ?? "Ettersende dokumentasjon"}
+          {title ?? t("heading.default-title")}
         </Heading>
       </header>
 

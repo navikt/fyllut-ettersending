@@ -52,6 +52,11 @@ interface FormData {
   userData?: UserData;
 }
 
+interface DownloadCoverPageRequestBody {
+  formData: FormData;
+  title: string;
+}
+
 enum SubmissionType {
   digital = "digital",
   paper = "paper",
@@ -132,5 +137,5 @@ interface EttersendelseApplication {
   soknadstype?: ApplicationType;
 }
 
-export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, EttersendelseApplication };
+export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, EttersendelseApplication, DownloadCoverPageRequestBody };
 export { UnauthenticatedError, UserType, SubmissionType, getSubmissionTypeFromString };

@@ -1,0 +1,18 @@
+{
+  "userType": "You have to select who the submission applies to",
+  "socialSecurityNo": "Norwegian national identification number / d-number is not valid",
+  "socialSecurityNoIsEmpty": "You have to fill in your Norwegian national identification number / d-number",
+  "firstName": "You have to fill in your first name",
+  "lastName": "You have to fill in your last name",
+  "streetName": "You have to fill in the street address",
+  "postalCode": "You have to fill in zip code",
+  "city": "You have to fill in city",
+  "country": "You have to fill in country",
+  "otherDocumentation": "You have to fill in what documentation you want to send to NAV",
+  "subjectOfSubmission": "You have to choose topic for the submission",
+  "navUnitContact": "You have to state whether you have been in contact with NAV about this matter previously",
+  "navUnitContactSelect": "You have to select which NAV unit you have been in contact with",
+  "navUnit": "You have to choose which NAV unit will receive the submission",
+  "chooseOne": "Select one alternative",
+  "attachments": "Select at least one attachment"
+}

@@ -2,14 +2,16 @@ import Section from "../section/section";
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import { useFormState } from "../../data/appState";
 import { SubmissionType } from "../../data/domain";
+import { useTranslation } from "next-i18next";
 
 const ChooseSubmissionType = () => {
   const { formData, updateFormData } = useFormState();
+  const { t } = useTranslation("detaljer");
 
   return (
     <Section>
       <RadioGroup
-        legend={"Vil du sende dokumentasjonen digitalt eller i posten?"}
+        legend={t("submission-type-radio.legend")}
         size="medium"
         onChange={(submissionType: SubmissionType) => {
           updateFormData({
@@ -20,10 +22,10 @@ const ChooseSubmissionType = () => {
         value={formData.submissionType ?? ""}
       >
         <Radio name={SubmissionType.digital} value={SubmissionType.digital}>
-          Send digitalt
+          {t("submission-type-radio.choice-digital")}
         </Radio>
         <Radio name={SubmissionType.paper} value={SubmissionType.paper}>
-          Send i posten
+          {t("submission-type-radio.choice-by-mail")}
         </Radio>
       </RadioGroup>
     </Section>

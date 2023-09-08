@@ -5,6 +5,7 @@ import styles from "../attachment/attachment.module.css";
 import { useFormState } from "../../data/appState";
 import { hasOtherAttachment } from "../../utils/formDataUtil";
 import { isSubmissionTypePaper } from "../../utils/submissionUtil";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   form: Form;
@@ -12,13 +13,14 @@ interface Props {
 
 const ChooseAttachments = ({ form }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
+  const { t } = useTranslation("detaljer");
 
   return (
     <>
       {form.attachments?.length > 0 && (
         <Section>
           <CheckboxGroup
-            legend="Hvilke vedlegg skal du ettersende?"
+            legend={t("attachments-checkbox.legend")}
             value={formData.attachments ? formData.attachments.map((attachment) => attachment.key) : []}
             size="medium"
             onChange={(checked) => {
@@ -37,7 +39,7 @@ const ChooseAttachments = ({ form }: Props) => {
             <TextField
               value={formData.otherDocumentationTitle ?? ""}
               name="otherDocumentationTitle"
-              label="Hvilken annen dokumentasjon skal du sende?"
+              label={t("attachments-checkbox.other-documentation-label")}
               size="medium"
               onChange={(e) => updateFormData({ otherDocumentationTitle: e.target.value })}
               className={styles.input}

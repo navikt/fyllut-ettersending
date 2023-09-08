@@ -1,0 +1,38 @@
+{
+  "button": {
+    "next": "Next",
+    "previous": "Previous",
+    "cancel": "Cancel",
+    "exit": "Exit"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "heading": {
+    "default-title": "Forward documentation"
+  },
+  "choose-user": {
+    "user-type": {
+      "legend": "Who is the submission for?",
+      "choice-has-ssn": "I have a Norwegian national identification number or d-number",
+      "choice-no-ssn": "I do not have a Norwegian national identification number or d-number",
+      "choice-other": "Several people at the same time or workplace scheme organizers, course organizers and other businesses"
+    },
+    "ssn-input": {
+      "label": "Norwegian national identification number / d-number",
+      "placeholder": "Enter text"
+    },
+    "contact-information": {
+      "first-name": "First name",
+      "last-name": "Last name",
+      "street-name": "Street address",
+      "postal-code": "Zip code",
+      "city": "City",
+      "country": "Country",
+      "nav-unit-contact-legend": "Have you been in contact with NAV about this case earlier?",
+      "nav-unit-select-label": "Which NAV unit have you been in contact with?"
+    },
+    "nav-unit-input": {
+      "label": "Select which NAV unit that should receive your documents"
+    }
+  }
+}

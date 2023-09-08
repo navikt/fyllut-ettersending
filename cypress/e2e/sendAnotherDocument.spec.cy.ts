@@ -1,4 +1,4 @@
-import { ButtonText } from "../../src/data/text";
+import {TestButtonText} from "./testUtils";
 
 describe("sendAnotherDocument", () => {
   const SUBJECT_PER = {
@@ -22,8 +22,9 @@ describe("sendAnotherDocument", () => {
       cy.wait("@getNavUnits");
       // Intercept: Download cover page pdf
       cy.intercept("POST", `${Cypress.config("baseUrl")}/api/download`, (req) => {
-        expect(req.body.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
-        expect(req.body.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.title).to.equal("Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave");
         req.reply("mock-pdf");
       }).as("downloadForsteside");
     });
@@ -47,12 +48,12 @@ describe("sendAnotherDocument", () => {
       cy.findAllByRole("radio").check("true");
       cy.get('[name="contactInformationNavUnit"]').click().type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
 
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", { name: ButtonText.downloadCoverPage }).should("exist").click();
+      cy.findByRole("button", { name: TestButtonText.downloadCoverPage }).should("exist").click();
     });
 
     it("should be able to fill out the form and go to next page (other)", () => {
@@ -66,11 +67,11 @@ describe("sendAnotherDocument", () => {
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click().type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", { name: ButtonText.downloadCoverPage }).should("exist").click();
+      cy.findByRole("button", {name: TestButtonText.downloadCoverPage}).should("exist").click();
     });
   });
 
@@ -81,8 +82,9 @@ describe("sendAnotherDocument", () => {
       cy.wait("@getNavUnits");
       // Intercept: Download cover page pdf
       cy.intercept("POST", `${Cypress.config("baseUrl")}/api/download`, (req) => {
-        expect(req.body.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
-        expect(req.body.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.title).to.equal("Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave");
         req.reply("mock-pdf");
       }).as("downloadForsteside");
     });
@@ -92,11 +94,11 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="subjectOfSubmission"]').should("not.exist");
       cy.findAllByRole("radio").check("hasSocialNumber");
       cy.get('[name="socialSecurityNo"]').click().type("16020256145");
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", { name: ButtonText.downloadCoverPage }).should("exist").click();
+      cy.findByRole("button", { name: TestButtonText.downloadCoverPage }).should("exist").click();
     });
   });
 
@@ -107,8 +109,8 @@ describe("sendAnotherDocument", () => {
       cy.wait("@getNavUnits");
       // Intercept: Download cover page pdf
       cy.intercept("POST", `${Cypress.config("baseUrl")}/api/download`, (req) => {
-        expect(req.body.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
-        expect(req.body.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
         req.reply("mock-pdf");
       }).as("downloadForsteside");
     });
@@ -118,11 +120,11 @@ describe("sendAnotherDocument", () => {
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
       cy.findAllByRole("radio").check("hasSocialNumber");
       cy.get('[name="socialSecurityNo"]').click().type("16020256145");
-      cy.get("button").contains(ButtonText.next).click();
+      cy.get("button").contains(TestButtonText.next).click();
 
       //Download page
       cy.url().should("include", "/last-ned");
-      cy.findByRole("button", { name: ButtonText.downloadCoverPage }).should("exist").click();
+      cy.findByRole("button", {name: TestButtonText.downloadCoverPage}).should("exist").click();
     });
   });
 });

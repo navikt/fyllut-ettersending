@@ -5,6 +5,7 @@ import Section from "../section/section";
 import styles from "./search.module.css";
 import { useRouter } from "next/router";
 import { Paths } from "../../data/text";
+import { useTranslation } from "next-i18next";
 
 interface Props {
   forms: Form[];
@@ -14,6 +15,7 @@ const FormSearch = ({ forms }: Props) => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState<Form[]>([]);
   const router = useRouter();
+  const { t } = useTranslation("ettersendelse");
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
@@ -35,10 +37,8 @@ const FormSearch = ({ forms }: Props) => {
       <Section>
         <TextField
           autoComplete="off"
-          label="Hvilket skjema vil du ettersende dokumentasjon til?"
-          description="Søk på skjemanavn, skjemanummer eller stikkord
-            (for eksempel: dagpenger, stønad, tiltak, foreldrepenger).
-            Velg søknad / skjema i søkeresultatet."
+          label={t("search-input.label")}
+          description={t("search-input.description")}
           name="search"
           onChange={(e) => setSearchInput(e.target.value)}
           size="medium"

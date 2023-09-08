@@ -3,7 +3,7 @@ import Layout from "../components/layout/layout";
 
 const Error = ({ statusCode }) => {
   return (
-    <Layout>
+    <Layout title="Ettersende dokumentasjon" showBackLink={false}>
       <Heading spacing size="large" level="2">
         Feilmelding
       </Heading>

@@ -1,0 +1,30 @@
+{
+  "title": {
+    "ettersending": "Send additional documentation by post",
+    "lospost": "Submit documentation"
+  },
+  "section-top": {
+    "title": "1. Download the cover sheet for your submission",
+    "description": "The cover sheet contains important information that NAV needs. It must be submitted with your documents."
+  },
+  "section-attachments": {
+    "title": {
+      "single": "2. Find the following document",
+      "plural": "2. Find the following documents"
+    }
+  },
+  "section-last": {
+    "title": "{{step}}. Send the documents to NAV by post",
+    "description": {
+      "ettersending": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet.",
+      "lospost": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet."
+    }
+  },
+  "button": {
+    "download-cover-page": "Download cover sheet"
+  },
+  "cover-page-title": {
+    "ettersendelse": "Additional documentation for {{formNumber}} {{title}}{{extraInfo}}",
+    "innsendelse": "Submission regarding: {{titleOfSubmission}}{{extraInfo}}"
+  }
+}

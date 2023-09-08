@@ -1,0 +1,12 @@
+{
+  "title": "Senda inn dokumentasjonen",
+  "heading": "Kva gjeld innsendinga?",
+  "attachments": {
+    "description": "Vel \"Ettersend vedlegg\" viss du skal ettersenda dokumentasjon til ein søknad du har sendt tidlegare.",
+    "button-text": "Ettersend vedlegg"
+  },
+  "other-documentation": {
+    "description": "Vel \"Annan dokumentasjon\" viss du vil senda dokumentasjon som ikkje er knytt til ein søknad.",
+    "button-text": "Annan dokumentasjon"
+  }
+}

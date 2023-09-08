@@ -1,3 +1,5 @@
+import {TestButtonText} from "./testUtils";
+
 describe("reset", () => {
   before(() => {
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
@@ -27,7 +29,7 @@ describe("reset", () => {
     cy.findAllByRole("checkbox").first().check();
 
     // Gå tilbake
-    cy.findByRole("link", { name: "Gå tilbake" }).click();
+    cy.findByRole("link", { name: TestButtonText.previous }).click();
 
     // Skriv inn "hund" i tekstboksen
     cy.findAllByRole("textbox").click().type("hund");

@@ -1,0 +1,12 @@
+{
+  "title": "Submit documentation",
+  "heading": "What is the submission about?",
+  "attachments": {
+    "description": "Select \"Submit attachment\" if you are going to submit additional documentation to an application you have previously sent.",
+    "button-text": "Submit documentation"
+  },
+  "other-documentation": {
+    "description": "Select \"Other documentation\" if you want to send documentation that is not linked to an application.",
+    "button-text": "Other documentation"
+  }
+}
