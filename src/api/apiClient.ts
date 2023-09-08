@@ -19,7 +19,7 @@ const fetchNavUnits = async (): Promise<NavUnit[]> => {
   return response.json();
 };
 
-const downloadFrontpage = async (formData: FormData, title: string, lang: string) => {
+const downloadFrontpage = async (formData: FormData, title: string, lang: string = "nb") => {
   const jsonBody: DownloadCoverPageRequestBody = {
     formData,
     title

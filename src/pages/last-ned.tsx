@@ -15,10 +15,10 @@ import { getServerSideTranslations } from "../utils/i18nUtil";
 import { getCoverPageTitle } from "../utils/lastNedUtil";
 
 interface Props {
-  url: string;
+  locale: string | undefined;
 }
 
-const LastNed: NextPage<Props> = () => {
+const LastNed: NextPage<Props> = ({locale}) => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation("last-ned");
@@ -33,7 +33,7 @@ const LastNed: NextPage<Props> = () => {
     setLoading(true);
     const title = getCoverPageTitle(formData, t);
     try {
-      await downloadFrontpage(formData, title, document.documentElement.lang);
+      await downloadFrontpage(formData, title, locale);
     } finally {
       setLoading(false);
     }
@@ -104,7 +104,7 @@ const LastNed: NextPage<Props> = () => {
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const translations = await getServerSideTranslations(locale, ["common", "last-ned"]);
-  return {props: {...translations}};
+  return {props: {...translations, locale}};
 }
 
 export default LastNed;
