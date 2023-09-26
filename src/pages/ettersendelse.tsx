@@ -1,50 +1,32 @@
 import "@navikt/ds-css";
-import { Loader } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
 import { Form } from "../data/domain";
 import FormSearch from "../components/search/formSearch";
 import Layout from "../components/layout/layout";
-import { fetchForms } from "../api/apiClient";
 import { Paths } from "src/data/text";
 import { getServerSideTranslations } from "../utils/i18nUtil";
 import { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
+import { getForms } from "src/api/apiService";
 
-interface Props {}
-
-const Ettersendelse: NextPage<Props> = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [forms, setForms] = useState<Form[]>([]);
+interface Props {
+  forms: Form[];
+}
+const Ettersendelse: NextPage<Props> = (props: Props) => {
   const { t } = useTranslation("ettersendelse");
-
-  const fetchData = useCallback(async () => {
-    const [formsResponse] = await Promise.all([fetchForms()]);
-    setForms(formsResponse);
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Layout title={t("title")} backUrl={Paths.base}>
-      {loading ? (
-        <div className="loader">
-          <Loader size="xlarge" title={t("loading-text")} />
-        </div>
-      ) : (
-        <FormSearch forms={forms} />
-      )}
+      <FormSearch forms={props.forms} />
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const translations = await getServerSideTranslations(locale, ["common", "ettersendelse"]);
-  return {props: {...translations}};
-}
+  const forms = await getForms();
+
+  return { props: { ...translations, forms }, revalidate: 120 };
+};
 
 export default Ettersendelse;
