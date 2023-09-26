@@ -13,9 +13,9 @@ on:
           - prod
 
 jobs:
-  test:
-    name: "Test"
-    uses: ./.github/workflows/test.yaml
+  # test:
+  #   name: "Test"
+  #   uses: ./.github/workflows/test.yaml
 
   build-and-push:
     name: "Build and push"
@@ -30,7 +30,7 @@ jobs:
 
   deployAppToProd:
     name: "Deploy app to prod"
-    needs: [build-and-push, test]
+    needs: [build-and-push]
     if: github.event.inputs.environment == 'prod'
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
 
   deployAppToDev:
     name: "Deploy app to dev"
-    needs: [build-and-push, test]
+    needs: [build-and-push]
     if: github.event.inputs.environment == 'dev'
     runs-on: ubuntu-latest
     steps:

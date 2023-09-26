@@ -1,19 +1,19 @@
 import "@navikt/ds-css";
 import { Alert, Heading, Ingress } from "@navikt/ds-react";
 import type { NextPage } from "next";
-import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from "../../data/domain";
-import ChooseAttachments from "../../components/attachment/chooseAttachments";
-import ButtonGroup from "../../components/button/buttonGroup";
-import ChooseUser from "../../components/submission/chooseUser";
-import { useFormState } from "../../data/appState";
+import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from "../../../../data/domain";
+import ChooseAttachments from "../../../../components/attachment/chooseAttachments";
+import ButtonGroup from "../../../../components/button/buttonGroup";
+import ChooseUser from "../../../../components/submission/chooseUser";
+import { useFormState } from "../../../../data/appState";
 import { useCallback, useEffect, useState } from "react";
-import Section from "../../components/section/section";
-import Layout from "../../components/layout/layout";
+import Section from "../../../../components/section/section";
+import Layout from "../../../../components/layout/layout";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
-import { fetchNavUnits } from "../../api/apiClient";
-import { Paths } from "../../data/text";
-import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
+import { fetchNavUnits } from "../../../../api/apiClient";
+import { Paths } from "../../../../data/text";
+import ChooseSubmissionType from "../../../../components/submission/chooseSubmissionType";
 import {
   createSubmissionUrl,
   getDefaultSubmissionType,
@@ -21,14 +21,14 @@ import {
   isSubmissionTypePaper,
   isSubmissionAllowed,
   isSubmissionParamSet,
-} from "../../utils/submissionUtil";
-import { ButtonType } from "../../components/button/buttonGroupElement";
+} from "../../../../utils/submissionUtil";
+import { ButtonType } from "../../../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
 import { getIdPortenToken } from "src/api/loginRedirect";
 import { getEttersendinger, getForm } from "src/api/apiService";
 import { ServerResponse } from "http";
 import { useReffererPage } from "src/hooks/useReferrerPage";
-import { getServerSideTranslations } from "../../utils/i18nUtil";
+import { getServerSideTranslations } from "../../../../utils/i18nUtil";
 import { useTranslation } from "next-i18next";
 
 interface Props {
