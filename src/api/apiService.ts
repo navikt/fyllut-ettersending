@@ -8,15 +8,16 @@ import { isLocalDevelopment } from "src/utils/utils";
 const getForms = async (): Promise<Form[]> => {
   const startTime = Date.now();
   let forms = [];
+  logger.info(`loading forms ${isMock()} ${process.env.FYLLUT_BASE_URL}`);
   try {
     if (isMock()) {
       forms = require("../mock/forms.json");
     } else {
       forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
-      logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
+      logger.info(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
     }
   } catch (e: any) {
-    logger.error("Failed to load forms", e);
+    logger.error(`Failed to load forms (ms: ${Date.now() - startTime})`, e);
   }
 
   return forms;
@@ -119,13 +120,13 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
     if (!isLocalDevelopment()) {
       tokenxToken = (await getTokenxToken(
         idportenToken,
-        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
+        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api",
       )) as string;
     }
 
     const response = await fetch(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
-      { headers: { Authorization: `Bearer ${tokenxToken}` } }
+      { headers: { Authorization: `Bearer ${tokenxToken}` } },
     );
 
     return await response.json();
