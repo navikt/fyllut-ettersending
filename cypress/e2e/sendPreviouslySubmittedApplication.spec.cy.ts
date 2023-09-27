@@ -2,9 +2,13 @@ import {TestButtonText} from "./testUtils";
 
 describe.only("sendPreviouslySubmittedApplication", () => {
   beforeEach(() => {
+    cy.mocksSetCollection("form2");
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
     cy.visit("/ettersendelse");
     cy.wait("@getForms");
+  });
+  after(() => {
+    cy.mocksRestoreRouteVariants();
   });
 
   it("fill out and send documentation by mail", () => {

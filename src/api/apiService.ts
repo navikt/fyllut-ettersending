@@ -9,12 +9,8 @@ const getForms = async (): Promise<Form[]> => {
   const startTime = Date.now();
   let forms = [];
   try {
-    if (isMock()) {
-      forms = require("../mock/forms.json");
-    } else {
-      forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
-      logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
-    }
+    forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
+    logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
     logger.error("Failed to load forms", e);
   }
@@ -27,12 +23,8 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
   let form;
 
   try {
-    if (isMock()) {
-      form = require(`../mock/${formPath}.json`) ?? {};
-    } else {
-      form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
-      logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
-    }
+    form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
+    logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
     logger.error(`Failed to load form ${formPath}`, e);
   }
@@ -63,12 +55,8 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
   let units: any[] = [];
 
   try {
-    if (isMock()) {
-      units = require("../mock/navUnits.json");
-    } else {
-      units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
-      logger.debug(`Loaded ${units.length} nav units (ms: ${Date.now() - startTime})`);
-    }
+    units = await get(`${process.env.FYLLUT_BASE_URL}/api/enhetsliste`);
+    logger.debug(`Loaded ${units.length} nav units (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
     logger.error("Failed to load nav units", e);
   }
@@ -88,12 +76,8 @@ const getArchiveSubjects = async (): Promise<KeyValue> => {
   let subjects = {};
 
   try {
-    if (isMock()) {
-      subjects = require("../mock/archiveSubjects.json");
-    } else {
-      subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
-      logger.debug(`Loaded ${Object.keys(subjects).length} archive subjects (ms: ${Date.now() - startTime})`);
-    }
+    subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
+    logger.debug(`Loaded ${Object.keys(subjects).length} archive subjects (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
     logger.error("Failed to load archive subjects", e);
   }
@@ -133,10 +117,6 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
     logger.error("Could not fetch ettersendinger", ex);
     return [];
   }
-};
-
-const isMock = () => {
-  return !!process.env.MOCK;
 };
 
 export { getForms, getForm, getNavUnits, getArchiveSubjects, downloadFrontPage, getEttersendinger };

@@ -32,3 +32,23 @@ yarn dev
 ```
 
 Serveren kjører på http://localhost:3002.
+
+### Mocks Server
+
+Man kan utvikle lokalt uten å være avhengig av eksterne api'er ved å kjøre opp en Mocks Server.  
+
+URLer i `.env.local` må peke til mock:
+
+    INNSENDING_API_URL=http://127.0.0.1:3200
+    SEND_INN_FRONTEND_URL=http://127.0.0.1:3200/send-inn-frontend
+    MIN_SIDE_FRONTEND_URL=http://127.0.0.1:3200/min-side-frontend
+    FYLLUT_BASE_URL=http://127.0.0.1:3200/fyllut
+
+Start Mocks Server:
+
+    yarn mocks
+
+Start fyllut-ettersending på vanlig måte:
+
+    yarn dev
+   
