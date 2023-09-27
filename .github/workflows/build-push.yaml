@@ -31,7 +31,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set environment variables
-        run: cp .env.ci.${{ inputs.environment }} .env
+        run: yarn ts-node src/utils/populateEnv.ts ${{ inputs.environment }}
       - name: "Build application"
         run: yarn build
       - name: Build and push Docker image
