@@ -23,10 +23,6 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
     } else {
       const { locale } = ctx;
 
-      console.log("Fetching decorator with env", process.env.NODE_ENV);
-      console.log("Fetching decorator with app env", process.env.APP_ENV);
-      console.log("Fetching decorator with locale", locale);
-
       const decoratorProps: DecoratorFetchProps = {
         env: process.env.APP_ENV === "production" ? "prod" : "dev",
         params: {

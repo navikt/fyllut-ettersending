@@ -12,7 +12,7 @@ describe("Internationalization", () => {
     cy.findByRole("button", { name: "Gå vidare" }).should("exist");
   });
   it("renders page in bokmål when language is 'no'", () => {
-    cy.visit("/no/lospost");
+    cy.visit("/nb/lospost");
     cy.findByRole("button", { name: "Gå videre" }).should("exist");
   });
 });
