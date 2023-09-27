@@ -7,3 +7,5 @@
 !/yarn.lock
 !/public
 !/.next
+!/.env.ci.dev
+!/.env.ci.prod
