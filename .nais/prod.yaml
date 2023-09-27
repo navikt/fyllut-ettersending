@@ -9,7 +9,7 @@ accessPolicy:
       - application: skjemautfylling
 env:
   - name: FYLLUT_BASE_URL
-    value: http://skjemautfylling/fyllut
+    value: https://www.nav.no/fyllut
   - name: INNSENDING_API_AUDIENCE
     value: "prod-gcp:team-soknad:innsending-api"
   - name: INNSENDING_API_URL
