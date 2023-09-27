@@ -8,7 +8,7 @@ interface NaisConfig {
   }[];
 }
 
-// Check if a YAML file path is provided as a command-line argument
+// Environment is provided as a command-line argument
 const environment = process.argv[2];
 
 if (!environment) {
@@ -20,18 +20,19 @@ if (!environment) {
 const yamlData = fs.readFileSync(`.nais/${environment}.yaml`, "utf8");
 
 try {
-  // Parse the YAML data
   const parsedYaml = yaml.load(yamlData) as NaisConfig;
 
   if (parsedYaml && parsedYaml.env) {
     const envFileContent: string[] = [];
 
+    // Add the environment variables from the YAML file
     for (const envVar of parsedYaml.env) {
       if (envVar.name && envVar.value) {
         envFileContent.push(`${envVar.name}=${envVar.value}`);
       }
     }
 
+    // Add the environment variables from the .env.ci file
     const envContent = fs.readFileSync(`.env.ci.${environment}`, "utf8");
     envFileContent.push(envContent);
 
