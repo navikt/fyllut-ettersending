@@ -8,7 +8,7 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
     let Decorator;
-    if (process.env.NODE_ENV === "test") {
+    if (process.env.SKIP_DECORATOR === "true") {
       Decorator = {
         Styles: () => <></>,
         Scripts: () => <></>,

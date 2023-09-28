@@ -38,6 +38,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: "yarn run start:with:test"
+          start: "yarn start"
           wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
           config-file: "cypress.config.ts"
