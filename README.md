@@ -39,3 +39,11 @@ Serveren kjører på http://localhost:3002.
 
 Alle sidene unntatt ved innlogging for digital innsending (`src/pages/detaljer/[id]/digital/index.tsx`) er statisk generert build-time (i GHA). 
 Siden Github ikke har tilgang til interne URL'er, brukes fyllut delingslenke for å hente skjemaene. Merk at disse skjemaene er laget via prod-versjonen av skjemabyggeren. 
+
+## Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.
+
+## For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #team-fyllut-sendinn
