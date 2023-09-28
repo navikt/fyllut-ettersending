@@ -7,26 +7,16 @@ type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorCompon
 class _Document extends Document<{ Decorator: DecoratorComponents }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
-    let Decorator;
-    if (process.env.SKIP_DECORATOR === "true") {
-      Decorator = {
-        Styles: () => <></>,
-        Scripts: () => <></>,
-        Header: () => <></>,
-        Footer: () => <></>,
-      };
-    } else {
-      const { locale} = ctx;
-      const decoratorProps: DecoratorFetchProps = {
-        env: process.env.NODE_ENV === "production" ? "prod" : "dev",
-        params: {
-          simple: true,
-          language: locale as DecoratorLocale || "nb",
-          logoutWarning: true,
-        },
-      };
-      Decorator = await fetchDecoratorReact(decoratorProps);
-    }
+    const { locale} = ctx;
+    const decoratorProps: DecoratorFetchProps = {
+      env: process.env.NODE_ENV === "production" ? "prod" : "dev",
+      params: {
+        simple: true,
+        language: locale as DecoratorLocale || "nb",
+        logoutWarning: true,
+      },
+    };
+    const Decorator = await fetchDecoratorReact(decoratorProps);
 
     return { ...initialProps, Decorator };
   }
