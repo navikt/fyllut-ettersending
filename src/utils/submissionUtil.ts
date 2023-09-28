@@ -1,11 +1,9 @@
-import { NextRouter } from "next/router";
-import { Form, FormData, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
+import { Form, FormData, SubmissionType } from "../data/domain";
 
-const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
+const getDefaultSubmissionType = (form: Form, submissionType?: SubmissionType): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
 
-  if (isSubmissionParamSet(router)) {
-    const submissionType: SubmissionType = getSubmissionTypeFromString(router.query.sub as string);
+  if (submissionType) {
     return submissionType;
   }
 
@@ -21,7 +19,7 @@ const createSubmissionUrl = (form: Form, formData: FormData): string => {
   const attachmentList = formData.attachments?.map(({ attachmentCode }) => attachmentCode);
 
   return `${process.env.NEXT_PUBLIC_SENDINN_URL}?erEttersendelse=true&sprak=NO_NB&skjemanummer=${encodeURIComponent(
-    formNumber
+    formNumber,
   )}&vedleggsIder=${attachmentList}`;
 };
 
@@ -33,11 +31,6 @@ const areBothSubmissionTypesAllowed = (form: Form) => {
   return form.properties.submissionType === "PAPIR_OG_DIGITAL";
 };
 
-const isSubmissionParamSet = (router: NextRouter) => {
-  const submissionValues = Object.values(SubmissionType) as string[];
-  return !!router.query.sub && submissionValues.includes(router.query.sub as string);
-};
-
 const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === SubmissionType.paper;
 };
@@ -47,6 +40,5 @@ export {
   createSubmissionUrl,
   isSubmissionAllowed,
   areBothSubmissionTypesAllowed,
-  isSubmissionParamSet,
   isSubmissionTypePaper,
 };

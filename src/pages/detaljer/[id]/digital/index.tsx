@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import type { NextPage } from "next";
-import { EttersendelseApplication, Form, UnauthenticatedError } from "../../../../data/domain";
+import { EttersendelseApplication, Form, SubmissionType, UnauthenticatedError } from "../../../../data/domain";
 import { GetServerSidePropsContext } from "next/types";
 import { getIdPortenToken } from "src/api/loginRedirect";
 import { getEttersendinger, getForm } from "src/api/apiService";
@@ -15,8 +15,8 @@ interface Props {
 }
 
 // For digital submissions we need to log in to see if there are existing "ettersendinger". This cannot be done statically.
-const DigitalDetaljer: NextPage<Props> = (props) => {
-  return <FormDetail {...props}></FormDetail>;
+const DigitalDetail: NextPage<Props> = (props) => {
+  return <FormDetail {...props} submissionType={SubmissionType.digital}></FormDetail>;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -80,4 +80,4 @@ const redirectToLogin = (context: GetServerSidePropsContext) => {
   };
 };
 
-export default DigitalDetaljer;
+export default DigitalDetail;

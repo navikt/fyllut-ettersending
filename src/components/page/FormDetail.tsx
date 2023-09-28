@@ -19,7 +19,6 @@ import {
   areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
   isSubmissionAllowed,
-  isSubmissionParamSet,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
@@ -30,6 +29,7 @@ interface Props {
   form: Form;
   id: string;
   existingEttersendinger: EttersendelseApplication[];
+  submissionType?: SubmissionType;
 }
 
 const FormDetail: NextPage<Props> = (props) => {
@@ -63,7 +63,7 @@ const FormDetail: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
-        submissionType: getDefaultSubmissionType(form, router),
+        submissionType: getDefaultSubmissionType(form, props.submissionType),
         formId: id,
       });
     }
@@ -112,7 +112,7 @@ const FormDetail: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          {areBothSubmissionTypesAllowed(form) && !isSubmissionParamSet(router) && <ChooseSubmissionType />}
+          {areBothSubmissionTypesAllowed(form) && !props.submissionType && <ChooseSubmissionType />}
 
           <ChooseAttachments form={form} />
 

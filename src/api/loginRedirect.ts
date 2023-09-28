@@ -1,11 +1,10 @@
 import { verifyIdportenAccessToken } from "src/auth/verifyIdPortenToken";
 import logger from "../utils/logger";
 import { GetServerSidePropsContext } from "next/types";
-import { SubmissionType, UnauthenticatedError } from "src/data/domain";
+import { UnauthenticatedError } from "src/data/domain";
 import { isLocalDevelopment } from "src/utils/utils";
 
 const getIdPortenToken = async (context: GetServerSidePropsContext) => {
-  const sub = context.query?.sub;
   const authHeader = context.req.headers.authorization;
 
   if (isLocalDevelopment()) {
@@ -20,7 +19,7 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
       throw new UnauthenticatedError("Could not validate idporten token");
     }
     return idportenToken;
-  } else if (sub === SubmissionType.digital) {
+  } else {
     logger.info("Missing jwt for digital submission");
     throw new UnauthenticatedError("Missing jwt for digital submission");
   }
