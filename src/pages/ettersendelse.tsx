@@ -23,6 +23,10 @@ const Ettersendelse: NextPage<Props> = (props: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (process.env.APP_ENV === "production") {
+    return { notFound: true };
+  }
+
   const translations = await getServerSideTranslations(locale, ["common", "ettersendelse"]);
   const forms = await getForms();
 
