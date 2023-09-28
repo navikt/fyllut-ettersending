@@ -30,14 +30,16 @@ jobs:
         run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set environment variables
+        run: cp .env.test .env
       - name: "Build application"
-        run: yarn build:test
+        run: yarn build
       - name: "Run mock server"
         run: yarn mocks:no-cli &
       - name: "Cypress tests"
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: "yarn run start:with:test"
+          start: "yarn start"
           wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
           config-file: "cypress.config.ts"

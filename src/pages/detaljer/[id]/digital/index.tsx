@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import type { NextPage } from "next";
-import { EttersendelseApplication, Form, SubmissionType, UnauthenticatedError } from "../../../../data/domain";
+import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from "../../../../data/domain";
 import { GetServerSidePropsContext } from "next/types";
 import { getIdPortenToken } from "src/api/loginRedirect";
 import { getEttersendinger, getForm, getNavUnits } from "src/api/apiService";
@@ -12,11 +12,12 @@ interface Props {
   form: Form;
   id: string;
   existingEttersendinger: EttersendelseApplication[];
+  navUnits: NavUnit[];
 }
 
 // For digital submissions we need to log in to see if there are existing "ettersendinger". This cannot be done statically.
 const DigitalDetail: NextPage<Props> = (props) => {
-  return <FormDetail {...props} submissionType={SubmissionType.digital}></FormDetail>;
+  return <FormDetail {...props} submissionType={SubmissionType.digital} navUnits={props.navUnits}></FormDetail>;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

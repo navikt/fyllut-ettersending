@@ -2,6 +2,7 @@ import {TestButtonText} from "./testUtils";
 
 describe("reset", () => {
   before(() => {
+    cy.mocksSetCollection("form1");
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
     cy.visit("/ettersendelse", {
       onBeforeLoad(win) {
@@ -13,6 +14,9 @@ describe("reset", () => {
       },
     });
     cy.wait("@getForms");
+  });
+  after(() => {
+    cy.mocksRestoreRouteVariants();
   });
 
   it("resets formData when a different form is selected than the one previously selected", () => {
@@ -33,6 +37,7 @@ describe("reset", () => {
 
     // Skriv inn "hund" i tekstboksen
     cy.findAllByRole("textbox").click().type("hund");
+    cy.mocksUseRouteVariant("get-form:form2");
 
     // Klikk det andre skjemaet
     cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click();
