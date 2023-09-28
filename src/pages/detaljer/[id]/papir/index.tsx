@@ -4,6 +4,7 @@ import { EttersendelseApplication, Form, NavUnit, SubmissionType } from "../../.
 import FormDetail from "src/components/page/FormDetail";
 import { getServerSideTranslations } from "src/utils/i18nUtil";
 import { getForm, getForms, getNavUnits } from "src/api/apiService";
+import { isPaperSubmissionAllowed } from "src/utils/submissionUtil";
 
 interface Props {
   form: Form;
@@ -18,9 +19,14 @@ const PaperDetail: NextPage<Props> = (props) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   const id = params?.id as string;
+  const form = await getForm(id, locale);
+
+  // If the form submission type is not digital, return 404
+  if (form && !isPaperSubmissionAllowed(form)) {
+    return { notFound: true };
+  }
 
   const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
-  const form = await getForm(id, locale);
   const navUnits = await getNavUnits();
 
   return { props: { ...translations, form, id, navUnits }, revalidate: 120 };

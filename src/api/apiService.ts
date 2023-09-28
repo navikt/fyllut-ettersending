@@ -42,7 +42,7 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
     ...form,
     properties: {
       formNumber: form?.properties.skjemanummer ?? null,
-      submissionType: form?.properties.ettersending ?? form?.properties.innsending ?? "PAPIR_OG_DIGITAL",
+      submissionType: form?.properties.ettersending ?? "PAPIR_OG_DIGITAL",
       navUnitTypes: form?.properties.enhetstyper ?? [],
       subjectOfSubmission: form?.properties.tema ?? null,
       navUnitMustBeSelected: form?.properties.enhetMaVelgesVedPapirInnsending ?? null,

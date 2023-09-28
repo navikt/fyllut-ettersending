@@ -35,10 +35,20 @@ const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === SubmissionType.paper;
 };
 
+const isPaperSubmissionAllowed = (form: Form) => {
+  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_PAPIR";
+};
+
+const isDigitalSubmissionAllowed = (form: Form) => {
+  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_DIGITAL";
+};
+
 export {
   getDefaultSubmissionType,
   createSubmissionUrl,
   isSubmissionAllowed,
   areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
+  isPaperSubmissionAllowed,
+  isDigitalSubmissionAllowed,
 };

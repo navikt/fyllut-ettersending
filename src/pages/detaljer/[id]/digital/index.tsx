@@ -7,6 +7,7 @@ import { getEttersendinger, getForm, getNavUnits } from "src/api/apiService";
 import { ServerResponse } from "http";
 import { getServerSideTranslations } from "../../../../utils/i18nUtil";
 import FormDetail from "src/components/page/FormDetail";
+import { isDigitalSubmissionAllowed } from "src/utils/submissionUtil";
 
 interface Props {
   form: Form;
@@ -39,6 +40,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
   const { locale } = context;
   const form = await getForm(id, locale);
+
+  // If the form submission type is not paper, return 404
+  if (form && !isDigitalSubmissionAllowed(form)) {
+    return { notFound: true };
+  }
+
   const navUnits = await getNavUnits();
   const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
 
