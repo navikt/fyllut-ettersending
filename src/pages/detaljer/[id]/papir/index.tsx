@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import type { GetStaticProps, NextPage } from "next";
-import { EttersendelseApplication, Form, SubmissionType } from "../../../../data/domain";
+import { EttersendelseApplication, Form, NavUnit, SubmissionType } from "../../../../data/domain";
 import FormDetail from "src/components/page/FormDetail";
 import { getServerSideTranslations } from "src/utils/i18nUtil";
 import { getForm, getForms, getNavUnits } from "src/api/apiService";
@@ -9,10 +9,11 @@ interface Props {
   form: Form;
   id: string;
   existingEttersendinger: EttersendelseApplication[];
+  navUnits: NavUnit[];
 }
 
 const PaperDetail: NextPage<Props> = (props) => {
-  return <FormDetail {...props} submissionType={SubmissionType.paper}></FormDetail>;
+  return <FormDetail {...props} submissionType={SubmissionType.paper} navUnits={props.navUnits}></FormDetail>;
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {

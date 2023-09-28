@@ -1,11 +1,6 @@
 {
   "title": "Ettersenda dokumentasjon i posten",
   "loading-text": "Laster...",
-  "submission-type-radio": {
-    "legend": "Vil du senda dokumentasjonen digitalt eller i posten?",
-    "choice-digital": "Send digitalt",
-    "choice-by-mail": "Send i posten"
-  },
   "attachments-checkbox": {
     "legend": "Kva dokument skal du ettersenda?",
     "other-documentation-label": "Gje dokumentet eit beskrivande namn"

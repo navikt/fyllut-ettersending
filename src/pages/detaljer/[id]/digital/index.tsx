@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { EttersendelseApplication, Form, SubmissionType, UnauthenticatedError } from "../../../../data/domain";
 import { GetServerSidePropsContext } from "next/types";
 import { getIdPortenToken } from "src/api/loginRedirect";
-import { getEttersendinger, getForm } from "src/api/apiService";
+import { getEttersendinger, getForm, getNavUnits } from "src/api/apiService";
 import { ServerResponse } from "http";
 import { getServerSideTranslations } from "../../../../utils/i18nUtil";
 import FormDetail from "src/components/page/FormDetail";
@@ -38,6 +38,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
   const { locale } = context;
   const form = await getForm(id, locale);
+  const navUnits = await getNavUnits();
   const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
 
   // Fetch existing ettersendinger and redirect if necessary
@@ -48,7 +49,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   return {
-    props: { form, existingEttersendinger, id, ...translations },
+    props: { form, existingEttersendinger, id, navUnits, ...translations },
   };
 }
 

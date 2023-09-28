@@ -6,17 +6,13 @@ import ChooseAttachments from "../../components/attachment/chooseAttachments";
 import ButtonGroup from "../../components/button/buttonGroup";
 import ChooseUser from "../../components/submission/chooseUser";
 import { useFormState } from "../../data/appState";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Section from "../../components/section/section";
 import Layout from "../../components/layout/layout";
-import { useRouter } from "next/router";
-import { fetchNavUnits } from "../../api/apiClient";
 import { Paths } from "../../data/text";
-import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
 import {
   createSubmissionUrl,
   getDefaultSubmissionType,
-  areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
   isSubmissionAllowed,
 } from "../../utils/submissionUtil";
@@ -30,31 +26,21 @@ interface Props {
   id: string;
   existingEttersendinger: EttersendelseApplication[];
   submissionType?: SubmissionType;
+  navUnits: NavUnit[];
 }
 
 const FormDetail: NextPage<Props> = (props) => {
-  const router = useRouter();
   const { form, id } = props;
   const { formData, resetFormData } = useFormState();
-  const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const referrerPage = useReffererPage();
   const { t } = useTranslation("detaljer");
   const { t: tCommon } = useTranslation("common");
 
-  const fetchData = useCallback(async () => {
-    setNavUnits(await fetchNavUnits());
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
   const getNavUnitsConnectedToForm = (deviceTypes: string[] | undefined) => {
-    const navUnitsConnectedToForm: NavUnit[] = navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
+    const navUnitsConnectedToForm: NavUnit[] = props.navUnits.filter((navUnit) => deviceTypes?.includes(navUnit.type));
     return navUnitsConnectedToForm && !!Object.keys(navUnitsConnectedToForm).length
       ? navUnitsConnectedToForm
-      : navUnits;
+      : props.navUnits;
   };
 
   useEffect(() => {
@@ -69,12 +55,6 @@ const FormDetail: NextPage<Props> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, formData]);
-
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>{t("loading-text")}</div>;
-  }
 
   const downloadButton: ButtonType = {
     text: tCommon("button.next"),
@@ -112,8 +92,6 @@ const FormDetail: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          {areBothSubmissionTypesAllowed(form) && !props.submissionType && <ChooseSubmissionType />}
-
           <ChooseAttachments form={form} />
 
           {isSubmissionTypePaper(formData) && (
