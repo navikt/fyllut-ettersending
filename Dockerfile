@@ -2,7 +2,6 @@ FROM node:18.16.0-alpine
 WORKDIR /app
 
 ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
@@ -15,6 +14,9 @@ COPY ./public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
+RUN mkdir -p .next/server
+RUN chmod -R 777 .next/server
+
 COPY --chown=nextjs:nodejs ./.next/standalone ./
 COPY --chown=nextjs:nodejs ./.next/static ./.next/static
 
@@ -23,5 +25,7 @@ USER nextjs
 EXPOSE 3002
 
 ENV PORT 3002
+
+ENV HOSTNAME "0.0.0.0"
 
 CMD ["node", "server.js"]

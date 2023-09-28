@@ -32,3 +32,10 @@ yarn dev
 ```
 
 Serveren kjører på http://localhost:3002.
+
+## NextJS
+
+### Static Site Generation (SSG)
+
+Alle sidene unntatt ved innlogging for digital innsending (`src/pages/detaljer/[id]/digital/index.tsx`) er statisk generert build-time (i GHA). 
+Siden Github ikke har tilgang til interne URL'er, brukes fyllut delingslenke for å hente skjemaene. Merk at disse skjemaene er laget via prod-versjonen av skjemabyggeren. 

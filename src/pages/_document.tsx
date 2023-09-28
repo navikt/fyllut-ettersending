@@ -22,12 +22,13 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
       };
     } else {
       const { locale } = ctx;
+      const language = locale === "no" ? "nb" : locale;
 
       const decoratorProps: DecoratorFetchProps = {
         env: process.env.APP_ENV === "production" ? "prod" : "dev",
         params: {
           simple: true,
-          language: (locale as DecoratorLocale) || "nb",
+          language: (language as DecoratorLocale) || "nb",
           logoutWarning: true,
         },
       };

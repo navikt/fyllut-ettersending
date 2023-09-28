@@ -11,7 +11,7 @@ accessPolicy:
       - application: skjemautfylling-delingslenke
 env:
   - name: FYLLUT_BASE_URL
-    value: https://skjemautfylling-formio.intern.dev.nav.no/fyllut
+    value: https://skjemadelingslenke.ekstern.dev.nav.no/fyllut # External link to be able to build the static site in Github
   - name: INNSENDING_API_AUDIENCE
     value: "dev-gcp:team-soknad:innsending-api"
   - name: INNSENDING_API_URL

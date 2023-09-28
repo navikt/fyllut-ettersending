@@ -41,7 +41,7 @@ const post = async (url: string, body: BodyInit, headers?: HttpHeaders) => {
   return handleResponse(response, url);
 };
 
-const handleResponse = (response: Response, url: string) => {
+const handleResponse = async (response: Response, url: string) => {
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText} (${url})`);
   }

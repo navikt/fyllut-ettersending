@@ -60,10 +60,10 @@ const Lospost: NextPage<Props> = (props: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const [archiveSubject, navUnits] = await Promise.all([getArchiveSubjects(), getNavUnits()]);
+  const [archiveSubjects, navUnits] = await Promise.all([getArchiveSubjects(), getNavUnits()]);
   const translations = await getServerSideTranslations(locale, ["lospost", "common", "validator"]);
 
-  return { props: { ...translations, archiveSubject, navUnits }, revalidate: 120 };
+  return { props: { ...translations, archiveSubjects, navUnits }, revalidate: 120 };
 };
 
 export default Lospost;
