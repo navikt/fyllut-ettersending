@@ -30,12 +30,12 @@ jobs:
         run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set environment variables
+        run: cp .env.test .env
       - name: "Build application"
         run: yarn build:test
       - name: "Run mock server"
         run: yarn mocks:no-cli &
-      - name: Set environment variables
-        run: cp .env.test .env
       - name: "Cypress tests"
         uses: cypress-io/github-action@v6
         with:
