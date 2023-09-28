@@ -26,7 +26,7 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
     form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
-    logger.error(`Failed to load form ${formPath}`, e);
+    logger.error(`Failed to load form ${formPath}. Error: ${e} ${e.message}`, e);
   }
 
   form.attachments.sort((a: Attachment, b: Attachment) => {

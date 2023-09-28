@@ -4,6 +4,7 @@ import { EttersendelseApplication, Form, NavUnit, SubmissionType } from "../../.
 import FormDetail from "src/components/page/FormDetail";
 import { getServerSideTranslations } from "src/utils/i18nUtil";
 import { getForm, getForms, getNavUnits } from "src/api/apiService";
+import { useRouter } from "next/router";
 import { isPaperSubmissionAllowed } from "src/utils/submissionUtil";
 
 interface Props {
@@ -14,7 +15,19 @@ interface Props {
 }
 
 const PaperDetail: NextPage<Props> = (props) => {
-  return <FormDetail {...props} submissionType={SubmissionType.paper} navUnits={props.navUnits}></FormDetail>;
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <FormDetail
+      form={props.form}
+      id={props.id}
+      existingEttersendinger={props.existingEttersendinger}
+      submissionType={SubmissionType.paper}
+      navUnits={props.navUnits}
+    ></FormDetail>
+  );
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
@@ -23,6 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 
   // If the form submission type is not digital, return 404
   if (form && !isPaperSubmissionAllowed(form)) {
+    console.log("Form not found", id);
     return { notFound: true };
   }
 

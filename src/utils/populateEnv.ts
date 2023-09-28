@@ -37,7 +37,7 @@ try {
     envFileContent.push(envContent);
 
     // Write the environment variables to .env
-    fs.writeFileSync(".env", envFileContent.join("\n"));
+    fs.writeFileSync(".env.local", envFileContent.join("\n"));
     console.log(".env file has been updated with environment variables.");
   } else {
     console.error('No "env" section found in the YAML file.');
