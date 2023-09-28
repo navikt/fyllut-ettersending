@@ -1,0 +1,14 @@
+name: Autodeployment
+run-name: Autodeploy til prod (hver dag)
+on:
+  schedule:
+    - cron: "0 0 * * *" # 00:00 hver dag
+
+jobs:
+  build-push-deploy-main:
+    uses: ./.github/workflows/main.yaml
+    secrets: inherit
+    permissions:
+      contents: "read"
+      id-token: "write"
+      packages: "read"
