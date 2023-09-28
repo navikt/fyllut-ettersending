@@ -1,6 +1,24 @@
 [
   {
     "id": "base",
-    "routes": ["get-ettersendingssoknader:none", "get-send-inn-frontend:success", "get-min-side-frontend:success"]
+    "routes": [
+      "get-ettersendingssoknader:none",
+      "get-send-inn-frontend:success",
+      "get-min-side-frontend:success",
+      "get-forms:all",
+      "get-form:not-found",
+      "get-archive-subjects:all",
+      "get-nav-units:all"
+    ]
+  },
+  {
+    "id": "form1",
+    "from": "base",
+    "routes": ["get-form:form1"]
+  },
+  {
+    "id": "form2",
+    "from": "base",
+    "routes": ["get-form:form2"]
   }
 ]
