@@ -1,11 +1,11 @@
 import { get, post } from "./http";
-import { Attachment, Form, KeyValue, NavUnit } from "../data/domain";
+import { Attachment, BasicForm, Form, FyllutFormList, KeyValue, NavUnit } from "../data/domain";
 import { FrontPageRequest } from "./frontPageService";
 import logger from "../utils/logger";
 import { getTokenxToken } from "src/auth/getTokenXToken";
 import { isLocalDevelopment } from "src/utils/utils";
 
-const getForms = async (): Promise<Form[]> => {
+const getForms = async (): Promise<BasicForm[]> => {
   const startTime = Date.now();
   let forms = [];
   try {
@@ -15,7 +15,15 @@ const getForms = async (): Promise<Form[]> => {
     logger.error("Failed to load forms", e);
   }
 
-  return forms;
+  return forms.map((form: FyllutFormList) => {
+    return {
+      ...form,
+      properties: {
+        formNumber: form?.properties.skjemanummer ?? null,
+        submissionType: form?.properties?.ettersending ?? "PAPIR_OG_DIGITAL",
+      },
+    };
+  });
 };
 
 const getForm = async (formPath: string, language: string = "nb"): Promise<Form | undefined> => {
