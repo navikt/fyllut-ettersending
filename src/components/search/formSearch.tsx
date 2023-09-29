@@ -23,7 +23,7 @@ const FormSearch = ({ forms }: Props) => {
       (form) =>
         form.title.toLowerCase().includes(lcSearchInput) ||
         form.path.toLowerCase().includes(lcSearchInput) ||
-        form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput)
+        form.properties?.skjemanummer?.toLowerCase().includes(lcSearchInput),
     );
     setSearchResult(result);
   }, [searchInput, forms]);
@@ -49,19 +49,34 @@ const FormSearch = ({ forms }: Props) => {
         {searchResult
           .sort((a, b) => sortForms(a, b))
           .map((form, index) => (
-            <LinkPanel
-              href="#"
-              className={styles.clickable}
-              key={index}
-              border
-              onClick={async (e) => {
-                e.preventDefault();
-                await router.push(`${Paths.details}/${form.path}`);
-              }}
-            >
-              <LinkPanel.Title>{form.title}</LinkPanel.Title>
-              <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
-            </LinkPanel>
+            <>
+              <LinkPanel
+                href="#"
+                className={styles.clickable}
+                key={`digital-${index}`}
+                border
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await router.push(`${Paths.details}/${form.path}?sub=digital`);
+                }}
+              >
+                <LinkPanel.Title>{`${form.title} (digital)`}</LinkPanel.Title>
+                <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
+              </LinkPanel>
+              <LinkPanel
+                href="#"
+                className={styles.clickable}
+                key={`papir-${index}`}
+                border
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await router.push(`${Paths.details}/${form.path}?sub=paper`);
+                }}
+              >
+                <LinkPanel.Title>{`${form.title} (papir)`}</LinkPanel.Title>
+                <LinkPanel.Description>{form.properties?.skjemanummer}</LinkPanel.Description>
+              </LinkPanel>
+            </>
           ))}
       </div>
     </>
