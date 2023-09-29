@@ -19,37 +19,37 @@ describe("reset", () => {
   });
 
   it("resets formData when a different form is selected than the one previously selected", () => {
-    // Skriv inn "test" i tekstboksen
+    // Write "test" in the textbox
     cy.findAllByRole("textbox").focus().type("test");
 
-    // Klikk det første skjemaet
+    // Click the second form in the list (digital)
     cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click();
 
-    // Sjekk at URLen inneholder "/detaljer"
+    // Check that the URL contains "/detaljer"
     cy.url().should("include", "/detaljer");
 
-    // Sjekk av checboxen
+    // Check the checbox
     cy.findAllByRole("checkbox").first().check();
 
-    // Gå tilbake
+    // Go back
     cy.findByRole("link", { name: TestButtonText.previous }).click();
 
-    // Skriv inn "hund" i tekstboksen
+    // Write "hund" in the textbox
     cy.findAllByRole("textbox").click().type("hund");
 
-    // Klikk det andre skjemaet
-    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click();
+    // Click the second form in the list (paper)
+    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(1).click();
 
-    // Sjekk at URLen inneholder "/detaljer"
+    // Check that the URL contains "detaljer"
     cy.url().should("include", "/detaljer");
 
     // Waiting in order to trigger the bug where attachment checkbox is checked
     cy.wait(20);
 
-    // Sjekk at checkboxen ikke er sjekket
+    // Check that the checbox isn't checked
     cy.findAllByRole("checkbox").should("not.be.checked");
 
-    // Sjekk at ingen av checkboxene er sjekket (formet er resatt)
+    // Check that none of the checkboxes are checked (the form is reset)
     cy.findAllByRole("checkbox").each(($el) => {
       cy.wrap($el).should("have.not.attr", "checked");
     });

@@ -13,14 +13,11 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { Paths } from "../../data/text";
-import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
 import {
   createSubmissionUrl,
   getDefaultSubmissionType,
-  areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
   isSubmissionAllowed,
-  isSubmissionParamSet,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
@@ -117,8 +114,6 @@ const Detaljer: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          {areBothSubmissionTypesAllowed(form) && !isSubmissionParamSet(router) && <ChooseSubmissionType />}
-
           <ChooseAttachments form={form} />
 
           {isSubmissionTypePaper(formData) && (
