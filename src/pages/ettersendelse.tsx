@@ -42,9 +42,13 @@ const Ettersendelse: NextPage<Props> = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (process.env.APP_ENV === "production") {
+    return { notFound: true };
+  }
+
   const translations = await getServerSideTranslations(locale, ["common", "ettersendelse"]);
-  return {props: {...translations}};
-}
+  return { props: { ...translations } };
+};
 
 export default Ettersendelse;
