@@ -5,9 +5,6 @@ metadata:
   namespace: "skjemadigitalisering"
   labels:
     team: skjemadigitalisering
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "50M"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
 spec:
   image: {{image}}
   port: 3002
@@ -15,18 +12,14 @@ spec:
     path: "/fyllut-ettersending/api/internal/isalive"
     port: 3002
     initialDelay: 20
-    timeout: 10
+    timeout: 1
     periodSeconds: 5
     failureThreshold: 10
   readiness:
     path: "/fyllut-ettersending/api/internal/isready"
     port: 3002
     initialDelay: 20
-    timeout: 10
-  replicas:
-    min: 2
-    max: 4
-    cpuThresholdPercentage: 50
+    timeout: 1
   prometheus:
     enabled: false
   tokenx:
@@ -37,9 +30,6 @@ spec:
       enabled: true
       autoLogin: false
       level: Level4
-  resources:
-    requests:
-      memory: 512Mi
   ingresses:
   {{#each ingresses as |url|}}
     - {{url}}
