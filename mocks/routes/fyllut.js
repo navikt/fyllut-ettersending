@@ -21,36 +21,52 @@ module.exports = [
     ],
   },
   {
-    id: "get-form",
-    url: "/fyllut/api/forms/*",
+    id: "get-form-1",
+    url: "/fyllut/api/forms/form1",
     method: "GET",
     variants: [
+      {
+        id: "success",
+        type: "json",
+        options: {
+          status: 200,
+          body: form1,
+        },
+      },
       {
         id: "not-found",
         type: "text",
         options: {
           status: 404,
           body: "NOT FOUND",
-        }
+        },
       },
+    ],
+  },
+  {
+    id: "get-form-2",
+    url: "/fyllut/api/forms/form2",
+    method: "GET",
+    variants: [
       {
-        id: "form1",
-        type: "json",
-        options: {
-          status: 200,
-          body: form1,
-        }
-      },
-      {
-        id: "form2",
+        id: "success",
         type: "json",
         options: {
           status: 200,
           body: form2,
-        }
+        },
       },
-    ]
+      {
+        id: "not-found",
+        type: "text",
+        options: {
+          status: 404,
+          body: "NOT FOUND",
+        },
+      },
+    ],
   },
+
   {
     id: "get-archive-subjects",
     url: "/fyllut/api/common-codes/archive-subjects",
@@ -62,9 +78,9 @@ module.exports = [
         options: {
           status: 200,
           body: archiveSubjects,
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     id: "get-nav-units",
@@ -77,8 +93,8 @@ module.exports = [
         options: {
           status: 200,
           body: navUnits,
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ];

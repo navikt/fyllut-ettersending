@@ -6,19 +6,10 @@
       "get-send-inn-frontend:success",
       "get-min-side-frontend:success",
       "get-forms:all",
-      "get-form:not-found",
       "get-archive-subjects:all",
-      "get-nav-units:all"
+      "get-nav-units:all",
+      "get-form-1:success",
+      "get-form-2:success"
     ]
-  },
-  {
-    "id": "form1",
-    "from": "base",
-    "routes": ["get-form:form1"]
-  },
-  {
-    "id": "form2",
-    "from": "base",
-    "routes": ["get-form:form2"]
   }
 ]

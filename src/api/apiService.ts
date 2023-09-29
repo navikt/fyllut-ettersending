@@ -29,7 +29,7 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
     logger.error(`Failed to load form ${formPath}. Error: ${e} ${e.message}`, e);
   }
 
-  form.attachments.sort((a: Attachment, b: Attachment) => {
+  form?.attachments.sort((a: Attachment, b: Attachment) => {
     if (b.otherDocumentation) {
       return -1;
     } else if (a.otherDocumentation) {

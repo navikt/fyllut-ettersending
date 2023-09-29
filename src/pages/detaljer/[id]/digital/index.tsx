@@ -42,7 +42,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const form = await getForm(id, locale);
 
   // If the form submission type is not paper, return 404
-  if (form && !isDigitalSubmissionAllowed(form)) {
+  if (!form || (form && !isDigitalSubmissionAllowed(form))) {
+    console.log("Form not found", id);
     return { notFound: true };
   }
 

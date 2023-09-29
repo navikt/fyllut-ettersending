@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   const form = await getForm(id, locale);
 
   // If the form submission type is not digital, return 404
-  if (form && !isPaperSubmissionAllowed(form)) {
+  if (!form || (form && !isPaperSubmissionAllowed(form))) {
     console.log("Form not found", id);
     return { notFound: true };
   }
