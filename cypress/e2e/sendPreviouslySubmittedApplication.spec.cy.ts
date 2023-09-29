@@ -1,8 +1,7 @@
-import {TestButtonText} from "./testUtils";
+import { TestButtonText } from "./testUtils";
 
 describe.only("sendPreviouslySubmittedApplication", () => {
   beforeEach(() => {
-    cy.mocksSetCollection("form2");
     cy.intercept("GET", `${Cypress.config("baseUrl")}/api/forms`).as("getForms");
     cy.visit("/ettersendelse");
     cy.wait("@getForms");

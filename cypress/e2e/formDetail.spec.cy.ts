@@ -1,6 +1,5 @@
 beforeEach(() => {
   cy.mocksRestoreRouteVariants();
-  cy.mocksSetCollection("form2");
 });
 afterEach(() => {
   cy.mocksRestoreRouteVariants();
