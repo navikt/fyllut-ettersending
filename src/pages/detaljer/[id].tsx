@@ -73,12 +73,6 @@ const Detaljer: NextPage<Props> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, formData]);
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>{t("loading-text")}</div>;
-  }
-
   const downloadButton: ButtonType = {
     text: tCommon("button.next"),
     path: Paths.downloadPage,
@@ -104,8 +98,10 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
   };
 
+  const title = router.query.sub === SubmissionType.digital ? t("title-digital") : t("title-paper");
+
   return (
-    <Layout title={t("title")} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage}>
       <Section>
         <Heading size="large" level="2">
           {form.title}

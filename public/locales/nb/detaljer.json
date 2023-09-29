@@ -1,5 +1,6 @@
 {
-  "title": "Ettersende dokumentasjon i posten",
+  "title-paper": "Ettersende dokumentasjon i posten",
+  "title-digital": "Ettersende dokumentasjon digitalt",
   "loading-text": "Laster...",
   "attachments-checkbox": {
     "legend": "Hvilke dokumenter skal du ettersende?",

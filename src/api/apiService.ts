@@ -7,15 +7,16 @@ import { isLocalDevelopment } from "src/utils/utils";
 
 const getForms = async (): Promise<BasicForm[]> => {
   const startTime = Date.now();
-  let forms = [];
+  let forms: FyllutFormList[] = [];
+
   try {
     forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
     logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
-    logger.error("Failed to load forms", e);
+    logger.error(`Failed to load forms ${e.message}`, e);
   }
 
-  return forms.map((form: FyllutFormList) => {
+  return forms.map((form) => {
     return {
       ...form,
       properties: {

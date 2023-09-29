@@ -9,6 +9,7 @@ accessPolicy:
       - application: skjemautfylling
       - application: skjemautfylling-experimental
       - application: skjemautfylling-delingslenke
+      - application: skjemautfylling-preprod
 env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling-preprod/fyllut

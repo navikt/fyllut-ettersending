@@ -18,7 +18,7 @@ interface Props {
   locale: string | undefined;
 }
 
-const LastNed: NextPage<Props> = ({locale}) => {
+const LastNed: NextPage<Props> = ({ locale }) => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation("last-ned");
@@ -27,7 +27,7 @@ const LastNed: NextPage<Props> = ({locale}) => {
   const isLospost = !formData.formId;
   const submissionType = isLospost ? "lospost" : "ettersending";
 
-  const previousPath = isLospost ? Paths.otherDocumentation : Paths.details + "/" + formData.formId;
+  const previousPath = isLospost ? Paths.otherDocumentation : Paths.details + "/" + formData.formId + "?sub=paper";
 
   const download = async () => {
     setLoading(true);
@@ -45,9 +45,7 @@ const LastNed: NextPage<Props> = ({locale}) => {
         <Heading level="2" size="medium" spacing>
           {t("section-top.title")}
         </Heading>
-        <BodyShort spacing>
-          {t("section-top.description")}
-        </BodyShort>
+        <BodyShort spacing>{t("section-top.description")}</BodyShort>
       </Section>
 
       <Section>
@@ -59,7 +57,7 @@ const LastNed: NextPage<Props> = ({locale}) => {
       {formData.attachments && (
         <Section>
           <Heading level="2" size="medium" spacing>
-            {t(`section-attachments.title.${formData.attachments.length > 1 ? "plural": "single"}`)}
+            {t(`section-attachments.title.${formData.attachments.length > 1 ? "plural" : "single"}`)}
           </Heading>
           <ul>
             {formData.attachments.map((attachment) => (
@@ -73,7 +71,7 @@ const LastNed: NextPage<Props> = ({locale}) => {
 
       <div className="lastSection">
         <Heading level="2" size="medium" spacing>
-          {t("section-last.title", {step: formData.attachments ? "3" : "2"})}
+          {t("section-last.title", { step: formData.attachments ? "3" : "2" })}
         </Heading>
 
         <BodyShort spacing>{t(`section-last.description.${submissionType}`)}</BodyShort>
@@ -102,9 +100,9 @@ const LastNed: NextPage<Props> = ({locale}) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const translations = await getServerSideTranslations(locale, ["common", "last-ned"]);
-  return {props: {...translations, locale}};
-}
+  return { props: { ...translations, locale } };
+};
 
 export default LastNed;

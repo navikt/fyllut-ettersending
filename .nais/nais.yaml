@@ -12,14 +12,14 @@ spec:
     path: "/fyllut-ettersending/api/internal/isalive"
     port: 3002
     initialDelay: 20
-    timeout: 1
+    timeout: 10
     periodSeconds: 5
     failureThreshold: 10
   readiness:
     path: "/fyllut-ettersending/api/internal/isready"
     port: 3002
     initialDelay: 20
-    timeout: 1
+    timeout: 10
   prometheus:
     enabled: false
   tokenx:
