@@ -1,18 +1,25 @@
-import { DecoratorComponents, fetchDecoratorReact, DecoratorFetchProps, DecoratorLocale } from "@navikt/nav-dekoratoren-moduler/ssr";
+import {
+  DecoratorComponents,
+  fetchDecoratorReact,
+  DecoratorFetchProps,
+  DecoratorLocale,
+} from "@navikt/nav-dekoratoren-moduler/ssr";
 import { DocumentContext, DocumentInitialProps } from "next/dist/pages/_document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
-type MyDocumentInitialProps = DocumentInitialProps & {Decorator: DecoratorComponents}
+type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponents };
 
 class _Document extends Document<{ Decorator: DecoratorComponents }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
-    const { locale} = ctx;
+    const { locale } = ctx;
+    const language = locale === "no" ? "nb" : locale;
+
     const decoratorProps: DecoratorFetchProps = {
       env: process.env.NODE_ENV === "production" ? "prod" : "dev",
       params: {
         simple: true,
-        language: locale as DecoratorLocale || "nb",
+        language: (language as DecoratorLocale) || "nb",
         logoutWarning: true,
       },
     };
