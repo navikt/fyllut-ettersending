@@ -1,5 +1,5 @@
 import { NextRouter } from "next/router";
-import { Form, FormData, FormList, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
+import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
 
 const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
@@ -42,11 +42,11 @@ const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === SubmissionType.paper;
 };
 
-const isPaperSubmissionAllowed = (form: Form | FormList) => {
+const isPaperSubmissionAllowed = (form: Form | ListForm) => {
   return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_PAPIR";
 };
 
-const isDigitalSubmissionAllowed = (form: Form | FormList) => {
+const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
   return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_DIGITAL";
 };
 

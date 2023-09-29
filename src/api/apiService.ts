@@ -1,5 +1,5 @@
 import { get, post } from "./http";
-import { Attachment, BasicForm, Form, FyllutFormList, KeyValue, NavUnit } from "../data/domain";
+import { Attachment, BasicForm, Form, FyllutListForm, KeyValue, NavUnit } from "../data/domain";
 import { FrontPageRequest } from "./frontPageService";
 import logger from "../utils/logger";
 import { getTokenxToken } from "src/auth/getTokenXToken";
@@ -7,7 +7,7 @@ import { isLocalDevelopment } from "src/utils/utils";
 
 const getForms = async (): Promise<BasicForm[]> => {
   const startTime = Date.now();
-  let forms: FyllutFormList[] = [];
+  let forms: FyllutListForm[] = [];
 
   try {
     forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);

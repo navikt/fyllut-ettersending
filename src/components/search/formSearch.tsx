@@ -1,6 +1,6 @@
 import { LinkPanel, TextField } from "@navikt/ds-react";
 import React, { useEffect, useState } from "react";
-import { FormList } from "../../data/domain";
+import { ListForm } from "../../data/domain";
 import Section from "../section/section";
 import styles from "./search.module.css";
 import { useRouter } from "next/router";
@@ -9,12 +9,12 @@ import { useTranslation } from "next-i18next";
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from "src/utils/submissionUtil";
 
 interface Props {
-  forms: FormList[];
+  forms: ListForm[];
 }
 
 const FormSearch = ({ forms }: Props) => {
   const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState<FormList[]>([]);
+  const [searchResult, setSearchResult] = useState<ListForm[]>([]);
   const router = useRouter();
   const { t } = useTranslation("ettersendelse");
 
@@ -29,7 +29,7 @@ const FormSearch = ({ forms }: Props) => {
     setSearchResult(result);
   }, [searchInput, forms]);
 
-  const sortForms = (a: FormList, b: FormList) => {
+  const sortForms = (a: ListForm, b: ListForm) => {
     return a.title.trim().localeCompare(b.title.trim());
   };
 

@@ -7,22 +7,22 @@ export interface BasicForm {
   title: string;
 }
 // From fyllut /forms endpoint
-export interface FyllutFormList extends BasicForm {
-  properties: FyllutFormListProperties;
+export interface FyllutListForm extends BasicForm {
+  properties: FyllutListFormProperties;
 }
 
-export interface FyllutFormListProperties {
+export interface FyllutListFormProperties {
   skjemanummer?: string;
   innsending?: AllowedSubmissionType;
   ettersending?: AllowedSubmissionType;
 }
 
 // For the FormSearch component
-export interface FormList extends BasicForm {
-  properties: FormListProperties;
+export interface ListForm extends BasicForm {
+  properties: ListFormProperties;
 }
 
-export interface FormListProperties {
+export interface ListFormProperties {
   formNumber?: string;
   submissionType?: AllowedSubmissionType;
 }

@@ -12,7 +12,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
 
   it("fill out and send documentation by mail", () => {
     cy.get('[name="search"]').click().type("førerhund");
-    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(1).click(); // Paper
+    cy.get('[data-cy="searchResults"]').findAllByRole("link").contains("papir").click(); // Paper
     cy.url().should("include", "/detaljer");
     cy.get('[type="checkbox"]').first().check();
     cy.get('[type="radio"]').check("hasSocialNumber");
@@ -23,7 +23,7 @@ describe.only("sendPreviouslySubmittedApplication", () => {
 
   it("fill out and send documentation digitally", () => {
     cy.get('[name="search"]').click().type("førerhund");
-    cy.get('[data-cy="searchResults"]').findAllByRole("link").eq(0).click(); // Digital
+    cy.get('[data-cy="searchResults"]').findAllByRole("link").contains("digital").click(); // Digital
     cy.url().should("include", "/detaljer");
     cy.findByRole("checkbox", { name: "Legeerklæring om alminnelig helsetilstand" }).check();
     cy.findByRole("checkbox", { name: "Annen dokumentasjon" }).check();
