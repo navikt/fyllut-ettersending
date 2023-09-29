@@ -13,7 +13,7 @@ const getForms = async (): Promise<BasicForm[]> => {
     forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
     logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
   } catch (e: any) {
-    logger.error(`Failed to load forms ${e.message}`, e);
+    logger.error("Failed to load forms", e);
   }
 
   return forms.map((form) => {

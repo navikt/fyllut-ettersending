@@ -25,6 +25,8 @@ Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 FYLLUT_BASE_URL=https://fyllut-preprod.intern.dev.nav.no/fyllut
 ```
 
+Merk: I dev er `FYLLUT_BASE_URL` satt til `http://skjemautfylling/fyllut` som henter skjemaene fra produksjon (static). Dette er fordi hvis man skal teste videre til `send-inn` med digital innsending så prøver `innsending-api` å hente skjema fra Sanity der de fleste test-skjemaer ikke er definert. 
+
 ### Lokal server
 
 ```bash
