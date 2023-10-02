@@ -42,8 +42,7 @@ const Home: NextPage<Props> = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  // Testing
-  if (process.env.APP_ENV === "development") {
+  if (process.env.APP_ENV === "production") {
     return { notFound: true };
   }
   const translations = await getServerSideTranslations(locale, ["common", "home"]);
