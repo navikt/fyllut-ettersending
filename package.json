@@ -39,7 +39,7 @@
     "@mocks-server/main": "^4.1.0",
     "@testing-library/cypress": "^10.0.1",
     "@types/file-saver": "^2.0.5",
-    "@types/node": "^18.17.12",
+    "@types/node": "^20.8.0",
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
