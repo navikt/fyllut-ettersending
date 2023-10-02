@@ -1,13 +1,14 @@
 import { get, post } from "./http";
-import { Attachment, Form, KeyValue, NavUnit } from "../data/domain";
+import { Attachment, BasicForm, Form, FyllutListForm, KeyValue, NavUnit } from "../data/domain";
 import { FrontPageRequest } from "./frontPageService";
 import logger from "../utils/logger";
 import { getTokenxToken } from "src/auth/getTokenXToken";
 import { isLocalDevelopment } from "src/utils/utils";
 
-const getForms = async (): Promise<Form[]> => {
+const getForms = async (): Promise<BasicForm[]> => {
   const startTime = Date.now();
-  let forms = [];
+  let forms: FyllutListForm[] = [];
+
   try {
     forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
     logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
@@ -15,7 +16,15 @@ const getForms = async (): Promise<Form[]> => {
     logger.error("Failed to load forms", e);
   }
 
-  return forms;
+  return forms.map((form) => {
+    return {
+      ...form,
+      properties: {
+        formNumber: form?.properties.skjemanummer ?? null,
+        submissionType: form?.properties?.ettersending ?? "PAPIR_OG_DIGITAL",
+      },
+    };
+  });
 };
 
 const getForm = async (formPath: string, language: string = "nb"): Promise<Form | undefined> => {
@@ -29,7 +38,7 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
     logger.error(`Failed to load form ${formPath}`, e);
   }
 
-  form.attachments.sort((a: Attachment, b: Attachment) => {
+  form?.attachments.sort((a: Attachment, b: Attachment) => {
     if (b.otherDocumentation) {
       return -1;
     } else if (a.otherDocumentation) {
@@ -42,7 +51,7 @@ const getForm = async (formPath: string, language: string = "nb"): Promise<Form 
     ...form,
     properties: {
       formNumber: form?.properties.skjemanummer ?? null,
-      submissionType: form?.properties.ettersending ?? form?.properties.innsending ?? "PAPIR_OG_DIGITAL",
+      submissionType: form?.properties.ettersending ?? "PAPIR_OG_DIGITAL",
       navUnitTypes: form?.properties.enhetstyper ?? [],
       subjectOfSubmission: form?.properties.tema ?? null,
       navUnitMustBeSelected: form?.properties.enhetMaVelgesVedPapirInnsending ?? null,
@@ -103,13 +112,13 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
     if (!isLocalDevelopment()) {
       tokenxToken = (await getTokenxToken(
         idportenToken,
-        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api"
+        process.env.INNSENDING_API_AUDIENCE ?? "dev-gcp:team-soknad:innsending-api",
       )) as string;
     }
 
     const response = await fetch(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
-      { headers: { Authorization: `Bearer ${tokenxToken}` } }
+      { headers: { Authorization: `Bearer ${tokenxToken}` } },
     );
 
     return await response.json();

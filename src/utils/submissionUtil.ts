@@ -1,5 +1,5 @@
 import { NextRouter } from "next/router";
-import { Form, FormData, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
+import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
 
 const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
@@ -21,7 +21,7 @@ const createSubmissionUrl = (form: Form, formData: FormData): string => {
   const attachmentList = formData.attachments?.map(({ attachmentCode }) => attachmentCode);
 
   return `${process.env.NEXT_PUBLIC_SENDINN_URL}?erEttersendelse=true&sprak=NO_NB&skjemanummer=${encodeURIComponent(
-    formNumber
+    formNumber,
   )}&vedleggsIder=${attachmentList}`;
 };
 
@@ -42,6 +42,30 @@ const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === SubmissionType.paper;
 };
 
+const isPaperSubmissionAllowed = (form: Form | ListForm) => {
+  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_PAPIR";
+};
+
+const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
+  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_DIGITAL";
+};
+
+const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {
+  if (!submissionType || Array.isArray(submissionType)) {
+    return false;
+  }
+
+  if (submissionType === SubmissionType.paper) {
+    return isPaperSubmissionAllowed(form);
+  }
+
+  if (submissionType === SubmissionType.digital) {
+    return isDigitalSubmissionAllowed(form);
+  }
+
+  return false;
+};
+
 export {
   getDefaultSubmissionType,
   createSubmissionUrl,
@@ -49,4 +73,7 @@ export {
   areBothSubmissionTypesAllowed,
   isSubmissionParamSet,
   isSubmissionTypePaper,
+  isDigitalSubmissionAllowed,
+  isPaperSubmissionAllowed,
+  isValidSubmissionTypeInUrl,
 };

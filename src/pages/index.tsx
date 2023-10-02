@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import { Button, Heading, BodyShort } from "@navikt/ds-react";
-import type {GetStaticProps, NextPage} from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import { useRouter } from "next/router";
@@ -25,18 +25,14 @@ const Home: NextPage<Props> = () => {
       </Heading>
 
       <Section>
-        <BodyShort spacing={true}>
-          {t("attachments.description")}
-        </BodyShort>
+        <BodyShort spacing={true}>{t("attachments.description")}</BodyShort>
         <Button variant="primary" onClick={() => handleClick(Paths.formDocumentation)}>
           {t("attachments.button-text")}
         </Button>
       </Section>
 
       <Section>
-        <BodyShort spacing={true}>
-          {t("other-documentation.description")}
-        </BodyShort>
+        <BodyShort spacing={true}>{t("other-documentation.description")}</BodyShort>
         <Button variant="primary" onClick={() => handleClick(Paths.otherDocumentation)}>
           {t("other-documentation.button-text")}
         </Button>
@@ -45,9 +41,12 @@ const Home: NextPage<Props> = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  if (process.env.APP_ENV === "production") {
+    return { notFound: true };
+  }
   const translations = await getServerSideTranslations(locale, ["common", "home"]);
-  return {props: {...translations}};
-}
+  return { props: { ...translations } };
+};
 
 export default Home;

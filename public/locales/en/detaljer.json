@@ -1,11 +1,7 @@
 {
-  "title": "Send documentation by post",
+  "title-paper": "Send documentation by post",
+  "title-digital": "Send documentation digitally",
   "loading-text": "Loading...",
-  "submission-type-radio": {
-    "legend": "Do you want to send the documentation digitally or by post?",
-    "choice-digital": "Submit digitally",
-    "choice-by-mail": "Send by post"
-  },
   "attachments-checkbox": {
     "legend": "Which documents do you wish to submit?",
     "other-documentation-label": "Give the document a descriptive name"

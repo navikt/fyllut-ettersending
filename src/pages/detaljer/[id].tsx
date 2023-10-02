@@ -13,14 +13,12 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { fetchNavUnits } from "../../api/apiClient";
 import { Paths } from "../../data/text";
-import ChooseSubmissionType from "../../components/submission/chooseSubmissionType";
 import {
   createSubmissionUrl,
   getDefaultSubmissionType,
-  areBothSubmissionTypesAllowed,
   isSubmissionTypePaper,
   isSubmissionAllowed,
-  isSubmissionParamSet,
+  isValidSubmissionTypeInUrl,
 } from "../../utils/submissionUtil";
 import { ButtonType } from "../../components/button/buttonGroupElement";
 import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
@@ -75,12 +73,6 @@ const Detaljer: NextPage<Props> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, formData]);
 
-  // If the page is not yet generated, this will be displayed
-  // initially until getStaticProps() finishes running
-  if (router.isFallback) {
-    return <div>{t("loading-text")}</div>;
-  }
-
   const downloadButton: ButtonType = {
     text: tCommon("button.next"),
     path: Paths.downloadPage,
@@ -106,8 +98,10 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
   };
 
+  const title = router.query.sub === SubmissionType.digital ? t("title-digital") : t("title-paper");
+
   return (
-    <Layout title={t("title")} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage}>
       <Section>
         <Heading size="large" level="2">
           {form.title}
@@ -117,8 +111,6 @@ const Detaljer: NextPage<Props> = (props) => {
 
       {isSubmissionAllowed(form) ? (
         <>
-          {areBothSubmissionTypesAllowed(form) && !isSubmissionParamSet(router) && <ChooseSubmissionType />}
-
           <ChooseAttachments form={form} />
 
           {isSubmissionTypePaper(formData) && (
@@ -154,7 +146,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Set cache control header
-  const { res } = context;
+  const { res, query } = context;
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
 
   // Attempt to verify the token and redirect to login if necessary
@@ -171,6 +163,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
   const { locale } = context;
   const form = await getForm(id, locale);
+
+  // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
+  if (!form || !isValidSubmissionTypeInUrl(form, query.sub)) {
+    return { notFound: true };
+  }
+
   const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
 
   // Fetch existing ettersendinger and redirect if necessary

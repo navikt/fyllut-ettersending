@@ -25,6 +25,8 @@ Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 FYLLUT_BASE_URL=https://fyllut-preprod.intern.dev.nav.no/fyllut
 ```
 
+Merk: Når man går videre til `send-inn-frontend` for digital innsending hentes skjema fra Sanity. Mange av dev-skjemaene finnes ikke i Sanity og vil få 404. 
+
 ### Lokal server
 
 ```bash
@@ -52,3 +54,10 @@ Start fyllut-ettersending på vanlig måte:
 
     yarn dev
    
+## Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.
+
+## For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #team-fyllut-sendinn

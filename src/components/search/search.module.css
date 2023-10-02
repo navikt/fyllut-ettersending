@@ -2,14 +2,8 @@
   cursor: pointer;
 }
 
-.results {
-}
-
 .results a {
   background-color: #f1f1f1;
   margin-bottom: 1.5rem;
 }
 
-.results a:hover {
-  background-color: #e6f0ff;
-}

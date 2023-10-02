@@ -1,14 +1,37 @@
-class UnauthenticatedError extends Error {}
-interface Form {
+export class UnauthenticatedError extends Error {}
+
+export interface BasicForm {
   _id: string;
   modified: string;
   path: string;
   title: string;
+}
+// From fyllut /forms endpoint
+export interface FyllutListForm extends BasicForm {
+  properties: FyllutListFormProperties;
+}
+
+export interface FyllutListFormProperties {
+  skjemanummer?: string;
+  innsending?: AllowedSubmissionType;
+  ettersending?: AllowedSubmissionType;
+}
+
+// For the FormSearch component
+export interface ListForm extends BasicForm {
+  properties: ListFormProperties;
+}
+
+export interface ListFormProperties {
+  formNumber?: string;
+  submissionType?: AllowedSubmissionType;
+}
+
+export interface Form extends BasicForm {
   properties: FormProperties;
   attachments: Attachment[];
 }
-
-interface Attachment {
+export interface Attachment {
   label: string;
   key: string;
   description: string;
@@ -17,9 +40,9 @@ interface Attachment {
   attachmentCode: string;
 }
 
-type AllowedSubmissionType = "PAPIR_OG_DIGITAL" | "KUN_PAPIR" | "KUN_DIGITAL" | "INGEN";
+export type AllowedSubmissionType = "PAPIR_OG_DIGITAL" | "KUN_PAPIR" | "KUN_DIGITAL" | "INGEN";
 
-interface FormProperties {
+export interface FormProperties {
   formNumber?: string;
   skjemanummer?: string;
   submissionType?: AllowedSubmissionType;
@@ -28,18 +51,18 @@ interface FormProperties {
   subjectOfSubmission?: string;
 }
 
-interface NavUnit {
+export interface NavUnit {
   id: number;
   name: string;
   number: string;
   type: string;
 }
 
-interface KeyValue {
+export interface KeyValue {
   [key: string]: string;
 }
 
-interface FormData {
+export interface FormData {
   formId?: string;
   attachments?: Attachment[];
   navUnitContact?: boolean;
@@ -52,30 +75,30 @@ interface FormData {
   userData?: UserData;
 }
 
-interface DownloadCoverPageRequestBody {
+export interface DownloadCoverPageRequestBody {
   formData: FormData;
   title: string;
 }
 
-enum SubmissionType {
+export enum SubmissionType {
   digital = "digital",
   paper = "paper",
 }
 
-const getSubmissionTypeFromString = (string: string): SubmissionType => {
+export const getSubmissionTypeFromString = (string: string): SubmissionType => {
   if (!Object.values(SubmissionType).includes(string as SubmissionType)) {
     throw new Error(`Invalid submission type: ${string}`);
   }
   return SubmissionType[string as keyof typeof SubmissionType];
 };
 
-enum UserType {
+export enum UserType {
   hasSocialNumber = "hasSocialNumber",
   noSocialNumber = "noSocialNumber",
   other = "other",
 }
 
-interface UserData {
+export interface UserData {
   type?: UserType;
   firstName?: string;
   lastName?: string;
@@ -88,13 +111,13 @@ interface UserData {
   navUnit?: string;
 }
 
-type MimeType = "application/pdf" | "application/json" | "image/png" | "image/jpeg";
-type UploadStatus = "IkkeValgt" | "LastetOpp" | "Innsendt" | "SendSenere" | "SendesAvAndre" | "SendesIkke";
-type ApplicationStatus = "Opprettet" | "Utfylt" | "Innsendt" | "SlettetAvBruker" | "AutomatiskSlettet";
-type ArchivingStatus = "IkkeSatt" | "Arkivert" | "ArkiveringFeilet";
-type ApplicationType = "soknad" | "ettersendelse";
-type ApplicationDisplayType = "fyllUt" | "dokumentinnsending" | "ettersending";
-interface ApplicationAttachment {
+export type MimeType = "application/pdf" | "application/json" | "image/png" | "image/jpeg";
+export type UploadStatus = "IkkeValgt" | "LastetOpp" | "Innsendt" | "SendSenere" | "SendesAvAndre" | "SendesIkke";
+export type ApplicationStatus = "Opprettet" | "Utfylt" | "Innsendt" | "SlettetAvBruker" | "AutomatiskSlettet";
+export type ArchivingStatus = "IkkeSatt" | "Arkivert" | "ArkiveringFeilet";
+export type ApplicationType = "soknad" | "ettersendelse";
+export type ApplicationDisplayType = "fyllUt" | "dokumentinnsending" | "ettersending";
+export interface ApplicationAttachment {
   id?: number;
   vedleggsnr: string;
   tittel: string;
@@ -114,7 +137,7 @@ interface ApplicationAttachment {
   formioId?: string;
 }
 
-interface EttersendelseApplication {
+export interface EttersendelseApplication {
   id?: number;
   innsendingsId: string;
   ettersendingsId: string;
@@ -136,6 +159,3 @@ interface EttersendelseApplication {
   erSystemGenerert?: boolean;
   soknadstype?: ApplicationType;
 }
-
-export type { Form, NavUnit, KeyValue, UserData, FormData, Attachment, EttersendelseApplication, DownloadCoverPageRequestBody };
-export { UnauthenticatedError, UserType, SubmissionType, getSubmissionTypeFromString };
