@@ -1,6 +1,6 @@
 import "@navikt/ds-css";
 import { Button, Heading, BodyShort } from "@navikt/ds-react";
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Section from "../components/section/section";
 import Layout from "../components/layout/layout";
 import { useRouter } from "next/router";
@@ -41,8 +41,9 @@ const Home: NextPage<Props> = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  if (process.env.APP_ENV === "production") {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  // Testing
+  if (process.env.APP_ENV === "development") {
     return { notFound: true };
   }
   const translations = await getServerSideTranslations(locale, ["common", "home"]);
