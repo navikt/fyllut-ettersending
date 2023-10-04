@@ -1,31 +1,31 @@
-import { downloadFrontPage } from "./apiService";
-import {DownloadCoverPageRequestBody, FormData, UserType} from "../data/domain";
-import logger from "../utils/logger";
+import { DownloadCoverPageRequestBody, FormData, UserType } from '../data/domain';
+import logger from '../utils/logger';
+import { downloadFrontPage } from './apiService';
 
 const download = async (body: DownloadCoverPageRequestBody, acceptLanguage: string | undefined) => {
   let pdf;
   try {
     const spraakkode = toSpraakkode(acceptLanguage);
     pdf = await downloadFrontPage(toFrontPageRequest(body, spraakkode));
-    return Buffer.from(pdf.foersteside, "base64");
-  } catch (e: any) {
-    logger.error("Failed to download front page", e);
+    return Buffer.from(pdf.foersteside, 'base64');
+  } catch (e) {
+    logger.error('Failed to download front page', e as Error);
   }
 };
 
-const VALID_LANGUAGES = ["nb", "nn", "en"];
+const VALID_LANGUAGES = ['nb', 'nn', 'en'];
 const toSpraakkode = (acceptLanguage: string | undefined): string => {
   if (acceptLanguage && VALID_LANGUAGES.includes(acceptLanguage)) {
     return acceptLanguage.toUpperCase();
   }
-  return "NB";
-}
+  return 'NB';
+};
 
 const toFrontPageRequest = (body: DownloadCoverPageRequestBody, spraakkode: string): FrontPageRequest => {
-  const {formData, title} = body;
+  const { formData, title } = body;
   return {
-    foerstesidetype: "ETTERSENDELSE",
-    navSkjemaId: formData.formNumber || "",
+    foerstesidetype: 'ETTERSENDELSE',
+    navSkjemaId: formData.formNumber || '',
     spraakkode,
     overskriftstittel: title,
     arkivtittel: title,
@@ -54,7 +54,7 @@ const toFrontPageUser = (formData: FormData): FrontPageUser | undefined => {
   if (formData.userData?.socialSecurityNo) {
     return {
       brukerId: formData.userData?.socialSecurityNo,
-      brukerType: "PERSON",
+      brukerType: 'PERSON',
     } as FrontPageUser;
   }
 };
@@ -88,13 +88,13 @@ interface FrontPageRequest {
   ukjentBrukerPersoninfo?: string;
   tittel?: string;
   behandlingstema?: string;
-  "NAV-skjemaID"?: string;
+  'NAV-skjemaID'?: string;
   enhetsnummer?: string;
   avsender?: FrontPageSender;
-  arkivsak?: FrontPageArchiveCase
+  arkivsak?: FrontPageArchiveCase;
 }
 
-type FrontPageType = "SKJEMA" | "ETTERSENDELSE" | "LOESPOST";
+type FrontPageType = 'SKJEMA' | 'ETTERSENDELSE' | 'LOESPOST';
 
 export interface FrontPageAddress {
   adresselinje1: string;

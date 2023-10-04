@@ -11,5 +11,6 @@ module.exports = {
   root: true,
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-var-requires': 'off', // For next config, mocks-server etc that uses js files and require()
   },
 };

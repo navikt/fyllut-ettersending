@@ -40,7 +40,7 @@ export interface Attachment {
   attachmentCode: string;
 }
 
-export type AllowedSubmissionType = "PAPIR_OG_DIGITAL" | "KUN_PAPIR" | "KUN_DIGITAL" | "INGEN";
+export type AllowedSubmissionType = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';
 
 export interface FormProperties {
   formNumber?: string;
@@ -49,6 +49,26 @@ export interface FormProperties {
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
+}
+
+export interface ApiNavUnit {
+  enhetId: number;
+  navn: string;
+  enhetNr: string;
+  antallRessurser: number;
+  status: string;
+  orgNivaa: string;
+  type: string;
+  organisasjonsnummer: string;
+  underEtableringDato: string;
+  aktiveringsdato: string;
+  underAvviklingDato: string;
+  nedleggelsesdato: string;
+  oppgavebehandler: boolean;
+  versjon: number;
+  sosialeTjenester: string;
+  kanalstrategi: string;
+  orgNrTilKommunaltNavKontor: string;
 }
 
 export interface NavUnit {
@@ -81,8 +101,8 @@ export interface DownloadCoverPageRequestBody {
 }
 
 export enum SubmissionType {
-  digital = "digital",
-  paper = "paper",
+  digital = 'digital',
+  paper = 'paper',
 }
 
 export const getSubmissionTypeFromString = (string: string): SubmissionType => {
@@ -93,9 +113,9 @@ export const getSubmissionTypeFromString = (string: string): SubmissionType => {
 };
 
 export enum UserType {
-  hasSocialNumber = "hasSocialNumber",
-  noSocialNumber = "noSocialNumber",
-  other = "other",
+  hasSocialNumber = 'hasSocialNumber',
+  noSocialNumber = 'noSocialNumber',
+  other = 'other',
 }
 
 export interface UserData {
@@ -111,12 +131,12 @@ export interface UserData {
   navUnit?: string;
 }
 
-export type MimeType = "application/pdf" | "application/json" | "image/png" | "image/jpeg";
-export type UploadStatus = "IkkeValgt" | "LastetOpp" | "Innsendt" | "SendSenere" | "SendesAvAndre" | "SendesIkke";
-export type ApplicationStatus = "Opprettet" | "Utfylt" | "Innsendt" | "SlettetAvBruker" | "AutomatiskSlettet";
-export type ArchivingStatus = "IkkeSatt" | "Arkivert" | "ArkiveringFeilet";
-export type ApplicationType = "soknad" | "ettersendelse";
-export type ApplicationDisplayType = "fyllUt" | "dokumentinnsending" | "ettersending";
+export type MimeType = 'application/pdf' | 'application/json' | 'image/png' | 'image/jpeg';
+export type UploadStatus = 'IkkeValgt' | 'LastetOpp' | 'Innsendt' | 'SendSenere' | 'SendesAvAndre' | 'SendesIkke';
+export type ApplicationStatus = 'Opprettet' | 'Utfylt' | 'Innsendt' | 'SlettetAvBruker' | 'AutomatiskSlettet';
+export type ArchivingStatus = 'IkkeSatt' | 'Arkivert' | 'ArkiveringFeilet';
+export type ApplicationType = 'soknad' | 'ettersendelse';
+export type ApplicationDisplayType = 'fyllUt' | 'dokumentinnsending' | 'ettersending';
 export interface ApplicationAttachment {
   id?: number;
   vedleggsnr: string;
