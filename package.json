@@ -10,12 +10,13 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start -p 3002",
-    "lint": "next lint",
+    "lint": "eslint .",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
     "mocks": "mocks-server",
     "mocks:no-cli": "mocks-server --no-plugins.inquirerCli.enabled",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@navikt/aksel-icons": "^5.2.1",
