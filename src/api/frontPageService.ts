@@ -9,7 +9,7 @@ const download = async (body: DownloadCoverPageRequestBody, acceptLanguage: stri
     pdf = await downloadFrontPage(toFrontPageRequest(body, spraakkode));
     return Buffer.from(pdf.foersteside, 'base64');
   } catch (e) {
-    logger.error('Failed to download front page', e as Error);
+    logger.error('Failed to download front page', e);
   }
 };
 
