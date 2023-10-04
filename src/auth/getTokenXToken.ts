@@ -60,12 +60,14 @@ export async function getTokenxToken(subject_token: string, audience: string) {
     return grant.access_token;
   } catch (err) {
     switch ((err as Error).constructor) {
-      case OPError:
+      case OPError: {
+        const error = err as errors.OPError;
         console.error(
-          `Noe gikk galt med token exchange mot TokenX. Feilmelding fra openid-client: (${err}). HTTP Status fra TokenX: (${err.response.statusCode} ${err.response.statusMessage}) Body fra TokenX:`,
-          (err as errors.OPError)?.response?.body,
+          `Noe gikk galt med token exchange mot TokenX. Feilmelding fra openid-client: (${error}). HTTP Status fra TokenX: (${error?.response?.statusCode} ${error?.response?.statusMessage}) Body fra TokenX:`,
+          error?.response?.body,
         );
         break;
+      }
     }
     throw err;
   }
