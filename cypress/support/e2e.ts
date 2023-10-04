@@ -14,9 +14,9 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands";
-import "cypress-axe";
-import { register } from "@mocks-server/cypress-commands";
+import { register } from '@mocks-server/cypress-commands';
+import 'cypress-axe';
+import './commands';
 register();
 
 // Alternatively you can use CommonJS syntax:

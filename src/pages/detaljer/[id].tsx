@@ -1,33 +1,33 @@
-import "@navikt/ds-css";
-import { Alert, Heading, Ingress } from "@navikt/ds-react";
-import type { NextPage } from "next";
-import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from "../../data/domain";
-import ChooseAttachments from "../../components/attachment/chooseAttachments";
-import ButtonGroup from "../../components/button/buttonGroup";
-import ChooseUser from "../../components/submission/chooseUser";
-import { useFormState } from "../../data/appState";
-import { useCallback, useEffect, useState } from "react";
-import Section from "../../components/section/section";
-import Layout from "../../components/layout/layout";
-import { useRouter } from "next/router";
-import { GetServerSidePropsContext } from "next/types";
-import { fetchNavUnits } from "../../api/apiClient";
-import { Paths } from "../../data/text";
+import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
+import '@navikt/ds-css';
+import { Alert, Heading, Ingress } from '@navikt/ds-react';
+import { ServerResponse } from 'http';
+import type { NextPage } from 'next';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { GetServerSidePropsContext } from 'next/types';
+import { useCallback, useEffect, useState } from 'react';
+import { getEttersendinger, getForm } from 'src/api/apiService';
+import { getIdPortenToken } from 'src/api/loginRedirect';
+import { useReffererPage } from 'src/hooks/useReferrerPage';
+import { fetchNavUnits } from '../../api/apiClient';
+import ChooseAttachments from '../../components/attachment/chooseAttachments';
+import ButtonGroup from '../../components/button/buttonGroup';
+import { ButtonType } from '../../components/button/buttonGroupElement';
+import Layout from '../../components/layout/layout';
+import Section from '../../components/section/section';
+import ChooseUser from '../../components/submission/chooseUser';
+import { useFormState } from '../../data/appState';
+import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
+import { Paths } from '../../data/text';
+import { getServerSideTranslations } from '../../utils/i18nUtil';
 import {
   createSubmissionUrl,
   getDefaultSubmissionType,
-  isSubmissionTypePaper,
   isSubmissionAllowed,
+  isSubmissionTypePaper,
   isValidSubmissionTypeInUrl,
-} from "../../utils/submissionUtil";
-import { ButtonType } from "../../components/button/buttonGroupElement";
-import { ArrowLeftIcon, ArrowRightIcon } from "@navikt/aksel-icons";
-import { getIdPortenToken } from "src/api/loginRedirect";
-import { getEttersendinger, getForm } from "src/api/apiService";
-import { ServerResponse } from "http";
-import { useReffererPage } from "src/hooks/useReferrerPage";
-import { getServerSideTranslations } from "../../utils/i18nUtil";
-import { useTranslation } from "next-i18next";
+} from '../../utils/submissionUtil';
 
 interface Props {
   form: Form;
@@ -41,8 +41,8 @@ const Detaljer: NextPage<Props> = (props) => {
   const { formData, resetFormData } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const referrerPage = useReffererPage();
-  const { t } = useTranslation("detaljer");
-  const { t: tCommon } = useTranslation("common");
+  const { t } = useTranslation('detaljer');
+  const { t: tCommon } = useTranslation('common');
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -74,31 +74,31 @@ const Detaljer: NextPage<Props> = (props) => {
   }, [id, formData]);
 
   const downloadButton: ButtonType = {
-    text: tCommon("button.next"),
+    text: tCommon('button.next'),
     path: Paths.downloadPage,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
-    iconPosition: "right",
+    iconPosition: 'right',
   };
 
   const submitButton: ButtonType = {
-    text: tCommon("button.next"),
+    text: tCommon('button.next'),
     external: true,
     path: createSubmissionUrl(form, formData),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
-    iconPosition: "right",
+    iconPosition: 'right',
   };
 
   const previousButton: ButtonType = {
-    text: tCommon("button.previous"),
-    variant: "secondary",
+    text: tCommon('button.previous'),
+    variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
     path: referrerPage,
     external: true,
   };
 
-  const title = router.query.sub === SubmissionType.digital ? t("title-digital") : t("title-paper");
+  const title = router.query.sub === SubmissionType.digital ? t('title-digital') : t('title-paper');
 
   return (
     <Layout title={title} backUrl={referrerPage}>
@@ -130,15 +130,15 @@ const Detaljer: NextPage<Props> = (props) => {
             center={!!referrerPage}
             buttons={[
               {
-                text: tCommon("button.cancel"),
+                text: tCommon('button.cancel'),
                 path: Paths.base,
-                variant: "tertiary",
+                variant: 'tertiary',
               },
             ]}
           />
         </>
       ) : (
-        <Alert variant="info">{t("no-attachments-alert")}</Alert>
+        <Alert variant="info">{t('no-attachments-alert')}</Alert>
       )}
     </Layout>
   );
@@ -147,10 +147,10 @@ const Detaljer: NextPage<Props> = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Set cache control header
   const { res, query } = context;
-  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
 
   // Attempt to verify the token and redirect to login if necessary
-  let idportenToken = "";
+  let idportenToken = '';
   try {
     idportenToken = (await getIdPortenToken(context)) as string;
   } catch (ex) {
@@ -169,7 +169,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  const translations = await getServerSideTranslations(locale, ["common", "detaljer", "validator"]);
+  const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
 
   // Fetch existing ettersendinger and redirect if necessary
   let existingEttersendinger: EttersendelseApplication[] = [];
@@ -188,20 +188,20 @@ const redirectBasedOnExistingEttersendinger = (
   res: ServerResponse,
 ) => {
   if (existingEttersendinger.length === 1) {
-    res.setHeader("Location", `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
+    res.setHeader('Location', `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
     res.statusCode = 302;
   }
 
   if (existingEttersendinger.length > 1) {
-    res.setHeader("Location", `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`);
+    res.setHeader('Location', `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`);
     res.statusCode = 302;
   }
 };
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
-  const querySeparator = context.resolvedUrl.includes("?") ? "&" : "?";
-  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : "";
-  const redirect = encodeURIComponent("/fyllut-ettersending" + context.resolvedUrl + referrerQuery);
+  const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
+  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
+  const redirect = encodeURIComponent('/fyllut-ettersending' + context.resolvedUrl + referrerQuery);
   return {
     redirect: {
       permanent: false,

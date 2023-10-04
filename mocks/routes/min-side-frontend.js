@@ -1,16 +1,16 @@
 module.exports = [
   {
-    id: "get-min-side-frontend",
-    url: "/min-side-frontend/*",
-    method: "GET",
+    id: 'get-min-side-frontend',
+    url: '/min-side-frontend/*',
+    method: 'GET',
     variants: [
       {
-        id: "success",
-        type: "static",
+        id: 'success',
+        type: 'static',
         options: {
-          path: "mocks/data/min-side-frontend",
+          path: 'mocks/data/min-side-frontend',
           headers: {
-            "content-type": "text/html",
+            'content-type': 'text/html',
           },
         },
       },

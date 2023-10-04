@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to deploy"
+        description: 'Environment to deploy'
         required: true
-        default: "dev"
+        default: 'dev'
         type: choice
         options:
           - dev
@@ -14,28 +14,28 @@ on:
 
 jobs:
   test:
-    name: "Test"
+    name: 'Test'
     uses: ./.github/workflows/test.yaml
 
   build-and-push:
-    name: "Build and push"
+    name: 'Build and push'
     uses: ./.github/workflows/build-push.yaml
     with:
       environment: ${{ inputs.environment }}
     secrets: inherit
     permissions:
-      contents: "read"
-      id-token: "write"
-      packages: "read"
+      contents: 'read'
+      id-token: 'write'
+      packages: 'read'
 
   deployAppToProd:
-    name: "Deploy app to prod"
+    name: 'Deploy app to prod'
     needs: [build-and-push, test]
     if: github.event.inputs.environment == 'prod'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Deploy to PROD"
+      - name: 'Deploy to PROD'
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
@@ -45,13 +45,13 @@ jobs:
           VAR: image=${{ needs.build-and-push.outputs.image }}
 
   deployAppToDev:
-    name: "Deploy app to dev"
+    name: 'Deploy app to dev'
     needs: [build-and-push, test]
     if: github.event.inputs.environment == 'dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Deploy to DEV"
+      - name: 'Deploy to DEV'
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}

@@ -1,5 +1,5 @@
-import { Heading } from "@navikt/ds-react";
-import Layout from "../components/layout/layout";
+import { Heading } from '@navikt/ds-react';
+import Layout from '../components/layout/layout';
 
 const Error = ({ statusCode }) => {
   return (

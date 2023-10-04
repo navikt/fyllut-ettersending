@@ -1,35 +1,35 @@
-name: "Build and deploy (dev) fyllut-ettersending"
+name: 'Build and deploy (dev) fyllut-ettersending'
 on:
   push:
     branches:
       - main
     paths-ignore:
-      - "**.md"
-      - "**/**.md"
+      - '**.md'
+      - '**/**.md'
 
 jobs:
   test:
-    name: "Test"
+    name: 'Test'
     uses: ./.github/workflows/test.yaml
 
   build-and-push:
-    name: "Build"
+    name: 'Build'
     uses: ./.github/workflows/build-push.yaml
     with:
       environment: dev
     secrets: inherit
     permissions:
-      contents: "read"
-      id-token: "write"
-      packages: "read"
+      contents: 'read'
+      id-token: 'write'
+      packages: 'read'
 
   deployAppToDev:
-    name: "Deploy app to dev"
+    name: 'Deploy app to dev'
     needs: [build-and-push, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Deploy to DEV"
+      - name: 'Deploy to DEV'
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}

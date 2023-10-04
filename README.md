@@ -4,7 +4,7 @@ Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.inte
 
 ## Utvikling
 
-### Installere pakker lokalt 
+### Installere pakker lokalt
 
 For å installere npm-pakker med @navikt-scope må man autentisere seg for registry `npm.pkg.github.com`,
 så hvis man får `401 Unauthorized` ved installering må man kjøre følgende kommando:
@@ -25,7 +25,7 @@ Man kan lage en lokal konfigurasjonsfil på `.env.local`:
 FYLLUT_BASE_URL=https://fyllut-preprod.intern.dev.nav.no/fyllut
 ```
 
-Merk: Når man går videre til `send-inn-frontend` for digital innsending hentes skjema fra Sanity. Mange av dev-skjemaene finnes ikke i Sanity og vil få 404. 
+Merk: Når man går videre til `send-inn-frontend` for digital innsending hentes skjema fra Sanity. Mange av dev-skjemaene finnes ikke i Sanity og vil få 404.
 
 ### Lokal server
 
@@ -37,7 +37,7 @@ Serveren kjører på http://localhost:3002.
 
 ### Mocks Server
 
-Man kan utvikle lokalt uten å være avhengig av eksterne api'er ved å kjøre opp en Mocks Server.  
+Man kan utvikle lokalt uten å være avhengig av eksterne api'er ved å kjøre opp en Mocks Server.
 
 URLer i `.env.local` må peke til mock:
 
@@ -53,7 +53,7 @@ Start Mocks Server:
 Start fyllut-ettersending på vanlig måte:
 
     yarn dev
-   
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.

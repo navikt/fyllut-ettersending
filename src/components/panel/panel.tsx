@@ -1,6 +1,6 @@
-import styles from "./panel.module.css";
-import { ReactNode } from "react";
-import { Panel as NavPanel } from "@navikt/ds-react";
+import { Panel as NavPanel } from '@navikt/ds-react';
+import { ReactNode } from 'react';
+import styles from './panel.module.css';
 
 interface Props {
   children: ReactNode;

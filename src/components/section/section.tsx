@@ -1,5 +1,5 @@
-import styles from "./section.module.css";
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
+import styles from './section.module.css';
 
 interface Props {
   children: ReactNode;

@@ -1,5 +1,5 @@
-import { NextRouter } from "next/router";
-import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from "../data/domain";
+import { NextRouter } from 'next/router';
+import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from '../data/domain';
 
 const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
   const allowedSubmissionType = form.properties.submissionType;
@@ -9,7 +9,7 @@ const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionTyp
     return submissionType;
   }
 
-  if (allowedSubmissionType === "PAPIR_OG_DIGITAL" || allowedSubmissionType === "KUN_DIGITAL") {
+  if (allowedSubmissionType === 'PAPIR_OG_DIGITAL' || allowedSubmissionType === 'KUN_DIGITAL') {
     return SubmissionType.digital;
   }
 
@@ -26,11 +26,11 @@ const createSubmissionUrl = (form: Form, formData: FormData): string => {
 };
 
 const isSubmissionAllowed = (form: Form) => {
-  return form.attachments?.length > 0 && form.properties.submissionType !== "INGEN";
+  return form.attachments?.length > 0 && form.properties.submissionType !== 'INGEN';
 };
 
 const areBothSubmissionTypesAllowed = (form: Form) => {
-  return form.properties.submissionType === "PAPIR_OG_DIGITAL";
+  return form.properties.submissionType === 'PAPIR_OG_DIGITAL';
 };
 
 const isSubmissionParamSet = (router: NextRouter) => {
@@ -43,11 +43,11 @@ const isSubmissionTypePaper = (formData: FormData) => {
 };
 
 const isPaperSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_PAPIR";
+  return form.properties.submissionType === 'PAPIR_OG_DIGITAL' || form.properties.submissionType === 'KUN_PAPIR';
 };
 
 const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType === "PAPIR_OG_DIGITAL" || form.properties.submissionType === "KUN_DIGITAL";
+  return form.properties.submissionType === 'PAPIR_OG_DIGITAL' || form.properties.submissionType === 'KUN_DIGITAL';
 };
 
 const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {
@@ -67,13 +67,13 @@ const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefin
 };
 
 export {
-  getDefaultSubmissionType,
-  createSubmissionUrl,
-  isSubmissionAllowed,
   areBothSubmissionTypesAllowed,
-  isSubmissionParamSet,
-  isSubmissionTypePaper,
+  createSubmissionUrl,
+  getDefaultSubmissionType,
   isDigitalSubmissionAllowed,
   isPaperSubmissionAllowed,
+  isSubmissionAllowed,
+  isSubmissionParamSet,
+  isSubmissionTypePaper,
   isValidSubmissionTypeInUrl,
 };

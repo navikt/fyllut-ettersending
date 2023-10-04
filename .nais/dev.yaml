@@ -1,8 +1,8 @@
 env-name: dev-gcp
 logs-url: https://logs.adeo.no/app/r/s/1n4vb
-special-type-to-use-in-alertmanager-config: "fyllut-sendinn-alerts-dev"
+special-type-to-use-in-alertmanager-config: 'fyllut-sendinn-alerts-dev'
 ingresses:
-  - "https://fyllut-ettersending.intern.dev.nav.no/fyllut-ettersending"
+  - 'https://fyllut-ettersending.intern.dev.nav.no/fyllut-ettersending'
 accessPolicy:
   outbound:
     rules:
@@ -14,13 +14,12 @@ env:
   - name: FYLLUT_BASE_URL
     value: http://skjemautfylling-preprod/fyllut
   - name: INNSENDING_API_AUDIENCE
-    value: "dev-gcp:team-soknad:innsending-api"
+    value: 'dev-gcp:team-soknad:innsending-api'
   - name: INNSENDING_API_URL
-    value: "http://innsending-api.team-soknad"
+    value: 'http://innsending-api.team-soknad'
   - name: SEND_INN_FRONTEND_URL
-    value: "https://www.intern.dev.nav.no/sendinn"
+    value: 'https://www.intern.dev.nav.no/sendinn'
   - name: MIN_SIDE_FRONTEND_URL
-    value: "https://www.intern.dev.nav.no/minside"
+    value: 'https://www.intern.dev.nav.no/minside'
   - name: APP_ENV
     value: development
-
