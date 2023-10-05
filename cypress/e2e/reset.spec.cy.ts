@@ -45,9 +45,6 @@ describe('reset', () => {
     // Check that the URL contains "detaljer"
     cy.url().should('include', '/detaljer');
 
-    // Waiting in order to trigger the bug where attachment checkbox is checked
-    // cy.wait(20); // FIXME
-
     // Check that the checbox isn't checked
     cy.findAllByRole('checkbox').should('not.be.checked');
 
