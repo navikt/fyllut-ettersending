@@ -17,7 +17,7 @@ module.exports = {
   mock: {
     routes: {},
     collections: {
-      selected: "base",
+      selected: 'base',
     },
   },
   server: {

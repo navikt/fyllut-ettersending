@@ -1,8 +1,8 @@
-import { Button, ButtonProps } from "@navikt/ds-react";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { useFormState } from "../../data/appState";
-import styles from "./button.module.css";
+import { Button, ButtonProps } from '@navikt/ds-react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { useFormState } from '../../data/appState';
+import styles from './button.module.css';
 
 export interface Props {
   type: ButtonType;
@@ -13,7 +13,7 @@ export type ButtonType = {
   path?: string;
   validateForm?: boolean;
   external?: boolean;
-} & Omit<ButtonProps, "className" | "loading" | "size" | "children">;
+} & Omit<ButtonProps, 'className' | 'loading' | 'size' | 'children'>;
 
 const ButtonGroupElement = ({ type }: Props) => {
   const router = useRouter();

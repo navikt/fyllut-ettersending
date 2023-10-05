@@ -1,4 +1,4 @@
-apiVersion: "monitoring.coreos.com/v1"
+apiVersion: 'monitoring.coreos.com/v1'
 kind: PrometheusRule
 metadata:
   name: alert-fyllut-ettersending
@@ -8,19 +8,19 @@ metadata:
 
 spec:
   groups:
-    - name: {{ env-name }}
+    - name: { { env-name } }
       rules:
         - alert: Høy feilrate i logger
           expr: (100 * sum by (app, namespace) (rate(log_messages_errors{app="fyllut-ettersending",level=~"Warning|Error"}[3m])) / sum by (app, namespace) (rate(log_messages_total{app="fyllut-ettersending"}[3m]))) > 10
           for: 3m
           annotations:
-            title: "Høy feilrate i logger"
-            consequence: "Det kan være mange forskjellige årsaker til feilmeldingene. Se i loggene og undersøk hvorfor det er flere feilmeldinger enn normalt."
-            action: {{logs-url}}
+            title: 'Høy feilrate i logger'
+            consequence: 'Det kan være mange forskjellige årsaker til feilmeldingene. Se i loggene og undersøk hvorfor det er flere feilmeldinger enn normalt.'
+            action: { { logs-url } }
           labels:
             service: Fyllut-ettersending
             namespace: fyllut-sendinn
-            special_type_to_use_in_alertmanager_config: {{special-type-to-use-in-alertmanager-config}}
+            special_type_to_use_in_alertmanager_config: { { special-type-to-use-in-alertmanager-config } }
             alert_type: custom
             severity: warning
 
@@ -28,13 +28,13 @@ spec:
           expr: kube_deployment_status_replicas_available{deployment="fyllut-ettersending"} == 0
           for: 1m
           annotations:
-            title: "Fyllut-ettersending er nede"
-            consequence: "Tjenesten er utilgjengelig. Undersøk hvorfor poddene er nede."
-            action: {{logs-url}}
+            title: 'Fyllut-ettersending er nede'
+            consequence: 'Tjenesten er utilgjengelig. Undersøk hvorfor poddene er nede.'
+            action: { { logs-url } }
             sla: respond within 1h, during office hours
           labels:
             service: Fyllut-ettersending
             namespace: fyllut-sendinn
-            special_type_to_use_in_alertmanager_config: {{special-type-to-use-in-alertmanager-config}}
+            special_type_to_use_in_alertmanager_config: { { special-type-to-use-in-alertmanager-config } }
             alert_type: custom
             severity: critical

@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import styles from "./button.module.css";
-import ButtonGroupElement, { ButtonType } from "./buttonGroupElement";
+import classNames from 'classnames';
+import styles from './button.module.css';
+import ButtonGroupElement, { ButtonType } from './buttonGroupElement';
 
 interface Props {
   buttons: ButtonType[];

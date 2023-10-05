@@ -1,9 +1,9 @@
-import type { AppProps } from "next/app";
-import "./styles.css";
-import Head from "next/head";
-import { appWithTranslation } from "next-i18next";
+import { appWithTranslation } from 'next-i18next';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import './styles.css';
 
-import { FormDataProvider } from "../data/appState";
+import { FormDataProvider } from '../data/appState';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

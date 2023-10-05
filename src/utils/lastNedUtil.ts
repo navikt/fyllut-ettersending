@@ -1,20 +1,20 @@
-import { FormData } from "../data/domain";
-import { TFunction } from "next-i18next";
+import { TFunction } from 'next-i18next';
+import { FormData } from '../data/domain';
 
 const getCoverPageTitle = (formData: FormData, t: TFunction) => {
   const { formNumber, title, titleOfSubmission, otherDocumentationTitle } = formData;
-  const extraInfo = otherDocumentationTitle ? ` - ${otherDocumentationTitle}` : "";
+  const extraInfo = otherDocumentationTitle ? ` - ${otherDocumentationTitle}` : '';
   if (formNumber) {
-    return t("cover-page-title.ettersendelse", {
+    return t('cover-page-title.ettersendelse', {
       formNumber,
       title,
-      extraInfo
-    })
+      extraInfo,
+    });
   } else {
-    return t("cover-page-title.innsendelse", {
+    return t('cover-page-title.innsendelse', {
       titleOfSubmission,
-      extraInfo
-    })
+      extraInfo,
+    });
   }
 };
 

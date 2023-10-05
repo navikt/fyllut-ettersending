@@ -1,13 +1,13 @@
 const MimeType = {
-  JSON: "application/json",
-  TEXT: "text/plain",
-  PDF: "application/pdf",
+  JSON: 'application/json',
+  TEXT: 'text/plain',
+  PDF: 'application/pdf',
 } as const;
 
 type MimeType = (typeof MimeType)[keyof typeof MimeType];
 
 type HttpHeaders = {
-  "Content-Type"?: MimeType;
+  'Content-Type'?: MimeType;
   Accept?: MimeType;
   Authorization?: string;
   [header: string]: string | string[] | undefined;
@@ -15,7 +15,7 @@ type HttpHeaders = {
 
 const getDefaultHeaders = (headers?: HttpHeaders) => {
   const defaultHeaders = {
-    "Content-Type": MimeType.JSON,
+    'Content-Type': MimeType.JSON,
     Accept: MimeType.JSON,
   };
 
@@ -24,7 +24,7 @@ const getDefaultHeaders = (headers?: HttpHeaders) => {
 
 const get = async (url: string, headers?: HttpHeaders) => {
   const response = await fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: getDefaultHeaders(headers),
   });
 
@@ -33,7 +33,7 @@ const get = async (url: string, headers?: HttpHeaders) => {
 
 const post = async (url: string, body: BodyInit, headers?: HttpHeaders) => {
   const response = await fetch(url, {
-    method: "POST",
+    method: 'POST',
     headers: getDefaultHeaders(headers),
     body,
   });

@@ -1,23 +1,23 @@
-name: "Test"
-run-name: "Test [${{ github.event_name }}]"
+name: 'Test'
+run-name: 'Test [${{ github.event_name }}]'
 on:
   workflow_call:
   push:
     branches-ignore:
       - main
     paths-ignore:
-      - "**.md"
-      - "**/**.md"
+      - '**.md'
+      - '**/**.md'
   pull_request:
     branches:
       - main
     paths-ignore:
-      - "**.md"
-      - "**/**.md"
+      - '**.md'
+      - '**/**.md'
 
 jobs:
   test:
-    name: "Test"
+    name: 'Test'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,21 +25,21 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-          scope: "@navikt"
-      - name: "install dependencies"
+          scope: '@navikt'
+      - name: 'install dependencies'
         run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set environment variables
         run: cp .env.test .env
-      - name: "Build application"
+      - name: 'Build application'
         run: yarn build
-      - name: "Run mock server"
+      - name: 'Run mock server'
         run: yarn mocks:no-cli &
-      - name: "Cypress tests"
+      - name: 'Cypress tests'
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: "yarn start"
-          wait-on: "http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready"
-          config-file: "cypress.config.ts"
+          start: 'yarn start'
+          wait-on: 'http://localhost:3002/fyllut-ettersending, http://localhost:3002/fyllut-ettersending/api/internal/isready'
+          config-file: 'cypress.config.ts'

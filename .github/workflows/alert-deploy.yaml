@@ -4,10 +4,10 @@ on:
     branches:
       - main
     paths:
-      - ".nais/alerts.yaml"
-      - ".nais/dev.yaml"
-      - ".nais/prod.yaml"
-      - ".github/workflows/alert-deploy.yaml"
+      - '.nais/alerts.yaml'
+      - '.nais/dev.yaml'
+      - '.nais/prod.yaml'
+      - '.github/workflows/alert-deploy.yaml'
 jobs:
   apply-alerts:
     name: Apply alerts to cluster

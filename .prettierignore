@@ -1,0 +1,2 @@
+# Ignore nais.yaml files because it contains handlebars logic
+nais.yaml

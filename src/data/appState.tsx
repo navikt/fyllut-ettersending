@@ -1,7 +1,7 @@
-import React, { ReactNode, useContext, useState } from "react";
-import { FormData, KeyValue, UserData } from "./domain";
-import { validateFormData } from "../utils/validator";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from 'next-i18next';
+import React, { ReactNode, useContext, useState } from 'react';
+import { validateFormData } from '../utils/validator';
+import { FormData, KeyValue, UserData } from './domain';
 
 interface AppStateType {
   formData: FormData;
@@ -26,7 +26,7 @@ export function FormDataProvider({ children }: Props) {
   const [formData, setFormData] = useState<FormData>({});
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
-  const {t} = useTranslation("validator");
+  const { t } = useTranslation('validator');
 
   const updateFormData = (values: FormData) => {
     const data = {

@@ -1,30 +1,30 @@
-const exampleEttersending = require("../data/ettersending.json");
+const exampleEttersending = require('../data/ettersending.json');
 
 module.exports = [
   {
-    id: "get-ettersendingssoknader",
-    url: "/frontend/v1/skjema/*/soknader",
-    method: "GET",
+    id: 'get-ettersendingssoknader',
+    url: '/frontend/v1/skjema/*/soknader',
+    method: 'GET',
     variants: [
       {
-        id: "none",
-        type: "json",
+        id: 'none',
+        type: 'json',
         options: {
           status: 200,
           body: [],
         },
       },
       {
-        id: "one",
-        type: "json",
+        id: 'one',
+        type: 'json',
         options: {
           status: 200,
           body: [exampleEttersending],
         },
       },
       {
-        id: "two",
-        type: "json",
+        id: 'two',
+        type: 'json',
         options: {
           status: 200,
           body: [exampleEttersending, exampleEttersending],

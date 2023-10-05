@@ -1,11 +1,11 @@
-import "@navikt/ds-css";
-import styles from "./layout.module.css";
-import { ReactNode } from "react";
-import { Heading, Link as NavLink } from "@navikt/ds-react";
-import classNames from "classnames";
-import { ArrowLeftIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
-import { useTranslation } from "next-i18next";
+import { ArrowLeftIcon } from '@navikt/aksel-icons';
+import '@navikt/ds-css';
+import { Heading, Link as NavLink } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import { ReactNode } from 'react';
+import styles from './layout.module.css';
 
 interface Props {
   title?: string;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
-  const {t} = useTranslation("common");
+  const { t } = useTranslation('common');
 
   const backLink = () => {
     if (backUrl && showBackLink) {
@@ -23,7 +23,7 @@ const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
         <Link href={backUrl} passHref legacyBehavior>
           <NavLink className={styles.backLink}>
             <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
-            {t("button.previous")}
+            {t('button.previous')}
           </NavLink>
         </Link>
       );
@@ -34,7 +34,7 @@ const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
     <div className={styles.layout}>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          {title ?? t("heading.default-title")}
+          {title ?? t('heading.default-title')}
         </Heading>
       </header>
 

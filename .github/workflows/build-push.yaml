@@ -3,7 +3,7 @@ on:
   workflow_call:
     outputs:
       image:
-        description: "The docker image"
+        description: 'The docker image'
         value: ${{ jobs.build-and-push.outputs.image }}
     inputs:
       environment:
@@ -12,26 +12,26 @@ on:
 
 jobs:
   build-and-push:
-    name: "Build"
+    name: 'Build'
     runs-on: ubuntu-latest
     permissions:
-      contents: "read"
-      id-token: "write"
-      packages: "read"
+      contents: 'read'
+      id-token: 'write'
+      packages: 'read'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-          scope: "@navikt"
-      - name: "install dependencies"
+          scope: '@navikt'
+      - name: 'install dependencies'
         run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set environment variables
         run: cp .env.ci.${{ inputs.environment }} .env
-      - name: "Build application"
+      - name: 'Build application'
         run: yarn build
       - name: Build and push Docker image
         uses: nais/docker-build-push@v0

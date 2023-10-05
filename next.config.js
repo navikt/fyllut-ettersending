@@ -1,12 +1,12 @@
-const { i18n } = require("./next-i18next.config")
+const { i18n } = require('./next-i18next.config');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/fyllut-ettersending",
+  basePath: '/fyllut-ettersending',
   reactStrictMode: true,
-  output: "standalone",
+  output: 'standalone',
   eslint: {
-    dirs: ["src", "cypress"],
+    dirs: ['src', 'cypress'],
   },
   i18n,
   webpack(config) {
