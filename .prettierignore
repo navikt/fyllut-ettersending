@@ -1,2 +1,3 @@
-# Ignore nais.yaml files because it contains handlebars logic
-nais.yaml
+# Ignore nais yaml files because it contains handlebars logic 
+.nais/*.yaml
+.nais/*.yml
