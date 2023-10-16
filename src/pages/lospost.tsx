@@ -61,8 +61,9 @@ const Lospost: NextPage<Props> = ({ tema }) => {
         buttons={[
           {
             text: tCommon('button.cancel'),
-            path: Paths.base,
+            path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
             variant: 'tertiary',
+            external: true,
           },
         ]}
       />
