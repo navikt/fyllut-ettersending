@@ -1,24 +1,24 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
 import '@navikt/ds-css';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import type { NextPage } from 'next';
-import { GetStaticProps } from 'next';
+import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { Paths } from 'src/data/text';
-import { downloadFrontpage } from '../api/apiClient';
-import Layout from '../components/layout/layout';
-import Section from '../components/section/section';
-import { useFormState } from '../data/appState';
-import { getServerSideTranslations } from '../utils/i18nUtil';
-import { getCoverPageTitle } from '../utils/lastNedUtil';
+import { downloadFrontpage } from '../../api/apiClient';
+import Layout from '../../components/layout/layout';
+import Section from '../../components/section/section';
+import { useFormState } from '../../data/appState';
+import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { getCoverPageTitle } from '../../utils/lastNedUtil';
 
 interface Props {
   locale: string | undefined;
+  previousPath: string;
 }
 
-const LastNed: NextPage<Props> = ({ locale }) => {
+const LastNed: NextPage<Props> = ({ locale, previousPath }) => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation('last-ned');
@@ -26,8 +26,6 @@ const LastNed: NextPage<Props> = ({ locale }) => {
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? 'lospost' : 'ettersending';
-
-  const previousPath = isLospost ? Paths.otherDocumentation : Paths.details + '/' + formData.formId + '?sub=paper';
 
   const download = async () => {
     setLoading(true);
@@ -100,9 +98,23 @@ const LastNed: NextPage<Props> = ({ locale }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { locale, params } = context;
+  const id = params?.id as string;
+  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details + '/' + id + '?sub=paper';
+  if (isHardNavigation(context)) {
+    // Only allows soft navigation to this page, because client won't have any state on hard navigation
+    return {
+      redirect: {
+        permanent: true,
+        destination: previousPath,
+      },
+    };
+  }
   const translations = await getServerSideTranslations(locale, ['common', 'last-ned']);
-  return { props: { ...translations, locale } };
-};
+  return { props: { ...translations, locale, previousPath } };
+}
+
+const isHardNavigation = ({ req }: GetServerSidePropsContext) => !req.headers['x-nextjs-data'];
 
 export default LastNed;

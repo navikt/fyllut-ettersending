@@ -88,6 +88,12 @@ describe('sendAnotherDocument', () => {
 
       cy.get('button').contains(TestButtonText.next).click();
 
+      // Soft navigation check
+      cy.url().should('include', '/last-ned');
+      cy.go('back');
+      cy.url().should('include', '/lospost');
+      cy.go('forward');
+
       //Download page
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
@@ -150,6 +156,13 @@ describe('sendAnotherDocument', () => {
       //Download page
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe('hard navigate to download-page', () => {
+    it(' should redirect back to lospost', () => {
+      cy.visit('/last-ned/lospost');
+      cy.url().should('not.include', '/last-ned');
     });
   });
 });

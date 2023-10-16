@@ -75,7 +75,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage,
+    path: `${Paths.downloadPage}/${id}`,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
