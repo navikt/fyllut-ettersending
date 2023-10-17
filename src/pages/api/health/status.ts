@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Applic
   const response: ApplicationStatus = {
     status: 'OK',
     description: 'OK',
-    logLink: process.env.LOG_LINK,
+    logLink: process.env.LOG_LINK || 'https://logs.adeo.no/app/r/s/joMHK',
   };
   res.status(200).json(response);
 }
