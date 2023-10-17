@@ -7,6 +7,10 @@ interface ApplicationStatus {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ApplicationStatus>) {
-  const response: ApplicationStatus = { status: 'OK', description: 'OK' };
+  const response: ApplicationStatus = {
+    status: 'OK',
+    description: 'OK',
+    logLink: process.env.LOG_LINK,
+  };
   res.status(200).json(response);
 }
