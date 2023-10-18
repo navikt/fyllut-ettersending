@@ -35,6 +35,10 @@ spec:
     - {{url}}
   {{/each}}
   accessPolicy:
+    inbound:
+      rules:
+        - application: statuspoll
+          namespace: navdig
     outbound:
       rules:
       {{#each accessPolicy.outbound.rules}}
@@ -45,6 +49,8 @@ spec:
         - application: innsending-api
           namespace: team-soknad
   env:
+    - name: LOG_LINK
+      value: {{logs-url}}
   {{#each env}}
     - name: {{this.name}}
       value: {{this.value}}
