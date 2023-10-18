@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import LanguageSelect from '../button/languageSelect/languageSelect';
+import LanguageSelect from '../languageSelect/languageSelect';
 import styles from './layout.module.css';
 
 interface Props {
