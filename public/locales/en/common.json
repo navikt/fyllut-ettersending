@@ -10,6 +10,9 @@
   "heading": {
     "default-title": "Forward documentation"
   },
+  "language-select": {
+    "label": "Choose language"
+  },
   "choose-user": {
     "user-type": {
       "legend": "Who is the submission for?",
