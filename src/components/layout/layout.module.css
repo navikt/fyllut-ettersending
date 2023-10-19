@@ -30,16 +30,19 @@
 .mainContent {
   display: flex;
   flex-direction: row;
+  @media (max-width: 767px) {
+    flex-direction: column-reverse;
+  }
 }
 
 .mainColumn {
   flex-direction: column;
   max-width: 640px;
   width: 100%;
+  margin-right: 4rem;
 }
 
 .sideColumn {
-  margin-left: 4rem;
   flex-direction: column;
   max-width: 200px;
   width: 100%;

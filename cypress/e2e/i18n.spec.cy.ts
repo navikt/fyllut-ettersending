@@ -25,7 +25,7 @@ describe('Language select', () => {
 
   it('renders page in the selected language', () => {
     cy.visit('/en/lospost');
-    cy.findByRole('combobox', { name: 'Choose language' }).select('Nynorsk');
+    cy.findByRole('combobox', { name: 'Choose language' }).select('Norsk nynorsk');
     cy.findByRole('button', { name: 'Gå vidare' }).should('exist');
   });
 });
