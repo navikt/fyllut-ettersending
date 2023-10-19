@@ -10,6 +10,9 @@
   "heading": {
     "default-title": "Ettersende dokumentasjon"
   },
+  "language-select": {
+    "label": "Velg språk"
+  },
   "choose-user": {
     "user-type": {
       "legend": "Hvem gjelder innsendingen for?",

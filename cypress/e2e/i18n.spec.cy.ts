@@ -16,3 +16,16 @@ describe('Internationalization', () => {
     cy.findByRole('button', { name: 'Gå videre' }).should('exist');
   });
 });
+
+describe('Language select', () => {
+  it('is initialized with current language', () => {
+    cy.visit('/en/lospost');
+    cy.findByRole('combobox', { name: 'Choose language' }).find('option:selected').should('have.text', 'English');
+  });
+
+  it('renders page in the selected language', () => {
+    cy.visit('/en/lospost');
+    cy.findByRole('combobox', { name: 'Choose language' }).select('Nynorsk');
+    cy.findByRole('button', { name: 'Gå vidare' }).should('exist');
+  });
+});
