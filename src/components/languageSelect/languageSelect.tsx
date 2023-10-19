@@ -14,8 +14,8 @@ const LanguageSelect = () => {
 
   return (
     <Select label={t('language-select.label')} hideLabel value={locale} onChange={onChange}>
-      <option value="nb">Bokmål</option>
-      <option value="nn">Nynorsk</option>
+      <option value="nb">Norsk bokmål</option>
+      <option value="nn">Norsk nynorsk</option>
       <option value="en">English</option>
     </Select>
   );
