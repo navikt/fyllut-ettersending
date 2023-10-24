@@ -21,6 +21,12 @@ describe.only('sendPreviouslySubmittedApplication', () => {
     cy.get('[name="socialSecurityNo"]').type('28119135003');
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
+
+    // Soft navigation check
+    cy.go('back');
+    cy.url().should('include', '/detaljer');
+    cy.go('forward');
+    cy.url().should('include', '/last-ned');
   });
 
   it('fill out and send documentation digitally', () => {

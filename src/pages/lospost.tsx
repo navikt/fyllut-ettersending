@@ -27,7 +27,7 @@ const Lospost: NextPage<Props> = ({ tema }) => {
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage,
+    path: Paths.downloadPage + '/lospost',
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -61,8 +61,9 @@ const Lospost: NextPage<Props> = ({ tema }) => {
         buttons={[
           {
             text: tCommon('button.cancel'),
-            path: Paths.base,
+            path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
             variant: 'tertiary',
+            external: true,
           },
         ]}
       />
