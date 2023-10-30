@@ -37,5 +37,6 @@
     "nav-unit-input": {
       "label": "Velg hvilken NAV-enhet som skal motta innsendingen"
     }
-  }
+  },
+  "validationSummaryTitle": "For å gå videre må du rette opp følgende:"
 }

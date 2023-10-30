@@ -28,6 +28,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.first-name')}
           value={formData.userData?.firstName ?? ''}
+          id="firstName"
           name="firstName"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -37,6 +38,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.last-name')}
           value={formData.userData?.lastName ?? ''}
+          id="lastName"
           name="lastName"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -46,6 +48,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.street-name')}
           value={formData.userData?.streetName ?? ''}
+          id="streetName"
           name="streetName"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -55,6 +58,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.postal-code')}
           value={formData.userData?.postalCode ?? ''}
+          id="postalCode"
           name="postalCode"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -64,6 +68,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.city')}
           value={formData.userData?.city ?? ''}
+          id="city"
           name="city"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -73,6 +78,7 @@ const ContactInformation = ({ navUnits }: Props) => {
         <TextField
           label={t('choose-user.contact-information.country')}
           value={formData.userData?.country ?? ''}
+          id="country"
           name="country"
           onChange={handleUserDataInputChange}
           size="medium"
@@ -88,6 +94,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           onChange={(value) => updateUserData({ navUnitContact: value })}
           value={formData.userData?.navUnitContact ?? ''}
           name="navUnitContact"
+          id="navUnitContact"
           error={errors.navUnitContact}
         >
           <Radio value={true}>{t('yes')}</Radio>
@@ -101,6 +108,7 @@ const ContactInformation = ({ navUnits }: Props) => {
             label={t('choose-user.contact-information.nav-unit-select-label')}
             options={navUnitOptions}
             name="contactInformationNavUnit"
+            id="navUnit"
             error={errors.navUnit}
             isMultiSelect={false}
             selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}

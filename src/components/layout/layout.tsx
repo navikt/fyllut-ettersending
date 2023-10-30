@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import LanguageSelect from '../languageSelect/languageSelect';
+import ValidationSummary from '../validationSummary/validationSummary';
 import styles from './layout.module.css';
 
 interface Props {
@@ -43,6 +44,7 @@ const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
       <div className={classNames(styles.content, styles.mainContent)}>
         <div className={styles.mainColumn}>
           {backLink()}
+          <ValidationSummary />
           <div className={styles.children}>{children}</div>
         </div>
         <div className={styles.sideColumn}>

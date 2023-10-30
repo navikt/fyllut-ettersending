@@ -4,13 +4,14 @@ import { ChangeEvent } from 'react';
 interface Props {
   value?: string;
   name: string;
+  id: string;
   label: string;
   onChange: (value: string) => void;
   placeholder: string;
   error?: string;
 }
 
-const SocialSecurityNo = ({ value, name, label, onChange, placeholder, error }: Props) => {
+const SocialSecurityNo = ({ value, name, id, label, onChange, placeholder, error }: Props) => {
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
 
@@ -25,6 +26,7 @@ const SocialSecurityNo = ({ value, name, label, onChange, placeholder, error }: 
         value={value}
         autoComplete="off"
         name={name}
+        id={id}
         label={label}
         onChange={changeHandler}
         placeholder={placeholder}

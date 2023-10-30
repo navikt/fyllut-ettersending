@@ -12,7 +12,11 @@ const validateFormData = (formData: FormData, t: TFunction) => {
 
   if (formData.submissionType !== SubmissionType.digital) {
     if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
-      formErrors.otherDocumentation = t('otherDocumentation');
+      formErrors.otherDocumentationTitle = t('otherDocumentation');
+    }
+
+    if (!formData.formId && !formData.subjectOfSubmission) {
+      formErrors.subjectOfSubmission = t('subjectOfSubmission');
     }
 
     if (!formData.userData?.type) {
@@ -52,10 +56,6 @@ const validateFormData = (formData: FormData, t: TFunction) => {
       if (!formData.userData?.navUnit) {
         formErrors.navUnit = t('navUnit');
       }
-    }
-
-    if (!formData.formId && !formData.subjectOfSubmission) {
-      formErrors.subjectOfSubmission = t('subjectOfSubmission');
     }
   }
 

@@ -57,6 +57,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
         label={t('subject-of-submission.label')}
         options={options}
         name="subjectOfSubmission"
+        id="subjectOfSubmission"
         error={errors.subjectOfSubmission}
         isMultiSelect={false}
         selectedOptions={formData.titleOfSubmission ? [formData.titleOfSubmission] : []}
@@ -81,10 +82,11 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
           label={t('other-documentation-title.label')}
           description={t('other-documentation-title.description')}
           name="otherDocumentationTitle"
+          id="otherDocumentationTitle"
           value={formData.otherDocumentationTitle ?? ''}
           size="medium"
           onChange={(evt) => updateFormData({ otherDocumentationTitle: evt.target.value })}
-          error={errors.otherDocumentation}
+          error={errors.otherDocumentationTitle}
         />
       </Section>
       <Section>{renderCombobox()}</Section>
