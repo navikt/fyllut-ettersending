@@ -16,7 +16,12 @@ const ValidationSummary = () => {
   }, [hasError, validationSummaryRef]);
 
   return hasError ? (
-    <ErrorSummary ref={validationSummaryRef} className={styles.errorSummary} heading={t('validationSummaryTitle')}>
+    <ErrorSummary
+      ref={validationSummaryRef}
+      className={styles.errorSummary}
+      heading={t('validationSummaryTitle')}
+      data-cy="ValidationSummary"
+    >
       {errorEntries.map(([key, value]) => (
         <ErrorSummary.Item key={key} href={`#${key}`}>
           {value}

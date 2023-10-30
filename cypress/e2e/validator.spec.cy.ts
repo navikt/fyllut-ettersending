@@ -1,7 +1,8 @@
+import { TFunction } from 'next-i18next';
 import { FormData, UserType } from '../../src/data/domain';
 import { validateFormData } from '../../src/utils/validator';
 
-const tMock = (key: string): string => key;
+const tMock = ((key: string): string => key) as TFunction;
 
 describe('validator', () => {
   let formData: FormData;
@@ -73,7 +74,7 @@ describe('validator', () => {
         formData.otherDocumentationTitle = '';
         formData.subjectOfSubmission = '';
         const errors = validateFormData(formData, tMock);
-        expect(errors?.otherDocumentation).to.eq('otherDocumentation');
+        expect(errors?.otherDocumentationTitle).to.eq('otherDocumentation');
         expect(errors?.subjectOfSubmission).to.eq('subjectOfSubmission');
       });
     });
