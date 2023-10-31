@@ -11,7 +11,7 @@ interface AppStateType {
   errors: KeyValue;
   setValidate: (valid: boolean) => boolean;
   validationSummaryRef: React.RefObject<HTMLDivElement>;
-  handleValidationFocus: () => void;
+  validationSummaryFocus: () => void;
 }
 
 const FormDataContext = React.createContext<AppStateType>({} as AppStateType);
@@ -85,7 +85,7 @@ export function FormDataProvider({ children }: Props) {
     setErrors({});
   };
 
-  const handleValidationFocus = () => validationSummaryRef?.current?.focus();
+  const validationSummaryFocus = () => validationSummaryRef?.current?.focus();
 
   return (
     <FormDataContext.Provider
@@ -97,7 +97,7 @@ export function FormDataProvider({ children }: Props) {
         errors,
         setValidate,
         validationSummaryRef,
-        handleValidationFocus,
+        validationSummaryFocus,
       }}
     >
       {children}
