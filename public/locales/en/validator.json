@@ -1,6 +1,6 @@
 {
   "userType": "You have to select who the submission applies to",
-  "socialSecurityNo": "Norwegian national identification number / d-number is not valid",
+  "socialSecurityNo": "This is not a valid Norwegian national identification number / D number",
   "socialSecurityNoIsEmpty": "You have to fill in your Norwegian national identification number / d-number",
   "firstName": "You have to fill in your first name",
   "lastName": "You have to fill in your last name",
@@ -13,6 +13,5 @@
   "navUnitContact": "You have to state whether you have been in contact with NAV about this matter previously",
   "navUnitContactSelect": "You have to select which NAV unit you have been in contact with",
   "navUnit": "You have to choose which NAV unit will receive the submission",
-  "chooseOne": "Select one alternative",
-  "attachments": "Select at least one attachment"
+  "attachments": "You have to select at least one attachment"
 }
