@@ -29,6 +29,7 @@ const ChooseAttachments = ({ form }: Props) => {
             }}
             id="attachments"
             error={errors.attachments}
+            tabIndex={-1}
           >
             {form.attachments.map((attachment) => (
               <Checkbox key={attachment.key} value={attachment.key} name={attachment.key}>

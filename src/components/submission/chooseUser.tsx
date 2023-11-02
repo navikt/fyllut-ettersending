@@ -37,6 +37,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
           id="userType"
           error={errors.userType}
           value={formData.userData?.type ?? ''}
+          tabIndex={-1}
         >
           <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
             {t('choose-user.user-type.choice-has-ssn')}

@@ -96,6 +96,7 @@ const ContactInformation = ({ navUnits }: Props) => {
           name="navUnitContact"
           id="navUnitContact"
           error={errors.navUnitContact}
+          tabIndex={-1}
         >
           <Radio value={true}>{t('yes')}</Radio>
           <Radio value={false}>{t('no')}</Radio>
