@@ -37,3 +37,8 @@ input[type='number'] {
 .lastSection {
   margin-bottom: 3.75rem;
 }
+
+.navds-fieldset:focus-visible {
+  outline: 3px solid var(--a-border-focus);
+  outline-offset: 0.3rem;
+}
