@@ -3,8 +3,10 @@ import '@navikt/ds-css';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getForm } from 'src/api/apiService';
 import ButtonGroup from 'src/components/button/buttonGroup';
+import { Form } from 'src/data/domain';
 import { Paths } from 'src/data/text';
 import { downloadFrontpage } from '../../api/apiClient';
 import Layout from '../../components/layout/layout';
@@ -16,16 +18,25 @@ import { getCoverPageTitle } from '../../utils/lastNedUtil';
 interface Props {
   locale: string | undefined;
   previousPath: string;
+  form?: Form;
 }
 
-const LastNed: NextPage<Props> = ({ locale, previousPath }) => {
+const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
-  const { t } = useTranslation('last-ned');
+  const { t, i18n } = useTranslation('last-ned');
   const { t: tCommon } = useTranslation('common');
+  const { updateFormDataLanguage } = useFormState();
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? 'lospost' : 'ettersending';
+
+  useEffect(() => {
+    const language = i18n.language;
+    if (form && formData.language !== language) {
+      updateFormDataLanguage(language, form);
+    }
+  }, [formData, i18n.language, form, updateFormDataLanguage]);
 
   const download = async () => {
     setLoading(true);
@@ -111,8 +122,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
+
+  // Fetch the form
+  const form = id !== 'lospost' ? await getForm(id, locale) : null;
+
   const translations = await getServerSideTranslations(locale, ['common', 'last-ned']);
-  return { props: { ...translations, locale, previousPath } };
+  return { props: { ...translations, locale, previousPath, form } };
 }
 
 const isHardNavigation = ({ req }: GetServerSidePropsContext) => !req.headers['x-nextjs-data'];

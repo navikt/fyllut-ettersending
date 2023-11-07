@@ -93,6 +93,7 @@ export interface FormData {
   submissionType?: SubmissionType;
   title?: string;
   userData?: UserData;
+  language?: string;
 }
 
 export interface DownloadCoverPageRequestBody {

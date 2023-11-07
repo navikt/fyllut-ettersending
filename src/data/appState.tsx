@@ -1,12 +1,13 @@
 import { useTranslation } from 'next-i18next';
 import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { validateFormData } from '../utils/validator';
-import { FormData, KeyValue, UserData } from './domain';
+import { Form, FormData, KeyValue, UserData } from './domain';
 
 interface AppStateType {
   formData: FormData;
   updateFormData: (values: FormData) => void;
   updateUserData: (values: UserData) => void;
+  updateFormDataLanguage: (language: string, form: Form) => void;
   resetFormData: (formData?: FormData) => void;
   errors: KeyValue;
   setValidate: (valid: boolean) => boolean;
@@ -46,6 +47,24 @@ export function FormDataProvider({ children }: Props) {
     const data = {
       ...formData,
       ...values,
+    };
+    setFormData(data);
+  };
+
+  const updateFormDataLanguage = (language: string, form: Form) => {
+    const attachments = (formData.attachments || []).map((attachment) => {
+      const formAttachment = form.attachments.find((formAttachment) => formAttachment.key === attachment.key);
+      return {
+        ...attachment,
+        attachmentTitle: formAttachment?.attachmentTitle || '',
+        label: formAttachment?.label || '',
+      };
+    });
+    const data = {
+      ...formData,
+      attachments,
+      title: form.title,
+      language,
     };
     setFormData(data);
   };
@@ -94,6 +113,7 @@ export function FormDataProvider({ children }: Props) {
         resetFormData,
         updateFormData,
         updateUserData,
+        updateFormDataLanguage,
         errors,
         setValidate,
         validationSummaryRef,

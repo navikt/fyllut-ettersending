@@ -1,6 +1,7 @@
 const forms = require('../data/fyllut/forms.json');
 const form1 = require('../data/fyllut/form1.json');
 const form2 = require('../data/fyllut/form2.json');
+const form2En = require('../data/fyllut/form2-en.json');
 const archiveSubjects = require('../data/fyllut/archiveSubjects.json');
 const navUnits = require('../data/fyllut/navUnits.json');
 
@@ -50,10 +51,16 @@ module.exports = [
     variants: [
       {
         id: 'success',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: form2,
+          middleware: (req, res) => {
+            const { lang } = req.query;
+            res.status(200);
+            if (lang === 'en') {
+              return res.send(form2En);
+            }
+            res.send(form2);
+          },
         },
       },
       {
