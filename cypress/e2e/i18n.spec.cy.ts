@@ -28,4 +28,10 @@ describe('Language select', () => {
     cy.findByRole('combobox', { name: 'Choose language' }).select('Norsk nynorsk');
     cy.findByRole('button', { name: 'Gå vidare' }).should('exist');
   });
+
+  it('displays attachments in selected language', () => {
+    cy.visit('/detaljer/form2?sub=paper');
+    cy.findByRole('combobox', { name: 'Velg språk' }).select('English');
+    cy.findByRole('checkbox', { name: 'Statement from an ophthalmologist' }).should('exist');
+  });
 });

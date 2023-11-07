@@ -1,0 +1,35 @@
+{
+  "_id": "5fcf4f3d5797a50003f0bcab",
+  "title": "Application for guide dog",
+  "path": "form2",
+  "modified": "2022-06-02T13:32:13.338Z",
+  "properties": {
+    "skjemanummer": "NAV 10-07.50",
+    "tema": "HJE",
+    "innsending": "PAPIR_OG_DIGITAL",
+    "ettersending": "PAPIR_OG_DIGITAL"
+  },
+  "attachments": [
+    {
+      "label": "Statement from an ophthalmologist",
+      "key": "uttalelseFraOyelege",
+      "description": "The statement from the ophthalmologist must contain information about: \neye diagnosis (preferably with a prognosis), visual acuity (visus) \night correction, field of vision, and other varying vision conditions \n(for example, dark vision, contrast vision and\nrapid adaptation to changing light conditions).\n",
+      "attachmentTitle": "Confirmation from eye specialist",
+      "attachmentCode": "X6"
+    },
+    {
+      "label": "Doctor's statement about general state of health",
+      "key": "legeerklaeringOmAlmentilstand",
+      "description": "The statement from the GP must contain information on: \nprevious illnesses and injuries of importance to the applicant's \nhealth, illness in relatives and family of importance to the applicant's\nhealth, the applicant's height and weight, the applicant's physical form, \nthe applicant's hearing, circulatory organs, respiratory organs and \n limbs, and other things of importance to the applicant's general \nhealth and which may have an impact on the \napplication for a guide dog and dog keeping, including the applicant's \nmental state.\n\nThe doctor must conclude whether the applicant's health (also psychological) is suitable or not for guide dog.",
+      "attachmentTitle": "Medical certificate",
+      "attachmentCode": "L9"
+    },
+    {
+      "label": "Other documentation",
+      "key": "annenDokumentasjon",
+      "description": "",
+      "attachmentTitle": "Other",
+      "attachmentCode": "N6"
+    }
+  ]
+}
