@@ -39,10 +39,10 @@ interface Props {
 const Detaljer: NextPage<Props> = (props) => {
   const router = useRouter();
   const { form, id } = props;
-  const { formData, resetFormData } = useFormState();
+  const { formData, resetFormData, updateFormDataLanguage } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const referrerPage = useReffererPage();
-  const { t } = useTranslation('detaljer');
+  const { t, i18n } = useTranslation('detaljer');
   const { t: tCommon } = useTranslation('common');
 
   const fetchData = useCallback(async () => {
@@ -62,6 +62,7 @@ const Detaljer: NextPage<Props> = (props) => {
   };
 
   useEffect(() => {
+    const language = i18n.language;
     if (id !== formData.formId) {
       resetFormData({
         formNumber: form.properties.formNumber,
@@ -69,10 +70,12 @@ const Detaljer: NextPage<Props> = (props) => {
         subjectOfSubmission: form.properties.subjectOfSubmission,
         submissionType: getDefaultSubmissionType(form, router),
         formId: id,
+        language,
       });
+    } else if (formData.language !== language) {
+      updateFormDataLanguage(language, form);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, formData]);
+  }, [id, formData, i18n.language, form, resetFormData, updateFormDataLanguage, router]);
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
