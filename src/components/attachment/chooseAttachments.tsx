@@ -27,7 +27,9 @@ const ChooseAttachments = ({ form }: Props) => {
               const attachments = form.attachments?.filter((attachment) => checked.includes(attachment.key));
               updateFormData({ attachments });
             }}
+            id="attachments"
             error={errors.attachments}
+            tabIndex={-1}
           >
             {form.attachments.map((attachment) => (
               <Checkbox key={attachment.key} value={attachment.key} name={attachment.key}>
@@ -39,11 +41,12 @@ const ChooseAttachments = ({ form }: Props) => {
             <TextField
               value={formData.otherDocumentationTitle ?? ''}
               name="otherDocumentationTitle"
+              id="otherDocumentationTitle"
               label={t('attachments-checkbox.other-documentation-label')}
               size="medium"
               onChange={(e) => updateFormData({ otherDocumentationTitle: e.target.value })}
               className={styles.input}
-              error={errors.otherDocumentation}
+              error={errors.otherDocumentationTitle}
             />
           )}
         </Section>

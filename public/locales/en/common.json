@@ -37,5 +37,6 @@
     "nav-unit-input": {
       "label": "Select which NAV unit that should receive your documents"
     }
-  }
+  },
+  "validationSummaryTitle": "To proceed, you must correct the following:"
 }

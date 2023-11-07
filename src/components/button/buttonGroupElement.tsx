@@ -18,7 +18,7 @@ export type ButtonType = {
 const ButtonGroupElement = ({ type }: Props) => {
   const router = useRouter();
   const { text, path, validateForm, external, onClick, ...rest } = type;
-  const { setValidate } = useFormState();
+  const { setValidate, validationSummaryFocus } = useFormState();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,6 +28,7 @@ const ButtonGroupElement = ({ type }: Props) => {
       const valid = setValidate(true);
 
       if (!valid) {
+        validationSummaryFocus();
         setLoading(false);
         return;
       }

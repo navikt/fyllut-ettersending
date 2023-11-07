@@ -32,6 +32,15 @@ describe('sendAnotherDocument', () => {
     });
 
     it('should be able to fill out the form and go to next page (noSocialNumber)', () => {
+      // Sjekker validering først
+      cy.get('[data-cy="ValidationSummary"]').should('not.exist');
+      cy.get('button').contains(TestButtonText.next).click();
+      cy.focused()
+        .should('have.attr', 'data-cy', 'ValidationSummary')
+        .within(() => {
+          cy.get('li').should('have.length', 3);
+        });
+
       //Populate velg skjema page
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
@@ -40,6 +49,13 @@ describe('sendAnotherDocument', () => {
 
       // "Hvem gjelder innsendingen for?"
       cy.findAllByRole('radio').check('noSocialNumber');
+
+      cy.get('button').contains(TestButtonText.next).should('be.visible').click();
+      cy.focused()
+        .should('have.attr', 'data-cy', 'ValidationSummary')
+        .within(() => {
+          cy.get('li').should('have.length', 7);
+        });
 
       cy.get('[name="firstName"]').click();
       cy.get('[name="firstName"]').type('Ola');
@@ -63,6 +79,8 @@ describe('sendAnotherDocument', () => {
       cy.findAllByRole('radio').check('true');
       cy.get('[name="contactInformationNavUnit"]').click();
       cy.get('[name="contactInformationNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+
+      cy.get('[data-cy="ValidationSummary"]').should('not.exist');
 
       cy.get('button').contains(TestButtonText.next).click();
 
@@ -96,7 +114,8 @@ describe('sendAnotherDocument', () => {
 
       //Download page
       cy.url().should('include', '/last-ned');
-      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).click();
     });
   });
 

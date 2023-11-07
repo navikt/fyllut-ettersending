@@ -6,6 +6,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
+import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { Paths } from 'src/data/text';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { fetchArchiveSubjects, fetchNavUnits } from '../api/apiClient';
@@ -54,6 +55,7 @@ const Lospost: NextPage<Props> = ({ tema }) => {
 
   return (
     <Layout title={t('title')} backUrl={referrerPage}>
+      <ValidationSummary />
       <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
       <ButtonGroup

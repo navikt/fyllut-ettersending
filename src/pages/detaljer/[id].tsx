@@ -9,6 +9,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import { getEttersendinger, getForm } from 'src/api/apiService';
 import { getIdPortenToken } from 'src/api/loginRedirect';
+import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { fetchNavUnits } from '../../api/apiClient';
 import ChooseAttachments from '../../components/attachment/chooseAttachments';
@@ -108,6 +109,7 @@ const Detaljer: NextPage<Props> = (props) => {
         </Heading>
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
+      <ValidationSummary />
 
       {isSubmissionAllowed(form) ? (
         <>

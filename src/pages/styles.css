@@ -1,5 +1,5 @@
 html {
-  height: 100%;
+  scroll-behavior: smooth;
 }
 
 :root {
@@ -8,7 +8,7 @@ html {
 
 body {
   margin: 0;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -36,4 +36,9 @@ input[type='number'] {
 
 .lastSection {
   margin-bottom: 3.75rem;
+}
+
+.navds-fieldset:focus-visible {
+  outline: 3px solid var(--a-border-focus);
+  outline-offset: 0.3rem;
 }

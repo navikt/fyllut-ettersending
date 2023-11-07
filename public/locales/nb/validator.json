@@ -1,6 +1,6 @@
 {
   "userType": "Du må velge hvem gjelder innsendingen for",
-  "socialSecurityNo": "Fødselsnummer / d-nummer er ikke gyldig",
+  "socialSecurityNo": "Dette er ikke et gyldig fødselsnummer eller D-nummer",
   "socialSecurityNoIsEmpty": "Du må fylle ut fødselsnummer / d-nummer",
   "firstName": "Du må fylle ut fornavn",
   "lastName": "Du må fylle ut etternavn",
@@ -13,6 +13,5 @@
   "navUnitContact": "Du må oppgi om du har vært i kontakt med NAV om denne saken tidligere",
   "navUnitContactSelect": "Du må velge hvilken NAV-enhet har du vært i kontakt med",
   "navUnit": "Du må velge hvilken NAV-enhet som skal motta innsendingen",
-  "chooseOne": "Velg ett alternativ",
-  "attachments": "Velg minst ett vedlegg"
+  "attachments": "Du må velge minst ett dokument som skal ettersendes"
 }

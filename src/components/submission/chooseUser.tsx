@@ -34,8 +34,10 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
             });
           }}
           name="userType"
+          id="userType"
           error={errors.userType}
           value={formData.userData?.type ?? ''}
+          tabIndex={-1}
         >
           <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
             {t('choose-user.user-type.choice-has-ssn')}
@@ -56,6 +58,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
           <SocialSecurityNo
             value={formData.userData?.socialSecurityNo ?? ''}
             name="socialSecurityNo"
+            id="socialSecurityNo"
             label={t('choose-user.ssn-input.label')}
             onChange={(value) => updateUserData({ socialSecurityNo: value })}
             placeholder={t('choose-user.ssn-input.placeholder')}
@@ -72,6 +75,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
             label={t('choose-user.nav-unit-input.label')}
             options={navUnitOptions}
             name="chooseUserNavUnit"
+            id="navUnit"
             error={errors.navUnit}
             isMultiSelect={false}
             selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
