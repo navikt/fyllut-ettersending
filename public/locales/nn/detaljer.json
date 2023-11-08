@@ -6,5 +6,13 @@
     "legend": "Kva dokument skal du ettersenda?",
     "other-documentation-label": "Gje dokumentet eit beskrivande namn"
   },
-  "no-attachments-alert": "Dette skjemaet har ingen vedlegg"
+  "no-attachments-alert": "Dette skjemaet har ingen vedlegg",
+  "choose-submission-type": {
+    "title": "Sende dokument til NAV",
+    "heading": "Korleis vil du senda dokumenta?",
+    "digital-title": "Send digitalt",
+    "digital-description": "Det er enklast og raskast å lasta opp digitalt. Du blir beden om å logga inn.",
+    "paper-title": "Send i posten",
+    "paper-description": "Du må lasta ned ei førsteside som du skal senda saman med dokumenta."
+  }
 }

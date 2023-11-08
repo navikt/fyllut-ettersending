@@ -9,6 +9,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import { getEttersendinger, getForm } from 'src/api/apiService';
 import { getIdPortenToken } from 'src/api/loginRedirect';
+import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubmissionType';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { fetchNavUnits } from '../../api/apiClient';
@@ -24,7 +25,7 @@ import { Paths } from '../../data/text';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import {
   createSubmissionUrl,
-  getDefaultSubmissionType,
+  getSubmissionTypeFromUrl,
   isSubmissionAllowed,
   isSubmissionTypePaper,
   isValidSubmissionTypeInUrl,
@@ -39,7 +40,7 @@ interface Props {
 const Detaljer: NextPage<Props> = (props) => {
   const router = useRouter();
   const { form, id } = props;
-  const { formData, resetFormData, updateFormDataLanguage } = useFormState();
+  const { formData, resetFormData, updateFormDataLanguage, updateFormData } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const referrerPage = useReffererPage();
   const { t, i18n } = useTranslation('detaljer');
@@ -68,14 +69,16 @@ const Detaljer: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
-        submissionType: getDefaultSubmissionType(form, router),
+        submissionType: getSubmissionTypeFromUrl(router),
         formId: id,
         language,
       });
     } else if (formData.language !== language) {
       updateFormDataLanguage(language, form);
+    } else if (!formData.submissionType && getSubmissionTypeFromUrl(router)) {
+      updateFormData({ submissionType: getSubmissionTypeFromUrl(router) });
     }
-  }, [id, formData, i18n.language, form, resetFormData, updateFormDataLanguage, router]);
+  }, [id, formData, i18n.language, form, resetFormData, updateFormDataLanguage, updateFormData, router]);
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
@@ -104,6 +107,10 @@ const Detaljer: NextPage<Props> = (props) => {
 
   const title = router.query.sub === SubmissionType.digital ? t('title-digital') : t('title-paper');
 
+  if (!router.query.sub && isSubmissionAllowed(form)) {
+    return <ChooseSubmissionType form={form} id={id} />;
+  }
+
   return (
     <Layout title={title} backUrl={referrerPage}>
       <Section>
@@ -115,34 +122,34 @@ const Detaljer: NextPage<Props> = (props) => {
       <ValidationSummary />
 
       {isSubmissionAllowed(form) ? (
-        <>
-          <ChooseAttachments form={form} />
-
-          {isSubmissionTypePaper(formData) && (
-            <ChooseUser
-              navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-              shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+        formData.submissionType && (
+          <>
+            <ChooseAttachments form={form} />
+            {isSubmissionTypePaper(formData) && (
+              <ChooseUser
+                navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+                shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+              />
+            )}
+            <ButtonGroup
+              buttons={[
+                formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
+                ...(referrerPage ? [previousButton] : []),
+              ]}
             />
-          )}
-
-          <ButtonGroup
-            buttons={[
-              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
-              ...(referrerPage ? [previousButton] : []),
-            ]}
-          />
-          <ButtonGroup
-            center={!!referrerPage}
-            buttons={[
-              {
-                text: tCommon('button.cancel'),
-                path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-                variant: 'tertiary',
-                external: true,
-              },
-            ]}
-          />
-        </>
+            <ButtonGroup
+              center={!!referrerPage}
+              buttons={[
+                {
+                  text: tCommon('button.cancel'),
+                  path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+                  variant: 'tertiary',
+                  external: true,
+                },
+              ]}
+            />
+          </>
+        )
       ) : (
         <Alert variant="info">{t('no-attachments-alert')}</Alert>
       )}
@@ -171,7 +178,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const form = await getForm(id, locale);
 
   // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
-  if (!form || !isValidSubmissionTypeInUrl(form, query.sub)) {
+  if (!form || (query.sub && !isValidSubmissionTypeInUrl(form, query.sub))) {
     return { notFound: true };
   }
 

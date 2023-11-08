@@ -1,19 +1,13 @@
 import { NextRouter } from 'next/router';
 import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from '../data/domain';
 
-const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
-  const allowedSubmissionType = form.properties.submissionType;
-
+const getSubmissionTypeFromUrl = (router: NextRouter): SubmissionType | null => {
   if (isSubmissionParamSet(router)) {
     const submissionType: SubmissionType = getSubmissionTypeFromString(router.query.sub as string);
     return submissionType;
   }
 
-  if (allowedSubmissionType === 'PAPIR_OG_DIGITAL' || allowedSubmissionType === 'KUN_DIGITAL') {
-    return SubmissionType.digital;
-  }
-
-  return SubmissionType.paper;
+  return null;
 };
 
 const createSubmissionUrl = (form: Form, formData: FormData): string => {
@@ -69,7 +63,7 @@ const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefin
 export {
   areBothSubmissionTypesAllowed,
   createSubmissionUrl,
-  getDefaultSubmissionType,
+  getSubmissionTypeFromUrl,
   isDigitalSubmissionAllowed,
   isPaperSubmissionAllowed,
   isSubmissionAllowed,
