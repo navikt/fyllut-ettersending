@@ -1,0 +1,25 @@
+{
+  "_id": "6448f6beb99e7e00027f5a21",
+  "title": "Kun papir",
+  "path": "form3",
+  "modified": "2023-11-08T08:38:24.177Z",
+  "properties": {
+    "skjemanummer": "kun-papir",
+    "innsending": "KUN_PAPIR",
+    "ettersending": "KUN_PAPIR",
+    "navUnitTypes": [],
+    "tema": "BIL",
+    "navUnitMustBeSelected": null,
+    "enhetstyper": ["YTA"]
+  },
+  "attachments": [
+    {
+      "label": "Har du annen dokumentasjon du ønsker å legge ved?",
+      "key": "annenDokumentasjon",
+      "description": "",
+      "otherDocumentation": true,
+      "attachmentTitle": "Annet",
+      "attachmentCode": "N6"
+    }
+  ]
+}

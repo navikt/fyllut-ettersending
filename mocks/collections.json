@@ -9,7 +9,8 @@
       "get-archive-subjects:all",
       "get-nav-units:all",
       "get-form-1:success",
-      "get-form-2:success"
+      "get-form-2:success",
+      "get-form-3:success"
     ]
   }
 ]
