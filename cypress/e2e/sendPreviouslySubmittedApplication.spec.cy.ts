@@ -3,7 +3,7 @@ import { TestButtonText, TestLinkText } from './testUtils';
 describe.only('sendPreviouslySubmittedApplication', () => {
   it('fill out and send documentation by mail, should redirect to subType-page', () => {
     cy.visit('/detaljer/form2');
-    cy.url().should('include', 'innsendings-metode');
+    cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendPaper).click();
     cy.url().should('include', 'detaljer').should('include', '?sub=paper');
     cy.get('[type="checkbox"]').first().check();
@@ -22,7 +22,7 @@ describe.only('sendPreviouslySubmittedApplication', () => {
 
   it('fill out and send documentation digitally, should redirect to subType-page', () => {
     cy.visit('/detaljer/form2');
-    cy.url().should('include', 'innsendings-metode');
+    cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendDigital).click();
     cy.url().should('include', 'detaljer').should('include', '?sub=digital');
     cy.findByRole('checkbox', { name: 'Legeerklæring om alminnelig helsetilstand' }).check();

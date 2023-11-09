@@ -4,7 +4,7 @@ enum Paths {
   downloadPage = '/last-ned',
   otherDocumentation = '/lospost',
   formDocumentation = '/ettersendelse',
-  submissionType = '/innsendings-metode',
+  submissionType = '/innsendingsvalg',
 }
 
 export { Paths };

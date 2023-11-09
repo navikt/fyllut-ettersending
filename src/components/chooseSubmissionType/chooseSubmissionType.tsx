@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ChooseSubmissionType = ({ id }: Props) => {
-  const { t } = useTranslation('innsendings-metode');
+  const { t } = useTranslation('innsendingsvalg');
   const pathWithId = Paths.details + '/' + id;
 
   return (

@@ -13,7 +13,7 @@ interface Props {
   existingEttersendinger: EttersendelseApplication[];
 }
 
-const InnsendingsMetode: NextPage<Props> = (props) => {
+const Innsendingsvalg: NextPage<Props> = (props) => {
   const { id } = props;
 
   return <ChooseSubmissionType id={id} />;
@@ -37,11 +37,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const translations = await getServerSideTranslations(locale, ['common', 'innsendings-metode']);
+  const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   return {
     props: { id, ...translations },
   };
 }
 
-export default InnsendingsMetode;
+export default Innsendingsvalg;
