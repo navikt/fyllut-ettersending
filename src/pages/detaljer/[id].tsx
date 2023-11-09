@@ -23,6 +23,7 @@ import { EttersendelseApplication, Form, NavUnit, SubmissionType, Unauthenticate
 import { Paths } from '../../data/text';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import {
+  areBothSubmissionTypesAllowed,
   createSubmissionUrl,
   getDefaultSubmissionType,
   isSubmissionAllowed,
@@ -115,34 +116,34 @@ const Detaljer: NextPage<Props> = (props) => {
       <ValidationSummary />
 
       {isSubmissionAllowed(form) ? (
-        <>
-          <ChooseAttachments form={form} />
-
-          {isSubmissionTypePaper(formData) && (
-            <ChooseUser
-              navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-              shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+        formData.submissionType && (
+          <>
+            <ChooseAttachments form={form} />
+            {isSubmissionTypePaper(formData) && (
+              <ChooseUser
+                navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+                shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+              />
+            )}
+            <ButtonGroup
+              buttons={[
+                formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
+                ...(referrerPage ? [previousButton] : []),
+              ]}
             />
-          )}
-
-          <ButtonGroup
-            buttons={[
-              formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
-              ...(referrerPage ? [previousButton] : []),
-            ]}
-          />
-          <ButtonGroup
-            center={!!referrerPage}
-            buttons={[
-              {
-                text: tCommon('button.cancel'),
-                path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-                variant: 'tertiary',
-                external: true,
-              },
-            ]}
-          />
-        </>
+            <ButtonGroup
+              center={!!referrerPage}
+              buttons={[
+                {
+                  text: tCommon('button.cancel'),
+                  path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+                  variant: 'tertiary',
+                  external: true,
+                },
+              ]}
+            />
+          </>
+        )
       ) : (
         <Alert variant="info">{t('no-attachments-alert')}</Alert>
       )}
@@ -171,11 +172,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const form = await getForm(id, locale);
 
   // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
-  if (!form || !isValidSubmissionTypeInUrl(form, query.sub)) {
+  if (!form || (query.sub && !isValidSubmissionTypeInUrl(form, query.sub))) {
     return { notFound: true };
   }
-
-  const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
 
   // Fetch existing ettersendinger and redirect if necessary
   let existingEttersendinger: EttersendelseApplication[] = [];
@@ -183,6 +182,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
     redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
   }
+
+  if (!query.sub && areBothSubmissionTypesAllowed(form)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: Paths.submissionType + '/' + id,
+      },
+    };
+  }
+
+  const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
 
   return {
     props: { form, existingEttersendinger, id, ...translations },

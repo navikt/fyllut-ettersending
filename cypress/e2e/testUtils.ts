@@ -5,4 +5,9 @@ enum TestButtonText {
   downloadCoverPage = 'Last ned førsteside',
 }
 
-export { TestButtonText };
+enum TestLinkText {
+  sendDigital = 'Send digitalt',
+  sendPaper = 'Send i posten',
+}
+
+export { TestButtonText, TestLinkText };
