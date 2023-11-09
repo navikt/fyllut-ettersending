@@ -178,8 +178,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Fetch existing ettersendinger and redirect if necessary
   let existingEttersendinger: EttersendelseApplication[] = [];
-  if (idportenToken && form?.properties.formNumber) {
-    existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
+  if (idportenToken) {
+    existingEttersendinger = await getEttersendinger(idportenToken, id);
     redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
   }
 
