@@ -90,7 +90,7 @@ export interface FormData {
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
   titleOfSubmission?: string;
-  submissionType?: SubmissionType | null;
+  submissionType?: SubmissionType;
   title?: string;
   userData?: UserData;
   language?: string;

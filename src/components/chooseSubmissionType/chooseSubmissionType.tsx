@@ -20,20 +20,16 @@ const ChooseSubmissionType = ({ id }: Props) => {
         {t('heading')}
       </Heading>
 
-      <ul className={styles.linkList}>
-        <NextLink href={pathWithId + '?sub=' + SubmissionType.digital} passHref legacyBehavior>
-          <LinkPanel border rel="noreferrer">
-            <LinkPanel.Title>{t('digital-title')}</LinkPanel.Title>
-            <LinkPanel.Description>{t('digital-description')}</LinkPanel.Description>
-          </LinkPanel>
-        </NextLink>
-        <NextLink href={`${pathWithId}?sub=${SubmissionType.paper}`} passHref legacyBehavior>
-          <LinkPanel border rel="noreferrer">
-            <LinkPanel.Title>{t('paper-title')}</LinkPanel.Title>
-            <LinkPanel.Description>{t('paper-description')}</LinkPanel.Description>
-          </LinkPanel>
-        </NextLink>
-      </ul>
+      <div className={styles.linkList}>
+        <LinkPanel as={NextLink} border href={pathWithId + '?sub=' + SubmissionType.digital} rel="noreferrer">
+          <LinkPanel.Title>{t('digital-title')}</LinkPanel.Title>
+          <LinkPanel.Description>{t('digital-description')}</LinkPanel.Description>
+        </LinkPanel>
+        <LinkPanel as={NextLink} border href={`${pathWithId}?sub=${SubmissionType.paper}`} rel="noreferrer">
+          <LinkPanel.Title>{t('paper-title')}</LinkPanel.Title>
+          <LinkPanel.Description>{t('paper-description')}</LinkPanel.Description>
+        </LinkPanel>
+      </div>
     </Layout>
   );
 };
