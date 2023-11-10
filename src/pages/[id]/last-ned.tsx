@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { getForm } from 'src/api/apiService';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { Form } from 'src/data/domain';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { downloadFrontpage } from '../../api/apiClient';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
@@ -112,7 +112,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, params } = context;
   const id = params?.id as string;
-  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details + '/' + id + '?sub=paper';
+  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details(id) + '?sub=paper';
   if (isHardNavigation(context)) {
     // Only allows soft navigation to this page, because client won't have any state on hard navigation
     return {

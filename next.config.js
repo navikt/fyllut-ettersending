@@ -17,6 +17,15 @@ const nextConfig = {
 
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/detaljer/:id',
+        destination: '/:id',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

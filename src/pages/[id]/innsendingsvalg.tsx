@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
 import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubmissionType';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { EttersendelseApplication } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
@@ -13,7 +13,7 @@ interface Props {
   existingEttersendinger: EttersendelseApplication[];
 }
 
-const InnsendingsMetode: NextPage<Props> = (props) => {
+const Innsendingsvalg: NextPage<Props> = (props) => {
   const { id } = props;
 
   return <ChooseSubmissionType id={id} />;
@@ -32,16 +32,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: Paths.details + '/' + id,
+        destination: Paths.details(id),
       },
     };
   }
 
-  const translations = await getServerSideTranslations(locale, ['common', 'innsendings-metode']);
+  const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   return {
     props: { id, ...translations },
   };
 }
 
-export default InnsendingsMetode;
+export default Innsendingsvalg;

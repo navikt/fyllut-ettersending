@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { fetchArchiveSubjects, fetchNavUnits } from '../api/apiClient';
 import Layout from '../components/layout/layout';
@@ -28,7 +28,7 @@ const Lospost: NextPage<Props> = ({ tema }) => {
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage + '/lospost',
+    path: Paths.downloadPage('lospost'),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',

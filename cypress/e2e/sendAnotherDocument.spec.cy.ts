@@ -180,7 +180,7 @@ describe('sendAnotherDocument', () => {
 
   describe('hard navigate to download-page', () => {
     it(' should redirect back to lospost', () => {
-      cy.visit('/last-ned/lospost');
+      cy.visit('/lospost/last-ned');
       cy.url().should('not.include', '/last-ned');
     });
   });

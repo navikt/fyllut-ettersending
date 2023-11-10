@@ -2,7 +2,7 @@ import { Heading, LinkPanel } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import NextLink from 'next/link';
 import { SubmissionType } from 'src/data/domain';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import Layout from '../layout/layout';
 import styles from './chooseSubmissionType.module.css';
 
@@ -11,8 +11,8 @@ interface Props {
 }
 
 const ChooseSubmissionType = ({ id }: Props) => {
-  const { t } = useTranslation('innsendings-metode');
-  const pathWithId = Paths.details + '/' + id;
+  const { t } = useTranslation('innsendingsvalg');
+  const pathWithId = Paths.details(id);
 
   return (
     <Layout title={t('title')}>

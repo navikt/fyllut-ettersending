@@ -3,7 +3,7 @@ import { Loader } from '@navikt/ds-react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useState } from 'react';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { fetchForms } from '../api/apiClient';
 import Layout from '../components/layout/layout';
 import FormSearch from '../components/search/formSearch';

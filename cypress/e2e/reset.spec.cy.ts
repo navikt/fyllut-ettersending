@@ -26,8 +26,8 @@ describe('reset', () => {
     // Click the second form in the list (digital)
     cy.get('[data-cy="searchResults"]').findAllByRole('link').eq(0).click();
 
-    // Check that the URL contains "/detaljer"
-    cy.url().should('include', '/detaljer');
+    // Check that the URL contain the form
+    cy.url().should('include', '/form1');
 
     // Check the checbox
     cy.findAllByRole('checkbox').first().check();
@@ -42,8 +42,8 @@ describe('reset', () => {
     // Click the second form in the list (paper)
     cy.get('[data-cy="searchResults"]').findAllByRole('link').eq(1).click();
 
-    // Check that the URL contains "detaljer"
-    cy.url().should('include', '/detaljer');
+    // Check that the URL contain the form
+    cy.url().should('include', '/form2');
 
     // Check that the checbox isn't checked
     cy.findAllByRole('checkbox').should('not.be.checked');
