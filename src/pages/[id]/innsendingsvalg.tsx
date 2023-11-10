@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
 import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubmissionType';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { EttersendelseApplication } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';

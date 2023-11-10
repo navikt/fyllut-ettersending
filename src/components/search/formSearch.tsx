@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from 'src/utils/submissionUtil';
 import { ListForm } from '../../data/domain';
-import { Paths } from '../../data/text';
+import { Paths } from '../../data/paths';
 import Section from '../section/section';
 import styles from './search.module.css';
 

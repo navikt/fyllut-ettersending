@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { getForm } from 'src/api/apiService';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { Form } from 'src/data/domain';
-import { Paths } from 'src/data/text';
+import { Paths } from 'src/data/paths';
 import { downloadFrontpage } from '../../api/apiClient';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';

@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/layout';
 import Section from '../components/section/section';
-import { Paths } from '../data/text';
+import { Paths } from '../data/paths';
 import { getServerSideTranslations } from '../utils/i18nUtil';
 
 interface Props {}

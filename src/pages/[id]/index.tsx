@@ -20,7 +20,7 @@ import Section from '../../components/section/section';
 import ChooseUser from '../../components/submission/chooseUser';
 import { useFormState } from '../../data/appState';
 import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
-import { Paths } from '../../data/text';
+import { Paths } from '../../data/paths';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import {
   areBothSubmissionTypesAllowed,
