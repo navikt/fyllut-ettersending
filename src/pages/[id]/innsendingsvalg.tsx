@@ -32,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: Paths.details + '/' + id,
+        destination: Paths.details(id),
       },
     };
   }

@@ -80,7 +80,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
-    path: `${Paths.downloadPage}/${id}`,
+    path: Paths.downloadPage(id),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -187,7 +187,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: Paths.submissionType + '/' + id,
+        destination: Paths.submissionType(id),
       },
     };
   }

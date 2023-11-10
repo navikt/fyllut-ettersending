@@ -2,10 +2,10 @@ import { TestButtonText, TestLinkText } from './testUtils';
 
 describe.only('sendPreviouslySubmittedApplication', () => {
   it('fill out and send documentation by mail, should redirect to subType-page', () => {
-    cy.visit('/detaljer/form2');
+    cy.visit('/form2');
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendPaper).click();
-    cy.url().should('include', 'detaljer').should('include', '?sub=paper');
+    cy.url().should('include', '?sub=paper');
     cy.get('[type="checkbox"]').first().check();
     cy.get('[type="radio"]').check('hasSocialNumber');
     cy.get('[name="socialSecurityNo"]').click();
@@ -15,16 +15,16 @@ describe.only('sendPreviouslySubmittedApplication', () => {
 
     // Soft navigation check
     cy.go('back');
-    cy.url().should('include', '/detaljer');
+    cy.url().should('not.include', '/last-ned');
     cy.go('forward');
     cy.url().should('include', '/last-ned');
   });
 
   it('fill out and send documentation digitally, should redirect to subType-page', () => {
-    cy.visit('/detaljer/form2');
+    cy.visit('/form2');
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendDigital).click();
-    cy.url().should('include', 'detaljer').should('include', '?sub=digital');
+    cy.url().should('include', '?sub=digital');
     cy.findByRole('checkbox', { name: 'Legeerklæring om alminnelig helsetilstand' }).check();
     cy.findByRole('checkbox', { name: 'Annen dokumentasjon' }).check();
     cy.get('button').contains(TestButtonText.next).click();
@@ -34,7 +34,7 @@ describe.only('sendPreviouslySubmittedApplication', () => {
   });
 
   it('fill out + submit, should not redirect to subType-page', () => {
-    cy.visit('/detaljer/form3');
+    cy.visit('/form3');
     cy.get('[type="checkbox"]').first().check();
     cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
     cy.get('[type="radio"]').check('hasSocialNumber');

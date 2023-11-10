@@ -28,7 +28,7 @@ const Lospost: NextPage<Props> = ({ tema }) => {
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage + '/lospost',
+    path: Paths.downloadPage('lospost'),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',

@@ -12,7 +12,7 @@ interface Props {
 
 const ChooseSubmissionType = ({ id }: Props) => {
   const { t } = useTranslation('innsendingsvalg');
-  const pathWithId = Paths.details + '/' + id;
+  const pathWithId = Paths.details(id);
 
   return (
     <Layout title={t('title')}>

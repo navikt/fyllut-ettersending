@@ -112,7 +112,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, params } = context;
   const id = params?.id as string;
-  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details + '/' + id + '?sub=paper';
+  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details(id) + '?sub=paper';
   if (isHardNavigation(context)) {
     // Only allows soft navigation to this page, because client won't have any state on hard navigation
     return {

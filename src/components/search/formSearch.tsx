@@ -59,7 +59,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details}/${form.path}?sub=digital`);
+                    await router.push(`${Paths.details(form.path)}?sub=digital`);
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (digital)`}</LinkPanel.Title>
@@ -75,7 +75,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details}/${form.path}?sub=paper`);
+                    await router.push(`${Paths.details(form.path)}?sub=paper`);
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (papir)`}</LinkPanel.Title>
