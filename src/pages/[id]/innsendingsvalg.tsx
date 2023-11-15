@@ -6,7 +6,7 @@ import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubm
 import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { EttersendelseApplication } from '../../data/domain';
-import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 
 interface Props {
   id: string;
@@ -32,7 +32,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: Paths.details(id),
+        destination: localePathPrefix(context) + Paths.details(id),
+        locale: false,
       },
     };
   }
