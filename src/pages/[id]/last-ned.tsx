@@ -12,7 +12,7 @@ import { downloadFrontpage } from '../../api/apiClient';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
-import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import { getCoverPageTitle } from '../../utils/lastNedUtil';
 
 interface Props {
@@ -118,7 +118,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: true,
-        destination: previousPath,
+        destination: localePathPrefix(context) + previousPath,
+        locale: false,
       },
     };
   }

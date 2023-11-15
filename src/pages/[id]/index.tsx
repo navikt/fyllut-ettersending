@@ -21,7 +21,7 @@ import ChooseUser from '../../components/submission/chooseUser';
 import { useFormState } from '../../data/appState';
 import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
 import { Paths } from '../../data/paths';
-import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import {
   areBothSubmissionTypesAllowed,
   createSubmissionUrl,
@@ -187,7 +187,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: Paths.submissionType(id),
+        destination: localePathPrefix(context) + Paths.submissionType(id),
+        locale: false,
       },
     };
   }
