@@ -24,14 +24,17 @@ const toSpraakkode = (acceptLanguage: string | undefined): string => {
 const toFrontPageRequest = (body: DownloadCoverPageRequestBody, spraakkode: string): FrontPageRequest => {
   const { formData, title } = body;
   return {
-    foerstesidetype: 'ETTERSENDELSE',
+    foerstesidetype: formData.formNumber ? 'ETTERSENDELSE' : 'LOESPOST',
     navSkjemaId: formData.formNumber || '',
     spraakkode,
     overskriftstittel: title,
-    arkivtittel: title,
+    arkivtittel: toArchiveTitle(formData),
     tema: formData.subjectOfSubmission,
     vedleggsliste: formData.attachments?.map((attachment) => attachment.attachmentTitle) ?? [],
-    dokumentlisteFoersteside: formData.attachments?.map((attachment) => attachment.label) ?? [],
+    dokumentlisteFoersteside:
+      formData.attachments?.map((attachment) =>
+        attachment.otherDocumentation ? formData.otherDocumentationTitle! : attachment.label,
+      ) ?? [],
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
@@ -67,6 +70,16 @@ const toUnknownAddressInfo = (formData: FormData): string | undefined => {
       `${formData.userData?.postalCode} ${formData.userData?.city}, ` +
       `${formData.userData?.country}.`
     );
+  }
+};
+
+// Arkivtittel må være på bokmål
+const toArchiveTitle = (formData: FormData) => {
+  const { formNumber, title, titleOfSubmission, otherDocumentationTitle } = formData;
+  if (formNumber) {
+    return `Ettersending til ${formNumber} ${title}`;
+  } else {
+    return `${titleOfSubmission} - ${otherDocumentationTitle}`;
   }
 };
 
