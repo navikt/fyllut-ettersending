@@ -24,7 +24,7 @@
     "download-cover-page": "Last ned førsteside"
   },
   "cover-page-title": {
-    "ettersendelse": "Ettersending til {{formNumber}} {{title}}{{extraInfo}}",
+    "ettersendelse": "Ettersending til {{formNumber}} {{title}}",
     "innsendelse": "Innsendingen gjelder: {{titleOfSubmission}}{{extraInfo}}"
   }
 }

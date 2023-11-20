@@ -8,7 +8,6 @@ const getCoverPageTitle = (formData: FormData, t: TFunction) => {
     return t('cover-page-title.ettersendelse', {
       formNumber,
       title,
-      extraInfo,
     });
   } else {
     return t('cover-page-title.innsendelse', {
