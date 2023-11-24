@@ -10,9 +10,10 @@ import ContactInformation from './contactInformation';
 interface Props {
   navUnits?: NavUnit[] | undefined;
   shouldRenderNavUnits?: boolean;
+  subject?: string;
 }
 
-const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
+const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, subject }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
 
@@ -20,8 +21,11 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
     return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
   }, [navUnits]);
 
-  return (
-    <>
+  const chosenSubject = subject ? subject : formData.subjectOfSubmission;
+
+  // If subject is TIL (tiltakspenger), we only want to show the "other option"
+  const radioGroupSection = () => {
+    return (
       <Section>
         <RadioGroup
           legend={t('choose-user.user-type.legend')}
@@ -39,19 +43,29 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
           value={formData.userData?.type ?? ''}
           tabIndex={-1}
         >
-          <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
-            {t('choose-user.user-type.choice-has-ssn')}
-          </Radio>
-          <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
-            {t('choose-user.user-type.choice-no-ssn')}
-          </Radio>
+          {chosenSubject !== 'TIL' && (
+            <>
+              <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber} id={UserType.hasSocialNumber}>
+                {t('choose-user.user-type.choice-has-ssn')}
+              </Radio>
+              <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber} id={UserType.noSocialNumber}>
+                {t('choose-user.user-type.choice-no-ssn')}
+              </Radio>
+            </>
+          )}
           {shouldRenderNavUnits && (
-            <Radio name={UserType.other} value={UserType.other}>
+            <Radio name={UserType.other} value={UserType.other} id={UserType.other}>
               {t('choose-user.user-type.choice-other')}
             </Radio>
           )}
         </RadioGroup>
       </Section>
+    );
+  };
+
+  return (
+    <>
+      {radioGroupSection()}
 
       {formData.userData?.type === UserType.hasSocialNumber && (
         <Section>

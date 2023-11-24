@@ -22,7 +22,7 @@ const OtherDocument: NextPage<Props> = (props) => {
     <>
       <Ingress className={styles.ingress}>{t('ingress', { interpolation: { escapeValue: false } })}</Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
-      <ChooseUser navUnits={navUnits} />
+      <ChooseUser navUnits={navUnits} subject={subject} />
     </>
   );
 };
