@@ -172,7 +172,7 @@ describe('sendAnotherDocument', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
     });
-    it('should hide radio buttons for ssn, use subject from query param and be able to fill out and go to next page', () => {
+    it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
@@ -181,13 +181,11 @@ describe('sendAnotherDocument', () => {
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
 
       // Hvem gjelder innsendingen for?
-      cy.get('[id="hasSocialNumber"]').should('not.exist');
-      cy.get('[id="noSocialNumber"]').should('not.exist');
-      cy.findAllByRole('radio').check('other');
+      cy.get('[name="userType').should('not.exist');
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
-      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT_LOKAL.name}{downArrow}{enter}`);
 
       cy.get('button').contains(TestButtonText.next).click();
 
@@ -211,7 +209,7 @@ describe('sendAnotherDocument', () => {
       }).as('downloadForsteside');
     });
 
-    it('should hide radio buttons for ssn and be able to fill out and go to next page', () => {
+    it('should hide radio buttons and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
@@ -220,14 +218,11 @@ describe('sendAnotherDocument', () => {
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_TIL.title}{downArrow}{enter}`);
 
       // Hvem gjelder innsendingen for?
-      cy.get('[id="hasSocialNumber"]').should('not.exist');
-      cy.get('[id="noSocialNumber"]').should('not.exist');
-      cy.get('[id="other"]').should('exist');
-      cy.findAllByRole('radio').check('other');
+      cy.get('[name="userType').should('not.exist');
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
-      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT_LOKAL.name}{downArrow}{enter}`);
 
       cy.get('button').contains(TestButtonText.next).click();
 
@@ -236,7 +231,7 @@ describe('sendAnotherDocument', () => {
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
     });
 
-    it.only('should only show fylke, lokal and tiltak units', () => {
+    it('should only show fylke, lokal and tiltak units', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
@@ -245,7 +240,7 @@ describe('sendAnotherDocument', () => {
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_TIL.title}{downArrow}{enter}`);
 
       // Hvem gjelder innsendingen for?
-      cy.findAllByRole('radio').check('other');
+      cy.findAllByRole('radio').should('not.exist');
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
