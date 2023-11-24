@@ -240,7 +240,7 @@ describe('sendAnotherDocument', () => {
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_TIL.title}{downArrow}{enter}`);
 
       // Hvem gjelder innsendingen for?
-      cy.findAllByRole('radio').should('not.exist');
+      cy.get('[name="userType').should('not.exist');
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();

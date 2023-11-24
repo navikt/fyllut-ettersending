@@ -21,11 +21,8 @@ const OtherDocument: NextPage<Props> = (props) => {
   const { archiveSubjects, navUnits, subject } = props;
 
   const chosenSubject = subject ? subject : formData.subjectOfSubmission;
-
-  // If subject is TIL (tiltak), we don't need to render the radio buttons
   const shouldRenderRadioButtons = chosenSubject !== 'TIL';
 
-  // If subject is TIL (tiltak), we only want fylke, lokal and tiltak units
   const navUnitOptions = () => {
     let options: NavUnit[] | undefined;
 
