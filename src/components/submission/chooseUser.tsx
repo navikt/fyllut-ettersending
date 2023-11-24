@@ -17,13 +17,23 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, subject }: Props) =
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
 
-  const navUnitOptions = useMemo(() => {
-    return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
-  }, [navUnits]);
-
   const chosenSubject = subject ? subject : formData.subjectOfSubmission;
 
-  // If subject is TIL (tiltakspenger), we only want to show the "other option"
+  // If subject is TIL (tiltak), we only want fylke, lokal and tiltak units
+  const navUnitOptions = useMemo(() => {
+    let options: NavUnit[] | undefined;
+
+    if (chosenSubject === 'TIL') {
+      const tiltakUnitTypes = ['FYLKE', 'LOKAL', 'TILTAK'];
+      options = navUnits?.filter((navUnit) => tiltakUnitTypes.includes(navUnit.type)) ?? [];
+    } else {
+      options = navUnits;
+    }
+
+    return options?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
+  }, [chosenSubject, navUnits]);
+
+  // If subject is TIL (tiltak), we only want to show the "other option"
   const radioGroupSection = () => {
     return (
       <Section>
@@ -84,7 +94,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, subject }: Props) =
       {formData.userData?.type === UserType.noSocialNumber && <ContactInformation navUnits={navUnits} />}
 
       {formData.userData?.type === UserType.other && (
-        <Section>
+        <Section dataCy="navUnitSection">
           <UNSAFE_Combobox
             label={t('choose-user.nav-unit-input.label')}
             options={navUnitOptions}
