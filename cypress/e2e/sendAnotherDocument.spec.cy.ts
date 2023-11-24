@@ -168,7 +168,7 @@ describe('sendAnotherDocument', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
     });
-    it.only('should hide radio buttons for ssn, use subject from query param and be able to fill out and go to next page', () => {
+    it('should hide radio buttons for ssn, use subject from query param and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
@@ -207,7 +207,7 @@ describe('sendAnotherDocument', () => {
       }).as('downloadForsteside');
     });
 
-    it.only('should hide radio buttons for ssn and be able to fill out and go to next page', () => {
+    it('should hide radio buttons for ssn and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
