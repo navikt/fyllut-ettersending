@@ -2,7 +2,7 @@ import { TextField, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useMemo } from 'react';
 import { useFormState } from '../../data/appState';
-import { KeyValue, UserType } from '../../data/domain';
+import { KeyValue } from '../../data/domain';
 import Section from '../section/section';
 
 interface Props {
@@ -37,10 +37,9 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
       updateFormData({
         subjectOfSubmission: subject,
         titleOfSubmission: archiveSubjects[subject],
-        userData: { type: subject === 'TIL' ? UserType.other : formData.userData?.type },
       });
     }
-  }, [archiveSubjects, formData.subjectOfSubmission, formData.userData?.type, subject, updateFormData]);
+  }, [archiveSubjects, formData.subjectOfSubmission, subject, updateFormData]);
 
   const renderCombobox = () => {
     const subjectExistsAndIsInvalid = !!subject && !!Object.values(archiveSubjects).length && !archiveSubjects[subject];
@@ -64,11 +63,9 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
         selectedOptions={formData.titleOfSubmission ? [formData.titleOfSubmission] : []}
         onToggleSelected={(option, isSelected) => {
           if (isSelected) {
-            const subject = findKeyByValue(archiveSubjects, option);
             updateFormData({
-              subjectOfSubmission: subject,
+              subjectOfSubmission: findKeyByValue(archiveSubjects, option),
               titleOfSubmission: option,
-              userData: { type: subject === 'TIL' ? UserType.other : formData.userData?.type },
             });
           } else {
             updateFormData({ subjectOfSubmission: undefined, titleOfSubmission: undefined });
