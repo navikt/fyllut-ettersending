@@ -129,7 +129,7 @@ export interface UserData {
   country?: string;
   socialSecurityNo?: string;
   navUnitContact?: boolean;
-  navUnit?: string;
+  navUnit?: NavUnit;
 }
 
 export type MimeType = 'application/pdf' | 'application/json' | 'image/png' | 'image/jpeg';

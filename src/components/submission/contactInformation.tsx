@@ -22,6 +22,10 @@ const ContactInformation = ({ navUnits }: Props) => {
     return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
   }, [navUnits]);
 
+  const findNavUnit = (navUnitName: string) => {
+    return navUnits?.find((navUnit) => navUnit.name === navUnitName);
+  };
+
   return (
     <>
       <Section>
@@ -112,10 +116,10 @@ const ContactInformation = ({ navUnits }: Props) => {
             id="navUnit"
             error={errors.navUnit}
             isMultiSelect={false}
-            selectedOptions={formData.userData?.navUnit ? [formData.userData?.navUnit] : []}
+            selectedOptions={formData.userData?.navUnit?.name ? [formData.userData?.navUnit.name] : []}
             onToggleSelected={(option, isSelected) => {
               if (isSelected) {
-                updateUserData({ navUnit: option });
+                updateUserData({ navUnit: findNavUnit(option) });
               } else {
                 updateUserData({ navUnit: undefined });
               }
