@@ -3,15 +3,10 @@ import styles from './section.module.css';
 
 interface Props {
   children: ReactNode;
-  dataCy?: string;
 }
 
-const Section = ({ children, dataCy }: Props) => {
-  return (
-    <div className={styles.section} data-cy={dataCy}>
-      {children}
-    </div>
-  );
+const Section = ({ children }: Props) => {
+  return <div className={styles.section}>{children}</div>;
 };
 
 export default Section;

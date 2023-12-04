@@ -38,6 +38,7 @@ const toFrontPageRequest = (body: DownloadCoverPageRequestBody, spraakkode: stri
     adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
+    enhetsnummer: formData.userData?.navUnit?.number,
   };
 };
 
