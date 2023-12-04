@@ -7,7 +7,8 @@ describe('sendAnotherDocument', () => {
   };
 
   const NAV_UNIT = {
-    name: 'Dagpenger',
+    name: 'Dagpenger - Grensearbeider inn',
+    number: '4465',
   };
 
   beforeEach(() => {
@@ -27,6 +28,8 @@ describe('sendAnotherDocument', () => {
         expect(req.body.title).to.equal(
           'Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave',
         );
+        expect(req.body.formData.userData.navUnit.name).to.equal(NAV_UNIT.name);
+        expect(req.body.formData.userData.navUnit.number).to.equal(NAV_UNIT.number);
         req.reply('mock-pdf');
       }).as('downloadForsteside');
     });
