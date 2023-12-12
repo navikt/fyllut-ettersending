@@ -76,11 +76,11 @@ const toUnknownAddressInfo = (formData: FormData): string | undefined => {
 
 // Arkivtittel må være på bokmål
 const toArchiveTitle = (formData: FormData) => {
-  const { formNumber, title, titleOfSubmission, otherDocumentationTitle } = formData;
+  const { formNumber, title, otherDocumentationTitle } = formData;
   if (formNumber) {
     return `Ettersending til ${formNumber} ${title}`;
   } else {
-    return `${titleOfSubmission} - ${otherDocumentationTitle}`;
+    return `${otherDocumentationTitle}`;
   }
 };
 
