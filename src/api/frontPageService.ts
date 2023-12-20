@@ -1,4 +1,4 @@
-import { DownloadCoverPageRequestBody, FormData, UserType } from '../data/domain';
+import { DownloadCoverPageRequestBody, FormData } from '../data/domain';
 import logger from '../utils/logger';
 import { downloadFrontPage } from './apiService';
 
@@ -35,23 +35,10 @@ const toFrontPageRequest = (body: DownloadCoverPageRequestBody, spraakkode: stri
       formData.attachments?.map((attachment) =>
         attachment.otherDocumentation ? formData.otherDocumentationTitle! : attachment.label,
       ) ?? [],
-    adresse: toFrontPageAddress(formData),
     bruker: toFrontPageUser(formData),
     ukjentBrukerPersoninfo: toUnknownAddressInfo(formData),
     enhetsnummer: formData.userData?.navUnit?.number,
   };
-};
-
-const toFrontPageAddress = (formData: FormData): FrontPageAddress | undefined => {
-  if (formData.userData?.type === UserType.noSocialNumber) {
-    return {
-      adresselinje1: formData.userData?.streetName,
-      postnummer: formData.userData?.postalCode,
-      poststed: formData.userData?.city,
-    } as FrontPageAddress;
-  }
-
-  return undefined;
 };
 
 const toFrontPageUser = (formData: FormData): FrontPageUser | undefined => {
