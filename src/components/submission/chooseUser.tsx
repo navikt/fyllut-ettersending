@@ -10,10 +10,10 @@ import ContactInformation from './contactInformation';
 interface Props {
   navUnits?: NavUnit[] | undefined;
   shouldRenderNavUnits?: boolean;
-  shouldRenderRadioButtons?: boolean;
+  shouldRenderUserTypes?: boolean;
 }
 
-const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, shouldRenderRadioButtons = true }: Props) => {
+const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, shouldRenderUserTypes = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
 
@@ -27,7 +27,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, shouldRenderRadioBu
 
   return (
     <>
-      {shouldRenderRadioButtons && (
+      {shouldRenderUserTypes && (
         <Section>
           <RadioGroup
             legend={t('choose-user.user-type.legend')}

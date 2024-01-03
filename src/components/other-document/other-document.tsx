@@ -21,13 +21,13 @@ const OtherDocument: NextPage<Props> = (props) => {
   const { archiveSubjects, navUnits, subject } = props;
 
   const chosenSubject = subject ? subject : formData.subjectOfSubmission;
-  const shouldRenderRadioButtons = chosenSubject !== 'TIL';
+  const shouldRenderUserTypes = chosenSubject !== 'TIL';
 
   return (
     <>
       <Ingress className={styles.ingress}>{t('ingress', { interpolation: { escapeValue: false } })}</Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
-      <ChooseUser navUnits={navUnits} shouldRenderRadioButtons={shouldRenderRadioButtons} />
+      <ChooseUser navUnits={navUnits} shouldRenderUserTypes={shouldRenderUserTypes} />
     </>
   );
 };
