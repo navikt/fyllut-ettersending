@@ -23,24 +23,11 @@ const OtherDocument: NextPage<Props> = (props) => {
   const chosenSubject = subject ? subject : formData.subjectOfSubmission;
   const shouldRenderRadioButtons = chosenSubject !== 'TIL';
 
-  const navUnitOptions = () => {
-    let options: NavUnit[] | undefined;
-
-    if (chosenSubject === 'TIL') {
-      const tiltakUnitTypes = ['FYLKE', 'LOKAL', 'TILTAK'];
-      options = navUnits?.filter((navUnit) => tiltakUnitTypes.includes(navUnit.type)) ?? [];
-    } else {
-      options = navUnits;
-    }
-
-    return options?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
-  };
-
   return (
     <>
       <Ingress className={styles.ingress}>{t('ingress', { interpolation: { escapeValue: false } })}</Ingress>
       <SubjectOfSubmission archiveSubjects={archiveSubjects} subject={subject} />
-      <ChooseUser navUnitOptions={navUnitOptions()} shouldRenderRadioButtons={shouldRenderRadioButtons} />
+      <ChooseUser navUnits={navUnits} shouldRenderRadioButtons={shouldRenderRadioButtons} />
     </>
   );
 };
