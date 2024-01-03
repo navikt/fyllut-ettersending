@@ -10,9 +10,10 @@ import ContactInformation from './contactInformation';
 interface Props {
   navUnits?: NavUnit[] | undefined;
   shouldRenderNavUnits?: boolean;
+  shouldRenderUserTypes?: boolean;
 }
 
-const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
+const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, shouldRenderUserTypes = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
 
@@ -26,36 +27,38 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
 
   return (
     <>
-      <Section>
-        <RadioGroup
-          legend={t('choose-user.user-type.legend')}
-          size="medium"
-          onChange={(type) => {
-            updateFormData({
-              userData: {
-                type,
-              },
-            });
-          }}
-          name="userType"
-          id="userType"
-          error={errors.userType}
-          value={formData.userData?.type ?? ''}
-          tabIndex={-1}
-        >
-          <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
-            {t('choose-user.user-type.choice-has-ssn')}
-          </Radio>
-          <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
-            {t('choose-user.user-type.choice-no-ssn')}
-          </Radio>
-          {shouldRenderNavUnits && (
-            <Radio name={UserType.other} value={UserType.other}>
-              {t('choose-user.user-type.choice-other')}
+      {shouldRenderUserTypes && (
+        <Section>
+          <RadioGroup
+            legend={t('choose-user.user-type.legend')}
+            size="medium"
+            onChange={(type) => {
+              updateFormData({
+                userData: {
+                  type,
+                },
+              });
+            }}
+            name="userType"
+            id="userType"
+            error={errors.userType}
+            value={formData.userData?.type ?? ''}
+            tabIndex={-1}
+          >
+            <Radio name={UserType.hasSocialNumber} value={UserType.hasSocialNumber}>
+              {t('choose-user.user-type.choice-has-ssn')}
             </Radio>
-          )}
-        </RadioGroup>
-      </Section>
+            <Radio name={UserType.noSocialNumber} value={UserType.noSocialNumber}>
+              {t('choose-user.user-type.choice-no-ssn')}
+            </Radio>
+            {shouldRenderNavUnits && (
+              <Radio name={UserType.other} value={UserType.other}>
+                {t('choose-user.user-type.choice-other')}
+              </Radio>
+            )}
+          </RadioGroup>
+        </Section>
+      )}
 
       {formData.userData?.type === UserType.hasSocialNumber && (
         <Section>
@@ -74,7 +77,7 @@ const ChooseUser = ({ navUnits, shouldRenderNavUnits = true }: Props) => {
       {formData.userData?.type === UserType.noSocialNumber && <ContactInformation navUnits={navUnits} />}
 
       {formData.userData?.type === UserType.other && (
-        <Section>
+        <Section dataCy="navUnitSection">
           <UNSAFE_Combobox
             label={t('choose-user.nav-unit-input.label')}
             options={navUnitOptions}

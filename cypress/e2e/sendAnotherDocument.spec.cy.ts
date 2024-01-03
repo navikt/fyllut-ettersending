@@ -6,6 +6,11 @@ describe('sendAnotherDocument', () => {
     title: 'Permittering og masseoppsigelser',
   };
 
+  const SUBJECT_TIL = {
+    subject: 'TIL',
+    title: 'Tiltak',
+  };
+
   const NAV_UNIT = {
     name: 'Dagpenger - Grensearbeider inn',
     number: '4465',
@@ -16,7 +21,7 @@ describe('sendAnotherDocument', () => {
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
   });
 
-  describe('form', () => {
+  describe('form with tema=PER', () => {
     beforeEach(() => {
       cy.visit('/lospost');
       cy.wait('@getArchiveSubjects');
@@ -122,7 +127,7 @@ describe('sendAnotherDocument', () => {
     });
   });
 
-  describe("query param 'tema'", () => {
+  describe("query param 'tema=PER'", () => {
     beforeEach(() => {
       cy.visit(`/lospost?tema=${SUBJECT_PER.subject}`);
       cy.wait('@getArchiveSubjects');
@@ -145,6 +150,79 @@ describe('sendAnotherDocument', () => {
       cy.findAllByRole('radio').check('hasSocialNumber');
       cy.get('[name="socialSecurityNo"]').click();
       cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe("query param 'tema=TIL", () => {
+    beforeEach(() => {
+      cy.visit(`/lospost?tema=${SUBJECT_TIL.subject}`);
+      cy.wait('@getArchiveSubjects');
+      cy.wait('@getNavUnits');
+      // Intercept: Download cover page pdf
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_TIL.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_TIL.title);
+        expect(req.body.title).to.equal('Innsendingen gjelder: Tiltak - Tiltak for noe');
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+    });
+    it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').should('not.exist');
+
+      // Hvem gjelder innsendingen for?
+      cy.get('[name="userType').should('not.exist');
+
+      // "Velg hvilken NAV-enhet som skal motta innsendingen"
+      cy.get('[name="chooseUserNavUnit"]').click();
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe('form with tema=TIL', () => {
+    beforeEach(() => {
+      cy.visit('/lospost');
+      cy.wait('@getArchiveSubjects');
+      cy.wait('@getNavUnits');
+      // Intercept: Download cover page pdf
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_TIL.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_TIL.title);
+        expect(req.body.title).to.equal('Innsendingen gjelder: Tiltak - Tiltak for noe');
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+    });
+
+    it('should hide radio buttons and be able to fill out and go to next page', () => {
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_TIL.title}{downArrow}{enter}`);
+
+      // Hvem gjelder innsendingen for?
+      cy.get('[name="userType').should('not.exist');
+
+      // "Velg hvilken NAV-enhet som skal motta innsendingen"
+      cy.get('[name="chooseUserNavUnit"]').click();
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+
       cy.get('button').contains(TestButtonText.next).click();
 
       //Download page
