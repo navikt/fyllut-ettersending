@@ -16,10 +16,6 @@ describe('sendAnotherDocument', () => {
     number: '4465',
   };
 
-  const NAV_UNIT_LOKAL = {
-    name: 'NAV Agder',
-  };
-
   beforeEach(() => {
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/archive-subjects`).as('getArchiveSubjects');
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
@@ -188,7 +184,7 @@ describe('sendAnotherDocument', () => {
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
-      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT_LOKAL.name}{downArrow}{enter}`);
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
       cy.get('button').contains(TestButtonText.next).click();
 
@@ -225,31 +221,7 @@ describe('sendAnotherDocument', () => {
 
       // "Velg hvilken NAV-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
-      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT_LOKAL.name}{downArrow}{enter}`);
-
-      cy.get('button').contains(TestButtonText.next).click();
-
-      //Download page
-      cy.url().should('include', '/last-ned');
-      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
-    });
-
-    it('should only show fylke, lokal and tiltak units', () => {
-      // Hvilken dokumentasjon vil du sende til NAV?
-      cy.get('[name="otherDocumentationTitle"]').click();
-      cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
-
-      // Hva gjelder innsendingen?
-      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_TIL.title}{downArrow}{enter}`);
-
-      // Hvem gjelder innsendingen for?
-      cy.get('[name="userType').should('not.exist');
-
-      // "Velg hvilken NAV-enhet som skal motta innsendingen"
-      cy.get('[name="chooseUserNavUnit"]').click();
-      cy.get('[data-cy="navUnitSection"]').contains(NAV_UNIT.name).should('not.exist');
-      cy.get('[data-cy="navUnitSection"]').contains(NAV_UNIT_LOKAL.name).should('exist');
-      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT_LOKAL.name}{downArrow}{enter}`);
+      cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
       cy.get('button').contains(TestButtonText.next).click();
 

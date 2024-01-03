@@ -1,20 +1,29 @@
 import { Radio, RadioGroup, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
+import { useMemo } from 'react';
 import { useFormState } from '../../data/appState';
-import { UserType } from '../../data/domain';
+import { NavUnit, UserType } from '../../data/domain';
 import SocialSecurityNo from '../form/socialSecurityNo';
 import Section from '../section/section';
 import ContactInformation from './contactInformation';
 
 interface Props {
-  navUnitOptions: string[];
+  navUnits?: NavUnit[] | undefined;
   shouldRenderNavUnits?: boolean;
   shouldRenderRadioButtons?: boolean;
 }
 
-const ChooseUser = ({ navUnitOptions, shouldRenderNavUnits = true, shouldRenderRadioButtons = true }: Props) => {
+const ChooseUser = ({ navUnits, shouldRenderNavUnits = true, shouldRenderRadioButtons = true }: Props) => {
   const { formData, updateFormData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
+
+  const navUnitOptions = useMemo(() => {
+    return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
+  }, [navUnits]);
+
+  const findNavUnit = (navUnitName: string) => {
+    return navUnits?.find((navUnit) => navUnit.name === navUnitName);
+  };
 
   return (
     <>
@@ -65,7 +74,7 @@ const ChooseUser = ({ navUnitOptions, shouldRenderNavUnits = true, shouldRenderR
         </Section>
       )}
 
-      {formData.userData?.type === UserType.noSocialNumber && <ContactInformation navUnitOptions={navUnitOptions} />}
+      {formData.userData?.type === UserType.noSocialNumber && <ContactInformation navUnits={navUnits} />}
 
       {formData.userData?.type === UserType.other && (
         <Section dataCy="navUnitSection">

@@ -62,11 +62,6 @@ const Detaljer: NextPage<Props> = (props) => {
       : navUnits;
   };
 
-  const navUnitOptions = () => {
-    const navUnitsConnectedToForm = getNavUnitsConnectedToForm(form.properties.navUnitTypes);
-    return navUnitsConnectedToForm?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
-  };
-
   useEffect(() => {
     const language = i18n.language;
     if (id !== formData.formId) {
@@ -126,7 +121,7 @@ const Detaljer: NextPage<Props> = (props) => {
             <ChooseAttachments form={form} />
             {isSubmissionTypePaper(formData) && (
               <ChooseUser
-                navUnitOptions={navUnitOptions()}
+                navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
                 shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
               />
             )}
