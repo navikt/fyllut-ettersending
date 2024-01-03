@@ -20,7 +20,7 @@ const OtherDocument: NextPage<Props> = (props) => {
 
   const { archiveSubjects, navUnits, subject } = props;
 
-  const chosenSubject = subject ? subject : formData.subjectOfSubmission;
+  const chosenSubject = subject ?? formData.subjectOfSubmission;
   const shouldRenderUserTypes = chosenSubject !== 'TIL';
 
   return (
