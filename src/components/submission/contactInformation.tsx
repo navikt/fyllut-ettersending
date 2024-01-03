@@ -1,29 +1,20 @@
 import { Radio, RadioGroup, TextField, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent } from 'react';
 import { useFormState } from '../../data/appState';
-import { NavUnit } from '../../data/domain';
 import Section from '../section/section';
 import styles from './submission.module.css';
 
 interface Props {
-  navUnits?: NavUnit[] | undefined;
+  navUnitOptions: string[];
 }
 
-const ContactInformation = ({ navUnits }: Props) => {
+const ContactInformation = ({ navUnitOptions }: Props) => {
   const { formData, updateUserData, errors } = useFormState();
   const { t } = useTranslation('common');
 
   const handleUserDataInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateUserData({ [e.target.name]: e.target.value });
-  };
-
-  const navUnitOptions = useMemo(() => {
-    return navUnits?.sort((a, b) => (a.name > b.name ? 1 : -1)).map((navUnit) => navUnit.name) ?? [];
-  }, [navUnits]);
-
-  const findNavUnit = (navUnitName: string) => {
-    return navUnits?.find((navUnit) => navUnit.name === navUnitName);
   };
 
   return (
