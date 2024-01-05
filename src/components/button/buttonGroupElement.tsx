@@ -35,7 +35,7 @@ const ButtonGroupElement = ({ type }: Props) => {
     }
 
     if (onClick) {
-      onClick(e);
+      await onClick(e);
     } else if (path) {
       if (external) {
         window.location.href = path;

@@ -101,6 +101,20 @@ export interface DownloadCoverPageRequestBody {
   title: string;
 }
 
+export interface EttersendingRequestBody {
+  tittel?: string;
+  skjemanr: string;
+  sprak: string;
+  tema: string;
+  vedleggsListe: EttersendingVedlegg[];
+}
+
+export interface EttersendingVedlegg {
+  vedleggsnr: string;
+  tittel?: string;
+  url?: string;
+}
+
 export enum SubmissionType {
   digital = 'digital',
   paper = 'paper',

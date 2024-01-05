@@ -1,5 +1,13 @@
 import FileSaver from 'file-saver';
-import { DownloadCoverPageRequestBody, FormData, KeyValue, NavUnit } from '../data/domain';
+import {
+  DownloadCoverPageRequestBody,
+  EttersendelseApplication,
+  EttersendingRequestBody,
+  EttersendingVedlegg,
+  FormData,
+  KeyValue,
+  NavUnit,
+} from '../data/domain';
 import { getFileName } from '../utils/formDataUtil';
 
 const baseUrl = '/fyllut-ettersending';
@@ -35,4 +43,31 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
   FileSaver.saveAs(await b64.blob(), getFileName(formData));
 };
 
-export { downloadFrontpage, fetchArchiveSubjects, fetchForms, fetchNavUnits };
+const createEttersending = async (formData: FormData) => {
+  // FIXME: Fix optionals
+  const jsonBody: EttersendingRequestBody = {
+    tittel: formData.title,
+    skjemanr: formData.formNumber!,
+    sprak: formData.language ?? 'nb',
+    tema: formData.subjectOfSubmission!,
+    vedleggsListe: formData.attachments!.map((vedlegg): EttersendingVedlegg => {
+      return {
+        vedleggsnr: vedlegg.attachmentCode,
+        tittel: vedlegg.label,
+      };
+    }),
+  };
+  const result = await fetch(`${baseUrl}/api/ettersending`, {
+    body: JSON.stringify(jsonBody),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf8',
+    },
+  });
+
+  const resultJson = (await result.json()) as EttersendelseApplication;
+
+  window.location.href = `${process.env.NEXT_PUBLIC_SENDINN_URL}/${resultJson.innsendingsId}`;
+};
+
+export { createEttersending, downloadFrontpage, fetchArchiveSubjects, fetchForms, fetchNavUnits };

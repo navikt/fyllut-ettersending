@@ -8,10 +8,10 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import { getEttersendinger, getForm } from 'src/api/apiService';
-import { getIdPortenToken } from 'src/api/loginRedirect';
+import { getIdPortenTokenFromContext } from 'src/api/loginRedirect';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { fetchNavUnits } from '../../api/apiClient';
+import { createEttersending, fetchNavUnits } from '../../api/apiClient';
 import ChooseAttachments from '../../components/attachment/chooseAttachments';
 import ButtonGroup from '../../components/button/buttonGroup';
 import { ButtonType } from '../../components/button/buttonGroupElement';
@@ -24,7 +24,6 @@ import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import {
   areBothSubmissionTypesAllowed,
-  createSubmissionUrl,
   getDefaultSubmissionType,
   isSubmissionAllowed,
   isSubmissionTypePaper,
@@ -89,7 +88,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButton: ButtonType = {
     text: tCommon('button.next'),
     external: true,
-    path: createSubmissionUrl(form, formData),
+    onClick: async () => await createEttersending(formData),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -125,6 +124,7 @@ const Detaljer: NextPage<Props> = (props) => {
                 shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
               />
             )}
+
             <ButtonGroup
               buttons={[
                 formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
@@ -159,7 +159,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Attempt to verify the token and redirect to login if necessary
   let idportenToken = '';
   try {
-    idportenToken = (await getIdPortenToken(context)) as string;
+    idportenToken = (await getIdPortenTokenFromContext(context)) as string;
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
       return redirectToLogin(context);

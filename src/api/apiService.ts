@@ -1,6 +1,15 @@
 import { getTokenxToken } from 'src/auth/getTokenXToken';
 import { isLocalDevelopment } from 'src/utils/utils';
-import { ApiNavUnit, Attachment, BasicForm, Form, FyllutListForm, KeyValue, NavUnit } from '../data/domain';
+import {
+  ApiNavUnit,
+  Attachment,
+  BasicForm,
+  EttersendingRequestBody,
+  Form,
+  FyllutListForm,
+  KeyValue,
+  NavUnit,
+} from '../data/domain';
 import logger from '../utils/logger';
 import { FrontPageRequest } from './frontPageService';
 import { get, post } from './http';
@@ -108,17 +117,11 @@ const downloadFrontPage = async (data: FrontPageRequest) => {
 
 const getEttersendinger = async (idportenToken: string, id: string) => {
   try {
-    let tokenxToken = 'mock-tokenx-token';
-    if (!isLocalDevelopment()) {
-      tokenxToken = (await getTokenxToken(
-        idportenToken,
-        process.env.INNSENDING_API_AUDIENCE ?? 'dev-gcp:team-soknad:innsending-api',
-      )) as string;
-    }
+    const tokenxToken = await getTokenX(idportenToken);
 
-    const response = await fetch(
+    const response = await get(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
-      { headers: { Authorization: `Bearer ${tokenxToken}` } },
+      { Authorization: `Bearer ${tokenxToken}` },
     );
 
     return await response.json();
@@ -128,4 +131,32 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
   }
 };
 
-export { downloadFrontPage, getArchiveSubjects, getEttersendinger, getForm, getForms, getNavUnits };
+const createEttersending = async (idportenToken: string, ettersendingBody: EttersendingRequestBody) => {
+  try {
+    const tokenxToken = await getTokenX(idportenToken);
+
+    const response = await post(
+      `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
+      JSON.stringify(ettersendingBody),
+      { Authorization: `Bearer ${tokenxToken}` },
+    );
+
+    return response;
+  } catch (e) {
+    logger.error('Could not create ettersending', e as Error);
+    return [];
+  }
+};
+
+const getTokenX = async (idportenToken: string) => {
+  let tokenxToken = 'mock-tokenx-token';
+  if (!isLocalDevelopment()) {
+    tokenxToken = (await getTokenxToken(
+      idportenToken,
+      process.env.INNSENDING_API_AUDIENCE ?? 'dev-gcp:team-soknad:innsending-api',
+    )) as string;
+  }
+  return tokenxToken;
+};
+
+export { createEttersending, downloadFrontPage, getArchiveSubjects, getEttersendinger, getForm, getForms, getNavUnits };
