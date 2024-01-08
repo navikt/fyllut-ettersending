@@ -1,3 +1,5 @@
+import { HttpError, UnauthenticatedError } from '../data/domain';
+
 const MimeType = {
   JSON: 'application/json',
   TEXT: 'text/plain',
@@ -22,38 +24,58 @@ const getDefaultHeaders = (headers?: HttpHeaders) => {
   return { ...defaultHeaders, ...headers };
 };
 
-const get = async (url: string, headers?: HttpHeaders) => {
+const get = async <T>(url: string, headers?: HttpHeaders): Promise<T> => {
   const response = await fetch(url, {
     method: 'GET',
     headers: getDefaultHeaders(headers),
   });
 
-  return handleResponse(response, url);
+  return await handleResponse(response);
 };
 
-const post = async (
-  url: string,
-  body: BodyInit,
-  headers?: HttpHeaders,
-  returnResponse: boolean = false,
-): Promise<Response> => {
+const post = async <T>(url: string, body: object, headers?: HttpHeaders): Promise<T> => {
   const response = await fetch(url, {
     method: 'POST',
     headers: getDefaultHeaders(headers),
-    body,
+    body: JSON.stringify(body),
   });
 
-  if (returnResponse) return response;
-
-  return handleResponse(response, url);
+  return await handleResponse(response);
 };
 
-const handleResponse = (response: Response, url: string) => {
+const handleResponse = async (response: Response) => {
   if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText} (${url})`);
+    if (response.status === 401) {
+      throw new UnauthenticatedError(response.statusText);
+    }
+
+    let errorMessage;
+    if (isResponseType(response, MimeType.JSON)) {
+      const responseJson = await response.json();
+      if (responseJson.message) {
+        errorMessage = responseJson.message;
+      }
+    } else if (isResponseType(response, MimeType.TEXT)) {
+      errorMessage = await response.text();
+    }
+
+    throw new HttpError(errorMessage || response.statusText, response.status);
   }
 
-  return response.json();
+  if (isResponseType(response, MimeType.JSON)) {
+    return response.json();
+  } else if (isResponseType(response, MimeType.TEXT)) {
+    return await response.text();
+  } else if (isResponseType(response, MimeType.PDF)) {
+    return await response.blob();
+  } else {
+    return response;
+  }
+};
+
+const isResponseType = (response: Response, mimeType: MimeType) => {
+  const contentType = response.headers.get('Content-Type');
+  return contentType && contentType.includes(mimeType);
 };
 
 export { get, post };

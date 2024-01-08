@@ -4,8 +4,11 @@ import {
   ApiNavUnit,
   Attachment,
   BasicForm,
+  EttersendelseApplication,
   EttersendingRequestBody,
   Form,
+  FyllutFoerstesidePdf,
+  FyllutForm,
   FyllutListForm,
   KeyValue,
   NavUnit,
@@ -19,7 +22,7 @@ const getForms = async (): Promise<BasicForm[]> => {
   let forms: FyllutListForm[] = [];
 
   try {
-    forms = await get(`${process.env.FYLLUT_BASE_URL}/api/forms`);
+    forms = await get<FyllutListForm[]>(`${process.env.FYLLUT_BASE_URL}/api/forms`);
     logger.debug(`Loaded ${forms.length} forms (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error('Failed to load forms', e as Error);
@@ -38,16 +41,18 @@ const getForms = async (): Promise<BasicForm[]> => {
 
 const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | undefined> => {
   const startTime = Date.now();
-  let form;
+  let form: FyllutForm | undefined;
 
   try {
-    form = await get(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
+    form = await get<FyllutForm>(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, e as Error);
   }
 
-  form?.attachments.sort((a: Attachment, b: Attachment) => {
+  if (!form) return undefined;
+
+  const sortedAttachments = form.attachments.sort((a: Attachment, b: Attachment) => {
     if (b.otherDocumentation) {
       return -1;
     } else if (a.otherDocumentation) {
@@ -59,12 +64,15 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
   return {
     ...form,
     properties: {
-      formNumber: form?.properties.skjemanummer ?? null,
-      submissionType: form?.properties.ettersending ?? 'PAPIR_OG_DIGITAL',
-      navUnitTypes: form?.properties.enhetstyper ?? [],
-      subjectOfSubmission: form?.properties.tema ?? null,
-      navUnitMustBeSelected: form?.properties.enhetMaVelgesVedPapirInnsending ?? null,
+      formNumber: form.properties.skjemanummer,
+      submissionType: form.properties.ettersending ?? 'PAPIR_OG_DIGITAL',
+      navUnitTypes: form.properties.enhetstyper ?? [],
+      subjectOfSubmission: form.properties.tema,
+      ...(form.properties.enhetMaVelgesVedPapirInnsending && {
+        navUnitMustBeSelected: form.properties.enhetMaVelgesVedPapirInnsending,
+      }),
     },
+    attachments: sortedAttachments,
   };
 };
 
@@ -107,7 +115,7 @@ const downloadFrontPage = async (data: FrontPageRequest) => {
   const startTime = Date.now();
 
   try {
-    const frontPage = post(`${process.env.FYLLUT_BASE_URL}/api/foersteside`, JSON.stringify(data));
+    const frontPage = post<FyllutFoerstesidePdf>(`${process.env.FYLLUT_BASE_URL}/api/foersteside`, data);
     logger.debug(`Download front page (ms: ${Date.now() - startTime})`);
     return frontPage;
   } catch (e) {
@@ -124,7 +132,7 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
       { Authorization: `Bearer ${tokenxToken}` },
     );
 
-    return await response.json();
+    return response;
   } catch (e) {
     logger.error('Could not fetch ettersendinger', e as Error);
     return [];
@@ -134,11 +142,12 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
 const createEttersending = async (idportenToken: string, ettersendingBody: EttersendingRequestBody) => {
   const tokenxToken = await getTokenX(idportenToken);
 
-  const response = await post(
+  const response = await post<EttersendelseApplication>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
-    JSON.stringify(ettersendingBody),
-    { Authorization: `Bearer ${tokenxToken}` },
-    true,
+    ettersendingBody,
+    {
+      Authorization: `Bearer ${tokenxToken}`,
+    },
   );
 
   return response;

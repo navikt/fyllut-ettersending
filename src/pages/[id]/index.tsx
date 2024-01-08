@@ -19,14 +19,7 @@ import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import ChooseUser from '../../components/submission/chooseUser';
 import { useFormState } from '../../data/appState';
-import {
-  EttersendelseApplication,
-  Form,
-  NavUnit,
-  SubmissionType,
-  UnauthenticatedError,
-  isApiError,
-} from '../../data/domain';
+import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import {
@@ -74,9 +67,7 @@ const Detaljer: NextPage<Props> = (props) => {
       const ettersending = await createEttersending(formData);
       router.push(`${process.env.NEXT_PUBLIC_SENDINN_URL}/${ettersending.innsendingsId}`);
     } catch (error) {
-      if (isApiError(error)) {
-        setErrorMessage(t(error.message));
-      }
+      setErrorMessage(t('ettersending-error'));
     }
   };
 

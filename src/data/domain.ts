@@ -1,6 +1,13 @@
 export class UnauthenticatedError extends Error {}
-export class ApiError extends Error {}
-export const isApiError = (err: unknown): err is ApiError => err instanceof ApiError;
+export const isHttpError = (err: unknown): err is HttpError => err instanceof HttpError;
+export class HttpError extends Error {
+  public readonly status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
 export interface BasicForm {
   _id: string;
   modified: string;
@@ -16,6 +23,24 @@ export interface FyllutListFormProperties {
   skjemanummer?: string;
   innsending?: AllowedSubmissionType;
   ettersending?: AllowedSubmissionType;
+}
+
+export interface FyllutFoerstesidePdf {
+  foersteside: string; // Base64
+}
+
+export interface FyllytFormProperties {
+  skjemanummer?: string;
+  tema: string;
+  innsending?: AllowedSubmissionType;
+  ettersending?: AllowedSubmissionType;
+  enhetstyper?: string[];
+  enhetMaVelgesVedPapirInnsending?: boolean;
+}
+
+export interface FyllutForm extends BasicForm {
+  properties: FyllytFormProperties;
+  attachments: Attachment[];
 }
 
 // For the FormSearch component

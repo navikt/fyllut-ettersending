@@ -1,11 +1,11 @@
 import FileSaver from 'file-saver';
 import {
-  ApiError,
   DownloadCoverPageRequestBody,
   EttersendelseApplication,
   EttersendingRequestBody,
   EttersendingVedlegg,
   FormData,
+  HttpError,
   KeyValue,
   NavUnit,
 } from '../data/domain';
@@ -44,7 +44,7 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
   FileSaver.saveAs(await b64.blob(), getFileName(formData));
 };
 
-const createEttersending = async (formData: FormData) => {
+const createEttersending = async (formData: FormData): Promise<EttersendelseApplication> => {
   const jsonBody: EttersendingRequestBody = {
     tittel: formData.title,
     skjemanr: formData.formNumber!,
@@ -69,10 +69,10 @@ const createEttersending = async (formData: FormData) => {
   });
 
   if (!result.ok) {
-    throw new ApiError('ettersending-error');
+    throw new HttpError(result.statusText, result.status);
   }
 
-  const resultJson = (await result.json()) as EttersendelseApplication;
+  const resultJson = await result.json();
   return resultJson;
 };
 
