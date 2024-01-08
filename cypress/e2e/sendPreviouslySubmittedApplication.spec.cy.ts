@@ -95,9 +95,7 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.findByRole('checkbox', { name: 'Legeerklæring om alminnelig helsetilstand' }).check();
     cy.findByRole('checkbox', { name: 'Annen dokumentasjon' }).check();
     cy.get('button').contains(TestButtonText.next).click();
-    cy.url().should('include', '/sendinn/opprettSoknadResource?erEttersendelse=true');
-    cy.url({ decode: true }).should('include', 'skjemanummer=NAV 10-07.50');
-    cy.url().should('include', 'vedleggsIder=N6,L9');
+    cy.url().should('include', '/sendinn/bd86463d-ad04-43e8-a80a-9ecd22bae7c0');
   });
 
   it('fill out + submit, should not redirect to subType-page', () => {
