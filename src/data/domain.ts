@@ -1,5 +1,6 @@
 export class UnauthenticatedError extends Error {}
-
+export class ApiError extends Error {}
+export const isApiError = (err: unknown): err is ApiError => err instanceof ApiError;
 export interface BasicForm {
   _id: string;
   modified: string;
@@ -38,6 +39,7 @@ export interface Attachment {
   otherDocumentation: boolean;
   attachmentTitle: string;
   attachmentCode: string;
+  attachmentForm?: string;
 }
 
 export type AllowedSubmissionType = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';

@@ -1,5 +1,6 @@
 import FileSaver from 'file-saver';
 import {
+  ApiError,
   DownloadCoverPageRequestBody,
   EttersendelseApplication,
   EttersendingRequestBody,
@@ -44,19 +45,21 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
 };
 
 const createEttersending = async (formData: FormData) => {
-  // FIXME: Fix optionals
   const jsonBody: EttersendingRequestBody = {
     tittel: formData.title,
     skjemanr: formData.formNumber!,
     sprak: formData.language ?? 'nb',
     tema: formData.subjectOfSubmission!,
-    vedleggsListe: formData.attachments!.map((vedlegg): EttersendingVedlegg => {
-      return {
-        vedleggsnr: vedlegg.attachmentCode,
-        tittel: vedlegg.label,
-      };
-    }),
+    vedleggsListe:
+      formData.attachments?.map((attachment): EttersendingVedlegg => {
+        return {
+          vedleggsnr: attachment.attachmentCode,
+          tittel: attachment.label,
+          url: attachment.attachmentForm ? `${process.env.FYLLUT_BASE_URL}/${attachment.attachmentForm}` : undefined,
+        };
+      }) ?? [],
   };
+
   const result = await fetch(`${baseUrl}/api/ettersending`, {
     body: JSON.stringify(jsonBody),
     method: 'POST',
@@ -65,9 +68,12 @@ const createEttersending = async (formData: FormData) => {
     },
   });
 
-  const resultJson = (await result.json()) as EttersendelseApplication;
+  if (!result.ok) {
+    throw new ApiError('ettersending-error');
+  }
 
-  window.location.href = `${process.env.NEXT_PUBLIC_SENDINN_URL}/${resultJson.innsendingsId}`;
+  const resultJson = (await result.json()) as EttersendelseApplication;
+  return resultJson;
 };
 
 export { createEttersending, downloadFrontpage, fetchArchiveSubjects, fetchForms, fetchNavUnits };

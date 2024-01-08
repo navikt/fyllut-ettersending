@@ -19,7 +19,14 @@ import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import ChooseUser from '../../components/submission/chooseUser';
 import { useFormState } from '../../data/appState';
-import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
+import {
+  EttersendelseApplication,
+  Form,
+  NavUnit,
+  SubmissionType,
+  UnauthenticatedError,
+  isApiError,
+} from '../../data/domain';
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import {
@@ -44,6 +51,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const referrerPage = useReffererPage();
   const { t, i18n } = useTranslation('detaljer');
   const { t: tCommon } = useTranslation('common');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -59,6 +67,17 @@ const Detaljer: NextPage<Props> = (props) => {
     return navUnitsConnectedToForm && !!Object.keys(navUnitsConnectedToForm).length
       ? navUnitsConnectedToForm
       : navUnits;
+  };
+
+  const submitButtonPressed = async () => {
+    try {
+      const ettersending = await createEttersending(formData);
+      router.push(`${process.env.NEXT_PUBLIC_SENDINN_URL}/${ettersending.innsendingsId}`);
+    } catch (error) {
+      if (isApiError(error)) {
+        setErrorMessage(t(error.message));
+      }
+    }
   };
 
   useEffect(() => {
@@ -88,7 +107,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButton: ButtonType = {
     text: tCommon('button.next'),
     external: true,
-    onClick: async () => await createEttersending(formData),
+    onClick: submitButtonPressed,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -113,6 +132,8 @@ const Detaljer: NextPage<Props> = (props) => {
         <Ingress>{form.properties.formNumber}</Ingress>
       </Section>
       <ValidationSummary />
+
+      <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
 
       {isSubmissionAllowed(form) ? (
         formData.submissionType && (

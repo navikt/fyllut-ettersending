@@ -132,20 +132,16 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
 };
 
 const createEttersending = async (idportenToken: string, ettersendingBody: EttersendingRequestBody) => {
-  try {
-    const tokenxToken = await getTokenX(idportenToken);
+  const tokenxToken = await getTokenX(idportenToken);
 
-    const response = await post(
-      `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
-      JSON.stringify(ettersendingBody),
-      { Authorization: `Bearer ${tokenxToken}` },
-    );
+  const response = await post(
+    `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
+    JSON.stringify(ettersendingBody),
+    { Authorization: `Bearer ${tokenxToken}` },
+    true,
+  );
 
-    return response;
-  } catch (e) {
-    logger.error('Could not create ettersending', e as Error);
-    return [];
-  }
+  return response;
 };
 
 const getTokenX = async (idportenToken: string) => {

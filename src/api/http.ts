@@ -31,12 +31,19 @@ const get = async (url: string, headers?: HttpHeaders) => {
   return handleResponse(response, url);
 };
 
-const post = async (url: string, body: BodyInit, headers?: HttpHeaders) => {
+const post = async (
+  url: string,
+  body: BodyInit,
+  headers?: HttpHeaders,
+  returnResponse: boolean = false,
+): Promise<Response> => {
   const response = await fetch(url, {
     method: 'POST',
     headers: getDefaultHeaders(headers),
     body,
   });
+
+  if (returnResponse) return response;
 
   return handleResponse(response, url);
 };
