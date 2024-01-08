@@ -5,7 +5,10 @@
     "types": ["cypress", "@testing-library/cypress", "node"],
     "allowJs": false,
     "strict": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
   },
   "include": ["**/*.ts"]
 }
