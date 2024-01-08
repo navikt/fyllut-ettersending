@@ -127,7 +127,7 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
   try {
     const tokenxToken = await getTokenX(idportenToken);
 
-    const response = await get(
+    const response = await get<EttersendelseApplication[]>(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
       { Authorization: `Bearer ${tokenxToken}` },
     );
@@ -145,9 +145,7 @@ const createEttersending = async (idportenToken: string, ettersendingBody: Etter
   const response = await post<EttersendelseApplication>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
     ettersendingBody,
-    {
-      Authorization: `Bearer ${tokenxToken}`,
-    },
+    { Authorization: `Bearer ${tokenxToken}` },
   );
 
   return response;
