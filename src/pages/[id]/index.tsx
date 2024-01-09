@@ -65,7 +65,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButtonPressed = async () => {
     try {
       const ettersending = await createEttersending(formData);
-      router.push(`${process.env.NEXT_PUBLIC_SENDINN_URL}/${ettersending.innsendingsId}`);
+      router.push(`${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${ettersending.innsendingsId}`);
     } catch (error) {
       setErrorMessage(t('ettersending-error'));
     }
@@ -217,7 +217,10 @@ const redirectBasedOnExistingEttersendinger = (
   res: ServerResponse,
 ) => {
   if (existingEttersendinger.length === 1) {
-    res.setHeader('Location', `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
+    res.setHeader(
+      'Location',
+      `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
+    );
     res.statusCode = 302;
   }
 

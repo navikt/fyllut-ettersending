@@ -47,7 +47,7 @@ describe('digital submission for form2', () => {
 
     cy.wait('@postEttersending');
 
-    cy.url().should('include', `/sendinn/${innsendingsId}`);
+    cy.url().should('include', `/send-inn-frontend/${innsendingsId}`);
   });
 
   it('should show error message when request fails', () => {
@@ -64,7 +64,7 @@ describe('digital submission for form2', () => {
 
     cy.wait('@postEttersending');
 
-    cy.url().should('not.include', `/sendinn/${innsendingsId}`);
+    cy.url().should('not.include', `/send-inn-frontend/${innsendingsId}`);
     cy.findByText('Det oppstod en feil ved ettersending av dokumentasjon').should('be.visible');
   });
 });
