@@ -95,7 +95,7 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.findByRole('checkbox', { name: 'Legeerklæring om alminnelig helsetilstand' }).check();
     cy.findByRole('checkbox', { name: 'Annen dokumentasjon' }).check();
     cy.get('button').contains(TestButtonText.next).click();
-    cy.url().should('include', '/sendinn/bd86463d-ad04-43e8-a80a-9ecd22bae7c0');
+    cy.url().should('include', '/send-inn-frontend/bd86463d-ad04-43e8-a80a-9ecd22bae7c0');
   });
 
   it('fill out + submit, should not redirect to subType-page', () => {
