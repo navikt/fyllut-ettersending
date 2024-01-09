@@ -22,6 +22,7 @@ export default defineConfig({
       SEND_INN_FRONTEND_URL: 'http://127.0.0.1:3200/send-inn-frontend',
       MIN_SIDE_FRONTEND_URL: 'http://127.0.0.1:3200/min-side-frontend',
       FYLLUT_BASE_URL: 'http://127.0.0.1:3200/fyllut',
+      NEXT_PUBLIC_FYLLUT_FRONTEND_URL: 'http://127.0.0.1:3200/fyllut-frontend',
     },
   },
 });
