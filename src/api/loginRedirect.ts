@@ -20,7 +20,7 @@ const getIdPortenToken = async (authHeader?: string, sub?: string | string[] | u
     try {
       await verifyIdportenAccessToken(idportenToken);
     } catch (e) {
-      logger.info('Could not validate idporten token');
+      logger.warn('Could not validate idporten token', e);
       throw new UnauthenticatedError('Could not validate idporten token');
     }
     return idportenToken;
