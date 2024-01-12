@@ -41,16 +41,15 @@ const getForms = async (): Promise<BasicForm[]> => {
 
 const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | undefined> => {
   const startTime = Date.now();
-  let form: FyllutForm | undefined;
+  let form: FyllutForm;
 
   try {
     form = await get<FyllutForm>(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, e as Error);
+    return undefined;
   }
-
-  if (!form) return undefined;
 
   const sortedAttachments = form.attachments.sort((a: Attachment, b: Attachment) => {
     if (b.otherDocumentation) {
