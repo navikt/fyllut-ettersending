@@ -56,7 +56,7 @@ const createEttersending = async (formData: FormData): Promise<EttersendelseAppl
           vedleggsnr: attachment.attachmentCode,
           tittel: attachment.label,
           url: attachment.attachmentForm
-            ? `${process.env.NEXT_PUBLIC_FYLLUT_FRONTEND_URL}/${attachment.attachmentForm}`
+            ? `${process.env.NEXT_PUBLIC_FYLLUT_FRONTEND_URL}/${attachment.attachmentForm}?sub=paper`
             : undefined,
         };
       }) ?? [],
