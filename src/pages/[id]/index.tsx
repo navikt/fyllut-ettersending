@@ -233,7 +233,7 @@ const redirectBasedOnExistingEttersendinger = (
   if (existingEttersendinger.length === 1) {
     return {
       redirect: {
-        permanent: true,
+        permanent: false,
         destination: `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
       },
       props: {},
@@ -243,7 +243,7 @@ const redirectBasedOnExistingEttersendinger = (
   if (existingEttersendinger.length > 1) {
     return {
       redirect: {
-        permanent: true,
+        permanent: false,
         destination: `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`,
       },
       props: {},
