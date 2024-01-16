@@ -47,8 +47,6 @@ const Detaljer: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
-  console.log('form', form);
-
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
   }, []);
