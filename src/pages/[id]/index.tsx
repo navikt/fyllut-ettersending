@@ -165,6 +165,9 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const authHeader = context.req.headers.authorization ?? (context.req.headers.Authorization as string);
+  logger.info(`Authorization header in detail page: ${!!authHeader}`);
+
   // Set cache control header
   const { res, query } = context;
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
@@ -186,8 +189,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale } = context;
   const form = await getForm(id, locale);
 
+  logger.info(JSON.stringify(form));
+
   // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
   if (!form || (query.sub && !isValidSubmissionTypeInUrl(form, query.sub))) {
+    logger.info('Redirecting to not found page');
     return { notFound: true };
   }
 
@@ -195,6 +201,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let existingEttersendinger: EttersendelseApplication[] = [];
   if (idportenToken && form?.properties.formNumber) {
     existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
+    logger.info('Redirecting based on existing ettersendinger');
     redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
   }
 
@@ -209,6 +216,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
+
+  logger.info('Returning props');
 
   return {
     props: { form, existingEttersendinger, id, ...translations },
@@ -237,6 +246,9 @@ const redirectToLogin = (context: GetServerSidePropsContext) => {
   const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
   const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
   const redirect = encodeURIComponent('/fyllut-ettersending' + context.resolvedUrl + referrerQuery);
+
+  logger.info("Redirecting to login page with redirect url: '" + redirect);
+
   return {
     redirect: {
       permanent: false,

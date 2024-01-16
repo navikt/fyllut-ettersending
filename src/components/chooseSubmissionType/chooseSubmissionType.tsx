@@ -1,8 +1,10 @@
 import { Heading, LinkPanel } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import NextLink from 'next/link';
+import { GetServerSidePropsContext } from 'next/types';
 import { SubmissionType } from 'src/data/domain';
 import { Paths } from 'src/data/paths';
+import logger from '../../utils/logger';
 import Layout from '../layout/layout';
 import styles from './chooseSubmissionType.module.css';
 
@@ -33,5 +35,15 @@ const ChooseSubmissionType = ({ id }: Props) => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const authHeaderUppercase = context.req.headers.Authorization;
+  const authHeaderLowercase = context.req.headers.authorization;
+
+  logger.info(`Authorization header in choose submission page: ${!!authHeaderUppercase}`);
+  logger.info(`Authorization header in choose submission page: ${!!authHeaderLowercase}`);
+
+  return { props: {} };
+}
 
 export default ChooseSubmissionType;
