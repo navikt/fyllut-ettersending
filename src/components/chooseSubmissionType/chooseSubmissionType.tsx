@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { GetServerSidePropsContext } from 'next/types';
 import { SubmissionType } from 'src/data/domain';
 import { Paths } from 'src/data/paths';
-import logger from 'src/utils/logger';
+import logger from '../../utils/logger';
 import Layout from '../layout/layout';
 import styles from './chooseSubmissionType.module.css';
 
