@@ -167,9 +167,6 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const authHeader = context.req.headers.authorization ?? (context.req.headers.Authorization as string);
-  logger.info(`Authorization header in detail page: ${!!authHeader}`);
-
   // Set cache control header
   const { res, query } = context;
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
