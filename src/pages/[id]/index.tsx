@@ -188,11 +188,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale } = context;
   const form = await getForm(id, locale);
 
-  logger.info(JSON.stringify(form));
-
   // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
   if (!form || (query.sub && !isValidSubmissionTypeInUrl(form, query.sub))) {
-    logger.info('Redirecting to not found page');
+    logger.info('Form does not exist or the submission type is not the same as the valid submission types in the form');
     return { notFound: true };
   }
 
@@ -201,7 +199,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (idportenToken && form?.properties.formNumber) {
     existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
     logger.info('Redirecting based on existing ettersendinger');
-    redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
+    const redirect = redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
+    if (redirect) return redirect;
   }
 
   if (!query.sub && areBothSubmissionTypesAllowed(form)) {
@@ -216,8 +215,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
 
-  logger.info('Returning props');
-
   return {
     props: { form, existingEttersendinger, id, ...translations },
   };
@@ -228,18 +225,23 @@ const redirectBasedOnExistingEttersendinger = (
   res: ServerResponse,
 ) => {
   if (existingEttersendinger.length === 1) {
-    res.setHeader(
-      'Location',
-      `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
-    );
-    res.statusCode = 302;
-    res.end();
+    return {
+      redirect: {
+        permanent: true,
+        destination: `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
+      },
+      props: {},
+    };
   }
 
   if (existingEttersendinger.length > 1) {
-    res.setHeader('Location', `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`);
-    res.statusCode = 302;
-    res.end();
+    return {
+      redirect: {
+        permanent: true,
+        destination: `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`,
+      },
+      props: {},
+    };
   }
 };
 
