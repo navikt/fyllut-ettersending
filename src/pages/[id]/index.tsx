@@ -47,6 +47,8 @@ const Detaljer: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
+  console.log('form', form);
+
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
   }, []);
@@ -234,11 +236,13 @@ const redirectBasedOnExistingEttersendinger = (
       `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
     );
     res.statusCode = 302;
+    res.end();
   }
 
   if (existingEttersendinger.length > 1) {
     res.setHeader('Location', `${process.env.MIN_SIDE_FRONTEND_URL}/varsler`);
     res.statusCode = 302;
+    res.end();
   }
 };
 
