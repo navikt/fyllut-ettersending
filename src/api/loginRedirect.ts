@@ -6,7 +6,7 @@ import logger from '../utils/logger';
 
 const getIdPortenTokenFromContext = async (context: GetServerSidePropsContext) => {
   const sub = context.query?.sub;
-  const authHeader = context.req.headers.authorization;
+  const authHeader = context.req.headers.authorization ?? (context.req.headers.Authorization as string);
 
   return getIdPortenToken(authHeader, sub);
 };
