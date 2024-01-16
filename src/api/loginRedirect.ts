@@ -4,10 +4,14 @@ import { SubmissionType, UnauthenticatedError } from 'src/data/domain';
 import { isLocalDevelopment } from 'src/utils/utils';
 import logger from '../utils/logger';
 
-const getIdPortenToken = async (context: GetServerSidePropsContext) => {
+const getIdPortenTokenFromContext = async (context: GetServerSidePropsContext) => {
   const sub = context.query?.sub;
   const authHeader = context.req.headers.authorization;
 
+  return getIdPortenToken(authHeader, sub);
+};
+
+const getIdPortenToken = async (authHeader?: string, sub?: string | string[] | undefined) => {
   if (isLocalDevelopment()) {
     logger.info('Mocking idporten jwt and pid');
     return 'mock-idporten-token';
@@ -16,7 +20,7 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
     try {
       await verifyIdportenAccessToken(idportenToken);
     } catch (e) {
-      logger.info('Could not validate idporten token');
+      logger.warn('Could not validate idporten token', e);
       throw new UnauthenticatedError('Could not validate idporten token');
     }
     return idportenToken;
@@ -26,4 +30,4 @@ const getIdPortenToken = async (context: GetServerSidePropsContext) => {
   }
 };
 
-export { getIdPortenToken };
+export { getIdPortenToken, getIdPortenTokenFromContext };

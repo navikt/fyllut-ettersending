@@ -8,10 +8,10 @@ import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import { getEttersendinger, getForm } from 'src/api/apiService';
-import { getIdPortenToken } from 'src/api/loginRedirect';
+import { getIdPortenTokenFromContext } from 'src/api/loginRedirect';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { fetchNavUnits } from '../../api/apiClient';
+import { createEttersending, fetchNavUnits } from '../../api/apiClient';
 import ChooseAttachments from '../../components/attachment/chooseAttachments';
 import ButtonGroup from '../../components/button/buttonGroup';
 import { ButtonType } from '../../components/button/buttonGroupElement';
@@ -24,7 +24,6 @@ import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import {
   areBothSubmissionTypesAllowed,
-  createSubmissionUrl,
   getDefaultSubmissionType,
   isSubmissionAllowed,
   isSubmissionTypePaper,
@@ -45,6 +44,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const referrerPage = useReffererPage();
   const { t, i18n } = useTranslation('detaljer');
   const { t: tCommon } = useTranslation('common');
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -60,6 +60,15 @@ const Detaljer: NextPage<Props> = (props) => {
     return navUnitsConnectedToForm && !!Object.keys(navUnitsConnectedToForm).length
       ? navUnitsConnectedToForm
       : navUnits;
+  };
+
+  const submitButtonPressed = async () => {
+    try {
+      const ettersending = await createEttersending(formData);
+      router.push(`${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${ettersending.innsendingsId}`);
+    } catch (error) {
+      setErrorMessage(t('ettersending-error'));
+    }
   };
 
   useEffect(() => {
@@ -89,7 +98,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButton: ButtonType = {
     text: tCommon('button.next'),
     external: true,
-    path: createSubmissionUrl(form, formData),
+    onClick: submitButtonPressed,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -115,6 +124,8 @@ const Detaljer: NextPage<Props> = (props) => {
       </Section>
       <ValidationSummary />
 
+      <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
+
       {isSubmissionAllowed(form) ? (
         formData.submissionType && (
           <>
@@ -125,6 +136,7 @@ const Detaljer: NextPage<Props> = (props) => {
                 shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
               />
             )}
+
             <ButtonGroup
               buttons={[
                 formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
@@ -159,7 +171,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Attempt to verify the token and redirect to login if necessary
   let idportenToken = '';
   try {
-    idportenToken = (await getIdPortenToken(context)) as string;
+    idportenToken = (await getIdPortenTokenFromContext(context)) as string;
   } catch (ex) {
     if (ex instanceof UnauthenticatedError) {
       return redirectToLogin(context);
@@ -205,7 +217,10 @@ const redirectBasedOnExistingEttersendinger = (
   res: ServerResponse,
 ) => {
   if (existingEttersendinger.length === 1) {
-    res.setHeader('Location', `${process.env.SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`);
+    res.setHeader(
+      'Location',
+      `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${existingEttersendinger[0].innsendingsId}`,
+    );
     res.statusCode = 302;
   }
 

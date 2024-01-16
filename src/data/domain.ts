@@ -1,5 +1,13 @@
 export class UnauthenticatedError extends Error {}
+export const isHttpError = (err: unknown): err is HttpError => err instanceof HttpError;
+export class HttpError extends Error {
+  public readonly status: number;
 
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
 export interface BasicForm {
   _id: string;
   modified: string;
@@ -15,6 +23,24 @@ export interface FyllutListFormProperties {
   skjemanummer?: string;
   innsending?: AllowedSubmissionType;
   ettersending?: AllowedSubmissionType;
+}
+
+export interface FyllutFoerstesidePdf {
+  foersteside: string; // Base64
+}
+
+export interface FyllytFormProperties {
+  skjemanummer?: string;
+  tema: string;
+  innsending?: AllowedSubmissionType;
+  ettersending?: AllowedSubmissionType;
+  enhetstyper?: string[];
+  enhetMaVelgesVedPapirInnsending?: boolean;
+}
+
+export interface FyllutForm extends BasicForm {
+  properties: FyllytFormProperties;
+  attachments: Attachment[];
 }
 
 // For the FormSearch component
@@ -38,6 +64,7 @@ export interface Attachment {
   otherDocumentation: boolean;
   attachmentTitle: string;
   attachmentCode: string;
+  attachmentForm?: string;
 }
 
 export type AllowedSubmissionType = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';
@@ -99,6 +126,20 @@ export interface FormData {
 export interface DownloadCoverPageRequestBody {
   formData: FormData;
   title: string;
+}
+
+export interface EttersendingRequestBody {
+  tittel?: string;
+  skjemanr: string;
+  sprak: string;
+  tema: string;
+  vedleggsListe: EttersendingVedlegg[];
+}
+
+export interface EttersendingVedlegg {
+  vedleggsnr: string;
+  tittel?: string;
+  url?: string;
 }
 
 export enum SubmissionType {

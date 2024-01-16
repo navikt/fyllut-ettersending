@@ -15,7 +15,10 @@ describe('redirects correctly based on existing ettersendelse applications', () 
   it('should redirect to send-inn with 1 application', () => {
     cy.mocksUseRouteVariant('get-ettersendingssoknader:one');
     cy.visit('/form2?sub=digital');
-    cy.url().should('equal', `${Cypress.env('SEND_INN_FRONTEND_URL')}/bd86463d-ad04-43e8-a80a-9ecd22bae7c0/`);
+    cy.url().should(
+      'equal',
+      `${Cypress.env('NEXT_PUBLIC_SEND_INN_FRONTEND_URL')}/bd86463d-ad04-43e8-a80a-9ecd22bae7c0/`,
+    );
   });
 
   it('should redirect to min-side varsler with 2 or more applications', () => {
