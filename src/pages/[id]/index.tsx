@@ -22,6 +22,7 @@ import { useFormState } from '../../data/appState';
 import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
+import logger from '../../utils/logger';
 import {
   areBothSubmissionTypesAllowed,
   getDefaultSubmissionType,
@@ -172,8 +173,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let idportenToken = '';
   try {
     idportenToken = (await getIdPortenTokenFromContext(context)) as string;
-  } catch (ex) {
+  } catch (ex: unknown) {
+    logger.info(`Failed to verify token`);
     if (ex instanceof UnauthenticatedError) {
+      logger.info(`Failed to verify token. Redirecting to login.`);
       return redirectToLogin(context);
     }
   }
