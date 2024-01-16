@@ -188,9 +188,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale } = context;
   const form = await getForm(id, locale);
 
-  // If the form doesn't exist or the submission type is not the same as the valid submission types in the form, return 404
-  if (!form || (query.sub && !isValidSubmissionTypeInUrl(form, query.sub))) {
-    logger.info('Form does not exist or the submission type is not the same as the valid submission types in the form');
+  if (!form) {
+    logger.info(`Failed to get form, returning not found`);
+    return { notFound: true };
+  }
+
+  if (query.sub && !isValidSubmissionTypeInUrl(form, query.sub)) {
+    logger.info(
+      `Submission type is not the same as the valid submission types in the form ${form.path}, returning not found`,
+    );
     return { notFound: true };
   }
 
