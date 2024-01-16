@@ -65,7 +65,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButtonPressed = async () => {
     try {
       const ettersending = await createEttersending(formData);
-      router.push(`${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${ettersending.innsendingsId}`);
+      window.location.href = `${process.env.NEXT_PUBLIC_SEND_INN_FRONTEND_URL}/${ettersending.innsendingsId}`;
     } catch (error) {
       setErrorMessage(t('ettersending-error'));
     }
