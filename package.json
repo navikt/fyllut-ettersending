@@ -38,7 +38,6 @@
     "winston": "^3.12.0"
   },
   "devDependencies": {
-    "@cypress/browserify-preprocessor": "^3.0.2",
     "@mocks-server/cypress-commands": "^6.1.1",
     "@mocks-server/main": "^4.1.0",
     "@testing-library/cypress": "^10.0.1",
