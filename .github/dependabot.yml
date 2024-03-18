@@ -1,7 +1,14 @@
 version: 2
+registries:
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{secrets.READER_TOKEN}}
 updates:
   - package-ecosystem: 'npm'
     directory: '/'
+    registries:
+      - npm-github
     schedule:
       interval: 'monthly'
     open-pull-requests-limit: 20
@@ -12,6 +19,17 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+      navikt-aksel:
+        patterns:
+          - '@navikt/ds-*'
+          - '@navikt/aksel-icons'
+        update-types:
+          - 'major'
+      typescript-eslint:
+        patterns: 
+          - '@typescript-eslint/*'
+        update-types:
+          - 'major'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
