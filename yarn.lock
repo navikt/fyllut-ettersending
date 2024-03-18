@@ -682,10 +682,12 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/5.7.6/fbe6fee9d2df3add79e38162a491972814a4d625#fbe6fee9d2df3add79e38162a491972814a4d625"
   integrity sha512-0zDth/bhegFthLK9FJPLAZayVAgGb+D4uFpfVRPKcu6fq2nBpcLttytoBhC6kPFe5pnBQmI6cgin4sZIbW5H/g==
 
-"@navikt/fnrvalidator@^1.3.3":
-  version "1.3.3"
-  resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/1.3.3/8414963a30e59e3056c9befea7bb022498a2a742#8414963a30e59e3056c9befea7bb022498a2a742"
-  integrity sha512-GsLa9ioYPGsDMBHcgKUNoYbZor09KyFIqSaWy8jy1I7f06q6DgUhdpZuRTHLVRCPjWqF2aLzKtvAfrw5dSeakg==
+"@navikt/fnrvalidator@^2.0.7":
+  version "2.0.7"
+  resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.0.7/89ceb6a448fbd068e4ad8ff7a414705bd0ea6315#89ceb6a448fbd068e4ad8ff7a414705bd0ea6315"
+  integrity sha512-3TQ2NLUk1rstZEoF65r9dr4RZxvmBEcXNKfA1dcZNpLw0SAb89WwcRpUrZMhd+7UdrfmKvfoTBvsfBwMoP9cyw==
+  dependencies:
+    typescript "^5.4.2"
 
 "@navikt/nav-dekoratoren-moduler@^2.1.6":
   version "2.1.6"
