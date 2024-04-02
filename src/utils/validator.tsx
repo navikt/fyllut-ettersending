@@ -1,4 +1,4 @@
-import fnrValidator from '@navikt/fnrvalidator';
+import { idnr } from '@navikt/fnrvalidator';
 import { TFunction } from 'next-i18next';
 import { FormData, KeyValue, SubmissionType, UserType } from '../data/domain';
 import { hasOtherAttachment } from './formDataUtil';
@@ -24,7 +24,7 @@ const validateFormData = (formData: FormData, t: TFunction) => {
     } else if (formData.userData?.type === UserType.hasSocialNumber) {
       if (!formData.userData?.socialSecurityNo) {
         formErrors.socialSecurityNo = t('socialSecurityNoIsEmpty');
-      } else if (fnrValidator?.idnr(formData.userData.socialSecurityNo).status === 'invalid') {
+      } else if (idnr(formData.userData.socialSecurityNo).status === 'invalid') {
         formErrors.socialSecurityNo = t('socialSecurityNo');
       }
     } else if (formData.userData?.type === UserType.noSocialNumber) {
