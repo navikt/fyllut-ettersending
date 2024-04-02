@@ -2,6 +2,9 @@ const { i18n } = require('./next-i18next.config');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: ['@navikt/ds-react', '@navikt/aksel-icons'],
+  },
   basePath: '/fyllut-ettersending',
   reactStrictMode: true,
   output: 'standalone',
