@@ -8,6 +8,10 @@ metadata:
 spec:
   image: {{image}}
   port: 3002
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: nodejs
   liveness:
     path: "/fyllut-ettersending/api/internal/isalive"
     port: 3002
