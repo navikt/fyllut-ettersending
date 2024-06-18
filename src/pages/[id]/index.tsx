@@ -19,7 +19,14 @@ import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import ChooseUser from '../../components/submission/chooseUser';
 import { useFormState } from '../../data/appState';
-import { EttersendelseApplication, Form, NavUnit, SubmissionType, UnauthenticatedError } from '../../data/domain';
+import {
+  EttersendelseApplication,
+  Form,
+  NavUnit,
+  SubmissionType,
+  UnauthenticatedError,
+  UserType,
+} from '../../data/domain';
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
@@ -82,6 +89,7 @@ const Detaljer: NextPage<Props> = (props) => {
         submissionType: getDefaultSubmissionType(form, router),
         formId: id,
         language,
+        userData: form.properties.hideUserTypes ? { type: UserType.none } : undefined,
       });
     } else if (formData.language !== language) {
       updateFormDataLanguage(language, form);
@@ -135,6 +143,7 @@ const Detaljer: NextPage<Props> = (props) => {
               <ChooseUser
                 navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
                 shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+                shouldRenderUserTypes={!form.properties.hideUserTypes}
               />
             )}
 
