@@ -10,7 +10,8 @@
     "navUnitTypes": [],
     "tema": "BIL",
     "navUnitMustBeSelected": null,
-    "enhetstyper": ["YTA"]
+    "enhetstyper": ["YTA"],
+    "hideUserTypes": true
   },
   "attachments": [
     {
