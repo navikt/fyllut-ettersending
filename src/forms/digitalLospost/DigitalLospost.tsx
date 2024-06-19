@@ -1,4 +1,4 @@
-import { Skeleton, TextField, UNSAFE_Combobox } from '@navikt/ds-react';
+import { BodyLong, Skeleton, TextField, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useReducer } from 'react';
 import { fetchArchiveSubjects } from '../../api/apiClient';
@@ -29,12 +29,26 @@ const DigitalLospostForm = ({ subject }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const ingress = useCallback(() => {
+    return (
+      <BodyLong size="large" className={styles.ingress}>
+        {t('ingress')}
+      </BodyLong>
+    );
+  }, [t]);
+
   if (subjects.status !== 'ready') {
-    return <Skeleton height="15rem" />;
+    return (
+      <>
+        {ingress()}
+        <Skeleton height="15rem" />
+      </>
+    );
   }
 
   return (
     <>
+      {ingress()}
       <TextField
         label={t('document-title.label')}
         description={t('document-title.description')}
