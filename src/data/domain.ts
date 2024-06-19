@@ -36,6 +36,7 @@ export interface FyllytFormProperties {
   ettersending?: AllowedSubmissionType;
   enhetstyper?: string[];
   enhetMaVelgesVedPapirInnsending?: boolean;
+  hideUserTypes?: boolean;
 }
 
 export interface FyllutForm extends BasicForm {
@@ -76,6 +77,7 @@ export interface FormProperties {
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
+  hideUserTypes?: boolean;
 }
 
 export interface ApiNavUnit {
@@ -158,6 +160,7 @@ export enum UserType {
   hasSocialNumber = 'hasSocialNumber',
   noSocialNumber = 'noSocialNumber',
   other = 'other',
+  none = 'none',
 }
 
 export interface UserData {
