@@ -13,5 +13,9 @@
   "navUnitContact": "Du må oppgi om du har vært i kontakt med NAV om denne saken tidligere",
   "navUnitContactSelect": "Du må velge hvilken NAV-enhet har du vært i kontakt med",
   "navUnit": "Du må velge hvilken NAV-enhet som skal motta innsendingen",
-  "attachments": "Du må velge minst ett dokument som skal ettersendes"
+  "attachments": "Du må velge minst ett dokument som skal ettersendes",
+  "digitalLospost": {
+    "subject": "Du må velge tema for innsendingen",
+    "documentTitle": "Du må fylle ut hvilken dokumentasjon vil du sende til NAV"
+  }
 }

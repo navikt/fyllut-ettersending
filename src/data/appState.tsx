@@ -1,14 +1,14 @@
 import { useTranslation } from 'next-i18next';
 import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { validateFormData } from '../utils/validator';
-import { Form, FormData, KeyValue, UserData } from './domain';
+import { Form, FormData, FormDataPage, KeyValue, UserData } from './domain';
 
 interface AppStateType {
   formData: FormData;
-  updateFormData: (values: FormData) => void;
+  updateFormData: (values: Partial<FormData>) => void;
   updateUserData: (values: UserData) => void;
   updateFormDataLanguage: (language: string, form: Form) => void;
-  resetFormData: (formData?: FormData) => void;
+  resetFormData: (formData?: Partial<FormData>) => void;
   errors: KeyValue;
   setValidate: (valid: boolean) => boolean;
   validationSummaryRef: React.RefObject<HTMLDivElement>;
@@ -23,10 +23,11 @@ export function useFormState() {
 
 type Props = {
   children: ReactNode;
+  page: FormDataPage;
 };
 
-export function FormDataProvider({ children }: Props) {
-  const [formData, setFormData] = useState<FormData>({});
+export function FormDataProvider({ children, page }: Props) {
+  const [formData, setFormData] = useState<FormData>({ page });
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
   const { t } = useTranslation('validator');
@@ -43,7 +44,7 @@ export function FormDataProvider({ children }: Props) {
     }
   }, [validateState, formData, t]);
 
-  const updateFormData = (values: FormData) => {
+  const updateFormData = (values: Partial<FormData>) => {
     const data = {
       ...formData,
       ...values,
@@ -93,12 +94,12 @@ export function FormDataProvider({ children }: Props) {
     return true;
   };
 
-  const resetFormData = (formData?: FormData) => {
+  const resetFormData = (data?: Partial<FormData>) => {
     setValidateState(false);
-    if (formData) {
-      setFormData({ ...formData, attachments: [] });
+    if (data) {
+      setFormData({ page: formData.page, ...data, attachments: [] });
     } else {
-      setFormData({});
+      setFormData({ page: formData.page });
     }
 
     setErrors({});

@@ -105,6 +105,7 @@ module.exports = [
       {
         id: 'all',
         type: 'json',
+        delay: 2000,
         options: {
           status: 200,
           body: archiveSubjects,

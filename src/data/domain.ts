@@ -109,7 +109,11 @@ export interface KeyValue {
   [key: string]: string;
 }
 
-export interface FormData {
+export type FormDataPage = 'digital-lospost' | 'other';
+
+export type FormData = { page: FormDataPage } & OtherFormdata & DigitalLospostFormData;
+
+export interface OtherFormdata {
   formId?: string;
   attachments?: Attachment[];
   navUnitContact?: boolean;
@@ -120,6 +124,13 @@ export interface FormData {
   submissionType?: SubmissionType;
   title?: string;
   userData?: UserData;
+  language?: string;
+}
+
+export interface DigitalLospostFormData {
+  title?: string;
+  subject?: string;
+  documentTitle?: string;
   language?: string;
 }
 
@@ -140,6 +151,13 @@ export interface EttersendingVedlegg {
   vedleggsnr: string;
   tittel?: string;
   url?: string;
+}
+
+export interface LospostRequestBody {
+  soknadTittel: string;
+  tema: string;
+  dokumentTittel: string;
+  sprak: string;
 }
 
 export enum SubmissionType {

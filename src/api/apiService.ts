@@ -11,6 +11,7 @@ import {
   FyllutForm,
   FyllutListForm,
   KeyValue,
+  LospostRequestBody,
   NavUnit,
 } from '../data/domain';
 import logger from '../utils/logger';
@@ -150,6 +151,19 @@ const createEttersending = async (idportenToken: string, ettersendingBody: Etter
   return response;
 };
 
+const createLospost = async (idportenToken: string, body: LospostRequestBody) => {
+  const tokenxToken = await getTokenX(idportenToken);
+
+  const response = await post<Response>(
+    `${process.env.INNSENDING_API_URL}/fyllut/v1/lospost`,
+    body,
+    { Authorization: `Bearer ${tokenxToken}` },
+    { rawResponse: true },
+  );
+
+  return response;
+};
+
 const getTokenX = async (idportenToken: string) => {
   let tokenxToken = 'mock-tokenx-token';
   if (!isLocalDevelopment()) {
@@ -161,4 +175,13 @@ const getTokenX = async (idportenToken: string) => {
   return tokenxToken;
 };
 
-export { createEttersending, downloadFrontPage, getArchiveSubjects, getEttersendinger, getForm, getForms, getNavUnits };
+export {
+  createEttersending,
+  createLospost,
+  downloadFrontPage,
+  getArchiveSubjects,
+  getEttersendinger,
+  getForm,
+  getForms,
+  getNavUnits,
+};
