@@ -61,4 +61,43 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'post-lospost',
+    url: '/fyllut/v1/lospost',
+    method: 'POST',
+    variants: [
+      {
+        id: 'success',
+        type: 'middleware',
+        options: {
+          middleware: (req, res) => {
+            const innsendingsId = '123';
+            const { soknadTittel, tema, dokumentTittel, sprak } = req.body;
+            res.status(201);
+            res.setHeader('location', `http://127.0.0.1:3200/send-inn-frontend/${innsendingsId}`);
+            res.send({
+              innsendingsId,
+              tema,
+              tittel: soknadTittel,
+              spraak: sprak,
+              vedleggsListe: [
+                {
+                  tittel: dokumentTittel,
+                  vedleggsnr: 'N6',
+                },
+              ],
+            });
+          },
+        },
+      },
+      {
+        id: 'failure',
+        type: 'json',
+        options: {
+          status: 500,
+          body: errorResponse,
+        },
+      },
+    ],
+  },
 ];
