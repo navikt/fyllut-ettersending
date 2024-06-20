@@ -83,6 +83,10 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (process.env.NAIS_CLUSTER_NAME === 'prod-gcp') {
+    // digital løspost not available in production yet
+    return { notFound: true };
+  }
   const { tema } = context.query as { tema: string };
   // Attempt to verify the token and redirect to login if necessary
   try {
