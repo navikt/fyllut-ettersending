@@ -26,7 +26,7 @@ const validateFormData = (formData: FormData, t: TFunction) => {
         formErrors.subjectOfSubmission = t('subjectOfSubmission');
       }
 
-      if (!formData.userData?.type) {
+      if (!formData.userData?.type && formData.userData?.type !== UserType.none) {
         formErrors.userType = t('userType');
       } else if (formData.userData?.type === UserType.hasSocialNumber) {
         if (!formData.userData?.socialSecurityNo) {

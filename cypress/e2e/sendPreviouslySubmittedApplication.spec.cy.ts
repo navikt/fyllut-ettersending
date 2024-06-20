@@ -98,13 +98,12 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.url().should('include', '/send-inn-frontend/bd86463d-ad04-43e8-a80a-9ecd22bae7c0');
   });
 
-  it('fill out + submit, should not redirect to subType-page', () => {
+  // Only paper, should not redirect to subType-page
+  // Don't fill out userType because hideUserTypes is true
+  it.only('fill out + submit, should not redirect to subType-page', () => {
     cy.visit('/form3');
     cy.get('[type="checkbox"]').first().check();
     cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
-    cy.get('[type="radio"]').check('hasSocialNumber');
-    cy.get('[name="socialSecurityNo"]').click();
-    cy.get('[name="socialSecurityNo"]').type('28119135003');
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
   });

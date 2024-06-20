@@ -68,6 +68,9 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
       submissionType: form.properties.ettersending ?? 'PAPIR_OG_DIGITAL',
       navUnitTypes: form.properties.enhetstyper ?? [],
       subjectOfSubmission: form.properties.tema,
+      ...(form.properties.hideUserTypes && {
+        hideUserTypes: form.properties.hideUserTypes,
+      }),
       ...(form.properties.enhetMaVelgesVedPapirInnsending && {
         navUnitMustBeSelected: form.properties.enhetMaVelgesVedPapirInnsending,
       }),
