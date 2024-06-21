@@ -83,7 +83,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (process.env.NAIS_CLUSTER_NAME === 'prod-gcp') {
+  if (process.env.APP_ENV === 'production') {
     // digital løspost not available in production yet
     return { notFound: true };
   }
