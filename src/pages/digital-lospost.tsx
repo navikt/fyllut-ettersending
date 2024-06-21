@@ -109,7 +109,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const redirectToLogin = (context: GetServerSidePropsContext) => {
   const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
   const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
-  const redirect = encodeURIComponent('/fyllut-ettersending' + context.resolvedUrl + referrerQuery);
+  const locale = context.locale && context.locale !== 'nb' ? `/${context.locale}` : '';
+  const redirect = encodeURIComponent(`/fyllut-ettersending${locale}` + context.resolvedUrl + referrerQuery);
 
   logger.info("Redirecting to login page with redirect url: '" + redirect);
 
