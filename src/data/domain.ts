@@ -115,6 +115,8 @@ export type FormDataPage = 'digital-lospost' | 'other';
 
 export type FormData = { page: FormDataPage } & OtherFormdata & DigitalLospostFormData;
 
+// `OtherFormData` brukes ved løspost (papir) og ettersending på valgt skjema.
+// Bør splittes opp for å tydeliggjøre hvilke skjemafelter som bruker hvor.
 export interface OtherFormdata {
   formId?: string;
   attachments?: Attachment[];
