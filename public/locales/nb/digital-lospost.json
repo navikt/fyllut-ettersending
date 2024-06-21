@@ -1,0 +1,12 @@
+{
+  "title": "Send dokumenter til NAV",
+  "ingress": "Her kommer det en beskrivelse.",
+  "document-title": {
+    "label": "Hvilken dokumentasjon vil du sende til NAV?",
+    "description": "Gi dokumentet et beskrivende navn"
+  },
+  "subject": {
+    "label": "Hva gjelder innsendingen?"
+  },
+  "lospost-error": "Det oppstod en feil ved innsending av dokumentasjon"
+}

@@ -15,6 +15,10 @@ type HttpHeaders = {
   [header: string]: string | string[] | undefined;
 };
 
+type HttpOptions = {
+  rawResponse?: boolean;
+};
+
 const getDefaultHeaders = (headers?: HttpHeaders) => {
   const defaultHeaders = {
     'Content-Type': MimeType.JSON,
@@ -33,17 +37,17 @@ const get = async <T>(url: string, headers?: HttpHeaders): Promise<T> => {
   return await handleResponse(response);
 };
 
-const post = async <T>(url: string, body: object, headers?: HttpHeaders): Promise<T> => {
+const post = async <T>(url: string, body: object, headers?: HttpHeaders, opts?: HttpOptions): Promise<T> => {
   const response = await fetch(url, {
     method: 'POST',
     headers: getDefaultHeaders(headers),
     body: JSON.stringify(body),
   });
 
-  return await handleResponse(response);
+  return await handleResponse(response, opts?.rawResponse);
 };
 
-const handleResponse = async (response: Response) => {
+const handleResponse = async (response: Response, rawResponse: boolean = false) => {
   if (!response.ok) {
     if (response.status === 401) {
       throw new UnauthenticatedError(response.statusText);
@@ -62,7 +66,9 @@ const handleResponse = async (response: Response) => {
     throw new HttpError(errorMessage || response.statusText, response.status);
   }
 
-  if (isResponseType(response, MimeType.JSON)) {
+  if (rawResponse) {
+    return response;
+  } else if (isResponseType(response, MimeType.JSON)) {
     return response.json();
   } else if (isResponseType(response, MimeType.TEXT)) {
     return await response.text();

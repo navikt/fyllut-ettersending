@@ -11,7 +11,8 @@
       "get-form-1:success",
       "get-form-2:success",
       "get-form-3:success",
-      "post-ettersending:success"
+      "post-ettersending:success",
+      "post-lospost:success"
     ]
   }
 ]

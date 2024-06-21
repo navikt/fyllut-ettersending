@@ -13,5 +13,9 @@
   "navUnitContact": "You have to state whether you have been in contact with NAV about this matter previously",
   "navUnitContactSelect": "You have to select which NAV unit you have been in contact with",
   "navUnit": "You have to choose which NAV unit will receive the submission",
-  "attachments": "You have to select at least one document to submit"
+  "attachments": "You have to select at least one document to submit",
+  "digitalLospost": {
+    "subject": "You have to choose topic for the submission",
+    "documentTitle": "You have to fill in what documentation you want to send to NAV"
+  }
 }
