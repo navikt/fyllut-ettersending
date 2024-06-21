@@ -90,7 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { tema } = context.query as { tema: string };
   // Attempt to verify the token and redirect to login if necessary
   try {
-    await getIdPortenTokenFromContext(context);
+    await getIdPortenTokenFromContext(context, true);
   } catch (ex: unknown) {
     logger.debug(`Failed to verify token`);
     if (ex instanceof UnauthenticatedError) {

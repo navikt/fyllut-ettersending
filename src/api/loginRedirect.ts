@@ -4,8 +4,8 @@ import { SubmissionType, UnauthenticatedError } from 'src/data/domain';
 import { isLocalDevelopment } from 'src/utils/utils';
 import logger from '../utils/logger';
 
-const getIdPortenTokenFromContext = async (context: GetServerSidePropsContext) => {
-  const sub = context.query?.sub;
+const getIdPortenTokenFromContext = async (context: GetServerSidePropsContext, authRequired = false) => {
+  const sub = authRequired ? SubmissionType.digital : context.query?.sub;
   const authHeader = context.req.headers.authorization;
 
   return getIdPortenToken(authHeader, sub);
