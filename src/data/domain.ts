@@ -131,9 +131,9 @@ export interface OtherFormdata {
   language?: string;
 }
 
+type Subject = { value: string; label: string };
 export interface DigitalLospostFormData {
-  title?: string;
-  subject?: string;
+  subject?: Subject;
   documentTitle?: string;
   language?: string;
 }
