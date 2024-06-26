@@ -2,8 +2,14 @@ import { Select } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { LanguageCode } from 'src/data/domain';
+import { languageCodeMap, languageSortOrder } from 'src/utils/language';
 
-const LanguageSelect = () => {
+interface LanguageSelectProps {
+  publishedLanguages?: LanguageCode[];
+}
+
+const LanguageSelect = ({ publishedLanguages = ['no', 'en', 'nn'] }: LanguageSelectProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { pathname, asPath, query, locale } = router;
@@ -14,9 +20,13 @@ const LanguageSelect = () => {
 
   return (
     <Select label={t('language-select.label')} hideLabel value={locale} onChange={onChange}>
-      <option value="nb">Norsk bokmål</option>
-      <option value="nn">Norsk nynorsk</option>
-      <option value="en">English</option>
+      {publishedLanguages
+        ?.sort((a, b) => languageSortOrder[a] - languageSortOrder[b])
+        .map((lang) => (
+          <option key={lang} value={lang}>
+            {languageCodeMap[lang]}
+          </option>
+        ))}
     </Select>
   );
 };

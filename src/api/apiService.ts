@@ -1,4 +1,5 @@
 import { getTokenxToken } from 'src/auth/getTokenXToken';
+import { toValidLanguageCodes } from 'src/utils/language';
 import { isLocalDevelopment } from 'src/utils/utils';
 import {
   ApiNavUnit,
@@ -68,6 +69,7 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
       submissionType: form.properties.ettersending ?? 'PAPIR_OG_DIGITAL',
       navUnitTypes: form.properties.enhetstyper ?? [],
       subjectOfSubmission: form.properties.tema,
+      publishedLanguages: ['no', ...toValidLanguageCodes(form.properties.publishedLanguages ?? [])],
       ...(form.properties.hideUserTypes && {
         hideUserTypes: form.properties.hideUserTypes,
       }),

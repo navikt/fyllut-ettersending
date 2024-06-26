@@ -34,4 +34,16 @@ describe('Language select', () => {
     cy.findByRole('combobox', { name: 'Velg språk' }).select('English');
     cy.findByRole('checkbox', { name: 'Statement from an ophthalmologist' }).should('exist');
   });
+
+  it('has default language when publishedLanguages is not set in form', () => {
+    cy.visit('/form1?sub=paper');
+    cy.findByRole('combobox', { name: 'Velg språk' }).find('option:selected').should('have.text', 'Norsk bokmål');
+    cy.findByRole('combobox', { name: 'Velg språk' }).find('option').should('have.length', 1);
+  });
+
+  it('has 3 languages when 2 publishedLanguages is set in form', () => {
+    cy.visit('/form2?sub=paper');
+    cy.findByRole('combobox', { name: 'Velg språk' }).find('option:selected').should('have.text', 'Norsk bokmål');
+    cy.findByRole('combobox', { name: 'Velg språk' }).find('option').should('have.length', 3);
+  });
 });
