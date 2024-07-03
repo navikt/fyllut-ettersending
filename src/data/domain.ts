@@ -169,6 +169,13 @@ export enum SubmissionType {
   paper = 'paper',
 }
 
+export const EnvQualifier = {
+  preprodIntern: 'preprodIntern',
+  preprodAnsatt: 'preprodAnsatt',
+  local: 'local',
+} as const;
+export type EnvQualifierType = (typeof EnvQualifier)[keyof typeof EnvQualifier];
+
 export const getSubmissionTypeFromString = (string: string): SubmissionType => {
   if (!Object.values(SubmissionType).includes(string as SubmissionType)) {
     throw new Error(`Invalid submission type: ${string}`);

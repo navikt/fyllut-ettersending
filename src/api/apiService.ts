@@ -4,6 +4,7 @@ import {
   ApiNavUnit,
   Attachment,
   BasicForm,
+  EnvQualifierType,
   EttersendelseApplication,
   EttersendingRequestBody,
   Form,
@@ -142,25 +143,36 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
   }
 };
 
-const createEttersending = async (idportenToken: string, ettersendingBody: EttersendingRequestBody) => {
+const createEttersending = async (
+  idportenToken: string,
+  ettersendingBody: EttersendingRequestBody,
+  envQualifier?: EnvQualifierType,
+) => {
   const tokenxToken = await getTokenX(idportenToken);
 
   const response = await post<EttersendelseApplication>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
     ettersendingBody,
-    { Authorization: `Bearer ${tokenxToken}` },
+    {
+      Authorization: `Bearer ${tokenxToken}`,
+      ...(envQualifier && { 'Nav-Env-Qualifier': envQualifier }),
+    },
   );
 
   return response;
 };
 
-const createLospost = async (idportenToken: string, body: LospostRequestBody) => {
+const createLospost = async (idportenToken: string, body: LospostRequestBody, appEnvQualifier?: EnvQualifierType) => {
   const tokenxToken = await getTokenX(idportenToken);
 
   const response = await post<Response>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/lospost`,
     body,
-    { Authorization: `Bearer ${tokenxToken}` },
+    {
+      Authorization: `Bearer${tokenxToken}`,
+      ...(appEnvQualifier && { 'Nav-Env-Qualifier': appEnvQualifier }),
+      // 'Nav-Env-Qualifier': 'preprodAnsatt',
+    },
     { rawResponse: true },
   );
 
