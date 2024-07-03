@@ -171,7 +171,6 @@ const createLospost = async (idportenToken: string, body: LospostRequestBody, ap
     {
       Authorization: `Bearer${tokenxToken}`,
       ...(appEnvQualifier && { 'Nav-Env-Qualifier': appEnvQualifier }),
-      // 'Nav-Env-Qualifier': 'preprodAnsatt',
     },
     { rawResponse: true },
   );
