@@ -13,8 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const envQualifier = getEnvQualifier(req);
       const response = await createEttersending(idportenToken, body, envQualifier);
-      res.status(200);
-      res.send(response);
+      res.status(response.status);
+      res.setHeader('location', response.headers.get('location')!);
+      res.send(await response.json());
     } catch (error) {
       logger.error('Error creating ettersending', error);
       if (isHttpError(error)) {
