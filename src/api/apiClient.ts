@@ -2,7 +2,6 @@ import FileSaver from 'file-saver';
 import {
   DigitalLospostFormData,
   DownloadCoverPageRequestBody,
-  EttersendelseApplication,
   EttersendingRequestBody,
   EttersendingVedlegg,
   FormData,
@@ -46,7 +45,7 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
   FileSaver.saveAs(await b64.blob(), getFileName(formData));
 };
 
-const createEttersending = async (formData: FormData): Promise<EttersendelseApplication> => {
+const createEttersending = async (formData: FormData): Promise<string> => {
   const jsonBody: EttersendingRequestBody = {
     tittel: formData.title,
     skjemanr: formData.formNumber!,
@@ -76,7 +75,12 @@ const createEttersending = async (formData: FormData): Promise<EttersendelseAppl
     throw new HttpError(result.statusText, result.status);
   }
 
-  return await result.json();
+  const location = result.headers.get('location');
+  if (!location) {
+    throw new HttpError('Ukjent lokasjon', 500);
+  }
+
+  return location;
 };
 
 const createLospost = async (formData: DigitalLospostFormData): Promise<string> => {
