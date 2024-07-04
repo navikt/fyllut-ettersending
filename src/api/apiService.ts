@@ -169,7 +169,7 @@ const createLospost = async (idportenToken: string, body: LospostRequestBody, ap
     `${process.env.INNSENDING_API_URL}/fyllut/v1/lospost`,
     body,
     {
-      Authorization: `Bearer${tokenxToken}`,
+      Authorization: `Bearer ${tokenxToken}`,
       ...(appEnvQualifier && { 'Nav-Env-Qualifier': appEnvQualifier }),
     },
     { rawResponse: true },
