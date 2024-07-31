@@ -14,7 +14,7 @@ interface Props {
 const ChooseSubmissionType = ({ id, form }: Props) => {
   const { t } = useTranslation('innsendingsvalg');
   const pathWithId = Paths.details(id);
-  console.log(form);
+
   return (
     <Layout title={t('title')} publishedLanguages={form.properties.publishedLanguages}>
       <Heading size="medium" level="2" spacing className={styles.heading}>
