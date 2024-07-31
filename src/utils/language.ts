@@ -17,13 +17,13 @@ const toValidLanguageCode = (lang: string): LanguageCode => {
 };
 
 const languageCodeMap = {
-  no: 'Norsk bokmål',
+  nb: 'Norsk bokmål',
   nn: 'Norsk nynorsk',
   en: 'English',
 } as const;
 
 const languageSortOrder = {
-  no: 0,
+  nb: 0,
   nn: 1,
   en: 2,
 } as const;

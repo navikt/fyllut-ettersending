@@ -9,7 +9,7 @@ interface LanguageSelectProps {
   publishedLanguages?: LanguageCode[];
 }
 
-const LanguageSelect = ({ publishedLanguages = ['no', 'en', 'nn'] }: LanguageSelectProps) => {
+const LanguageSelect = ({ publishedLanguages = ['nb', 'en', 'nn'] }: LanguageSelectProps) => {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { pathname, asPath, query, locale } = router;
