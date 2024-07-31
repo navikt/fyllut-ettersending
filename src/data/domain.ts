@@ -204,7 +204,7 @@ export type ApplicationStatus = 'Opprettet' | 'Utfylt' | 'Innsendt' | 'SlettetAv
 export type ArchivingStatus = 'IkkeSatt' | 'Arkivert' | 'ArkiveringFeilet';
 export type ApplicationType = 'soknad' | 'ettersendelse';
 export type ApplicationDisplayType = 'fyllUt' | 'dokumentinnsending' | 'ettersending';
-export type LanguageCode = 'no' | 'nn' | 'en';
+export type LanguageCode = 'nb' | 'nn' | 'en';
 export interface ApplicationAttachment {
   id?: number;
   vedleggsnr: string;

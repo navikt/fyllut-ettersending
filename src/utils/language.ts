@@ -6,17 +6,13 @@ const toValidLanguageCodes = (languages: string[]): LanguageCode[] => {
 
 const toValidLanguageCode = (lang: string): LanguageCode => {
   switch (lang) {
-    case 'nb':
-    case 'no':
-    case 'nb-NO':
-      return 'no';
     case 'nn':
     case 'nn-NO':
       return 'nn';
     case 'en':
       return 'en';
     default:
-      return 'no';
+      return 'nb';
   }
 };
 
