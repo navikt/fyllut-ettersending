@@ -37,6 +37,7 @@ export interface FyllytFormProperties {
   enhetstyper?: string[];
   enhetMaVelgesVedPapirInnsending?: boolean;
   hideUserTypes?: boolean;
+  publishedLanguages?: LanguageCode[];
 }
 
 export interface FyllutForm extends BasicForm {
@@ -78,6 +79,7 @@ export interface FormProperties {
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
   hideUserTypes?: boolean;
+  publishedLanguages?: LanguageCode[];
 }
 
 export interface ApiNavUnit {
@@ -202,6 +204,7 @@ export type ApplicationStatus = 'Opprettet' | 'Utfylt' | 'Innsendt' | 'SlettetAv
 export type ArchivingStatus = 'IkkeSatt' | 'Arkivert' | 'ArkiveringFeilet';
 export type ApplicationType = 'soknad' | 'ettersendelse';
 export type ApplicationDisplayType = 'fyllUt' | 'dokumentinnsending' | 'ettersending';
+export type LanguageCode = 'nb' | 'nn' | 'en';
 export interface ApplicationAttachment {
   id?: number;
   vedleggsnr: string;

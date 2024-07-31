@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { LanguageCode } from 'src/data/domain';
 import LanguageSelect from '../languageSelect/languageSelect';
 import styles from './layout.module.css';
 
@@ -13,9 +14,10 @@ interface Props {
   children: ReactNode;
   backUrl?: string;
   showBackLink?: boolean;
+  publishedLanguages?: LanguageCode[];
 }
 
-const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
+const Layout = ({ title, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
   const { t } = useTranslation('common');
 
   const backLink = () => {
@@ -46,9 +48,11 @@ const Layout = ({ title, children, backUrl, showBackLink = true }: Props) => {
           <div className={styles.children}>{children}</div>
         </div>
         <div className={styles.sideColumn}>
-          <div className={styles.children}>
-            <LanguageSelect />
-          </div>
+          {(!publishedLanguages || publishedLanguages.length > 1) && (
+            <div className={styles.children}>
+              <LanguageSelect publishedLanguages={publishedLanguages} />
+            </div>
+          )}
         </div>
       </div>
     </div>

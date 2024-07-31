@@ -49,7 +49,11 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
   };
 
   return (
-    <Layout title={t(`title.${submissionType}`)} backUrl={previousPath}>
+    <Layout
+      title={t(`title.${submissionType}`)}
+      backUrl={previousPath}
+      publishedLanguages={form?.properties.publishedLanguages}
+    >
       <Section>
         <Heading level="2" size="medium" spacing>
           {t('section-top.title')}

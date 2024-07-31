@@ -7,7 +7,8 @@
     "skjemanummer": "NAV 10-07.50",
     "tema": "HJE",
     "innsending": "PAPIR_OG_DIGITAL",
-    "ettersending": "PAPIR_OG_DIGITAL"
+    "ettersending": "PAPIR_OG_DIGITAL",
+    "publishedLanguages": ["en"]
   },
   "attachments": [
     {
