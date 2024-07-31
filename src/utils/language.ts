@@ -4,6 +4,11 @@ const toValidLanguageCodes = (languages: string[]): LanguageCode[] => {
   return languages.map((lang) => toValidLanguageCode(lang));
 };
 
+/**
+ * New language codes in Fyllut need to be defined here or we will get duplicate nb language in the language selector
+ *
+ * @param lang
+ */
 const toValidLanguageCode = (lang: string): LanguageCode => {
   switch (lang) {
     case 'nn':
