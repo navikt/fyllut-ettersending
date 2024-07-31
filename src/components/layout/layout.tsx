@@ -17,7 +17,7 @@ interface Props {
   publishedLanguages?: LanguageCode[];
 }
 
-const Layout = ({ title, children, backUrl, showBackLink = true, publishedLanguages = [] }: Props) => {
+const Layout = ({ title, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
   const { t } = useTranslation('common');
 
   const backLink = () => {
@@ -48,7 +48,7 @@ const Layout = ({ title, children, backUrl, showBackLink = true, publishedLangua
           <div className={styles.children}>{children}</div>
         </div>
         <div className={styles.sideColumn}>
-          {publishedLanguages.length > 1 && (
+          {(!publishedLanguages || publishedLanguages.length > 1) && (
             <div className={styles.children}>
               <LanguageSelect publishedLanguages={publishedLanguages} />
             </div>
