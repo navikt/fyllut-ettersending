@@ -133,9 +133,9 @@ export interface OtherFormdata {
   language?: string;
 }
 
+type Subject = { value: string; label: string };
 export interface DigitalLospostFormData {
-  title?: string;
-  subject?: string;
+  subject?: Subject;
   documentTitle?: string;
   language?: string;
 }
@@ -170,6 +170,13 @@ export enum SubmissionType {
   digital = 'digital',
   paper = 'paper',
 }
+
+export const EnvQualifier = {
+  preprodIntern: 'preprodIntern',
+  preprodAnsatt: 'preprodAnsatt',
+  local: 'local',
+} as const;
+export type EnvQualifierType = (typeof EnvQualifier)[keyof typeof EnvQualifier];
 
 export const getSubmissionTypeFromString = (string: string): SubmissionType => {
   if (!Object.values(SubmissionType).includes(string as SubmissionType)) {

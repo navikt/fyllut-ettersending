@@ -20,7 +20,7 @@ const DigitalLospostForm = ({ subject }: Props) => {
     const hideSubjectsCombobox = subject ? !!archiveSubjectsResponse[subject] : false;
     dispatch({ type: 'set', subjects: archiveSubjectsResponse, hidden: hideSubjectsCombobox });
     if (hideSubjectsCombobox) {
-      updateFormData({ subject });
+      updateFormData({ subject: { value: subject!, label: archiveSubjectsResponse[subject!] } });
     }
   }, [subject, updateFormData]);
 
@@ -68,9 +68,9 @@ const DigitalLospostForm = ({ subject }: Props) => {
           name="subject"
           error={errors.subject}
           isMultiSelect={false}
-          selectedOptions={formData.subject ? [subjects.map[formData.subject]] : []}
+          selectedOptions={formData.subject ? [subjects.map[formData.subject.value]] : []}
           onToggleSelected={(option, isSelected) => {
-            updateFormData({ subject: isSelected ? option : undefined });
+            updateFormData({ subject: isSelected ? { value: option, label: subjects.map[option] } : undefined });
           }}
           className={styles.input}
         />

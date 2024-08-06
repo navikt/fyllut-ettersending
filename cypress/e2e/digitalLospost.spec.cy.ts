@@ -9,7 +9,10 @@ describe('Digital løspost', () => {
   describe('Creation of søknad succeeds', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
-      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`).as('opprettLospost');
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Bil - Førerkort');
+        expect(req.body.tema).to.equal('BIL');
+      }).as('opprettLospost');
     });
 
     it('requires both title and subject to proceed', () => {

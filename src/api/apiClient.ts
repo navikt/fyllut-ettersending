@@ -1,5 +1,6 @@
 import FileSaver from 'file-saver';
 import {
+  DigitalLospostFormData,
   DownloadCoverPageRequestBody,
   EttersendelseApplication,
   EttersendingRequestBody,
@@ -78,11 +79,14 @@ const createEttersending = async (formData: FormData): Promise<EttersendelseAppl
   return await result.json();
 };
 
-const createLospost = async (title: string, formData: FormData): Promise<string> => {
+const createLospost = async (formData: DigitalLospostFormData): Promise<string> => {
+  if (!formData.subject || !formData.documentTitle) {
+    throw new Error('Ufullstendig skjema');
+  }
   const jsonBody: LospostRequestBody = {
-    soknadTittel: title,
-    tema: formData.subject!,
-    dokumentTittel: formData.documentTitle!,
+    soknadTittel: `${formData.subject.label} - ${formData.documentTitle}`,
+    tema: formData.subject.value,
+    dokumentTittel: formData.documentTitle,
     sprak: formData.language || 'nb',
   };
   const result = await fetch(`${baseUrl}/api/lospost`, {

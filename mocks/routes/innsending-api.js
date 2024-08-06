@@ -71,6 +71,12 @@ module.exports = [
         type: 'middleware',
         options: {
           middleware: (req, res) => {
+            const authHeader = req.headers['authorization'];
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+              res.status(401);
+              res.send('Unauthorized');
+              return;
+            }
             const innsendingsId = '123';
             const { soknadTittel, tema, dokumentTittel, sprak } = req.body;
             res.status(201);

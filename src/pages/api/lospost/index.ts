@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createLospost } from '../../../api/apiService';
 import { getIdPortenToken } from '../../../api/loginRedirect';
 import { LospostRequestBody, isHttpError } from '../../../data/domain';
+import { getEnvQualifier } from '../../../utils/apiUtil';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -9,7 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const idportenToken = (await getIdPortenToken(req.headers.authorization)) as string;
 
     try {
-      const response = await createLospost(idportenToken, body);
+      const envQualifier = getEnvQualifier(req);
+      const response = await createLospost(idportenToken, body, envQualifier);
       res.status(response.status);
       res.setHeader('location', response.headers.get('location')!);
       res.send(await response.json());
