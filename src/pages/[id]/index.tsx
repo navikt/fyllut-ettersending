@@ -124,7 +124,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const title = router.query.sub === SubmissionType.digital ? t('title-digital') : t('title-paper');
 
   return (
-    <Layout title={title} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage} publishedLanguages={form.properties.publishedLanguages}>
       <Section>
         <Heading size="large" level="2">
           {form.title}

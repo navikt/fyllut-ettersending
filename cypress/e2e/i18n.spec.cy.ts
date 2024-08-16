@@ -32,6 +32,12 @@ describe('Language select', () => {
   it('displays attachments in selected language', () => {
     cy.visit('/form2?sub=paper');
     cy.findByRole('combobox', { name: 'Velg språk' }).select('English');
+    cy.findByRole('combobox', { name: 'Velg språk' }).find('option').should('have.length', 2);
     cy.findByRole('checkbox', { name: 'Statement from an ophthalmologist' }).should('exist');
+  });
+
+  it('has default language when publishedLanguages is not set in form', () => {
+    cy.visit('/form1?sub=paper');
+    cy.findByRole('combobox', { name: 'Velg språk' }).should('not.exist');
   });
 });

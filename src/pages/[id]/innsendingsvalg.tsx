@@ -5,18 +5,19 @@ import { getForm } from 'src/api/apiService';
 import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubmissionType';
 import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
-import { EttersendelseApplication } from '../../data/domain';
+import { EttersendelseApplication, Form } from '../../data/domain';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 
 interface Props {
   id: string;
+  form: Form;
   existingEttersendinger: EttersendelseApplication[];
 }
 
 const Innsendingsvalg: NextPage<Props> = (props) => {
-  const { id } = props;
+  const { id, form } = props;
 
-  return <ChooseSubmissionType id={id} />;
+  return <ChooseSubmissionType id={id} form={form} />;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -41,7 +42,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   return {
-    props: { id, ...translations },
+    props: { id, form, ...translations },
   };
 }
 
