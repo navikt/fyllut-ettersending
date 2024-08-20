@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { createEttersending } from 'src/api/apiService';
 import { getIdPortenToken } from 'src/api/loginRedirect';
 import { EttersendingRequestBody, isHttpError } from '../../../data/domain';
+import { getEnvQualifier } from '../../../utils/apiUtil';
 import logger from '../../../utils/logger';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,7 +11,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const idportenToken = (await getIdPortenToken(req.headers.authorization)) as string;
 
     try {
-      const response = await createEttersending(idportenToken, body);
+      const envQualifier = getEnvQualifier(req);
+      const response = await createEttersending(idportenToken, body, envQualifier);
       res.status(200);
       res.send(response);
     } catch (error) {
