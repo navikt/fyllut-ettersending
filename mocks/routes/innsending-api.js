@@ -47,8 +47,11 @@ module.exports = [
         id: 'success',
         type: 'json',
         options: {
-          status: 200,
+          status: 201,
           body: exampleEttersending,
+          headers: {
+            location: `http://127.0.0.1:3200/send-inn-frontend/bd86463d-ad04-43e8-a80a-9ecd22bae7c0`,
+          },
         },
       },
       {

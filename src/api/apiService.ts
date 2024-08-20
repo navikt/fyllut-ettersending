@@ -152,13 +152,14 @@ const createEttersending = async (
 ) => {
   const tokenxToken = await getTokenX(idportenToken);
 
-  const response = await post<EttersendelseApplication>(
+  const response = await post<Response>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
     ettersendingBody,
     {
       Authorization: `Bearer ${tokenxToken}`,
       ...(envQualifier && { 'Nav-Env-Qualifier': envQualifier }),
     },
+    { rawResponse: true },
   );
 
   return response;
