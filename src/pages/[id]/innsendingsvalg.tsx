@@ -2,11 +2,11 @@ import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
+import ChooseFormSubmissionType from 'src/components/chooseSubmissionType/chooseFormSubmissionType';
 import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { EttersendelseApplication, Form } from '../../data/domain';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
-import ChooseFormSubmissionType from './chooseFormSubmissionType';
 
 interface Props {
   id: string;
