@@ -50,23 +50,43 @@ describe('Løspost - Digital submission', () => {
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
 
-    it('tema is prefilled from query param', () => {
-      cy.visit('/lospost/digital?tema=BIL');
-      cy.wait('@getArchiveSubjects');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
-        .should('exist')
-        .type('Førerkort');
-      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.findByRole('button', { name: TestButtonText.next }).click();
-      cy.wait('@opprettLospost');
-      cy.url().should('contain', URL_SEND_INN_FRONTEND);
-    });
+    describe.only('Tema query parameter', () => {
+      it('tema is prefilled from query param', () => {
+        cy.visit('/lospost/digital?tema=BIL');
+        cy.wait('@getArchiveSubjects');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+          .should('exist')
+          .type('Førerkort');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+        cy.url().should('contain', '?tema=BIL');
+        cy.findByRole('button', { name: TestButtonText.next }).click();
+        cy.wait('@opprettLospost');
+        cy.url().should('contain', URL_SEND_INN_FRONTEND);
+      });
 
-    it('illegal tema in query param is ignored', () => {
-      cy.visit('/lospost/digital?tema=INVALID');
-      cy.wait('@getArchiveSubjects');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
-      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
+      it('unknown tema in query param is ignored and removed from url', () => {
+        cy.visit('/lospost/digital?tema=INVALID');
+        cy.wait('@getArchiveSubjects');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
+        cy.url().should('not.contain', 'tema=INVALID');
+      });
+
+      it('illegal tema PER in query param is ignored and removed from url', () => {
+        cy.visit('/lospost/digital?tema=PER');
+        cy.wait('@getArchiveSubjects');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
+        cy.url().should('not.contain', 'tema=PER');
+      });
+
+      it('illegal tema TIL in query param is ignored and removed from url', () => {
+        cy.visit('/lospost/digital?tema=PER');
+        cy.wait('@getArchiveSubjects');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
+        cy.url().should('not.contain', 'tema=TIL');
+      });
     });
   });
 
