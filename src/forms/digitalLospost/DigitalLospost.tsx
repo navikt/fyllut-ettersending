@@ -4,14 +4,13 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useReducer } from 'react';
 import { fetchArchiveSubjects } from '../../api/apiClient';
 import { useFormState } from '../../data/appState';
+import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 import archiveSubjectsReducer from './archiveSubjectsReducer';
 import styles from './digitalLospost.module.css';
 
 interface Props {
   subject?: string;
 }
-
-const INVALID_SUBJECTS = ['TIL', 'PER'];
 
 const DigitalLospostForm = ({ subject }: Props) => {
   const { t } = useTranslation('digital-lospost');
@@ -21,7 +20,7 @@ const DigitalLospostForm = ({ subject }: Props) => {
 
   const fetchData = useCallback(async () => {
     const archiveSubjectsResponse = await fetchArchiveSubjects();
-    INVALID_SUBJECTS.forEach((code) => delete archiveSubjectsResponse[code]);
+    PAPER_ONLY_SUBJECTS.forEach((code) => delete archiveSubjectsResponse[code]);
     const hideSubjectsCombobox = subject ? !!archiveSubjectsResponse[subject] : false;
     dispatch({ type: 'set', subjects: archiveSubjectsResponse, hidden: hideSubjectsCombobox });
     if (hideSubjectsCombobox) {

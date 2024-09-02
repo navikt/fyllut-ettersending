@@ -33,6 +33,18 @@ describe('Løspost - Landingsside', () => {
       cy.wait('@getArchiveSubjects');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
     });
+
+    describe('Illegal tema for digital submission', () => {
+      it('Redirects to paper with tema PER', () => {
+        cy.visit('/lospost?tema=PER');
+        cy.url().should('contain', '/lospost/paper?tema=PER');
+      });
+
+      it('Redirects to paper with tema TIL', () => {
+        cy.visit('/lospost?tema=TIL');
+        cy.url().should('contain', '/lospost/paper?tema=TIL');
+      });
+    });
   });
 
   describe('Automatic redirects from submission type in query parameter', () => {

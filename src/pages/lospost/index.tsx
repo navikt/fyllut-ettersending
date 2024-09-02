@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 
 interface Props {
   tema?: string;
@@ -41,6 +42,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           },
         };
     }
+  }
+  const onlyPaperAllowedForSubject = tema && PAPER_ONLY_SUBJECTS.includes(tema);
+  if (onlyPaperAllowedForSubject) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `${localePath}/lospost/paper${tema ? `?tema=${tema}` : ''}`,
+      },
+    };
   }
   return {
     props: {
