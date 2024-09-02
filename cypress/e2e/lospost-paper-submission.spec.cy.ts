@@ -1,6 +1,6 @@
 import { TestButtonText } from './testUtils';
 
-describe('sendAnotherDocument', () => {
+describe('Løspost - Paper submission', () => {
   const SUBJECT_PER = {
     subject: 'PER',
     title: 'Permittering og masseoppsigelser',
@@ -287,7 +287,7 @@ describe('sendAnotherDocument', () => {
       cy.findByRole('button', { name: 'Last ned førsteside' }).should('exist');
 
       // Navigate to previous page
-      cy.findByRole('button', { name: 'Gå tilbake' }).should('exist').click();
+      cy.findByRole('button', { name: TestButtonText.previous }).should('exist').click();
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .should('contain.value', 'Lisenskostnader');

@@ -1,4 +1,6 @@
-describe('Digital løspost', () => {
+import { TestButtonText } from './testUtils';
+
+describe('Løspost - Digital submission', () => {
   const URL_FYLLUT_ETTERSENDING = Cypress.config().baseUrl;
   const URL_SEND_INN_FRONTEND = 'http://127.0.0.1:3200/send-inn-frontend';
 
@@ -22,7 +24,7 @@ describe('Digital løspost', () => {
         .should('exist')
         .type('Førerkort');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
-      cy.findByRole('button', { name: 'Gå videre' }).click();
+      cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
@@ -33,7 +35,7 @@ describe('Digital løspost', () => {
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Førerkort');
-      cy.findByRole('button', { name: 'Gå videre' }).click();
+      cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.findByRole('region', { name: 'For å gå videre må du rette opp følgende:' })
         .should('exist')
         .within(() => {
@@ -43,7 +45,7 @@ describe('Digital løspost', () => {
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' })
         .should('have.focus')
         .type('Bi{downArrow}{downArrow}{enter}');
-      cy.findByRole('button', { name: 'Gå videre' }).click();
+      cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
@@ -55,7 +57,7 @@ describe('Digital løspost', () => {
         .should('exist')
         .type('Førerkort');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.findByRole('button', { name: 'Gå videre' }).click();
+      cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
@@ -80,7 +82,7 @@ describe('Digital løspost', () => {
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Pensjonsbevis');
-      cy.findByRole('button', { name: 'Gå videre' }).click();
+      cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.findByText('Det oppstod en feil ved innsending av dokumentasjon').should('exist');
       cy.url().should('contain', URL_FYLLUT_ETTERSENDING);
