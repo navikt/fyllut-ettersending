@@ -30,6 +30,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? 'lospost' : 'ettersending';
+  const backButtonPath = isLospost ? `${previousPath}/paper` : previousPath;
 
   useEffect(() => {
     const language = i18n.language;
@@ -51,7 +52,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
   return (
     <Layout
       title={t(`title.${submissionType}`)}
-      backUrl={previousPath}
+      backUrl={backButtonPath}
       publishedLanguages={form?.properties.publishedLanguages}
     >
       <Section>
@@ -95,7 +96,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
             text: tCommon('button.previous'),
             variant: 'secondary',
             icon: <ArrowLeftIcon aria-hidden />,
-            path: previousPath,
+            path: backButtonPath,
           },
         ]}
       />

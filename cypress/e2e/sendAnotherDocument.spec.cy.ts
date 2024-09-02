@@ -23,7 +23,7 @@ describe('sendAnotherDocument', () => {
 
   describe('form with tema=PER', () => {
     beforeEach(() => {
-      cy.visit('/paper-lospost');
+      cy.visit('/lospost/paper');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -117,7 +117,7 @@ describe('sendAnotherDocument', () => {
       // Soft navigation check
       cy.url().should('include', '/last-ned');
       cy.go('back');
-      cy.url().should('include', '/paper-lospost');
+      cy.url().should('include', '/lospost/paper');
       cy.go('forward');
 
       //Download page
@@ -129,7 +129,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param 'tema=PER'", () => {
     beforeEach(() => {
-      cy.visit(`/paper-lospost?tema=${SUBJECT_PER.subject}`);
+      cy.visit(`/lospost/paper?tema=${SUBJECT_PER.subject}`);
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -160,7 +160,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param 'tema=TIL", () => {
     beforeEach(() => {
-      cy.visit(`/paper-lospost?tema=${SUBJECT_TIL.subject}`);
+      cy.visit(`/lospost/paper?tema=${SUBJECT_TIL.subject}`);
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -196,7 +196,7 @@ describe('sendAnotherDocument', () => {
 
   describe('form with tema=TIL', () => {
     beforeEach(() => {
-      cy.visit('/paper-lospost');
+      cy.visit('/lospost/paper');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -233,7 +233,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param invalid 'tema'", () => {
     beforeEach(() => {
-      cy.visit('/paper-lospost?tema=invalid');
+      cy.visit('/lospost/paper?tema=invalid');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -260,8 +260,8 @@ describe('sendAnotherDocument', () => {
   });
 
   describe('hard navigate to download-page', () => {
-    it(' should redirect back to lospost', () => {
-      cy.visit('/paper-lospost/last-ned');
+    it('should redirect back to lospost', () => {
+      cy.visit('/lospost/last-ned');
       cy.url().should('not.include', '/last-ned');
     });
   });

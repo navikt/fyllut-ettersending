@@ -9,11 +9,11 @@ import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { fetchArchiveSubjects, fetchNavUnits } from '../api/apiClient';
-import Layout from '../components/layout/layout';
-import OtherDocument from '../components/other-document/other-document';
-import { KeyValue, NavUnit } from '../data/domain';
-import { getServerSideTranslations } from '../utils/i18nUtil';
+import { fetchArchiveSubjects, fetchNavUnits } from '../../api/apiClient';
+import Layout from '../../components/layout/layout';
+import OtherDocument from '../../components/other-document/other-document';
+import { KeyValue, NavUnit } from '../../data/domain';
+import { getServerSideTranslations } from '../../utils/i18nUtil';
 
 interface Props {
   tema?: string;

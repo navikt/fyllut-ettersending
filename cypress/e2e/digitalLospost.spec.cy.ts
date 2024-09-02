@@ -16,7 +16,7 @@ describe('Digital løspost', () => {
     });
 
     it('requires both title and subject to proceed', () => {
-      cy.visit('/digital-lospost');
+      cy.visit('/lospost/digital');
       cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
@@ -28,7 +28,7 @@ describe('Digital løspost', () => {
     });
 
     it('renders validation error when subject is missing', () => {
-      cy.visit('/digital-lospost');
+      cy.visit('/lospost/digital');
       cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
@@ -49,7 +49,7 @@ describe('Digital løspost', () => {
     });
 
     it('tema is prefilled from query param', () => {
-      cy.visit('/digital-lospost?tema=BIL');
+      cy.visit('/lospost/digital?tema=BIL');
       cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
@@ -61,7 +61,7 @@ describe('Digital løspost', () => {
     });
 
     it('illegal tema in query param is ignored', () => {
-      cy.visit('/digital-lospost?tema=INVALID');
+      cy.visit('/lospost/digital?tema=INVALID');
       cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
@@ -75,7 +75,7 @@ describe('Digital løspost', () => {
     });
 
     it('renders error message', () => {
-      cy.visit('/digital-lospost?tema=PEN');
+      cy.visit('/lospost/digital?tema=PEN');
       cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')

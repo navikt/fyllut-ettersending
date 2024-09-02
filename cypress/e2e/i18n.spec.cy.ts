@@ -1,30 +1,30 @@
 describe('Internationalization', () => {
   it('renders page in bokmål', () => {
-    cy.visit('/paper-lospost');
+    cy.visit('/lospost/paper');
     cy.findByRole('button', { name: 'Gå videre' }).should('exist');
   });
   it('renders page in english', () => {
-    cy.visit('/en/paper-lospost');
+    cy.visit('/en/lospost/paper');
     cy.findByRole('button', { name: 'Next' }).should('exist');
   });
   it('renders page in nynorsk', () => {
-    cy.visit('/nn/paper-lospost');
+    cy.visit('/nn/lospost/paper');
     cy.findByRole('button', { name: 'Gå vidare' }).should('exist');
   });
   it("renders page in bokmål when language is 'no'", () => {
-    cy.visit('/no/paper-lospost');
+    cy.visit('/no/lospost/paper');
     cy.findByRole('button', { name: 'Gå videre' }).should('exist');
   });
 });
 
 describe('Language select', () => {
   it('is initialized with current language', () => {
-    cy.visit('/en/paper-lospost');
+    cy.visit('/en/lospost/paper');
     cy.findByRole('combobox', { name: 'Choose language' }).find('option:selected').should('have.text', 'English');
   });
 
   it('renders page in the selected language', () => {
-    cy.visit('/en/paper-lospost');
+    cy.visit('/en/lospost/paper');
     cy.findByRole('combobox', { name: 'Choose language' }).select('Norsk nynorsk');
     cy.findByRole('button', { name: 'Gå vidare' }).should('exist');
   });

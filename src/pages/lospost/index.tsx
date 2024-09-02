@@ -1,8 +1,8 @@
 import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
-import ChooseSubmissionType from '../components/chooseSubmissionType/chooseSubmissionType';
-import { getServerSideTranslations } from '../utils/i18nUtil';
+import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
+import { getServerSideTranslations } from '../../utils/i18nUtil';
 
 interface Props {
   tema?: string;
@@ -13,8 +13,8 @@ const Lospost: NextPage<Props> = ({ tema }) => {
 
   return (
     <ChooseSubmissionType
-      pathDigital={`/digital-lospost${temaQueryString}`}
-      pathPaper={`/paper-lospost${temaQueryString}`}
+      pathDigital={`/lospost/digital${temaQueryString}`}
+      pathPaper={`/lospost/paper${temaQueryString}`}
     />
   );
 };
@@ -30,14 +30,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         return {
           redirect: {
             permanent: false,
-            destination: `${localePath}/paper-lospost${tema ? `?tema=${tema}` : ''}`,
+            destination: `${localePath}/lospost/paper${tema ? `?tema=${tema}` : ''}`,
           },
         };
       case 'digital':
         return {
           redirect: {
             permanent: false,
-            destination: `${localePath}/digital-lospost${tema ? `?tema=${tema}` : ''}`,
+            destination: `${localePath}/lospost/digital${tema ? `?tema=${tema}` : ''}`,
           },
         };
     }
