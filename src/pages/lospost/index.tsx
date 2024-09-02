@@ -25,30 +25,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { tema, sub } = query as { tema: string; sub: string };
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'innsendingsvalg']);
   const localePath = locale ? `/${locale}` : '';
-  if (sub) {
-    switch (sub) {
-      case 'paper':
-        return {
-          redirect: {
-            permanent: false,
-            destination: `${localePath}/lospost/paper${tema ? `?tema=${tema}` : ''}`,
-          },
-        };
-      case 'digital':
-        return {
-          redirect: {
-            permanent: false,
-            destination: `${localePath}/lospost/digital${tema ? `?tema=${tema}` : ''}`,
-          },
-        };
-    }
-  }
   const onlyPaperAllowedForSubject = tema && PAPER_ONLY_SUBJECTS.includes(tema);
-  if (onlyPaperAllowedForSubject) {
+  const redirectToPaper = sub === 'paper' || onlyPaperAllowedForSubject;
+  if (redirectToPaper) {
     return {
       redirect: {
         permanent: false,
         destination: `${localePath}/lospost/paper${tema ? `?tema=${tema}` : ''}`,
+      },
+    };
+  } else if (sub === 'digital') {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `${localePath}/lospost/digital${tema ? `?tema=${tema}` : ''}`,
       },
     };
   }
