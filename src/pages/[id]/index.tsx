@@ -1,7 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import '@navikt/ds-css';
 import { Alert, Heading, Ingress } from '@navikt/ds-react';
-import { ServerResponse } from 'http';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -73,7 +72,7 @@ const Detaljer: NextPage<Props> = (props) => {
   const submitButtonPressed = async () => {
     try {
       window.location.href = await createEttersending(formData);
-    } catch (error) {
+    } catch (_error) {
       setErrorMessage(t('ettersending-error'));
     }
   };
@@ -211,7 +210,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (idportenToken && form?.properties.formNumber) {
     existingEttersendinger = await getEttersendinger(idportenToken, form.properties.formNumber);
     logger.info('Redirecting based on existing ettersendinger');
-    const redirect = redirectBasedOnExistingEttersendinger(existingEttersendinger, res);
+    const redirect = redirectBasedOnExistingEttersendinger(existingEttersendinger);
     if (redirect) return redirect;
   }
 
@@ -232,10 +231,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-const redirectBasedOnExistingEttersendinger = (
-  existingEttersendinger: EttersendelseApplication[],
-  res: ServerResponse,
-) => {
+const redirectBasedOnExistingEttersendinger = (existingEttersendinger: EttersendelseApplication[]) => {
   if (existingEttersendinger.length === 1) {
     return {
       redirect: {

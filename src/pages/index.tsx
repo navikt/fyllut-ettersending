@@ -8,9 +8,7 @@ import Section from '../components/section/section';
 import { Paths } from '../data/paths';
 import { getServerSideTranslations } from '../utils/i18nUtil';
 
-interface Props {}
-
-const Home: NextPage<Props> = () => {
+const Home: NextPage = () => {
   const router = useRouter();
   const { t } = useTranslation('home');
 

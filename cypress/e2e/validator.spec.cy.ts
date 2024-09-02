@@ -9,6 +9,7 @@ describe('validator', () => {
 
   beforeEach(() => {
     formData = {
+      page: 'other',
       userData: {},
     };
   });
@@ -58,7 +59,7 @@ describe('validator', () => {
         formData.userData!.type = UserType.noSocialNumber;
         formData.userData!.navUnitContact = false;
         const errors = validateFormData(formData, tMock);
-        expect(errors?.navUnitContact).to.be.undefined;
+        expect(errors?.navUnitContact).to.eq(undefined);
       });
     });
 
