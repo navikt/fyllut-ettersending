@@ -50,7 +50,7 @@ describe('Løspost - Digital submission', () => {
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
 
-    describe.only('Tema query parameter', () => {
+    describe('Tema query parameter', () => {
       it('tema is prefilled from query param', () => {
         cy.visit('/lospost/digital?tema=BIL');
         cy.wait('@getArchiveSubjects');
