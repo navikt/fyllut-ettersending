@@ -19,10 +19,15 @@ _(Les mer om bruk av Github npm registry i NAV her: https://github.com/navikt/fr
 
 ### Konfigurasjon
 
-Man kan lage en lokal konfigurasjonsfil på `.env.local`:
+Man kan lage en lokal konfigurasjonsfil på `.env.local`. Følgende eksempel inneholder verdier som passer ved kjøring
+mot Mocks Server (se nedenfor), men disse kan byttes ut dersom man har noen av de andre applikasjonene kjørende lokalt:
 
 ```
-FYLLUT_BASE_URL=https://fyllut-preprod.intern.dev.nav.no/fyllut
+FYLLUT_BASE_URL=http://127.0.0.1:3200/fyllut
+INNSENDING_API_URL=http://127.0.0.1:3200
+SEND_INN_FRONTEND_URL=http://127.0.0.1:3200/send-inn-frontend
+MIN_SIDE_FRONTEND_URL=http://127.0.0.1:3200/min-side-frontend
+NEXT_PUBLIC_SEND_INN_FRONTEND_URL=http://127.0.0.1:3200/send-inn-frontend
 ```
 
 Merk: Når man går videre til `send-inn-frontend` for digital innsending hentes skjema fra Sanity. Mange av dev-skjemaene finnes ikke i Sanity og vil få 404.
@@ -43,6 +48,7 @@ URLer i `.env.local` må peke til mock:
 
     INNSENDING_API_URL=http://127.0.0.1:3200
     NEXT_PUBLIC_SEND_INN_FRONTEND_URL=http://127.0.0.1:3200/send-inn-frontend
+    SEND_INN_FRONTEND_URL=http://127.0.0.1:3200/send-inn-frontend
     MIN_SIDE_FRONTEND_URL=http://127.0.0.1:3200/min-side-frontend
     FYLLUT_BASE_URL=http://127.0.0.1:3200/fyllut
 
