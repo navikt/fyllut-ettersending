@@ -11,7 +11,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <FormDataProvider page={page}>
       <Head>
-        <title>FyllUt :: Ettersending</title>
+        <title>Dokument til NAV - nav.no</title>
       </Head>
       <Component {...pageProps} />
     </FormDataProvider>
