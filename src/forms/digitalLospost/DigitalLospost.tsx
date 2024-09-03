@@ -27,7 +27,7 @@ const DigitalLospostForm = ({ subject }: Props) => {
       updateFormData({ subject: { value: subject!, label: archiveSubjectsResponse[subject!] } });
     } else if (subject) {
       const { pathname } = router;
-      router.replace(pathname, undefined, { shallow: true }).then();
+      router.replace(pathname, undefined, { shallow: true });
     }
   }, [router, subject, updateFormData]);
 
