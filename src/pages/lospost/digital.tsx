@@ -33,7 +33,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
   const submitButtonPressed = async () => {
     try {
       window.location.href = await createLospost(formData);
-    } catch (error) {
+    } catch (_error) {
       setErrorMessage(t('lospost-error'));
     }
   };

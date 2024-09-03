@@ -12,7 +12,7 @@ const ValidationSummary = () => {
   const hasError = !!errorEntries.length;
 
   useEffect(() => {
-    validationSummaryRef?.current && validationSummaryRef.current.focus();
+    validationSummaryRef?.current?.focus();
   }, [hasError, validationSummaryRef]);
 
   return hasError ? (

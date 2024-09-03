@@ -10,9 +10,7 @@ import FormSearch from '../components/search/formSearch';
 import { Form } from '../data/domain';
 import { getServerSideTranslations } from '../utils/i18nUtil';
 
-interface Props {}
-
-const Ettersendelse: NextPage<Props> = () => {
+const Ettersendelse: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [forms, setForms] = useState<Form[]>([]);
   const { t } = useTranslation('ettersendelse');
