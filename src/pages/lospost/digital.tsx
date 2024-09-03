@@ -9,15 +9,15 @@ import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { createLospost } from '../api/apiClient';
-import { getIdPortenTokenFromContext } from '../api/loginRedirect';
-import Layout from '../components/layout/layout';
-import Section from '../components/section/section';
-import { useFormState } from '../data/appState';
-import { FormDataPage, UnauthenticatedError } from '../data/domain';
-import DigitalLospostForm from '../forms/digitalLospost/DigitalLospost';
-import { getServerSideTranslations } from '../utils/i18nUtil';
-import logger from '../utils/logger';
+import { createLospost } from '../../api/apiClient';
+import { getIdPortenTokenFromContext } from '../../api/loginRedirect';
+import Layout from '../../components/layout/layout';
+import Section from '../../components/section/section';
+import { useFormState } from '../../data/appState';
+import { FormDataPage, UnauthenticatedError } from '../../data/domain';
+import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
+import { getServerSideTranslations } from '../../utils/i18nUtil';
+import logger from '../../utils/logger';
 
 interface Props {
   tema?: string;
@@ -83,10 +83,6 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (process.env.APP_ENV === 'production') {
-    // digital løspost not available in production yet
-    return { notFound: true };
-  }
   const { tema } = context.query as { tema: string };
   // Attempt to verify the token and redirect to login if necessary
   try {

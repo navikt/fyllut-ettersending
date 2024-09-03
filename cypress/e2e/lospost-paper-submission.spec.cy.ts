@@ -1,6 +1,6 @@
 import { TestButtonText } from './testUtils';
 
-describe('sendAnotherDocument', () => {
+describe('Løspost - Paper submission', () => {
   const SUBJECT_PER = {
     subject: 'PER',
     title: 'Permittering og masseoppsigelser',
@@ -23,7 +23,7 @@ describe('sendAnotherDocument', () => {
 
   describe('form with tema=PER', () => {
     beforeEach(() => {
-      cy.visit('/lospost');
+      cy.visit('/lospost/paper');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -117,7 +117,7 @@ describe('sendAnotherDocument', () => {
       // Soft navigation check
       cy.url().should('include', '/last-ned');
       cy.go('back');
-      cy.url().should('include', '/lospost');
+      cy.url().should('include', '/lospost/paper');
       cy.go('forward');
 
       //Download page
@@ -129,7 +129,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param 'tema=PER'", () => {
     beforeEach(() => {
-      cy.visit(`/lospost?tema=${SUBJECT_PER.subject}`);
+      cy.visit(`/lospost/paper?tema=${SUBJECT_PER.subject}`);
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -160,7 +160,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param 'tema=TIL", () => {
     beforeEach(() => {
-      cy.visit(`/lospost?tema=${SUBJECT_TIL.subject}`);
+      cy.visit(`/lospost/paper?tema=${SUBJECT_TIL.subject}`);
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -196,7 +196,7 @@ describe('sendAnotherDocument', () => {
 
   describe('form with tema=TIL', () => {
     beforeEach(() => {
-      cy.visit('/lospost');
+      cy.visit('/lospost/paper');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -233,7 +233,7 @@ describe('sendAnotherDocument', () => {
 
   describe("query param invalid 'tema'", () => {
     beforeEach(() => {
-      cy.visit('/lospost?tema=invalid');
+      cy.visit('/lospost/paper?tema=invalid');
       cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
@@ -259,10 +259,39 @@ describe('sendAnotherDocument', () => {
     });
   });
 
-  describe('hard navigate to download-page', () => {
-    it(' should redirect back to lospost', () => {
+  describe('Navigation', () => {
+    it('should redirect back to lospost on hard navigate to download-page', () => {
       cy.visit('/lospost/last-ned');
       cy.url().should('not.include', '/last-ned');
+    });
+
+    it('should navigate back from download-page and keep input data', () => {
+      cy.visit('/lospost/paper?tema=BIL');
+      cy.wait('@getArchiveSubjects');
+
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Lisenskostnader');
+
+      cy.findByRole('group', { name: 'Hvem gjelder innsendingen for?' })
+        .should('exist')
+        .within(() => {
+          cy.findByRole('radio', { name: 'Jeg har fødselsnummer eller d-nummer' }).should('exist').click();
+        });
+
+      cy.findByRole('textbox', { name: 'Fødselsnummer / d-nummer' }).should('exist').type('28880948417');
+
+      // Click next to open page for cover sheet download
+      cy.get('button').contains(TestButtonText.next).click();
+      cy.findByRole('heading', { name: 'Send inn dokumentasjon' }).should('exist');
+      cy.findByRole('button', { name: 'Last ned førsteside' }).should('exist');
+
+      // Navigate to previous page
+      cy.findByRole('button', { name: TestButtonText.previous }).should('exist').click();
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .should('contain.value', 'Lisenskostnader');
+      cy.findByRole('button', { name: 'Last ned førsteside' }).should('not.exist');
     });
   });
 });

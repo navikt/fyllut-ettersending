@@ -100,7 +100,7 @@ describe('sendPreviouslySubmittedApplication', () => {
 
   // Only paper, should not redirect to subType-page
   // Don't fill out userType because hideUserTypes is true
-  it.only('fill out + submit, should not redirect to subType-page', () => {
+  it('fill out + submit, should not redirect to subType-page', () => {
     cy.visit('/form3');
     cy.get('[type="checkbox"]').first().check();
     cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');

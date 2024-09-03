@@ -2,7 +2,7 @@ import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
-import ChooseSubmissionType from 'src/components/chooseSubmissionType/chooseSubmissionType';
+import ChooseFormSubmissionType from 'src/components/chooseSubmissionType/chooseFormSubmissionType';
 import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { EttersendelseApplication, Form } from '../../data/domain';
@@ -17,7 +17,7 @@ interface Props {
 const Innsendingsvalg: NextPage<Props> = (props) => {
   const { id, form } = props;
 
-  return <ChooseSubmissionType id={id} form={form} />;
+  return <ChooseFormSubmissionType id={id} form={form} />;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
