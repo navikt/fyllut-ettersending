@@ -81,7 +81,7 @@ describe('Løspost - Digital submission', () => {
       });
 
       it('illegal tema TIL in query param is ignored and removed from url', () => {
-        cy.visit('/lospost/digital?tema=PER');
+        cy.visit('/lospost/digital?tema=TIL');
         cy.wait('@getArchiveSubjects');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
