@@ -9,7 +9,7 @@ const MimeType = {
 type MimeType = (typeof MimeType)[keyof typeof MimeType];
 
 type HttpHeaders = {
-  'Content-Type'?: MimeType;
+  'Content-Type'?: string;
   Accept?: MimeType;
   Authorization?: string;
   [header: string]: string | string[] | undefined;
@@ -21,7 +21,7 @@ type HttpOptions = {
 
 const getDefaultHeaders = (headers?: HttpHeaders) => {
   const defaultHeaders = {
-    'Content-Type': MimeType.JSON,
+    'Content-Type': `${MimeType.JSON}; charset=utf8`,
     Accept: MimeType.JSON,
   };
 
