@@ -21,7 +21,7 @@ type HttpOptions = {
 
 const getDefaultHeaders = (headers?: HttpHeaders) => {
   const defaultHeaders = {
-    'Content-Type': `${MimeType.JSON}; charset=utf8`,
+    'Content-Type': MimeType.JSON,
     Accept: MimeType.JSON,
   };
 
@@ -31,7 +31,7 @@ const getDefaultHeaders = (headers?: HttpHeaders) => {
 const get = async <T>(url: string, headers?: HttpHeaders): Promise<T> => {
   const response = await fetch(url, {
     method: 'GET',
-    headers: getDefaultHeaders(headers),
+    headers: getDefaultHeaders({ 'Content-Type': 'application/json; charset=utf8', ...headers }),
   });
 
   return await handleResponse(response);
