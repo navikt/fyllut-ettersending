@@ -9,7 +9,7 @@ const MimeType = {
 type MimeType = (typeof MimeType)[keyof typeof MimeType];
 
 type HttpHeaders = {
-  'Content-Type'?: MimeType;
+  'Content-Type'?: string;
   Accept?: MimeType;
   Authorization?: string;
   [header: string]: string | string[] | undefined;
@@ -31,7 +31,7 @@ const getDefaultHeaders = (headers?: HttpHeaders) => {
 const get = async <T>(url: string, headers?: HttpHeaders): Promise<T> => {
   const response = await fetch(url, {
     method: 'GET',
-    headers: getDefaultHeaders(headers),
+    headers: getDefaultHeaders({ 'Content-Type': 'application/json; charset=utf8', ...headers }),
   });
 
   return await handleResponse(response);

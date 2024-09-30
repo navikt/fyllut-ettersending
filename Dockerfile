@@ -1,9 +1,9 @@
 FROM node:22-alpine
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -18,6 +18,6 @@ USER nextjs
 
 EXPOSE 3002
 
-ENV PORT 3002
+ENV PORT=3002
 
 CMD ["node", "server.js"]
