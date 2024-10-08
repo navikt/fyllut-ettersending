@@ -43,11 +43,10 @@ describe('Løspost - Paper submission', () => {
       // Sjekker validering først
       cy.get('[data-cy="ValidationSummary"]').should('not.exist');
       cy.get('button').contains(TestButtonText.next).click();
-      cy.focused()
-        .should('have.attr', 'data-cy', 'ValidationSummary')
-        .within(() => {
-          cy.get('li').should('have.length', 3);
-        });
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('heading').should('have.focus');
+        cy.get('li').should('have.length', 3);
+      });
 
       //Populate velg skjema page
       cy.get('[name="otherDocumentationTitle"]').click();
@@ -59,11 +58,10 @@ describe('Løspost - Paper submission', () => {
       cy.findAllByRole('radio').check('noSocialNumber');
 
       cy.get('button').contains(TestButtonText.next).should('be.visible').click();
-      cy.focused()
-        .should('have.attr', 'data-cy', 'ValidationSummary')
-        .within(() => {
-          cy.get('li').should('have.length', 7);
-        });
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('heading').should('have.focus');
+        cy.get('li').should('have.length', 7);
+      });
 
       cy.get('[name="firstName"]').click();
       cy.get('[name="firstName"]').type('Ola');

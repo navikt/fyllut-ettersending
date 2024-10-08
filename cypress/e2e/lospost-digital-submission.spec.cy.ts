@@ -36,7 +36,7 @@ describe('Løspost - Digital submission', () => {
         .should('exist')
         .type('Førerkort');
       cy.findByRole('button', { name: TestButtonText.next }).click();
-      cy.findByRole('region', { name: 'For å gå videre må du rette opp følgende:' })
+      cy.get('[data-cy=ValidationSummary]')
         .should('exist')
         .within(() => {
           cy.findByRole('link', { name: 'Du må velge tema for innsendingen' }).should('exist').click();
