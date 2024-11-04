@@ -12,6 +12,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <FormDataProvider page={page}>
       <Head>
         <title>Dokument til NAV - nav.no</title>
+        {page !== 'lospost' && <meta name="robots" content="noindex" />}
       </Head>
       <Component {...pageProps} />
     </FormDataProvider>

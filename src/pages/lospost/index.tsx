@@ -44,6 +44,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   return {
     props: {
+      page: 'lospost',
       ...(tema && { tema }),
       ...translations,
     },
