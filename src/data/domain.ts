@@ -113,7 +113,7 @@ export interface KeyValue {
   [key: string]: string;
 }
 
-export type FormDataPage = 'digital-lospost' | 'other';
+export type FormDataPage = 'lospost' | 'digital-lospost' | 'other';
 
 export type FormData = { page: FormDataPage } & OtherFormdata & DigitalLospostFormData;
 
