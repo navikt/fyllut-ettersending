@@ -56,6 +56,12 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
   };
 
   useEffect(() => {
+    if (formData.page !== 'digital-lospost') {
+      updateFormData({ page: 'digital-lospost' });
+    }
+  }, [formData.page, updateFormData]);
+
+  useEffect(() => {
     if (formData.language !== i18n.language) {
       updateFormData({ language: i18n.language });
     }
