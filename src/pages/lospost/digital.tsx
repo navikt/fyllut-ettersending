@@ -3,7 +3,6 @@ import '@navikt/ds-css';
 import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useReducer, useState } from 'react';
@@ -97,28 +96,23 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
       : t('title');
 
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <Layout title={title} backUrl={referrerPage}>
-        <ValidationSummary />
-        <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
-        <DigitalLospostForm subjects={subjects} />
-        <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
-        <ButtonGroup
-          center={!!referrerPage}
-          buttons={[
-            {
-              text: tCommon('button.cancel'),
-              path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-              variant: 'tertiary',
-              external: true,
-            },
-          ]}
-        />
-      </Layout>
-    </>
+    <Layout title={title} backUrl={referrerPage}>
+      <ValidationSummary />
+      <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
+      <DigitalLospostForm subjects={subjects} />
+      <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
+      <ButtonGroup
+        center={!!referrerPage}
+        buttons={[
+          {
+            text: tCommon('button.cancel'),
+            path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+            variant: 'tertiary',
+            external: true,
+          },
+        ]}
+      />
+    </Layout>
   );
 };
 

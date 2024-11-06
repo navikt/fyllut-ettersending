@@ -3,7 +3,6 @@ import '@navikt/ds-css';
 import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
@@ -120,54 +119,52 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
   };
 
-  const title = `${t('title-for')} ${form.title}`;
-
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <Layout title={title} backUrl={referrerPage} publishedLanguages={form.properties.publishedLanguages}>
-        <ValidationSummary />
+    <Layout
+      title={t('title-for')}
+      postFix={form.title}
+      backUrl={referrerPage}
+      publishedLanguages={form.properties.publishedLanguages}
+    >
+      <ValidationSummary />
 
-        <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
+      <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
 
-        {isSubmissionAllowed(form) ? (
-          formData.submissionType && (
-            <>
-              <ChooseAttachments form={form} />
-              {isSubmissionTypePaper(formData) && (
-                <ChooseUser
-                  navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-                  shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
-                  shouldRenderUserTypes={!form.properties.hideUserTypes}
-                />
-              )}
-
-              <ButtonGroup
-                buttons={[
-                  formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
-                  ...(referrerPage ? [previousButton] : []),
-                ]}
+      {isSubmissionAllowed(form) ? (
+        formData.submissionType && (
+          <>
+            <ChooseAttachments form={form} />
+            {isSubmissionTypePaper(formData) && (
+              <ChooseUser
+                navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+                shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+                shouldRenderUserTypes={!form.properties.hideUserTypes}
               />
-              <ButtonGroup
-                center={!!referrerPage}
-                buttons={[
-                  {
-                    text: tCommon('button.cancel'),
-                    path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-                    variant: 'tertiary',
-                    external: true,
-                  },
-                ]}
-              />
-            </>
-          )
-        ) : (
-          <Alert variant="info">{t('no-attachments-alert')}</Alert>
-        )}
-      </Layout>
-    </>
+            )}
+
+            <ButtonGroup
+              buttons={[
+                formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
+                ...(referrerPage ? [previousButton] : []),
+              ]}
+            />
+            <ButtonGroup
+              center={!!referrerPage}
+              buttons={[
+                {
+                  text: tCommon('button.cancel'),
+                  path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+                  variant: 'tertiary',
+                  external: true,
+                },
+              ]}
+            />
+          </>
+        )
+      ) : (
+        <Alert variant="info">{t('no-attachments-alert')}</Alert>
+      )}
+    </Layout>
   );
 };
 
