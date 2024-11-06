@@ -16,6 +16,7 @@
   "attachments": "Du må velge minst ett dokument som skal ettersendes",
   "digitalLospost": {
     "subject": "Du må velge tema for innsendingen",
-    "documentTitle": "Du må fylle ut hvilken dokumentasjon vil du sende til NAV"
+    "documentTitle": "Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
+    "documentTitleLength": "Hvilken dokumentasjon vil du sende til NAV kan maksimalt ha 150 tegn"
   }
 }
