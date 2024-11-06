@@ -53,7 +53,8 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const title = tema ? `${t('title-about')} ${archiveSubjects[tema]}` : t('title');
+  const title =
+    tema && archiveSubjects[tema] ? `${t('title-about')} ${archiveSubjects[tema].toLowerCase()}` : t('title');
 
   return (
     <Layout title={title} backUrl={referrerPage}>

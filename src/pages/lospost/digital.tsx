@@ -92,7 +92,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
 
   const title =
     tema && subjects.status === 'ready' && subjects.hidden
-      ? `${t('title-about')} ${subjects.map[tema]?.toLowerCase()}`
+      ? `${t('title-about')} ${subjects.map[tema]?.toLowerCase()}`.trim()
       : t('title');
 
   return (
