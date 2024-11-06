@@ -3,18 +3,19 @@ import '@navikt/ds-css';
 import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
+import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { createLospost } from '../../api/apiClient';
+import { createLospost, fetchArchiveSubjects } from '../../api/apiClient';
 import { getIdPortenTokenFromContext } from '../../api/loginRedirect';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
-import { FormDataPage, UnauthenticatedError } from '../../data/domain';
+import { FormDataPage, KeyValue, UnauthenticatedError } from '../../data/domain';
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
+  const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
   const { formData, updateFormData } = useFormState();
   const { t, i18n } = useTranslation('digital-lospost');
   const { t: tCommon } = useTranslation('common');
@@ -55,6 +57,17 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
     external: true,
   };
 
+  const fetchData = useCallback(async () => {
+    if (Object.keys(archiveSubjects).length === 0) {
+      const archiveSubjectsResponse = await fetchArchiveSubjects();
+      setArchiveSubjects(archiveSubjectsResponse);
+    }
+  }, [archiveSubjects]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   useEffect(() => {
     if (formData.page !== 'digital-lospost') {
       updateFormData({ page: 'digital-lospost' });
@@ -67,24 +80,32 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
     }
   }, [formData.language, i18n.language, updateFormData]);
 
+  const title =
+    tema && archiveSubjects[tema] ? `${t('title-about')} ${archiveSubjects[tema].toLowerCase()}` : t('title');
+
   return (
-    <Layout title={t('title')} backUrl={referrerPage}>
-      <ValidationSummary />
-      <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
-      <DigitalLospostForm subject={tema} />
-      <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
-      <ButtonGroup
-        center={!!referrerPage}
-        buttons={[
-          {
-            text: tCommon('button.cancel'),
-            path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-            variant: 'tertiary',
-            external: true,
-          },
-        ]}
-      />
-    </Layout>
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Layout title={title} backUrl={referrerPage}>
+        <ValidationSummary />
+        <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
+        <DigitalLospostForm subject={tema} />
+        <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
+        <ButtonGroup
+          center={!!referrerPage}
+          buttons={[
+            {
+              text: tCommon('button.cancel'),
+              path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+              variant: 'tertiary',
+              external: true,
+            },
+          ]}
+        />
+      </Layout>
+    </>
   );
 };
 

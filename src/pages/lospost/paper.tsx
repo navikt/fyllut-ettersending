@@ -2,6 +2,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
+import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
@@ -53,23 +54,30 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const title = tema ? `${t('title-about')} ${archiveSubjects[tema]}` : t('title');
+
   return (
-    <Layout title={t('title')} backUrl={referrerPage}>
-      <ValidationSummary />
-      <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
-      <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
-      <ButtonGroup
-        center={!!referrerPage}
-        buttons={[
-          {
-            text: tCommon('button.cancel'),
-            path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-            variant: 'tertiary',
-            external: true,
-          },
-        ]}
-      />
-    </Layout>
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Layout title={title} backUrl={referrerPage}>
+        <ValidationSummary />
+        <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
+        <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
+        <ButtonGroup
+          center={!!referrerPage}
+          buttons={[
+            {
+              text: tCommon('button.cancel'),
+              path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+              variant: 'tertiary',
+              external: true,
+            },
+          ]}
+        />
+      </Layout>
+    </>
   );
 };
 
