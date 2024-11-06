@@ -4,8 +4,9 @@ import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
@@ -15,21 +16,24 @@ import { getIdPortenTokenFromContext } from '../../api/loginRedirect';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
-import { FormDataPage, KeyValue, UnauthenticatedError } from '../../data/domain';
+import { FormDataPage, UnauthenticatedError } from '../../data/domain';
+import archiveSubjectsReducer from '../../forms/digitalLospost/archiveSubjectsReducer';
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 
 interface Props {
   tema?: string;
 }
 
 const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
-  const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
   const { formData, updateFormData } = useFormState();
+  const router = useRouter();
   const { t, i18n } = useTranslation('digital-lospost');
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [subjects, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
   const referrerPage = useReffererPage();
 
   const submitButtonPressed = async () => {
@@ -58,15 +62,22 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
   };
 
   const fetchData = useCallback(async () => {
-    if (Object.keys(archiveSubjects).length === 0) {
-      const archiveSubjectsResponse = await fetchArchiveSubjects();
-      setArchiveSubjects(archiveSubjectsResponse);
+    const archiveSubjectsResponse = await fetchArchiveSubjects();
+    PAPER_ONLY_SUBJECTS.forEach((code) => delete archiveSubjectsResponse[code]);
+    const hideSubjectsCombobox = tema ? !!archiveSubjectsResponse[tema] : false;
+    dispatch({ type: 'set', subjects: archiveSubjectsResponse, hidden: hideSubjectsCombobox });
+    if (hideSubjectsCombobox) {
+      updateFormData({ subject: { value: tema!, label: archiveSubjectsResponse[tema!] } });
+    } else if (tema) {
+      const { pathname } = router;
+      router.replace(pathname, undefined, { shallow: true });
     }
-  }, [archiveSubjects]);
+  }, [router, tema, updateFormData]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (formData.page !== 'digital-lospost') {
@@ -81,7 +92,9 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
   }, [formData.language, i18n.language, updateFormData]);
 
   const title =
-    tema && archiveSubjects[tema] ? `${t('title-about')} ${archiveSubjects[tema].toLowerCase()}` : t('title');
+    tema && subjects.status === 'ready' && subjects.hidden
+      ? `${t('title-about')} ${subjects.map[tema]?.toLowerCase()}`
+      : t('title');
 
   return (
     <>
@@ -91,7 +104,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
       <Layout title={title} backUrl={referrerPage}>
         <ValidationSummary />
         <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
-        <DigitalLospostForm subject={tema} />
+        <DigitalLospostForm subjects={subjects} />
         <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
         <ButtonGroup
           center={!!referrerPage}
