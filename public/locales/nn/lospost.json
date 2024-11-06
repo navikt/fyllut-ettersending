@@ -1,5 +1,6 @@
 {
   "title": "Send dokument til NAV",
+  "title-about": "Send dokument til NAV om",
   "ingress": "Når du skal senda dokument til NAV i posten må du bruka ei førsteside for innsending. Fyll ut felta nedanfor og klikk \"Gå vidare\". På neste side kan du lasta ned førsteside til innsendinga di. Du treng ikkje ha dokumenta klare for å lasta ned førsteside. Alle dokumenta du sender inn må merkast med namn/firmanamn og eventuelt fødselsnummer/d-nummer.",
   "other-documentation-title": {
     "label": "Kva dokumentasjon vil du senda til NAV?",

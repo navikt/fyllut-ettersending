@@ -38,6 +38,7 @@ describe('digital submission for form2', () => {
     cy.mocksUseRouteVariant('post-ettersending:success');
     cy.visit('/form2?sub=digital');
 
+    cy.findByRole('heading', { level: 1, name: `Ettersend dokumentasjon for ${FORM2.title}` });
     // Choose attachments
     cy.findByRole('checkbox', { name: n6?.label }).check();
     cy.findByRole('checkbox', { name: l9?.label }).check();
