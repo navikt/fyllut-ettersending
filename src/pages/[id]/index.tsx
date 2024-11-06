@@ -120,7 +120,7 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
   };
 
-  const title = `${t('title-for')} "${form.title}"`;
+  const title = `${t('title-for')} ${form.title}`;
 
   return (
     <>
