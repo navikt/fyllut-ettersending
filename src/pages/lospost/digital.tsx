@@ -21,6 +21,7 @@ import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
@@ -91,8 +92,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
   }, [formData.language, i18n.language, updateFormData]);
 
   const title =
-    tema && subjects.status === 'ready' && subjects.hidden
-      ? `${t('title-about')} ${subjects.map[tema]?.toLowerCase()}`.trim()
+    tema && subjects.status === 'ready' && subjects.map[tema]
+      ? `${t('title-about')} ${uncapitalize(subjects.map[tema])}`
       : t('title');
 
   return (

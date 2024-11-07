@@ -14,6 +14,7 @@ import Layout from '../../components/layout/layout';
 import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
@@ -54,7 +55,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
   }, []);
 
   const title =
-    tema && archiveSubjects[tema] ? `${t('title-about')} ${archiveSubjects[tema].toLowerCase()}` : t('title');
+    tema && archiveSubjects[tema] ? `${t('title-about')} ${uncapitalize(archiveSubjects[tema])}` : t('title');
 
   return (
     <Layout title={title} backUrl={referrerPage}>

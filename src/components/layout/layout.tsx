@@ -12,14 +12,13 @@ import styles from './layout.module.css';
 
 interface Props {
   title?: string;
-  postFix?: string;
   children: ReactNode;
   backUrl?: string;
   showBackLink?: boolean;
   publishedLanguages?: LanguageCode[];
 }
 
-const Layout = ({ title, postFix, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
+const Layout = ({ title, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
   const { t } = useTranslation('common');
 
   const backLink = () => {
@@ -38,11 +37,11 @@ const Layout = ({ title, postFix, children, backUrl, showBackLink = true, publis
   return (
     <div className={styles.layout}>
       <Head>
-        <title>{`${title ?? ''} ${postFix ?? ''}`.trim()}</title>
+        <title>{title ?? t('heading.default-title')}</title>
       </Head>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
-          {title ?? t('heading.default-title')} <em>{postFix}</em>
+          {title ?? t('heading.default-title')}
         </Heading>
       </header>
 

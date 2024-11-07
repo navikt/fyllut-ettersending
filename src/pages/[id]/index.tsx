@@ -29,6 +29,7 @@ import {
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { uncapitalize } from '../../utils/stringUtil';
 import {
   areBothSubmissionTypesAllowed,
   getDefaultSubmissionType,
@@ -121,8 +122,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
   return (
     <Layout
-      title={t('title-for')}
-      postFix={form.title}
+      title={`${t('title-for')} ${uncapitalize(form.title)}`}
       backUrl={referrerPage}
       publishedLanguages={form.properties.publishedLanguages}
     >
