@@ -8,6 +8,8 @@ const validateFormData = (formData: FormData, t: TFunction) => {
   if (formData.page === 'digital-lospost') {
     if (!formData.documentTitle) {
       formErrors.documentTitle = t('digitalLospost.documentTitle');
+    } else if (formData.documentTitle.length > 150) {
+      formErrors.documentTitle = t('digitalLospost.documentTitleLength');
     }
     if (!formData.subject) {
       formErrors.subject = t('digitalLospost.subject');
