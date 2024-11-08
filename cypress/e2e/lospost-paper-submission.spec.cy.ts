@@ -142,6 +142,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV om permittering og masseoppsigelser' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
@@ -169,6 +170,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
     });
+
     it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
@@ -243,6 +245,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should show combobox for subject and be able to fill out and go to next page', () => {
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);

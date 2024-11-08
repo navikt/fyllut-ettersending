@@ -14,6 +14,7 @@ import Layout from '../../components/layout/layout';
 import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
@@ -53,8 +54,11 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const title =
+    tema && archiveSubjects[tema] ? `${t('title-about')} ${uncapitalize(archiveSubjects[tema])}` : t('title');
+
   return (
-    <Layout title={t('title')} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage}>
       <ValidationSummary />
       <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />

@@ -23,9 +23,9 @@ interface ErrorState {
   status: 'error';
 }
 
-type ReducerState = InitState | ReadyState | ErrorState;
+type SubjectsState = InitState | ReadyState | ErrorState;
 
-const archiveSubjectsReducer = (state: ReducerState, action: ActionType): ReducerState => {
+const archiveSubjectsReducer = (state: SubjectsState, action: ActionType): SubjectsState => {
   switch (action.type) {
     case 'init':
       return { status: 'init' };
@@ -45,4 +45,5 @@ const archiveSubjectsReducer = (state: ReducerState, action: ActionType): Reduce
   }
 };
 
+export type { SubjectsState };
 export default archiveSubjectsReducer;

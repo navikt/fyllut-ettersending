@@ -1,5 +1,6 @@
 {
   "title": "Send documents to NAV",
+  "title-about": "Send documents to NAV about",
   "ingress": "Here you can send documentation to NAV. Fill in the fields below and click \"Next\". On the next page, you can upload the documentation you want to submit.",
   "document-title": {
     "label": "What documentation do you want to send to NAV?",

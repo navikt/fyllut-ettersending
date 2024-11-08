@@ -3,6 +3,7 @@ import '@navikt/ds-css';
 import { Heading, Link as NavLink } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import { LanguageCode } from 'src/data/domain';
@@ -35,6 +36,9 @@ const Layout = ({ title, children, backUrl, showBackLink = true, publishedLangua
 
   return (
     <div className={styles.layout}>
+      <Head>
+        <title>{title ?? t('heading.default-title')}</title>
+      </Head>
       <header className={classNames(styles.header, styles.content)}>
         <Heading size="xlarge" level="1">
           {title ?? t('heading.default-title')}
