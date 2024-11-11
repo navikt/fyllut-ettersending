@@ -26,7 +26,6 @@ describe('Løspost - Digital submission', () => {
 
     it('does not allow title of length more than 150 characters', () => {
       cy.visit('/lospost/digital');
-      cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type(
