@@ -4,10 +4,6 @@ describe('Løspost - Digital submission', () => {
   const URL_FYLLUT_ETTERSENDING = Cypress.config().baseUrl;
   const URL_SEND_INN_FRONTEND = 'http://127.0.0.1:3200/send-inn-frontend';
 
-  beforeEach(() => {
-    cy.intercept('GET', `${Cypress.config('baseUrl')}/api/archive-subjects`).as('getArchiveSubjects');
-  });
-
   describe('Creation of søknad succeeds', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
