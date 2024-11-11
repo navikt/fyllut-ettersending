@@ -16,6 +16,7 @@
   "attachments": "You have to select at least one document to submit",
   "digitalLospost": {
     "subject": "You have to choose topic for the submission",
-    "documentTitle": "You have to fill in what documentation you want to send to NAV"
+    "documentTitle": "You have to fill in what documentation you want to send to NAV",
+    "documentTitleLength": "The document title may at most have 150 characters"
   }
 }

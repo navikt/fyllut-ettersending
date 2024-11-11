@@ -24,6 +24,29 @@ describe('Løspost - Digital submission', () => {
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
 
+    it('does not allow title of length more than 150 characters', () => {
+      cy.visit('/lospost/digital');
+      cy.wait('@getArchiveSubjects');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type(
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
+        );
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.get('[data-cy=ValidationSummary]')
+        .should('exist')
+        .within(() => {
+          cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til NAV kan maksimalt ha 150 tegn' })
+            .should('exist')
+            .click();
+        });
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('have.focus')
+        .type('{backspace}');
+      cy.findByLabelText('For å gå videre må du rette opp følgende:').should('not.exist');
+    });
+
     it('renders validation error when subject is missing', () => {
       cy.visit('/lospost/digital');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
