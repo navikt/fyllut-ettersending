@@ -22,6 +22,7 @@ import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -119,10 +120,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { tema, dokumentnavn } = context.query as { tema: string; dokumentnavn: string };
-  const pageProps = {
-    ...(tema && { tema }),
-    ...(dokumentnavn && { dokumentnavn }),
-  };
+  const pageProps = excludeKeysEmpty({ tema, dokumentnavn });
   // Attempt to verify the token and redirect to login if necessary
   try {
     await getIdPortenTokenFromContext(context, true);

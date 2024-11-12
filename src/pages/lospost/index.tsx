@@ -4,6 +4,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { excludeKeysEmpty } from '../../utils/object';
 
 interface Props {
   tema?: string;
@@ -56,10 +57,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const createPageProps = ({ tema, dokumentnavn }: Props) => {
-  const props = {
-    ...(tema && { tema }),
-    ...(dokumentnavn && { dokumentnavn }),
-  };
+  const props = excludeKeysEmpty({ tema, dokumentnavn });
   return {
     asQueryString: () => new URLSearchParams(props).toString(),
     asProps: () => props,
