@@ -10,17 +10,6 @@ interface Props {
   dokumentnavn?: string;
 }
 
-const createPageProps = ({ tema, dokumentnavn }: Props) => {
-  const props = {
-    ...(tema && { tema }),
-    ...(dokumentnavn && { dokumentnavn }),
-  };
-  return {
-    asQueryString: () => new URLSearchParams(props).toString(),
-    asProps: () => props,
-  };
-};
-
 const Lospost: NextPage<Props> = ({ tema, dokumentnavn }) => {
   const queryString = createPageProps({ tema, dokumentnavn }).asQueryString();
 
@@ -65,5 +54,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     },
   };
 }
+
+const createPageProps = ({ tema, dokumentnavn }: Props) => {
+  const props = {
+    ...(tema && { tema }),
+    ...(dokumentnavn && { dokumentnavn }),
+  };
+  return {
+    asQueryString: () => new URLSearchParams(props).toString(),
+    asProps: () => props,
+  };
+};
 
 export default Lospost;
