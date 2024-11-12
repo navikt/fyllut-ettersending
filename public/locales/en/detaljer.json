@@ -1,6 +1,5 @@
 {
-  "title-paper": "Send documentation by post",
-  "title-digital": "Send documentation digitally",
+  "title-for": "Send document for",
   "loading-text": "Loading...",
   "attachments-checkbox": {
     "legend": "Which documents do you wish to submit?",

@@ -3,31 +3,39 @@ import '@navikt/ds-css';
 import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';
 import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { createLospost } from '../../api/apiClient';
+import { getArchiveSubjects } from '../../api/apiService';
 import { getIdPortenTokenFromContext } from '../../api/loginRedirect';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
-import { FormDataPage, UnauthenticatedError } from '../../data/domain';
+import { FormDataPage, KeyValue, UnauthenticatedError } from '../../data/domain';
+import archiveSubjectsReducer from '../../forms/digitalLospost/archiveSubjectsReducer';
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
+  subjects?: KeyValue;
 }
 
-const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
+const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects }) => {
   const { formData, updateFormData } = useFormState();
+  const router = useRouter();
   const { t, i18n } = useTranslation('digital-lospost');
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
   const referrerPage = useReffererPage();
 
   const submitButtonPressed = async () => {
@@ -55,6 +63,24 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
     external: true,
   };
 
+  const verifySubjects = useCallback(async () => {
+    if (serverSubjects) {
+      const hideSubjectsCombobox = tema ? !!serverSubjects[tema] : false;
+      dispatch({ type: 'set', subjects: serverSubjects, hidden: hideSubjectsCombobox });
+      if (hideSubjectsCombobox) {
+        updateFormData({ subject: { value: tema!, label: serverSubjects[tema!] } });
+      } else if (tema) {
+        const { pathname } = router;
+        router.replace(pathname, undefined, { shallow: true });
+      }
+    }
+  }, [router, serverSubjects, tema, updateFormData]);
+
+  useEffect(() => {
+    verifySubjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (formData.page !== 'digital-lospost') {
       updateFormData({ page: 'digital-lospost' });
@@ -67,11 +93,14 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
     }
   }, [formData.language, i18n.language, updateFormData]);
 
+  const title =
+    tema && serverSubjects?.[tema] ? `${t('title-about')} ${uncapitalize(serverSubjects[tema])}` : t('title');
+
   return (
-    <Layout title={t('title')} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage}>
       <ValidationSummary />
       <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
-      <DigitalLospostForm subject={tema} />
+      <DigitalLospostForm subjects={subjectsState} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
       <ButtonGroup
         center={!!referrerPage}
@@ -100,12 +129,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       return redirectToLogin(context);
     }
   }
+  const subjects = await getArchiveSubjects();
+  PAPER_ONLY_SUBJECTS.forEach((code) => delete subjects[code]);
   const translations = await getServerSideTranslations(context.locale, ['digital-lospost', 'common', 'validator']);
   const page: FormDataPage = 'digital-lospost';
   if (tema) {
-    return { props: { tema, page, ...translations } };
+    return { props: { tema, page, subjects, ...translations } };
   }
-  return { props: { page, ...translations } };
+  return { props: { page, subjects, ...translations } };
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {

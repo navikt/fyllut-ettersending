@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import '@navikt/ds-css';
-import { Alert, Heading, Ingress } from '@navikt/ds-react';
+import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -29,6 +29,7 @@ import {
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { uncapitalize } from '../../utils/stringUtil';
 import {
   areBothSubmissionTypesAllowed,
   getDefaultSubmissionType,
@@ -119,16 +120,12 @@ const Detaljer: NextPage<Props> = (props) => {
     external: true,
   };
 
-  const title = router.query.sub === SubmissionType.digital ? t('title-digital') : t('title-paper');
-
   return (
-    <Layout title={title} backUrl={referrerPage} publishedLanguages={form.properties.publishedLanguages}>
-      <Section>
-        <Heading size="large" level="2">
-          {form.title}
-        </Heading>
-        <Ingress>{form.properties.formNumber}</Ingress>
-      </Section>
+    <Layout
+      title={`${t('title-for')} ${uncapitalize(form.title)}`}
+      backUrl={referrerPage}
+      publishedLanguages={form.properties.publishedLanguages}
+    >
       <ValidationSummary />
 
       <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>

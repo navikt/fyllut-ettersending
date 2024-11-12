@@ -17,14 +17,12 @@ describe('Løspost - Paper submission', () => {
   };
 
   beforeEach(() => {
-    cy.intercept('GET', `${Cypress.config('baseUrl')}/api/archive-subjects`).as('getArchiveSubjects');
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
   });
 
   describe('form with tema=PER', () => {
     beforeEach(() => {
       cy.visit('/lospost/paper');
-      cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
@@ -128,7 +126,6 @@ describe('Løspost - Paper submission', () => {
   describe("query param 'tema=PER'", () => {
     beforeEach(() => {
       cy.visit(`/lospost/paper?tema=${SUBJECT_PER.subject}`);
-      cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
@@ -142,6 +139,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV om permittering og masseoppsigelser' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
@@ -159,7 +157,6 @@ describe('Løspost - Paper submission', () => {
   describe("query param 'tema=TIL", () => {
     beforeEach(() => {
       cy.visit(`/lospost/paper?tema=${SUBJECT_TIL.subject}`);
-      cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
@@ -169,6 +166,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
     });
+
     it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
       // Hvilken dokumentasjon vil du sende til NAV?
       cy.get('[name="otherDocumentationTitle"]').click();
@@ -195,7 +193,6 @@ describe('Løspost - Paper submission', () => {
   describe('form with tema=TIL', () => {
     beforeEach(() => {
       cy.visit('/lospost/paper');
-      cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
@@ -232,7 +229,6 @@ describe('Løspost - Paper submission', () => {
   describe("query param invalid 'tema'", () => {
     beforeEach(() => {
       cy.visit('/lospost/paper?tema=invalid');
-      cy.wait('@getArchiveSubjects');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
@@ -243,6 +239,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should show combobox for subject and be able to fill out and go to next page', () => {
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
@@ -265,7 +262,6 @@ describe('Løspost - Paper submission', () => {
 
     it('should navigate back from download-page and keep input data', () => {
       cy.visit('/lospost/paper?tema=BIL');
-      cy.wait('@getArchiveSubjects');
 
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
