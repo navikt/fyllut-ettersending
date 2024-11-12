@@ -11,7 +11,7 @@ interface Props {
 
 const DigitalLospostForm = ({ subjects }: Props) => {
   const { t } = useTranslation('digital-lospost');
-  const { updateFormData, formData, errors } = useFormState();
+  const { updateFormData, formData, errors, documentationTitleHint } = useFormState();
 
   const ingress = useCallback(() => {
     return (
@@ -38,7 +38,7 @@ const DigitalLospostForm = ({ subjects }: Props) => {
         description={t('document-title.description')}
         name="documentTitle"
         id="documentTitle"
-        value={formData.documentTitle ?? ''}
+        value={formData.documentTitle || documentationTitleHint || ''}
         size="medium"
         onChange={(event) => updateFormData({ documentTitle: event.target.value })}
         error={errors.documentTitle}

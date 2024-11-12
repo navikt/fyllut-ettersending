@@ -13,6 +13,7 @@ interface AppStateType {
   setValidate: (valid: boolean) => boolean;
   validationSummaryRef: React.RefObject<HTMLDivElement>;
   validationSummaryFocus: () => void;
+  documentationTitleHint: string | undefined;
 }
 
 const FormDataContext = React.createContext<AppStateType>({} as AppStateType);
@@ -24,9 +25,10 @@ export function useFormState() {
 type Props = {
   children: ReactNode;
   page: FormDataPage;
+  documentationTitleHint: string | undefined;
 };
 
-export function FormDataProvider({ children, page }: Props) {
+export function FormDataProvider({ children, page, documentationTitleHint }: Props) {
   const [formData, setFormData] = useState<FormData>({ page });
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
@@ -119,6 +121,7 @@ export function FormDataProvider({ children, page }: Props) {
         setValidate,
         validationSummaryRef,
         validationSummaryFocus,
+        documentationTitleHint,
       }}
     >
       {children}

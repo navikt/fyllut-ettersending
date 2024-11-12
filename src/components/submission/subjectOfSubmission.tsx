@@ -22,7 +22,7 @@ const findKeyByValue = (obj: KeyValueMap, value: string): string | undefined => 
 // If subject is in query param and is invalid -> render combobox
 // If subject is not in query param -> render combobox
 const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
-  const { formData, updateFormData, errors } = useFormState();
+  const { formData, updateFormData, errors, documentationTitleHint } = useFormState();
   const { t } = useTranslation('lospost');
 
   const options = useMemo(() => {
@@ -86,7 +86,7 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
           description={t('other-documentation-title.description')}
           name="otherDocumentationTitle"
           id="otherDocumentationTitle"
-          value={formData.otherDocumentationTitle ?? ''}
+          value={formData.otherDocumentationTitle || documentationTitleHint || ''}
           size="medium"
           onChange={(evt) => updateFormData({ otherDocumentationTitle: evt.target.value })}
           error={errors.otherDocumentationTitle}

@@ -118,7 +118,11 @@ const DigitalLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { tema, dokumentnavn } = context.query as { tema: string; dokumentnavn: string };
+  const pageProps = {
+    ...(tema && { tema }),
+    ...(dokumentnavn && { dokumentnavn }),
+  };
   // Attempt to verify the token and redirect to login if necessary
   try {
     await getIdPortenTokenFromContext(context, true);
@@ -131,10 +135,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   const translations = await getServerSideTranslations(context.locale, ['digital-lospost', 'common', 'validator']);
   const page: FormDataPage = 'digital-lospost';
-  if (tema) {
-    return { props: { tema, page, ...translations } };
-  }
-  return { props: { page, ...translations } };
+  return { props: { page, ...pageProps, ...translations } };
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {

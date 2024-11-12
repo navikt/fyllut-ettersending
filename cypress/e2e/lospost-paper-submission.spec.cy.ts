@@ -260,6 +260,15 @@ describe('Løspost - Paper submission', () => {
     });
   });
 
+  describe("query param 'dokumentnavn'", () => {
+    it('prefills document title input value', () => {
+      cy.visit('/lospost/paper?tema=SYK&dokumentnavn=Bestridelse');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .should('contain.value', 'Bestridelse');
+    });
+  });
+
   describe('Navigation', () => {
     it('should redirect back to lospost on hard navigate to download-page', () => {
       cy.visit('/lospost/last-ned');

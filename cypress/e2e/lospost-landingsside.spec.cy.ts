@@ -47,6 +47,26 @@ describe('Løspost - Landingsside', () => {
     });
   });
 
+  describe('Predefined document title', () => {
+    it('Redirects to paper with predefined document title', () => {
+      cy.visit('/lospost?team=SYK&dokumentnavn=Bestridelse%3A');
+      cy.get('a').contains(TestLinkText.sendPaper).click();
+      cy.url().should('contain', '/lospost/paper');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .should('have.value', 'Bestridelse:');
+    });
+
+    it('Redirects to digital with predefined document title', () => {
+      cy.visit('/lospost?team=SYK&dokumentnavn=Bestridelse%3A');
+      cy.get('a').contains(TestLinkText.sendDigital).click();
+      cy.url().should('contain', '/lospost/digital');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .should('have.value', 'Bestridelse:');
+    });
+  });
+
   describe('Automatic redirects from submission type in query parameter', () => {
     it('Redirects to page for paper lospost', () => {
       cy.visit('/lospost?sub=paper');

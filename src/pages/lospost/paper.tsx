@@ -78,12 +78,13 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { tema, dokumentnavn } = context.query as { tema: string; dokumentnavn: string };
+  const pageProps = {
+    ...(tema && { tema }),
+    ...(dokumentnavn && { dokumentnavn }),
+  };
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'validator']);
-  if (tema) {
-    return { props: { tema, ...translations } };
-  }
-  return { props: { ...translations } };
+  return { props: { ...pageProps, ...translations } };
 }
 
 export default PaperLospostPage;

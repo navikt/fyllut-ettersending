@@ -8,8 +8,9 @@ import { FormDataPage } from '../data/domain';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const page = (pageProps.page as FormDataPage) || 'other';
+  const documentationTitleHint = (pageProps.dokumentnavn as string) || undefined;
   return (
-    <FormDataProvider page={page}>
+    <FormDataProvider page={page} documentationTitleHint={documentationTitleHint}>
       <Head>
         <title>Dokument til NAV - nav.no</title>
         {page !== 'lospost' && <meta name="robots" content="noindex" />}
