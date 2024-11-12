@@ -11,6 +11,11 @@ describe('Løspost - Paper submission', () => {
     title: 'Tiltak',
   };
 
+  const SUBJECT_SYK = {
+    subject: 'SYK',
+    title: 'Sykepenger',
+  };
+
   const NAV_UNIT = {
     name: 'Dagpenger - Grensearbeider inn',
     number: '4465',
@@ -255,11 +260,70 @@ describe('Løspost - Paper submission', () => {
   });
 
   describe("query param 'dokumentnavn'", () => {
-    it('prefills document title input value', () => {
-      cy.visit('/lospost/paper?tema=SYK&dokumentnavn=Bestridelse');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+    const INPUT_LABEL = 'Hvilken dokumentasjon vil du sende til NAV?';
+
+    beforeEach(() => {
+      cy.visit('/lospost/paper?tema=SYK&dokumentnavn=Bestridelse%3A');
+      cy.findByRole('textbox', { name: INPUT_LABEL }).should('exist').should('contain.value', 'Bestridelse:');
+    });
+
+    const fillSocialSecurityNo = () => {
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+    };
+
+    it('uses prefilled documentation title', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title);
+        expect(req.body.title).to.equal('Innsendingen gjelder: Sykepenger - Bestridelse: Bekreftelse fra lege');
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      cy.findByRole('textbox', { name: INPUT_LABEL }).type(' Bekreftelse fra lege');
+      fillSocialSecurityNo();
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+      cy.wait('@downloadForsteside');
+    });
+
+    it('overrides prefilled documentation title', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title);
+        expect(req.body.title).to.equal('Innsendingen gjelder: Sykepenger - Bekreftelse fra lege');
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      cy.findByRole('textbox', { name: INPUT_LABEL }).type('{selectall}Bekreftelse fra lege');
+      fillSocialSecurityNo();
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+      cy.wait('@downloadForsteside');
+    });
+
+    it('validates that the user actually has typed something to describe the documentation', () => {
+      cy.findByRole('textbox', { name: INPUT_LABEL }).type('{selectall}{backspace}');
+      fillSocialSecurityNo();
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.get('[data-cy=ValidationSummary]')
         .should('exist')
-        .should('contain.value', 'Bestridelse');
+        .within(() => {
+          cy.findByRole('link', { name: 'Du må fylle ut hvilken dokumentasjon vil du sende til NAV' })
+            .should('exist')
+            .click();
+        });
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('have.focus');
+
+      cy.url().should('not.include', '/last-ned');
     });
   });
 
