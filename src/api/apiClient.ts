@@ -6,7 +6,6 @@ import {
   EttersendingVedlegg,
   FormData,
   HttpError,
-  KeyValue,
   LospostRequestBody,
   NavUnit,
 } from '../data/domain';
@@ -16,11 +15,6 @@ const baseUrl = '/fyllut-ettersending';
 
 const fetchForms = async () => {
   const response = await fetch(`${baseUrl}/api/forms`);
-  return response.json();
-};
-
-const fetchArchiveSubjects = async (): Promise<KeyValue> => {
-  const response = await fetch(`${baseUrl}/api/archive-subjects`);
   return response.json();
 };
 
@@ -113,4 +107,4 @@ const createLospost = async (formData: DigitalLospostFormData): Promise<string> 
   return location;
 };
 
-export { createEttersending, createLospost, downloadFrontpage, fetchArchiveSubjects, fetchForms, fetchNavUnits };
+export { createEttersending, createLospost, downloadFrontpage, fetchForms, fetchNavUnits };

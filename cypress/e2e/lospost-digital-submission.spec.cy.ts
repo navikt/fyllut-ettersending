@@ -4,10 +4,6 @@ describe('Løspost - Digital submission', () => {
   const URL_FYLLUT_ETTERSENDING = Cypress.config().baseUrl;
   const URL_SEND_INN_FRONTEND = 'http://127.0.0.1:3200/send-inn-frontend';
 
-  beforeEach(() => {
-    cy.intercept('GET', `${Cypress.config('baseUrl')}/api/archive-subjects`).as('getArchiveSubjects');
-  });
-
   describe('Creation of søknad succeeds', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
@@ -19,7 +15,6 @@ describe('Løspost - Digital submission', () => {
 
     it('requires both title and subject to proceed', () => {
       cy.visit('/lospost/digital');
-      cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Førerkort');
@@ -29,9 +24,30 @@ describe('Løspost - Digital submission', () => {
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
 
+    it('does not allow title of length more than 150 characters', () => {
+      cy.visit('/lospost/digital');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type(
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
+        );
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.get('[data-cy=ValidationSummary]')
+        .should('exist')
+        .within(() => {
+          cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til NAV kan maksimalt ha 150 tegn' })
+            .should('exist')
+            .click();
+        });
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('have.focus')
+        .type('{backspace}');
+      cy.findByLabelText('For å gå videre må du rette opp følgende:').should('not.exist');
+    });
+
     it('renders validation error when subject is missing', () => {
       cy.visit('/lospost/digital');
-      cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Førerkort');
@@ -53,7 +69,6 @@ describe('Løspost - Digital submission', () => {
     describe('Tema query parameter', () => {
       it('tema is prefilled from query param', () => {
         cy.visit('/lospost/digital?tema=BIL');
-        cy.wait('@getArchiveSubjects');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
           .should('exist')
           .type('Førerkort');
@@ -66,13 +81,11 @@ describe('Løspost - Digital submission', () => {
 
       it('tema is included in heading', () => {
         cy.visit('/lospost/digital?tema=PEN');
-        cy.wait('@getArchiveSubjects');
         cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV om pensjon' }).should('be.visible');
       });
 
       it('unknown tema in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=INVALID');
-        cy.wait('@getArchiveSubjects');
         cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
@@ -81,7 +94,6 @@ describe('Løspost - Digital submission', () => {
 
       it('illegal tema PER in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=PER');
-        cy.wait('@getArchiveSubjects');
         cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
@@ -90,7 +102,6 @@ describe('Løspost - Digital submission', () => {
 
       it('illegal tema TIL in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=TIL');
-        cy.wait('@getArchiveSubjects');
         cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
@@ -107,7 +118,6 @@ describe('Løspost - Digital submission', () => {
 
     it('renders error message', () => {
       cy.visit('/lospost/digital?tema=PEN');
-      cy.wait('@getArchiveSubjects');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Pensjonsbevis');

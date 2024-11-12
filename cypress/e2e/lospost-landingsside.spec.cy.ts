@@ -2,10 +2,6 @@ import { TestLinkText } from './testUtils';
 
 describe('Løspost - Landingsside', () => {
   describe('No predefined submission type', () => {
-    beforeEach(() => {
-      cy.intercept('GET', `${Cypress.config('baseUrl')}/api/archive-subjects`).as('getArchiveSubjects');
-    });
-
     it('Lets user choose submission type', () => {
       cy.visit('/lospost');
       cy.get('a').contains(TestLinkText.sendDigital).should('exist');
@@ -16,21 +12,18 @@ describe('Løspost - Landingsside', () => {
       cy.visit('/lospost?tema=PEN');
       cy.get('a').contains(TestLinkText.sendDigital).click();
       cy.url().should('contain', '/lospost/digital?tema=PEN');
-      cy.wait('@getArchiveSubjects');
     });
 
     it('Redirects to paper with tema', () => {
       cy.visit('/lospost?tema=BIL');
       cy.get('a').contains(TestLinkText.sendPaper).click();
       cy.url().should('contain', '/lospost/paper?tema=BIL');
-      cy.wait('@getArchiveSubjects');
     });
 
     it('Redirects to paper with no tema', () => {
       cy.visit('/lospost');
       cy.get('a').contains(TestLinkText.sendPaper).click();
       cy.url().should('contain', '/lospost/paper');
-      cy.wait('@getArchiveSubjects');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
     });
 

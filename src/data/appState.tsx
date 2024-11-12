@@ -47,11 +47,7 @@ export function FormDataProvider({ children, page, documentationTitleHint }: Pro
   }, [validateState, formData, t]);
 
   const updateFormData = (values: Partial<FormData>) => {
-    const data = {
-      ...formData,
-      ...values,
-    };
-    setFormData(data);
+    setFormData((previousFormData) => ({ ...previousFormData, ...values }));
   };
 
   const updateFormDataLanguage = (language: string, form: Form) => {

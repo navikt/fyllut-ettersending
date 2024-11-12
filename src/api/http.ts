@@ -28,10 +28,11 @@ const getDefaultHeaders = (headers?: HttpHeaders) => {
   return { ...defaultHeaders, ...headers };
 };
 
-const get = async <T>(url: string, headers?: HttpHeaders): Promise<T> => {
+const get = async <T>(url: string, headers?: HttpHeaders, options?: Partial<RequestInit>): Promise<T> => {
   const response = await fetch(url, {
     method: 'GET',
     headers: getDefaultHeaders({ 'Content-Type': 'application/json; charset=utf8', ...headers }),
+    ...options,
   });
 
   return await handleResponse(response);
