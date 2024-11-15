@@ -40,6 +40,30 @@ describe('Løspost - Landingsside', () => {
     });
   });
 
+  describe('Query parameter dokumentnavn', () => {
+    it('Redirects to digital with tema and dokumentnavn', () => {
+      cy.visit('/lospost?tema=PEN&dokumentnavn=Utbetaling');
+      cy.get('a').contains(TestLinkText.sendDigital).click();
+      cy.url().should('contain', '/lospost/digital?tema=PEN&dokumentnavn=Utbetaling');
+    });
+
+    it('Redirects to paper with tema and dokumentnavn', () => {
+      cy.visit('/lospost?tema=BIL&dokumentnavn=Utbetaling');
+      cy.get('a').contains(TestLinkText.sendPaper).click();
+      cy.url().should('contain', '/lospost/paper?tema=BIL&dokumentnavn=Utbetaling');
+    });
+
+    it('Redirects automatically to digital with tema and dokumentnavn when sub=digital', () => {
+      cy.visit('/lospost?sub=digital&tema=PEN&dokumentnavn=Utbetaling');
+      cy.url().should('contain', '/lospost/digital?tema=PEN&dokumentnavn=Utbetaling');
+    });
+
+    it('Redirects automatically to paper with tema and dokumentnavn when sub=paper', () => {
+      cy.visit('/lospost?sub=paper&tema=BIL&dokumentnavn=Utbetaling');
+      cy.url().should('contain', '/lospost/paper?tema=BIL&dokumentnavn=Utbetaling');
+    });
+  });
+
   describe('Automatic redirects from submission type in query parameter', () => {
     it('Redirects to page for paper lospost', () => {
       cy.visit('/lospost?sub=paper');
