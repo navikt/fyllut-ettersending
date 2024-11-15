@@ -11,6 +11,11 @@ describe('Løspost - Paper submission', () => {
     title: 'Tiltak',
   };
 
+  const SUBJECT_SYK = {
+    subject: 'SYK',
+    title: 'Sykepenger',
+  };
+
   const NAV_UNIT = {
     name: 'Dagpenger - Grensearbeider inn',
     number: '4465',
@@ -243,6 +248,35 @@ describe('Løspost - Paper submission', () => {
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe("query param 'dokumentnavn'", () => {
+    beforeEach(() => {
+      cy.visit(`/lospost/paper?tema=${SUBJECT_SYK.subject}&dokumentnavn=Bestridelse`);
+      cy.wait('@getNavUnits');
+      // Intercept: Download cover page pdf
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.title).to.equal('Innsendingen gjelder: Sykepenger - Bestridelse - Min dokumentasjon');
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+    });
+
+    it('should include predefined text in title', () => {
+      cy.findByRole('heading', { level: 1, name: `Send dokumenter til NAV om ${SUBJECT_SYK.title.toLowerCase()}` });
+
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Min dokumentasjon');
+
       cy.findAllByRole('radio').check('hasSocialNumber');
       cy.get('[name="socialSecurityNo"]').click();
       cy.get('[name="socialSecurityNo"]').type('16020256145');

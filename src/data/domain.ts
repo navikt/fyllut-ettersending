@@ -115,7 +115,8 @@ export interface KeyValue {
 
 export type FormDataPage = 'lospost' | 'digital-lospost' | 'other';
 
-export type FormData = { page: FormDataPage } & OtherFormdata & DigitalLospostFormData;
+export type FormData = { page: FormDataPage; documentationTitlePrefix?: string } & OtherFormdata &
+  DigitalLospostFormData;
 
 // `OtherFormData` brukes ved løspost (papir) og ettersending på valgt skjema.
 // Bør splittes opp for å tydeliggjøre hvilke skjemafelter som bruker hvor.

@@ -24,10 +24,11 @@ export function useFormState() {
 type Props = {
   children: ReactNode;
   page: FormDataPage;
+  documentationTitlePrefix?: string;
 };
 
-export function FormDataProvider({ children, page }: Props) {
-  const [formData, setFormData] = useState<FormData>({ page });
+export function FormDataProvider({ children, page, documentationTitlePrefix }: Props) {
+  const [formData, setFormData] = useState<FormData>({ page, documentationTitlePrefix });
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
   const { t } = useTranslation('validator');
