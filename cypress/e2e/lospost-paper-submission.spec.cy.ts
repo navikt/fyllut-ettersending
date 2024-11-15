@@ -286,6 +286,27 @@ describe('Løspost - Paper submission', () => {
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
     });
+
+    it('should keep predefined text in title when navigating back from download page', () => {
+      cy.findByRole('heading', { level: 1, name: `Send dokumenter til NAV om ${SUBJECT_SYK.title.toLowerCase()}` });
+
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Min dokumentasjon');
+
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      // Navigation
+      cy.url().should('include', '/last-ned');
+      cy.get('button').contains(TestButtonText.previous).click();
+      cy.url().should('include', '/lospost/paper');
+      cy.get('button').contains(TestButtonText.next).click();
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
   });
 
   describe('Navigation', () => {
