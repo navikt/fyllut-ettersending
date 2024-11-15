@@ -22,6 +22,7 @@ import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -118,7 +119,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { tema, dokumentnavn } = context.query as { tema: string; dokumentnavn: string };
+  const pageProps = excludeKeysEmpty({ tema, dokumentnavn });
   // Attempt to verify the token and redirect to login if necessary
   try {
     await getIdPortenTokenFromContext(context, true);
@@ -133,10 +135,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   PAPER_ONLY_SUBJECTS.forEach((code) => delete subjects[code]);
   const translations = await getServerSideTranslations(context.locale, ['digital-lospost', 'common', 'validator']);
   const page: FormDataPage = 'digital-lospost';
-  if (tema) {
-    return { props: { tema, page, subjects, ...translations } };
-  }
-  return { props: { page, subjects, ...translations } };
+  return { props: { page, subjects, ...pageProps, ...translations } };
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {

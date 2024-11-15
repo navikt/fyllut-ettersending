@@ -81,10 +81,11 @@ const createLospost = async (formData: DigitalLospostFormData): Promise<string> 
   if (!formData.subject || !formData.documentTitle) {
     throw new Error('Ufullstendig skjema');
   }
+  const titlePrefix = formData.documentationTitlePrefix ? `${formData.documentationTitlePrefix} - ` : '';
   const jsonBody: LospostRequestBody = {
-    soknadTittel: `${formData.subject.label} - ${formData.documentTitle}`,
+    soknadTittel: `${formData.subject.label} - ${titlePrefix}${formData.documentTitle}`,
     tema: formData.subject.value,
-    dokumentTittel: formData.documentTitle,
+    dokumentTittel: `${titlePrefix}${formData.documentTitle}`,
     sprak: formData.language || 'nb',
   };
   const result = await fetch(`${baseUrl}/api/lospost`, {

@@ -115,8 +115,7 @@ export interface KeyValue {
 
 export type FormDataPage = 'lospost' | 'digital-lospost' | 'other';
 
-export type FormData = { page: FormDataPage; documentationTitlePrefix?: string } & OtherFormdata &
-  DigitalLospostFormData;
+export type FormData = { page: FormDataPage } & OtherFormdata & DigitalLospostFormData;
 
 // `OtherFormData` brukes ved løspost (papir) og ettersending på valgt skjema.
 // Bør splittes opp for å tydeliggjøre hvilke skjemafelter som bruker hvor.
@@ -126,6 +125,7 @@ export interface OtherFormdata {
   navUnitContact?: boolean;
   formNumber?: string;
   otherDocumentationTitle?: string;
+  documentationTitlePrefix?: string;
   subjectOfSubmission?: string;
   titleOfSubmission?: string;
   submissionType?: SubmissionType;
@@ -137,6 +137,7 @@ export interface OtherFormdata {
 type Subject = { value: string; label: string };
 export interface DigitalLospostFormData {
   subject?: Subject;
+  documentationTitlePrefix?: string;
   documentTitle?: string;
   language?: string;
 }
