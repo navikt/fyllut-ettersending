@@ -29,6 +29,7 @@ import {
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { getLoginRedirect } from '../../utils/login';
 import { uncapitalize } from '../../utils/stringUtil';
 import {
   areBothSubmissionTypesAllowed,
@@ -251,16 +252,13 @@ const redirectBasedOnExistingEttersendinger = (existingEttersendinger: Ettersend
 };
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
-  const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
-  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
-  const redirect = encodeURIComponent('/fyllut-ettersending' + context.resolvedUrl + referrerQuery);
-
+  const redirect = getLoginRedirect(context);
   logger.info("Redirecting to login page with redirect url: '" + redirect);
 
   return {
     redirect: {
       permanent: false,
-      destination: `/oauth2/login?redirect=${redirect}`,
+      destination: `/oauth2/login?redirect=${encodeURIComponent(redirect)}`,
     },
     props: {},
   };

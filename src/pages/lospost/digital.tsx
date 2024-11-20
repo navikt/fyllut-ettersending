@@ -21,6 +21,7 @@ import archiveSubjectsReducer from '../../forms/digitalLospost/archiveSubjectsRe
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { getLoginRedirect } from '../../utils/login';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';
@@ -139,17 +140,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
-  const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
-  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
-  const locale = context.locale && context.locale !== 'nb' ? `/${context.locale}` : '';
-  const redirect = encodeURIComponent(`/fyllut-ettersending${locale}` + context.resolvedUrl + referrerQuery);
-
+  const redirect = getLoginRedirect(context);
   logger.info("Redirecting to login page with redirect url: '" + redirect);
 
   return {
     redirect: {
       permanent: false,
-      destination: `/oauth2/login?redirect=${redirect}`,
+      destination: `/oauth2/login?redirect=${encodeURIComponent(redirect)}`,
     },
     props: {},
   };
