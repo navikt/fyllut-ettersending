@@ -1,5 +1,5 @@
 import { IncomingHttpHeaders } from 'node:http';
-import { FOR_TEST } from '../../src/utils/login';
+import { FOR_TEST } from '../../../src/utils/login';
 
 describe('utils/login', () => {
   it('Creates redirect url', () => {
