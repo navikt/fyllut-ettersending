@@ -12,8 +12,8 @@ function createRedirect(resolvedUrl: string, headers: IncomingHttpHeaders, local
   const refererQuerySeparator = resolvedUrl.includes('?') ? '&' : '?';
   const referer = getRefererWithoutQueryParams(headers);
   const referrerQuery = referer ? `${refererQuerySeparator}referrer=${referer}` : '';
-  const locale2 = locale && locale !== 'nb' ? `/${locale}` : '';
-  return `/fyllut-ettersending${locale2}` + resolvedUrl + referrerQuery;
+  const localeInPath = locale && locale !== 'nb' ? `/${locale}` : '';
+  return `/fyllut-ettersending${localeInPath}` + resolvedUrl + referrerQuery;
 }
 
 export const getLoginRedirect = (context: GetServerSidePropsContext): string => {
