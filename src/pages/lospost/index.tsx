@@ -15,10 +15,7 @@ const Lospost: NextPage<Props> = ({ tema, gjelder }) => {
   const queryString = createPageProps({ tema, gjelder }).asQueryString();
 
   return (
-    <ChooseSubmissionType
-      pathDigital={`/lospost/digital${queryString ? `?${queryString}` : ''}`}
-      pathPaper={`/lospost/paper${queryString ? `?${queryString}` : ''}`}
-    />
+    <ChooseSubmissionType pathDigital={`/lospost/digital${queryString}`} pathPaper={`/lospost/paper${queryString}`} />
   );
 };
 
@@ -35,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: `${localePath}/lospost/paper${queryString ? `?${queryString}` : ''}`,
+        destination: `${localePath}/lospost/paper${queryString}`,
       },
     };
   } else if (sub === 'digital') {
@@ -43,7 +40,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: `${localePath}/lospost/digital${queryString ? `?${queryString}` : ''}`,
+        destination: `${localePath}/lospost/digital${queryString}`,
       },
     };
   }
@@ -59,7 +56,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const createPageProps = ({ tema, gjelder }: Props) => {
   const props = excludeKeysEmpty({ tema, gjelder });
   return {
-    asQueryString: () => new URLSearchParams(props).toString(),
+    asQueryString: () => {
+      const qs = new URLSearchParams(props).toString();
+      return qs ? `?${qs}` : '';
+    },
     asProps: () => props,
   };
 };

@@ -16,7 +16,8 @@ const getPageQueryString = (params: ReadonlyURLSearchParams) => {
   params.forEach((value, key) => {
     if (key !== 'referrer') pageParams.push(`${key}=${value}`);
   });
-  return pageParams.join('&');
+  const qs = pageParams.join('&');
+  return qs ? `?${qs}` : '';
 };
 
 export const useReffererPage = () => {
@@ -28,8 +29,8 @@ export const useReffererPage = () => {
     setReferrerPage((oldRef) => {
       if (!oldRef) {
         if (referrerParam && validateReferrer(referrerParam)) {
-          const pageQueryString = getPageQueryString(searchParams);
-          return `${referrerParam}${pageQueryString ? `?${pageQueryString}` : ''}`;
+          const queryString = getPageQueryString(searchParams);
+          return `${referrerParam}${queryString}`;
         }
         if (document.referrer && validateReferrer(document.referrer)) {
           return document.referrer;
