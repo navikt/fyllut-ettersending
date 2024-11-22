@@ -110,7 +110,7 @@ describe('Løspost - Digital submission', () => {
     });
   });
 
-  describe('Dokumentnavn query parameter', () => {
+  describe('Gjelder query parameter', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
@@ -120,12 +120,12 @@ describe('Løspost - Digital submission', () => {
     });
 
     it('title is prefixed with value from query param', () => {
-      cy.visit('/lospost/digital?tema=SYK&dokumentnavn=Bestridelse');
+      cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
         .should('exist')
         .type('Legedokument');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.url().should('contain', '?tema=SYK&dokumentnavn=Bestridelse');
+      cy.url().should('contain', '?tema=SYK&gjelder=Bestridelse');
       cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);

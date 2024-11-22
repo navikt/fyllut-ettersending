@@ -259,9 +259,9 @@ describe('Løspost - Paper submission', () => {
     });
   });
 
-  describe("query param 'dokumentnavn'", () => {
+  describe("query param 'gjelder'", () => {
     beforeEach(() => {
-      cy.visit(`/lospost/paper?tema=${SUBJECT_SYK.subject}&dokumentnavn=Bestridelse`);
+      cy.visit(`/lospost/paper?tema=${SUBJECT_SYK.subject}&gjelder=Bestridelse`);
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {

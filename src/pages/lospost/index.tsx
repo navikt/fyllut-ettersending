@@ -8,11 +8,11 @@ import { excludeKeysEmpty } from '../../utils/object';
 
 interface Props {
   tema?: string;
-  dokumentnavn?: string;
+  gjelder?: string;
 }
 
-const Lospost: NextPage<Props> = ({ tema, dokumentnavn }) => {
-  const queryString = createPageProps({ tema, dokumentnavn }).asQueryString();
+const Lospost: NextPage<Props> = ({ tema, gjelder }) => {
+  const queryString = createPageProps({ tema, gjelder }).asQueryString();
 
   return (
     <ChooseSubmissionType
@@ -24,8 +24,8 @@ const Lospost: NextPage<Props> = ({ tema, dokumentnavn }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, query } = context;
-  const { tema, dokumentnavn, sub } = query as { tema: string; dokumentnavn: string; sub: string };
-  const pageProps = createPageProps({ tema, dokumentnavn });
+  const { tema, gjelder, sub } = query as { tema: string; gjelder: string; sub: string };
+  const pageProps = createPageProps({ tema, gjelder });
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'innsendingsvalg']);
   const localePath = locale ? `/${locale}` : '';
   const onlyPaperAllowedForSubject = tema && PAPER_ONLY_SUBJECTS.includes(tema);
@@ -56,8 +56,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-const createPageProps = ({ tema, dokumentnavn }: Props) => {
-  const props = excludeKeysEmpty({ tema, dokumentnavn });
+const createPageProps = ({ tema, gjelder }: Props) => {
+  const props = excludeKeysEmpty({ tema, gjelder });
   return {
     asQueryString: () => new URLSearchParams(props).toString(),
     asProps: () => props,

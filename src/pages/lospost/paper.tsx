@@ -20,7 +20,7 @@ import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
-  dokumentnavn?: string;
+  gjelder?: string;
   subjects?: KeyValue;
 }
 
@@ -79,8 +79,8 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema, dokumentnavn } = context.query as { tema: string; dokumentnavn: string };
-  const pageProps = excludeKeysEmpty({ tema, dokumentnavn });
+  const { tema, gjelder } = context.query as { tema: string; gjelder: string };
+  const pageProps = excludeKeysEmpty({ tema, gjelder });
   const subjects = await getArchiveSubjects();
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'validator']);
   return { props: { subjects, ...pageProps, ...translations } };

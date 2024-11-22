@@ -8,7 +8,7 @@ import { FormDataPage } from '../data/domain';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const page = (pageProps.page as FormDataPage) || 'other';
-  const documentationTitlePrefix = (pageProps.dokumentnavn as string) || undefined;
+  const documentationTitlePrefix = (pageProps.gjelder as string) || undefined;
   return (
     <FormDataProvider page={page} documentationTitlePrefix={documentationTitlePrefix}>
       <Head>

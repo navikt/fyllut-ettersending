@@ -36,8 +36,8 @@ describe('Testing layout component', () => {
 
   it('Should keep query params when navigating to previous page', () => {
     const baseUrl = Cypress.config('baseUrl')!;
-    cy.visit('/lospost/digital?tema=SYK&dokumentnavn=Bestridelse&referrer=' + encodeURIComponent(`${baseUrl}/lospost`));
+    cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse&referrer=' + encodeURIComponent(`${baseUrl}/lospost`));
     cy.findByRole('link', { name: TestButtonText.previous }).should('exist').click();
-    cy.url().should('equal', `${baseUrl}/lospost?tema=SYK&dokumentnavn=Bestridelse`);
+    cy.url().should('equal', `${baseUrl}/lospost?tema=SYK&gjelder=Bestridelse`);
   });
 });
