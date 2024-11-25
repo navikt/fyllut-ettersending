@@ -3,7 +3,9 @@ const form1 = require('../data/fyllut/form1.json');
 const form2 = require('../data/fyllut/form2.json');
 const form2En = require('../data/fyllut/form2-en.json');
 const form3 = require('../data/fyllut/form3.json');
-const archiveSubjects = require('../data/fyllut/archiveSubjects.json');
+const archiveSubjectsNb = require('../data/fyllut/archiveSubjects-nb.json');
+const archiveSubjectsNn = require('../data/fyllut/archiveSubjects-nn.json');
+const archiveSubjectsEn = require('../data/fyllut/archiveSubjects-en.json');
 const navUnits = require('../data/fyllut/navUnits.json');
 
 module.exports = [
@@ -104,10 +106,25 @@ module.exports = [
     variants: [
       {
         id: 'all',
-        type: 'json',
+        type: 'middleware',
         options: {
-          status: 200,
-          body: archiveSubjects,
+          middleware: (req, res) => {
+            res.status(200);
+            res.contentType('application/json; charset=UTF-8');
+            const acceptLanguage = req.headers['accept-language'] || 'nb';
+            switch (acceptLanguage) {
+              case 'nn':
+                res.send(archiveSubjectsNn);
+                return;
+              case 'en':
+                res.send(archiveSubjectsEn);
+                return;
+              case 'nb':
+              default:
+                res.send(archiveSubjectsNb);
+                return;
+            }
+          },
         },
       },
     ],

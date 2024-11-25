@@ -120,7 +120,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema, gjelder } = context.query as { tema: string; gjelder: string };
+  const { locale, query } = context;
+  const { tema, gjelder } = query as { tema: string; gjelder: string };
   const pageProps = excludeKeysEmpty({ tema, gjelder });
   // Attempt to verify the token and redirect to login if necessary
   try {
@@ -132,7 +133,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       return redirectToLogin(context);
     }
   }
-  const subjects = await getArchiveSubjects();
+  const subjects = await getArchiveSubjects(locale);
   PAPER_ONLY_SUBJECTS.forEach((code) => delete subjects[code]);
   const translations = await getServerSideTranslations(context.locale, ['digital-lospost', 'common', 'validator']);
   const page: FormDataPage = 'digital-lospost';

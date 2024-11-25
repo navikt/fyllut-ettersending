@@ -1,4 +1,4 @@
-import { TestButtonText } from './testUtils';
+import { TestButtonText, TestButtonTextEn, TestButtonTextNn } from './testUtils';
 
 describe('Løspost - Paper submission', () => {
   const SUBJECT_PER = {
@@ -14,6 +14,8 @@ describe('Løspost - Paper submission', () => {
   const SUBJECT_SYK = {
     subject: 'SYK',
     title: 'Sykepenger',
+    title_nn: 'Sjukepengar',
+    title_en: 'Sickness Benefits',
   };
 
   const NAV_UNIT = {
@@ -306,6 +308,95 @@ describe('Løspost - Paper submission', () => {
       cy.get('button').contains(TestButtonText.next).click();
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe('Tema description when different locale', () => {
+    it('should use bokmål tema description', () => {
+      cy.visit('/lospost/paper');
+      cy.wait('@getNavUnits');
+
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title);
+        expect(req.body.title).to.equal(`Innsendingen gjelder: ${SUBJECT_SYK.title} - Et eller annet`);
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Et eller annet');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_SYK.title}{downArrow}{enter}`);
+
+      // Hvem gjelder innsendingen for?
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+    });
+
+    it('should use nynorsk tema description', () => {
+      cy.visit('/nn/lospost/paper');
+      cy.wait('@getNavUnits');
+
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title_nn);
+        expect(req.body.title).to.equal(`Innsendinga gjeld: ${SUBJECT_SYK.title_nn} - Skrive noko her`);
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Skrive noko her');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_SYK.title_nn}{downArrow}{enter}`);
+
+      // Hvem gjelder innsendingen for?
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonTextNn.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonTextNn.downloadCoverPage }).should('exist').click();
+    });
+
+    it('should use english tema description', () => {
+      cy.visit('/en/lospost/paper');
+      cy.wait('@getNavUnits');
+
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title_en);
+        expect(req.body.title).to.equal(`Submission regarding: ${SUBJECT_SYK.title_en} - Something`);
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Something');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_SYK.title_en}{downArrow}{enter}`);
+
+      // Hvem gjelder innsendingen for?
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonTextEn.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonTextEn.downloadCoverPage }).should('exist').click();
     });
   });
 

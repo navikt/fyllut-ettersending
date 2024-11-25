@@ -103,12 +103,13 @@ const getNavUnits = async (): Promise<NavUnit[]> => {
   });
 };
 
-const getArchiveSubjects = async (): Promise<KeyValue> => {
+const getArchiveSubjects = async (locale: string = 'nb'): Promise<KeyValue> => {
   const startTime = Date.now();
   let subjects = {};
 
   try {
-    subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`);
+    const headers = { 'accept-language': locale };
+    subjects = await get(`${process.env.FYLLUT_BASE_URL}/api/common-codes/archive-subjects`, headers);
     logger.debug(`Loaded ${Object.keys(subjects).length} archive subjects (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error('Failed to load archive subjects', e as Error);
