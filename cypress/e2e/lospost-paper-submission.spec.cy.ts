@@ -398,6 +398,38 @@ describe('Løspost - Paper submission', () => {
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonTextEn.downloadCoverPage }).should('exist').click();
     });
+
+    it('should support switching language and use correct tema description', () => {
+      cy.visit('/en/lospost/paper');
+      cy.wait('@getNavUnits');
+
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_SYK.title_nn);
+        expect(req.body.title).to.equal(`Innsendinga gjeld: ${SUBJECT_SYK.title_nn} - Nynorsk tittel`);
+        req.reply('mock-pdf');
+      }).as('downloadForsteside');
+
+      // Hvilken dokumentasjon vil du sende til NAV?
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Nynorsk tittel');
+
+      // Hva gjelder innsendingen?
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_SYK.title_en}{downArrow}{enter}`);
+
+      cy.findByRole('combobox', { name: 'Choose language' }).find('option:selected').should('have.text', 'English');
+      cy.findByRole('combobox', { name: 'Choose language' }).select('Norsk nynorsk');
+
+      // Hvem gjelder innsendingen for?
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonTextNn.next).click();
+
+      //Download page
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonTextNn.downloadCoverPage }).should('exist').click();
+    });
   });
 
   describe('Navigation', () => {

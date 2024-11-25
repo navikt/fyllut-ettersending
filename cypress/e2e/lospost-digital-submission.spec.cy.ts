@@ -165,6 +165,28 @@ describe('Løspost - Digital submission', () => {
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
+
+    it('should support changing language after tema is chosen, and use tema description with correct language', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Mitt førerkort');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/nn/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til NAV?' }).should('exist');
+
+      cy.findByRole('combobox', { name: 'Velg språk' }).find('option:selected').should('have.text', 'Norsk nynorsk');
+      cy.findByRole('combobox', { name: 'Velg språk' }).select('Norsk bokmål');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Mitt førerkort');
+
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
   });
 
   describe('Gjelder query parameter', () => {
