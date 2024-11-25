@@ -21,7 +21,9 @@ import archiveSubjectsReducer from '../../forms/digitalLospost/archiveSubjectsRe
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
+import { getLoginRedirect } from '../../utils/login';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
+import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -118,7 +120,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { tema, gjelder } = context.query as { tema: string; gjelder: string };
+  const pageProps = excludeKeysEmpty({ tema, gjelder });
   // Attempt to verify the token and redirect to login if necessary
   try {
     await getIdPortenTokenFromContext(context, true);
@@ -133,24 +136,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   PAPER_ONLY_SUBJECTS.forEach((code) => delete subjects[code]);
   const translations = await getServerSideTranslations(context.locale, ['digital-lospost', 'common', 'validator']);
   const page: FormDataPage = 'digital-lospost';
-  if (tema) {
-    return { props: { tema, page, subjects, ...translations } };
-  }
-  return { props: { page, subjects, ...translations } };
+  return { props: { page, subjects, ...pageProps, ...translations } };
 }
 
 const redirectToLogin = (context: GetServerSidePropsContext) => {
-  const querySeparator = context.resolvedUrl.includes('?') ? '&' : '?';
-  const referrerQuery = context.req.headers.referer ? `${querySeparator}referrer=${context.req.headers.referer}` : '';
-  const locale = context.locale && context.locale !== 'nb' ? `/${context.locale}` : '';
-  const redirect = encodeURIComponent(`/fyllut-ettersending${locale}` + context.resolvedUrl + referrerQuery);
-
+  const redirect = getLoginRedirect(context);
   logger.info("Redirecting to login page with redirect url: '" + redirect);
 
   return {
     redirect: {
       permanent: false,
-      destination: `/oauth2/login?redirect=${redirect}`,
+      destination: `/oauth2/login?redirect=${encodeURIComponent(redirect)}`,
     },
     props: {},
   };

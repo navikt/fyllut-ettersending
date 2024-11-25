@@ -110,6 +110,28 @@ describe('Løspost - Digital submission', () => {
     });
   });
 
+  describe('Gjelder query parameter', () => {
+    beforeEach(() => {
+      cy.mocksUseRouteVariant('post-lospost:success');
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Bestridelse - Legedokument');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+    });
+
+    it('title is prefixed with value from query param', () => {
+      cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Legedokument');
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK&gjelder=Bestridelse');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+  });
+
   describe('Creation of søknad fails', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:failure');

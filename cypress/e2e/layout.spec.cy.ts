@@ -33,4 +33,11 @@ describe('Testing layout component', () => {
     cy.visit('/lospost/paper?referrer=' + encodeURIComponent('https://nrk.no'));
     cy.findByRole('link', { name: TestButtonText.previous }).should('not.exist');
   });
+
+  it('Should keep query params when navigating to previous page', () => {
+    const baseUrl = Cypress.config('baseUrl')!;
+    cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse&referrer=' + encodeURIComponent(`${baseUrl}/lospost`));
+    cy.findByRole('link', { name: TestButtonText.previous }).should('exist').click();
+    cy.url().should('equal', `${baseUrl}/lospost?tema=SYK&gjelder=Bestridelse`);
+  });
 });

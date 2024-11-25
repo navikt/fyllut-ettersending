@@ -15,10 +15,12 @@ import Layout from '../../components/layout/layout';
 import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
+  gjelder?: string;
   subjects?: KeyValue;
 }
 
@@ -77,13 +79,11 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { tema, gjelder } = context.query as { tema: string; gjelder: string };
+  const pageProps = excludeKeysEmpty({ tema, gjelder });
   const subjects = await getArchiveSubjects();
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'validator']);
-  if (tema) {
-    return { props: { tema, subjects, ...translations } };
-  }
-  return { props: { subjects, ...translations } };
+  return { props: { subjects, ...pageProps, ...translations } };
 }
 
 export default PaperLospostPage;
