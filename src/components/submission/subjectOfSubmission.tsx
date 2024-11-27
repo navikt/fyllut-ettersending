@@ -23,7 +23,7 @@ const findKeyByValue = (obj: KeyValueMap, value: string): string | undefined => 
 // If subject is not in query param -> render combobox
 const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
   const { formData, updateFormData, errors } = useFormState();
-  const { t } = useTranslation('lospost');
+  const { t, i18n } = useTranslation('lospost');
 
   const options = useMemo(() => {
     return Object.values(archiveSubjects).sort((a, b) => (a > b ? 1 : -1));
@@ -41,6 +41,15 @@ const SubjectOfSubmission = ({ archiveSubjects, subject }: Props) => {
       });
     }
   }, [archiveSubjects, formData.subjectOfSubmission, formData.userData?.type, subject, updateFormData]);
+
+  useEffect(() => {
+    if (formData.subjectOfSubmission) {
+      const subjectDescription = archiveSubjects[formData.subjectOfSubmission];
+      if (formData.titleOfSubmission !== subjectDescription) {
+        updateFormData({ titleOfSubmission: subjectDescription });
+      }
+    }
+  }, [archiveSubjects, formData.subjectOfSubmission, formData.titleOfSubmission, i18n.language, updateFormData]);
 
   const renderCombobox = () => {
     const subjectExistsAndIsInvalid = !!subject && !!Object.values(archiveSubjects).length && !archiveSubjects[subject];

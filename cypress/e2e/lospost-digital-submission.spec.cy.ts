@@ -1,4 +1,4 @@
-import { TestButtonText } from './testUtils';
+import { TestButtonText, TestButtonTextEn, TestButtonTextNn } from './testUtils';
 
 describe('Løspost - Digital submission', () => {
   const URL_FYLLUT_ETTERSENDING = Cypress.config().baseUrl;
@@ -107,6 +107,85 @@ describe('Løspost - Digital submission', () => {
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
         cy.url().should('not.contain', 'tema=TIL');
       });
+    });
+  });
+
+  describe('Tema description when different locale', () => {
+    beforeEach(() => {
+      cy.mocksUseRouteVariant('post-lospost:success');
+    });
+
+    it('should use bokmål tema description', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Mitt førerkort');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Mitt førerkort');
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+
+    it('should use nynorsk tema description', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sjukepengar - Mitt førarkort');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/nn/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til NAV?' })
+        .should('exist')
+        .type('Mitt førarkort');
+      cy.findByRole('combobox', { name: 'Kva gjeld innsendinga?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonTextNn.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+
+    it('should use english tema description', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sickness Benefits - My driving licence');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/en/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'What documentation do you want to send to NAV?' })
+        .should('exist')
+        .type('My driving licence');
+      cy.findByRole('combobox', { name: 'What is the submission about?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonTextEn.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+
+    it('should support changing language after tema is chosen, and use tema description with correct language', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Mitt førerkort');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/nn/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til NAV?' }).should('exist');
+
+      cy.findByRole('combobox', { name: 'Velg språk' }).find('option:selected').should('have.text', 'Norsk nynorsk');
+      cy.findByRole('combobox', { name: 'Velg språk' }).select('Norsk bokmål');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        .should('exist')
+        .type('Mitt førerkort');
+
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
   });
 

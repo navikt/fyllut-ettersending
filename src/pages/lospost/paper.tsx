@@ -79,9 +79,10 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema, gjelder } = context.query as { tema: string; gjelder: string };
+  const { locale, query } = context;
+  const { tema, gjelder } = query as { tema: string; gjelder: string };
   const pageProps = excludeKeysEmpty({ tema, gjelder });
-  const subjects = await getArchiveSubjects();
+  const subjects = await getArchiveSubjects(locale);
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'validator']);
   return { props: { subjects, ...pageProps, ...translations } };
 }
