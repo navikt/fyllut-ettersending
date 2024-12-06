@@ -15,7 +15,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <title>Dokument til NAV - nav.no</title>
         <meta name="google-site-verification" content="TkSFJNNqsJLOyLN5yjG04ykxf61JTorXjhbEcYQkJd8" />
         {page !== 'lospost' && <meta name="robots" content="noindex" />}
-        {page === 'lospost' && !!pageProps.tema && <link rel="canonical" href="/fyllut-ettersending/lospost" />}
+        {page === 'lospost' && <link rel="canonical" href="/fyllut-ettersending/lospost" />}
       </Head>
       <Component {...pageProps} />
     </FormDataProvider>
