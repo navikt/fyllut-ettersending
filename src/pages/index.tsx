@@ -40,10 +40,9 @@ const Home: NextPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  // TODO: Legg dette tilbake når alle google-søkeresultater er borte
-  // if (process.env.APP_ENV === 'production') {
-  //   return { notFound: true };
-  // }
+  if (process.env.APP_ENV === 'production') {
+    return { notFound: true };
+  }
   const translations = await getServerSideTranslations(locale, ['common', 'home']);
   return { props: { ...translations } };
 };
