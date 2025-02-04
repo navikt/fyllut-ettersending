@@ -86,7 +86,7 @@ describe('Løspost - Paper submission', () => {
       cy.get('[name="country"]').click();
       cy.get('[name="country"]').type('Norway');
 
-      // "Har du vært i kontakt med NAV før?"
+      // "Har du vært i kontakt med Nav før?"
       cy.findAllByRole('radio').check('true');
       cy.get('[name="contactInformationNavUnit"]').click();
       cy.get('[name="contactInformationNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
@@ -111,7 +111,7 @@ describe('Løspost - Paper submission', () => {
       // "Hvem gjelder innsendingen for?"
       cy.findAllByRole('radio').check('other');
 
-      // "Velg hvilken NAV-enhet som skal motta innsendingen"
+      // "Velg hvilken Nav-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
       cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
@@ -146,7 +146,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
-      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV om permittering og masseoppsigelser' });
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav om permittering og masseoppsigelser' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
@@ -175,7 +175,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
 
@@ -185,7 +185,7 @@ describe('Løspost - Paper submission', () => {
       // Hvem gjelder innsendingen for?
       cy.get('[name="userType').should('not.exist');
 
-      // "Velg hvilken NAV-enhet som skal motta innsendingen"
+      // "Velg hvilken Nav-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
       cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
@@ -211,7 +211,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should hide radio buttons and be able to fill out and go to next page', () => {
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Tiltak for noe');
 
@@ -221,7 +221,7 @@ describe('Løspost - Paper submission', () => {
       // Hvem gjelder innsendingen for?
       cy.get('[name="userType').should('not.exist');
 
-      // "Velg hvilken NAV-enhet som skal motta innsendingen"
+      // "Velg hvilken Nav-enhet som skal motta innsendingen"
       cy.get('[name="chooseUserNavUnit"]').click();
       cy.get('[name="chooseUserNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
@@ -246,7 +246,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should show combobox for subject and be able to fill out and go to next page', () => {
-      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' });
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav' });
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
@@ -273,9 +273,9 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should include predefined text in title', () => {
-      cy.findByRole('heading', { level: 1, name: `Send dokumenter til NAV om ${SUBJECT_SYK.title.toLowerCase()}` });
+      cy.findByRole('heading', { level: 1, name: `Send dokumenter til Nav om ${SUBJECT_SYK.title.toLowerCase()}` });
 
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Min dokumentasjon');
 
@@ -290,9 +290,9 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('should keep predefined text in title when navigating back from download page', () => {
-      cy.findByRole('heading', { level: 1, name: `Send dokumenter til NAV om ${SUBJECT_SYK.title.toLowerCase()}` });
+      cy.findByRole('heading', { level: 1, name: `Send dokumenter til Nav om ${SUBJECT_SYK.title.toLowerCase()}` });
 
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Min dokumentasjon');
 
@@ -323,7 +323,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
 
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Et eller annet');
 
@@ -352,7 +352,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
 
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Skrive noko her');
 
@@ -381,7 +381,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
 
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Something');
 
@@ -410,7 +410,7 @@ describe('Løspost - Paper submission', () => {
         req.reply('mock-pdf');
       }).as('downloadForsteside');
 
-      // Hvilken dokumentasjon vil du sende til NAV?
+      // Hvilken dokumentasjon vil du sende til Nav?
       cy.get('[name="otherDocumentationTitle"]').click();
       cy.get('[name="otherDocumentationTitle"]').type('Nynorsk tittel');
 
@@ -441,7 +441,7 @@ describe('Løspost - Paper submission', () => {
     it('should navigate back from download-page and keep input data', () => {
       cy.visit('/lospost/paper?tema=BIL');
 
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Lisenskostnader');
 
@@ -460,7 +460,7 @@ describe('Løspost - Paper submission', () => {
 
       // Navigate to previous page
       cy.findByRole('button', { name: TestButtonText.previous }).should('exist').click();
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .should('contain.value', 'Lisenskostnader');
       cy.findByRole('button', { name: 'Last ned førsteside' }).should('not.exist');

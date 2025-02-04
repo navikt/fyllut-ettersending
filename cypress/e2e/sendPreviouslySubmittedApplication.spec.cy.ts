@@ -52,10 +52,10 @@ describe('downloading forsteside pdf', () => {
     cy.get('[name="country"]').click();
     cy.get('[name="country"]').type('Norway');
 
-    // "Har du vært i kontakt med NAV om denne saken tidligere?"
+    // "Har du vært i kontakt med Nav om denne saken tidligere?"
     cy.findAllByRole('radio').check('true');
 
-    // "Velg hvilken NAV-enhet som skal motta innsendingen"
+    // "Velg hvilken Nav-enhet som skal motta innsendingen"
     cy.get('[name="contactInformationNavUnit"]').click();
     cy.get('[name="contactInformationNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
