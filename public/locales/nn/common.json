@@ -31,11 +31,11 @@
       "postal-code": "Postnummer",
       "city": "Poststad",
       "country": "Land",
-      "nav-unit-contact-legend": "Har du vore i kontakt med NAV om denne saka tidlegare?",
-      "nav-unit-select-label": "Kva NAV-eining har du vore i kontakt med?"
+      "nav-unit-contact-legend": "Har du vore i kontakt med Nav om denne saka tidlegare?",
+      "nav-unit-select-label": "Kva Nav-eining har du vore i kontakt med?"
     },
     "nav-unit-input": {
-      "label": "Vel kva NAV-eining som skal ta imot innsendinga"
+      "label": "Vel kva Nav-eining som skal ta imot innsendinga"
     }
   },
   "validationSummaryTitle": "For å gå vidare må du retta opp følgjande:"
