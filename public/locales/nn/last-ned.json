@@ -5,7 +5,7 @@
   },
   "section-top": {
     "title": "1. Last ned førsteside til di sak",
-    "description": "Førstesida inneheld viktig informasjon som NAV treng. Den skal sendast inn saman med dokumenta dine."
+    "description": "Førstesida inneheld viktig informasjon som Nav treng. Den skal sendast inn saman med dokumenta dine."
   },
   "section-attachments": {
     "title": {
@@ -14,7 +14,7 @@
     }
   },
   "section-last": {
-    "title": "{{step}}. Send dokumenta til NAV i posten",
+    "title": "{{step}}. Send dokumenta til Nav i posten",
     "description": {
       "ettersending": "Legg førstesidearket frå punkt 1 på toppen av dokumenta. Send det heile til adressa på førstesidearket.",
       "lospost": "Legg førstesidearket frå punkt 1 på toppen av dokumenta du skal senda. Send det heile til adressa på førstesidearket."
