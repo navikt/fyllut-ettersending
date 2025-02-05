@@ -15,7 +15,7 @@ Logg på med github-brukernavn, og passordet man skal oppgi er et personlig acce
 genereres under [developer settings på GitHub](https://github.com/settings/tokens).
 Token trenger kun `read:packages`. Husk å enable SSO for navikt-orgen!
 
-_(Les mer om bruk av Github npm registry i NAV her: https://github.com/navikt/frontend#github-npm-registry)_
+_(Les mer om bruk av Github npm registry i Nav her: https://github.com/navikt/frontend#github-npm-registry)_
 
 ### Konfigurasjon
 
@@ -60,10 +60,35 @@ Start fyllut-ettersending på vanlig måte:
 
     yarn dev
 
+---
+
+## Tester
+
+For å kjøre testene, følg disse trinnene:
+
+1. Start mockserveren:
+
+    ```bash
+    yarn mocks
+    ```
+
+2. Start utviklingsserveren for testmiljøet:
+
+    ```bash
+    yarn dev:test
+    ```
+
+3. Kjør Cypress-testene:
+    ```bash
+    yarn cypress
+    ```
+
+---
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.
 
-## For NAV-ansatte
+## For Nav-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen #team-fyllut-sendinn

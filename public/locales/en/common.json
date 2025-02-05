@@ -31,11 +31,11 @@
       "postal-code": "Zip code",
       "city": "City",
       "country": "Country",
-      "nav-unit-contact-legend": "Have you been in contact with NAV about this case earlier?",
-      "nav-unit-select-label": "Which NAV unit have you been in contact with?"
+      "nav-unit-contact-legend": "Have you been in contact with Nav about this case earlier?",
+      "nav-unit-select-label": "Which Nav unit have you been in contact with?"
     },
     "nav-unit-input": {
-      "label": "Select which NAV unit that should receive your documents"
+      "label": "Select which Nav unit that should receive your documents"
     }
   },
   "validationSummaryTitle": "To proceed, you must correct the following:"

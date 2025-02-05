@@ -5,7 +5,7 @@
   },
   "section-top": {
     "title": "1. Download the cover sheet for your submission",
-    "description": "The cover sheet contains important information that NAV needs. It must be submitted with your documents."
+    "description": "The cover sheet contains important information that Nav needs. It must be submitted with your documents."
   },
   "section-attachments": {
     "title": {
@@ -14,7 +14,7 @@
     }
   },
   "section-last": {
-    "title": "{{step}}. Send the documents to NAV by post",
+    "title": "{{step}}. Send the documents to Nav by post",
     "description": {
       "ettersending": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet.",
       "lospost": "Place the cover sheet from point 1 on top of the documents. Send it all to the address on the cover sheet."

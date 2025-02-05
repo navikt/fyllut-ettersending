@@ -24,4 +24,15 @@ enum TestLinkText {
   sendPaper = 'Send i posten',
 }
 
-export { TestButtonText, TestButtonTextEn, TestButtonTextNn, TestLinkText };
+function setConsentCookie() {
+  cy.setCookie(
+    'navno-consent',
+    JSON.stringify({
+      consent: { analytics: false, surveys: false },
+      userActionTaken: true,
+      meta: { createdAt: '2025-02-04T14:50:17.096Z', updatedAt: '2025-02-04T14:50:17.096Z', version: 1 },
+    }),
+  );
+}
+
+export { TestButtonText, TestButtonTextEn, TestButtonTextNn, TestLinkText, setConsentCookie };
