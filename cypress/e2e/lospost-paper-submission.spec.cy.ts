@@ -1,4 +1,4 @@
-import { TestButtonText, TestButtonTextEn, TestButtonTextNn } from './testUtils';
+import { setConsentCookie, TestButtonText, TestButtonTextEn, TestButtonTextNn } from './testUtils';
 
 describe('Løspost - Paper submission', () => {
   const SUBJECT_PER = {
@@ -25,6 +25,7 @@ describe('Løspost - Paper submission', () => {
 
   beforeEach(() => {
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
+    setConsentCookie();
   });
 
   describe('form with tema=PER', () => {

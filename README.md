@@ -60,6 +60,31 @@ Start fyllut-ettersending på vanlig måte:
 
     yarn dev
 
+---
+
+## Tester
+
+For å kjøre testene, følg disse trinnene:
+
+1. Start mockserveren:
+
+    ```bash
+    yarn mocks
+    ```
+
+2. Start utviklingsserveren for testmiljøet:
+
+    ```bash
+    yarn dev:test
+    ```
+
+3. Kjør Cypress-testene:
+    ```bash
+    yarn cypress
+    ```
+
+---
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.
