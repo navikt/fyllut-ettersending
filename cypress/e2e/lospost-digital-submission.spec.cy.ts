@@ -15,7 +15,7 @@ describe('Løspost - Digital submission', () => {
 
     it('requires both title and subject to proceed', () => {
       cy.visit('/lospost/digital');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Førerkort');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
@@ -26,7 +26,7 @@ describe('Løspost - Digital submission', () => {
 
     it('does not allow title of length more than 150 characters', () => {
       cy.visit('/lospost/digital');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type(
           'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
@@ -36,11 +36,11 @@ describe('Løspost - Digital submission', () => {
       cy.get('[data-cy=ValidationSummary]')
         .should('exist')
         .within(() => {
-          cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til NAV kan maksimalt ha 150 tegn' })
+          cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn' })
             .should('exist')
             .click();
         });
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('have.focus')
         .type('{backspace}');
       cy.findByLabelText('For å gå videre må du rette opp følgende:').should('not.exist');
@@ -48,7 +48,7 @@ describe('Løspost - Digital submission', () => {
 
     it('renders validation error when subject is missing', () => {
       cy.visit('/lospost/digital');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Førerkort');
       cy.findByRole('button', { name: TestButtonText.next }).click();
@@ -69,7 +69,7 @@ describe('Løspost - Digital submission', () => {
     describe('Tema query parameter', () => {
       it('tema is prefilled from query param', () => {
         cy.visit('/lospost/digital?tema=BIL');
-        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
           .should('exist')
           .type('Førerkort');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
@@ -81,29 +81,29 @@ describe('Løspost - Digital submission', () => {
 
       it('tema is included in heading', () => {
         cy.visit('/lospost/digital?tema=PEN');
-        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV om pensjon' }).should('be.visible');
+        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav om pensjon' }).should('be.visible');
       });
 
       it('unknown tema in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=INVALID');
-        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
-        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav' }).should('be.visible');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
         cy.url().should('not.contain', 'tema=INVALID');
       });
 
       it('illegal tema PER in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=PER');
-        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
-        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav' }).should('be.visible');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
         cy.url().should('not.contain', 'tema=PER');
       });
 
       it('illegal tema TIL in query param is ignored and removed from url', () => {
         cy.visit('/lospost/digital?tema=TIL');
-        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til NAV' }).should('be.visible');
-        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' }).should('exist');
+        cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav' }).should('be.visible');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
         cy.url().should('not.contain', 'tema=TIL');
       });
@@ -122,7 +122,7 @@ describe('Løspost - Digital submission', () => {
       }).as('opprettLospost');
 
       cy.visit('/lospost/digital?tema=SYK');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Mitt førerkort');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
@@ -139,7 +139,7 @@ describe('Løspost - Digital submission', () => {
       }).as('opprettLospost');
 
       cy.visit('/nn/lospost/digital?tema=SYK');
-      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til NAV?' })
+      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til Nav?' })
         .should('exist')
         .type('Mitt førarkort');
       cy.findByRole('combobox', { name: 'Kva gjeld innsendinga?' }).should('not.exist');
@@ -156,7 +156,7 @@ describe('Løspost - Digital submission', () => {
       }).as('opprettLospost');
 
       cy.visit('/en/lospost/digital?tema=SYK');
-      cy.findByRole('textbox', { name: 'What documentation do you want to send to NAV?' })
+      cy.findByRole('textbox', { name: 'What documentation do you want to send to Nav?' })
         .should('exist')
         .type('My driving licence');
       cy.findByRole('combobox', { name: 'What is the submission about?' }).should('not.exist');
@@ -173,11 +173,11 @@ describe('Løspost - Digital submission', () => {
       }).as('opprettLospost');
 
       cy.visit('/nn/lospost/digital?tema=SYK');
-      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til NAV?' }).should('exist');
+      cy.findByRole('textbox', { name: 'Kva dokumentasjon vil du senda til Nav?' }).should('exist');
 
       cy.findByRole('combobox', { name: 'Velg språk' }).find('option:selected').should('have.text', 'Norsk nynorsk');
       cy.findByRole('combobox', { name: 'Velg språk' }).select('Norsk bokmål');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Mitt førerkort');
 
@@ -200,7 +200,7 @@ describe('Løspost - Digital submission', () => {
 
     it('title is prefixed with value from query param', () => {
       cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Legedokument');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
@@ -219,7 +219,7 @@ describe('Løspost - Digital submission', () => {
 
     it('renders error message', () => {
       cy.visit('/lospost/digital?tema=PEN');
-      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til NAV?' })
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Pensjonsbevis');
       cy.findByRole('button', { name: TestButtonText.next }).click();
