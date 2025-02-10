@@ -1,8 +1,9 @@
 {
-  "title": "Send dokument til NAV",
-  "ingress": "Her kan du sende dokumentasjon til NAV. Fyll ut felta nedanfor og klikk \"Gå vidare\". På neste side kan du laste opp dokumentasjonen du vil sende inn.",
+  "title": "Send dokument til Nav",
+  "title-about": "Send dokument til Nav om",
+  "ingress": "Her kan du sende dokumentasjon til Nav. Fyll ut felta nedanfor og klikk \"Gå vidare\". På neste side kan du laste opp dokumentasjonen du vil sende inn.",
   "document-title": {
-    "label": "Kva dokumentasjon vil du senda til NAV?",
+    "label": "Kva dokumentasjon vil du senda til Nav?",
     "description": "Gje dokumentet eit beskrivande namn"
   },
   "subject": {

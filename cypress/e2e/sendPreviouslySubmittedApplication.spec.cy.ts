@@ -1,4 +1,4 @@
-import { TestButtonText, TestLinkText } from './testUtils';
+import { setConsentCookie, TestButtonText, TestLinkText } from './testUtils';
 
 const FORM2 = {
   formId: 'form2',
@@ -14,6 +14,7 @@ const NAV_UNIT = {
 
 describe('downloading forsteside pdf', () => {
   beforeEach(() => {
+    setConsentCookie();
     // Intercept: Download cover page pdf
     cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
       expect(req.body.formData.formId).to.equal(FORM2.formId);
@@ -52,10 +53,10 @@ describe('downloading forsteside pdf', () => {
     cy.get('[name="country"]').click();
     cy.get('[name="country"]').type('Norway');
 
-    // "Har du vært i kontakt med NAV om denne saken tidligere?"
+    // "Har du vært i kontakt med Nav om denne saken tidligere?"
     cy.findAllByRole('radio').check('true');
 
-    // "Velg hvilken NAV-enhet som skal motta innsendingen"
+    // "Velg hvilken Nav-enhet som skal motta innsendingen"
     cy.get('[name="contactInformationNavUnit"]').click();
     cy.get('[name="contactInformationNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
 
@@ -68,6 +69,9 @@ describe('downloading forsteside pdf', () => {
 });
 
 describe('sendPreviouslySubmittedApplication', () => {
+  beforeEach(() => {
+    setConsentCookie();
+  });
   it('fill out and send documentation by mail, should redirect to subType-page', () => {
     cy.visit('/form2');
     cy.url().should('include', 'innsendingsvalg');

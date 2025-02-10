@@ -8,14 +8,15 @@
   "postalCode": "You have to fill in zip code",
   "city": "You have to fill in city",
   "country": "You have to fill in country",
-  "otherDocumentation": "You have to fill in what documentation you want to send to NAV",
+  "otherDocumentation": "You have to fill in what documentation you want to send to Nav",
   "subjectOfSubmission": "You have to choose topic for the submission",
-  "navUnitContact": "You have to state whether you have been in contact with NAV about this matter previously",
-  "navUnitContactSelect": "You have to select which NAV unit you have been in contact with",
-  "navUnit": "You have to choose which NAV unit will receive the submission",
+  "navUnitContact": "You have to state whether you have been in contact with Nav about this matter previously",
+  "navUnitContactSelect": "You have to select which Nav unit you have been in contact with",
+  "navUnit": "You have to choose which Nav unit will receive the submission",
   "attachments": "You have to select at least one document to submit",
   "digitalLospost": {
     "subject": "You have to choose topic for the submission",
-    "documentTitle": "You have to fill in what documentation you want to send to NAV"
+    "documentTitle": "You have to fill in what documentation you want to send to Nav",
+    "documentTitleLength": "The document title may at most have 150 characters"
   }
 }

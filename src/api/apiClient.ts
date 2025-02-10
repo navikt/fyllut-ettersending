@@ -6,7 +6,6 @@ import {
   EttersendingVedlegg,
   FormData,
   HttpError,
-  KeyValue,
   LospostRequestBody,
   NavUnit,
 } from '../data/domain';
@@ -16,11 +15,6 @@ const baseUrl = '/fyllut-ettersending';
 
 const fetchForms = async () => {
   const response = await fetch(`${baseUrl}/api/forms`);
-  return response.json();
-};
-
-const fetchArchiveSubjects = async (): Promise<KeyValue> => {
-  const response = await fetch(`${baseUrl}/api/archive-subjects`);
   return response.json();
 };
 
@@ -87,10 +81,11 @@ const createLospost = async (formData: DigitalLospostFormData): Promise<string> 
   if (!formData.subject || !formData.documentTitle) {
     throw new Error('Ufullstendig skjema');
   }
+  const titlePrefix = formData.documentationTitlePrefix ? `${formData.documentationTitlePrefix} - ` : '';
   const jsonBody: LospostRequestBody = {
-    soknadTittel: `${formData.subject.label} - ${formData.documentTitle}`,
+    soknadTittel: `${formData.subject.label} - ${titlePrefix}${formData.documentTitle}`,
     tema: formData.subject.value,
-    dokumentTittel: formData.documentTitle,
+    dokumentTittel: `${titlePrefix}${formData.documentTitle}`,
     sprak: formData.language || 'nb',
   };
   const result = await fetch(`${baseUrl}/api/lospost`, {
@@ -113,4 +108,4 @@ const createLospost = async (formData: DigitalLospostFormData): Promise<string> 
   return location;
 };
 
-export { createEttersending, createLospost, downloadFrontpage, fetchArchiveSubjects, fetchForms, fetchNavUnits };
+export { createEttersending, createLospost, downloadFrontpage, fetchForms, fetchNavUnits };

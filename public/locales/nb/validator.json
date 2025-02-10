@@ -8,14 +8,15 @@
   "postalCode": "Du må fylle ut postnummer",
   "city": "Du må fylle ut poststed",
   "country": "Du må fylle ut land",
-  "otherDocumentation": "Du må fylle ut hvilken dokumentasjon vil du sende til NAV",
+  "otherDocumentation": "Du må fylle ut hvilken dokumentasjon vil du sende til Nav",
   "subjectOfSubmission": "Du må velge tema for innsendingen",
-  "navUnitContact": "Du må oppgi om du har vært i kontakt med NAV om denne saken tidligere",
-  "navUnitContactSelect": "Du må velge hvilken NAV-enhet har du vært i kontakt med",
-  "navUnit": "Du må velge hvilken NAV-enhet som skal motta innsendingen",
+  "navUnitContact": "Du må oppgi om du har vært i kontakt med Nav om denne saken tidligere",
+  "navUnitContactSelect": "Du må velge hvilken Nav-enhet har du vært i kontakt med",
+  "navUnit": "Du må velge hvilken Nav-enhet som skal motta innsendingen",
   "attachments": "Du må velge minst ett dokument som skal ettersendes",
   "digitalLospost": {
     "subject": "Du må velge tema for innsendingen",
-    "documentTitle": "Du må fylle ut hvilken dokumentasjon vil du sende til NAV"
+    "documentTitle": "Du må fylle ut hvilken dokumentasjon vil du sende til Nav",
+    "documentTitleLength": "Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn"
   }
 }

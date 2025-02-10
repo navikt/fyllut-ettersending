@@ -9,18 +9,22 @@ import { ButtonType } from 'src/components/button/buttonGroupElement';
 import ValidationSummary from 'src/components/validationSummary/validationSummary';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { fetchArchiveSubjects, fetchNavUnits } from '../../api/apiClient';
+import { fetchNavUnits } from '../../api/apiClient';
+import { getArchiveSubjects } from '../../api/apiService';
 import Layout from '../../components/layout/layout';
 import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data/domain';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
+import { excludeKeysEmpty } from '../../utils/object';
+import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
+  gjelder?: string;
+  subjects?: KeyValue;
 }
 
-const PaperLospostPage: NextPage<Props> = ({ tema }) => {
-  const [archiveSubjects, setArchiveSubjects] = useState<KeyValue>({});
+const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const { t } = useTranslation('lospost');
   const { t: tCommon } = useTranslation('common');
@@ -43,8 +47,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
   };
 
   const fetchData = useCallback(async () => {
-    const [archiveSubjectsResponse, navUnitsResponse] = await Promise.all([fetchArchiveSubjects(), fetchNavUnits()]);
-    setArchiveSubjects(archiveSubjectsResponse);
+    const navUnitsResponse = await fetchNavUnits();
     setNavUnits(navUnitsResponse);
   }, []);
 
@@ -53,10 +56,12 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const title = tema && subjects?.[tema] ? `${t('title-about')} ${uncapitalize(subjects[tema])}` : t('title');
+
   return (
-    <Layout title={t('title')} backUrl={referrerPage}>
+    <Layout title={title} backUrl={referrerPage}>
       <ValidationSummary />
-      <OtherDocument archiveSubjects={archiveSubjects} navUnits={navUnits} subject={tema} />
+      <OtherDocument archiveSubjects={subjects ?? {}} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
       <ButtonGroup
         center={!!referrerPage}
@@ -74,12 +79,12 @@ const PaperLospostPage: NextPage<Props> = ({ tema }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { tema } = context.query as { tema: string };
+  const { locale, query } = context;
+  const { tema, gjelder } = query as { tema: string; gjelder: string };
+  const pageProps = excludeKeysEmpty({ tema, gjelder });
+  const subjects = await getArchiveSubjects(locale);
   const translations = await getServerSideTranslations(context.locale, ['lospost', 'common', 'validator']);
-  if (tema) {
-    return { props: { tema, ...translations } };
-  }
-  return { props: { ...translations } };
+  return { props: { subjects, ...pageProps, ...translations } };
 }
 
 export default PaperLospostPage;

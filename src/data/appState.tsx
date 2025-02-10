@@ -24,10 +24,11 @@ export function useFormState() {
 type Props = {
   children: ReactNode;
   page: FormDataPage;
+  documentationTitlePrefix?: string;
 };
 
-export function FormDataProvider({ children, page }: Props) {
-  const [formData, setFormData] = useState<FormData>({ page });
+export function FormDataProvider({ children, page, documentationTitlePrefix }: Props) {
+  const [formData, setFormData] = useState<FormData>({ page, documentationTitlePrefix });
   const [errors, setErrors] = useState<KeyValue>({});
   const [validateState, setValidateState] = useState<boolean>(false);
   const { t } = useTranslation('validator');
@@ -45,11 +46,7 @@ export function FormDataProvider({ children, page }: Props) {
   }, [validateState, formData, t]);
 
   const updateFormData = (values: Partial<FormData>) => {
-    const data = {
-      ...formData,
-      ...values,
-    };
-    setFormData(data);
+    setFormData((previousFormData) => ({ ...previousFormData, ...values }));
   };
 
   const updateFormDataLanguage = (language: string, form: Form) => {
