@@ -1,7 +1,7 @@
 import { LinkPanel, TextField } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from 'src/utils/submissionUtil';
 import { ListForm } from '../../data/domain';
 import { Paths } from '../../data/paths';
@@ -50,12 +50,11 @@ const FormSearch = ({ forms }: Props) => {
         {searchResult
           .sort((a, b) => sortForms(a, b))
           .map((form, index) => (
-            <>
+            <Fragment key={`submission-${index}`}>
               {isDigitalSubmissionAllowed(form) && (
                 <LinkPanel
                   href="#"
                   className={styles.clickable}
-                  key={`digital-${index}`}
                   border
                   onClick={async (e) => {
                     e.preventDefault();
@@ -71,7 +70,6 @@ const FormSearch = ({ forms }: Props) => {
                 <LinkPanel
                   href="#"
                   className={styles.clickable}
-                  key={`papir-${index}`}
                   border
                   onClick={async (e) => {
                     e.preventDefault();
@@ -82,7 +80,7 @@ const FormSearch = ({ forms }: Props) => {
                   <LinkPanel.Description>{form.properties?.formNumber}</LinkPanel.Description>
                 </LinkPanel>
               )}
-            </>
+            </Fragment>
           ))}
       </div>
     </>

@@ -38,7 +38,7 @@ export const useReffererPage = () => {
       }
       return oldRef;
     });
-  }, [referrerParam]);
+  }, [referrerParam, searchParams]);
 
   return referrerPage;
 };
