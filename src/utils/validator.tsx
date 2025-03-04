@@ -24,6 +24,10 @@ const validateFormData = (formData: FormData, t: TFunction) => {
         formErrors.otherDocumentationTitle = t('otherDocumentation');
       }
 
+      if ((!formData.formId || hasOtherAttachment(formData)) && (formData.otherDocumentationTitle ?? '').length > 150) {
+        formErrors.otherDocumentationTitle = t('otherDocumentationLength');
+      }
+
       if (!formData.formId && !formData.subjectOfSubmission) {
         formErrors.subjectOfSubmission = t('subjectOfSubmission');
       }

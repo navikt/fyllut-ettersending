@@ -129,6 +129,26 @@ describe('Løspost - Paper submission', () => {
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).click();
     });
+
+    it('does not allow title of length more than 150 characters', () => {
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+        .should('exist')
+        .type(
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
+        );
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.get('[data-cy=ValidationSummary]').should('exist');
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn' })
+          .should('exist')
+          .click();
+      });
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+        .should('have.focus')
+        .type('{backspace}');
+      cy.findByLabelText('For å gå videre må du rette opp følgende:').should('not.exist');
+    });
   });
 
   describe("query param 'tema=PER'", () => {
