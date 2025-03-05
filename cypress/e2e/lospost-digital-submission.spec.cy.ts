@@ -33,13 +33,12 @@ describe('Løspost - Digital submission', () => {
         );
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
       cy.findByRole('button', { name: TestButtonText.next }).click();
-      cy.get('[data-cy=ValidationSummary]')
-        .should('exist')
-        .within(() => {
-          cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn' })
-            .should('exist')
-            .click();
-        });
+      cy.get('[data-cy=ValidationSummary]').should('exist');
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('link', { name: 'Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn' })
+          .should('exist')
+          .click();
+      });
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('have.focus')
         .type('{backspace}');
@@ -52,11 +51,10 @@ describe('Løspost - Digital submission', () => {
         .should('exist')
         .type('Førerkort');
       cy.findByRole('button', { name: TestButtonText.next }).click();
-      cy.get('[data-cy=ValidationSummary]')
-        .should('exist')
-        .within(() => {
-          cy.findByRole('link', { name: 'Du må velge tema for innsendingen' }).should('exist').click();
-        });
+      cy.get('[data-cy=ValidationSummary]').should('exist');
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('link', { name: 'Du må velge tema for innsendingen' }).should('exist').click();
+      });
 
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' })
         .should('have.focus')
