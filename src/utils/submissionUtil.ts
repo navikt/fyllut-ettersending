@@ -9,7 +9,7 @@ const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionTyp
     return submissionType;
   }
 
-  if (allowedSubmissionType === 'PAPIR_OG_DIGITAL' || allowedSubmissionType === 'KUN_DIGITAL') {
+  if (allowedSubmissionType.includes('DIGITAL')) {
     return SubmissionType.digital;
   }
 
@@ -17,11 +17,11 @@ const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionTyp
 };
 
 const isSubmissionAllowed = (form: Form) => {
-  return form.attachments?.length > 0 && form.properties.submissionType !== 'INGEN';
+  return form.attachments?.length > 0 && form.properties.submissionType.length;
 };
 
 const areBothSubmissionTypesAllowed = (form: Form) => {
-  return form.properties.submissionType === 'PAPIR_OG_DIGITAL';
+  return form.properties.submissionType.includes('PAPER') && form.properties.submissionType.includes('DIGITAL');
 };
 
 const isSubmissionParamSet = (router: NextRouter) => {
@@ -34,11 +34,11 @@ const isSubmissionTypePaper = (formData: FormData) => {
 };
 
 const isPaperSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType === 'PAPIR_OG_DIGITAL' || form.properties.submissionType === 'KUN_PAPIR';
+  return form.properties.submissionType?.includes('PAPER');
 };
 
 const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType === 'PAPIR_OG_DIGITAL' || form.properties.submissionType === 'KUN_DIGITAL';
+  return form.properties.submissionType?.includes('DIGITAL');
 };
 
 const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {

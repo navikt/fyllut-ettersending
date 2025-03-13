@@ -36,7 +36,7 @@ const getForms = async (): Promise<BasicForm[]> => {
       ...form,
       properties: {
         formNumber: form?.properties.skjemanummer ?? null,
-        submissionType: form?.properties?.ettersending ?? 'PAPIR_OG_DIGITAL',
+        submissionType: form.properties.additionalSubmissionTypes ?? ['PAPER', 'DIGITAL'],
       },
     };
   });
@@ -67,7 +67,7 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     ...form,
     properties: {
       formNumber: form.properties.skjemanummer,
-      submissionType: form.properties.ettersending ?? 'PAPIR_OG_DIGITAL',
+      submissionType: form.properties.additionalSubmissionTypes ?? ['PAPER', 'DIGITAL'],
       navUnitTypes: form.properties.enhetstyper ?? [],
       subjectOfSubmission: form.properties.tema,
       publishedLanguages: ['nb', ...toValidLanguageCodes(form.properties.publishedLanguages ?? [])],

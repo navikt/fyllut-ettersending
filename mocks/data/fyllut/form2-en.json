@@ -6,8 +6,8 @@
   "properties": {
     "skjemanummer": "NAV 10-07.50",
     "tema": "HJE",
-    "innsending": "PAPIR_OG_DIGITAL",
-    "ettersending": "PAPIR_OG_DIGITAL",
+    "submissionTypes": ["PAPER", "DIGITAL"],
+    "additionalSubmissionTypes": ["PAPER", "DIGITAL"],
     "publishedLanguages": ["en"]
   },
   "attachments": [

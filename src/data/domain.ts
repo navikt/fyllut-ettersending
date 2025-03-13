@@ -21,8 +21,8 @@ export interface FyllutListForm extends BasicForm {
 
 export interface FyllutListFormProperties {
   skjemanummer?: string;
-  innsending?: AllowedSubmissionType;
-  ettersending?: AllowedSubmissionType;
+  submissionTypes?: AllowedSubmissionType[];
+  additionalSubmissionTypes: AllowedSubmissionType[];
 }
 
 export interface FyllutFoerstesidePdf {
@@ -32,8 +32,8 @@ export interface FyllutFoerstesidePdf {
 export interface FyllytFormProperties {
   skjemanummer?: string;
   tema: string;
-  innsending?: AllowedSubmissionType;
-  ettersending?: AllowedSubmissionType;
+  submissionTypes?: AllowedSubmissionType[];
+  additionalSubmissionTypes?: AllowedSubmissionType[];
   enhetstyper?: string[];
   enhetMaVelgesVedPapirInnsending?: boolean;
   hideUserTypes?: boolean;
@@ -52,7 +52,7 @@ export interface ListForm extends BasicForm {
 
 export interface ListFormProperties {
   formNumber?: string;
-  submissionType?: AllowedSubmissionType;
+  submissionType?: AllowedSubmissionType[];
 }
 
 export interface Form extends BasicForm {
@@ -69,12 +69,12 @@ export interface Attachment {
   attachmentForm?: string;
 }
 
-export type AllowedSubmissionType = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';
+export type AllowedSubmissionType = 'PAPER' | 'DIGITAL';
 
 export interface FormProperties {
   formNumber?: string;
   skjemanummer?: string;
-  submissionType?: AllowedSubmissionType;
+  submissionType: AllowedSubmissionType[];
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
