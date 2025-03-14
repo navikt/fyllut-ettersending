@@ -17,7 +17,7 @@ const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionTyp
 };
 
 const isSubmissionAllowed = (form: Form) => {
-  return form.attachments?.length > 0 && form.properties.submissionType.length;
+  return !!form.attachments?.length && !!form.properties.submissionType.length;
 };
 
 const areBothSubmissionTypesAllowed = (form: Form) => {
