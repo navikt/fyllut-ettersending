@@ -16,6 +16,7 @@ import {
   LospostRequestBody,
   NavUnit,
 } from '../data/domain';
+import { mapInnsendingTypeToSubmissionTypes } from '../utils/apiUtil';
 import logger from '../utils/logger';
 import { FrontPageRequest } from './frontPageService';
 import { get, post } from './http';
@@ -32,11 +33,12 @@ const getForms = async (): Promise<BasicForm[]> => {
   }
 
   return forms.map((form) => {
+    const { skjemanummer, subsequentSubmissionTypes, ettersending } = form.properties;
     return {
       ...form,
       properties: {
-        formNumber: form?.properties.skjemanummer ?? null,
-        submissionType: form.properties.additionalSubmissionTypes ?? ['PAPER', 'DIGITAL'],
+        formNumber: skjemanummer ?? null,
+        allowedSubmissionTypes: subsequentSubmissionTypes ?? mapInnsendingTypeToSubmissionTypes(ettersending),
       },
     };
   });
@@ -62,20 +64,27 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     }
     return a.label > b.label ? 1 : -1;
   });
-
+  const {
+    skjemanummer,
+    enhetMaVelgesVedPapirInnsending,
+    tema,
+    enhetstyper,
+    subsequentSubmissionTypes,
+    hideUserTypes,
+    ettersending,
+    publishedLanguages,
+  } = form.properties;
   return {
     ...form,
     properties: {
-      formNumber: form.properties.skjemanummer,
-      submissionType: form.properties.additionalSubmissionTypes ?? ['PAPER', 'DIGITAL'],
-      navUnitTypes: form.properties.enhetstyper ?? [],
-      subjectOfSubmission: form.properties.tema,
-      publishedLanguages: ['nb', ...toValidLanguageCodes(form.properties.publishedLanguages ?? [])],
-      ...(form.properties.hideUserTypes && {
-        hideUserTypes: form.properties.hideUserTypes,
-      }),
-      ...(form.properties.enhetMaVelgesVedPapirInnsending && {
-        navUnitMustBeSelected: form.properties.enhetMaVelgesVedPapirInnsending,
+      formNumber: skjemanummer,
+      allowedSubmissionTypes: subsequentSubmissionTypes ?? mapInnsendingTypeToSubmissionTypes(ettersending),
+      navUnitTypes: enhetstyper ?? [],
+      subjectOfSubmission: tema,
+      publishedLanguages: ['nb', ...toValidLanguageCodes(publishedLanguages ?? [])],
+      ...(hideUserTypes && { hideUserTypes }),
+      ...(enhetMaVelgesVedPapirInnsending && {
+        navUnitMustBeSelected: enhetMaVelgesVedPapirInnsending,
       }),
     },
     attachments: sortedAttachments,

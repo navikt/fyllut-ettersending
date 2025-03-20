@@ -5,8 +5,8 @@
   "modified": "2023-11-08T08:38:24.177Z",
   "properties": {
     "skjemanummer": "kun-papir",
-    "submissionTypes": ["PAPER"],
-    "additionalSubmissionTypes": ["PAPER"],
+    "subsequentSubmissionTypes": ["PAPER"],
+    "ettersending": "KUN_PAPIR",
     "navUnitTypes": [],
     "tema": "BIL",
     "navUnitMustBeSelected": null,

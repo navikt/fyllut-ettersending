@@ -1,44 +1,46 @@
 import { NextRouter } from 'next/router';
-import { Form, FormData, ListForm, SubmissionType, getSubmissionTypeFromString } from '../data/domain';
+import { Form, FormData, getSubmissionTypeFromString, ListForm, QuerySubmissionType } from '../data/domain';
 
-const getDefaultSubmissionType = (form: Form, router: NextRouter): SubmissionType => {
-  const allowedSubmissionType = form.properties.submissionType;
+const getDefaultQuerySubmissionType = (form: Form, router: NextRouter): QuerySubmissionType => {
+  const allowedSubmissionType = form.properties.allowedSubmissionTypes;
 
   if (isSubmissionParamSet(router)) {
-    const submissionType: SubmissionType = getSubmissionTypeFromString(router.query.sub as string);
-    return submissionType;
+    return getSubmissionTypeFromString(router.query.sub as string);
   }
 
   if (allowedSubmissionType.includes('DIGITAL')) {
-    return SubmissionType.digital;
+    return QuerySubmissionType.digital;
   }
 
-  return SubmissionType.paper;
+  return QuerySubmissionType.paper;
 };
 
 const isSubmissionAllowed = (form: Form) => {
-  return !!form.attachments?.length && !!form.properties.submissionType.length;
+  return !!form.attachments?.length && !!form.properties.allowedSubmissionTypes.length;
 };
 
 const areBothSubmissionTypesAllowed = (form: Form) => {
-  return form.properties.submissionType.includes('PAPER') && form.properties.submissionType.includes('DIGITAL');
+  return (
+    form.properties.allowedSubmissionTypes.includes('PAPER') &&
+    form.properties.allowedSubmissionTypes.includes('DIGITAL')
+  );
 };
 
 const isSubmissionParamSet = (router: NextRouter) => {
-  const submissionValues = Object.values(SubmissionType) as string[];
+  const submissionValues = Object.values(QuerySubmissionType) as string[];
   return !!router.query.sub && submissionValues.includes(router.query.sub as string);
 };
 
 const isSubmissionTypePaper = (formData: FormData) => {
-  return formData.submissionType === SubmissionType.paper;
+  return formData.submissionType === QuerySubmissionType.paper;
 };
 
 const isPaperSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType?.includes('PAPER');
+  return form.properties.allowedSubmissionTypes?.includes('PAPER');
 };
 
 const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
-  return form.properties.submissionType?.includes('DIGITAL');
+  return form.properties.allowedSubmissionTypes?.includes('DIGITAL');
 };
 
 const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {
@@ -46,11 +48,11 @@ const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefin
     return false;
   }
 
-  if (submissionType === SubmissionType.paper) {
+  if (submissionType === QuerySubmissionType.paper) {
     return isPaperSubmissionAllowed(form);
   }
 
-  if (submissionType === SubmissionType.digital) {
+  if (submissionType === QuerySubmissionType.digital) {
     return isDigitalSubmissionAllowed(form);
   }
 
@@ -59,7 +61,7 @@ const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefin
 
 export {
   areBothSubmissionTypesAllowed,
-  getDefaultSubmissionType,
+  getDefaultQuerySubmissionType,
   isDigitalSubmissionAllowed,
   isPaperSubmissionAllowed,
   isSubmissionAllowed,
