@@ -3,6 +3,9 @@ const form1 = require('../data/fyllut/form1.json');
 const form2 = require('../data/fyllut/form2.json');
 const form2En = require('../data/fyllut/form2-en.json');
 const form3 = require('../data/fyllut/form3.json');
+const digitalOnlyForm = require('../data/fyllut/digital-only-form.json');
+const paperOnlyForm = require('../data/fyllut/paper-only-form.json');
+const noSubmissionAllowedForm = require('../data/fyllut/no-attachments-allowed-form.json');
 const archiveSubjectsNb = require('../data/fyllut/archiveSubjects-nb.json');
 const archiveSubjectsNn = require('../data/fyllut/archiveSubjects-nn.json');
 const archiveSubjectsEn = require('../data/fyllut/archiveSubjects-en.json');
@@ -95,6 +98,62 @@ module.exports = [
         options: {
           status: 404,
           body: 'NOT FOUND',
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-digital-only',
+    url: '/fyllut/api/forms/digital-only',
+    method: 'GET',
+    variants: [
+      {
+        id: 'success',
+        type: 'json',
+        options: {
+          status: 200,
+          body: digitalOnlyForm,
+        },
+      },
+      {
+        id: 'failure',
+        type: 'json',
+        options: {
+          status: 500,
+          body: {
+            message: 'Serverfeil',
+            errorCode: '500',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-paper-only',
+    url: '/fyllut/api/forms/paper-only',
+    method: 'GET',
+    variants: [
+      {
+        id: 'success',
+        type: 'json',
+        options: {
+          status: 200,
+          body: paperOnlyForm,
+        },
+      },
+    ],
+  },
+  {
+    id: 'get-no-attachments-allowed',
+    url: '/fyllut/api/forms/no-attachments-allowed',
+    method: 'GET',
+    variants: [
+      {
+        id: 'success',
+        type: 'json',
+        options: {
+          status: 200,
+          body: noSubmissionAllowedForm,
         },
       },
     ],

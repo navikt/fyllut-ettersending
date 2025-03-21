@@ -35,6 +35,10 @@ const isSubmissionTypePaper = (formData: FormData) => {
   return formData.submissionType === QuerySubmissionType.paper;
 };
 
+const isSubmissionTypeDigital = (formData: FormData) => {
+  return formData.submissionType === QuerySubmissionType.digital;
+};
+
 const isPaperSubmissionAllowed = (form: Form | ListForm) => {
   return form.properties.allowedSubmissionTypes?.includes('PAPER');
 };
@@ -43,7 +47,10 @@ const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
   return form.properties.allowedSubmissionTypes?.includes('DIGITAL');
 };
 
-const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {
+const isValidSubmissionTypeInUrl = (form?: Form, submissionType?: string | undefined | string[]) => {
+  if (!form) {
+    return false;
+  }
   if (!submissionType || Array.isArray(submissionType)) {
     return false;
   }
@@ -66,6 +73,7 @@ export {
   isPaperSubmissionAllowed,
   isSubmissionAllowed,
   isSubmissionParamSet,
+  isSubmissionTypeDigital,
   isSubmissionTypePaper,
   isValidSubmissionTypeInUrl,
 };

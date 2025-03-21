@@ -1,0 +1,35 @@
+{
+  "_id": "6332d4a61c23e6dea56309e8",
+  "title": "Digital only",
+  "path": "digital-only",
+  "modified": "2022-06-02T13:32:13.338Z",
+  "properties": {
+    "skjemanummer": "test1",
+    "tema": "HJE",
+    "subsequentSubmissionTypes": ["DIGITAL"],
+    "publishedLanguages": ["nb", "en"]
+  },
+  "attachments": [
+    {
+      "label": "Uttalelse fra øyelege",
+      "key": "uttalelseFraOyelege",
+      "description": "Uttalelsen fra øyelegen skal inneholde opplysninger om: \nøyediagnose (gjerne med prognose), synsstyrke (visus) \netter korreksjon, synsfelt, og andre varierende synsforhold \n(for eksempel mørkesynet, kontrastsynet og\nrask tilpassing til skiftende lysforhold).\n",
+      "attachmentTitle": "Bekreftelse fra øyespesialist",
+      "attachmentCode": "X6"
+    },
+    {
+      "label": "Legeerklæring om alminnelig helsetilstand",
+      "key": "legeerklaeringOmAlmentilstand",
+      "description": "Uttalelsen fra fastlegen skal inneholde opplysninger om: \ntidligere sykdommer og skader av betydning for søkerens \nhelse, sykdom i slekt og familie av betydning for søkerens\nhelse, søkerens høyde og vekt, søkerens fysiske form, \nsøkerens hørsel, kretsløpsorganer, åndedrettsorganer og \nekstremiteter, og annet av betydning for søkerens alminnelige \nhelsetilstand og som kan ha påvirkning når det gjelder \nsøknad om førerhund og hundehold, blant annet søkerens \nmentale tilstand.\n\nLegen skal konkludere om søkerens helsemessige (også psykisk) er egnet eller ikke for førerhund.",
+      "attachmentTitle": "Legeerklæring",
+      "attachmentCode": "L9"
+    },
+    {
+      "label": "Annen dokumentasjon",
+      "key": "annenDokumentasjon",
+      "description": "",
+      "attachmentTitle": "Annet",
+      "attachmentCode": "N6"
+    }
+  ]
+}
