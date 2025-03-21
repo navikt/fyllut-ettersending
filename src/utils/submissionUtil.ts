@@ -16,7 +16,7 @@ const getDefaultQuerySubmissionType = (form: Form, router: NextRouter): QuerySub
 };
 
 const isSubmissionAllowed = (form: Form) => {
-  return !!form.attachments?.length && !!form.properties.allowedSubmissionTypes.length;
+  return !!form.properties.allowedSubmissionTypes.length;
 };
 
 const areBothSubmissionTypesAllowed = (form: Form) => {
@@ -43,18 +43,26 @@ const isDigitalSubmissionAllowed = (form: Form | ListForm) => {
   return form.properties.allowedSubmissionTypes?.includes('DIGITAL');
 };
 
+const isPaperValidSubmission = (form: Form, submissionType: string | undefined | string[]) => {
+  if (submissionType === QuerySubmissionType.paper) {
+    return isPaperSubmissionAllowed(form);
+  }
+};
+
+const isDigitalValidSubmission = (form: Form, submissionType: string | undefined | string[]) => {
+  if (submissionType === QuerySubmissionType.digital) {
+    return isDigitalSubmissionAllowed(form);
+  }
+};
+
 const isValidSubmissionTypeInUrl = (form: Form, submissionType: string | undefined | string[]) => {
   if (!submissionType || Array.isArray(submissionType)) {
     return false;
   }
 
-  if (submissionType === QuerySubmissionType.paper) {
-    return isPaperSubmissionAllowed(form);
-  }
+  isPaperValidSubmission(form, submissionType); // TODO ta tilbake. Dette likte jeg ikke
 
-  if (submissionType === QuerySubmissionType.digital) {
-    return isDigitalSubmissionAllowed(form);
-  }
+  isDigitalValidSubmission(form, submissionType);
 
   return false;
 };
@@ -63,7 +71,9 @@ export {
   areBothSubmissionTypesAllowed,
   getDefaultQuerySubmissionType,
   isDigitalSubmissionAllowed,
+  isDigitalValidSubmission,
   isPaperSubmissionAllowed,
+  isPaperValidSubmission,
   isSubmissionAllowed,
   isSubmissionParamSet,
   isSubmissionTypePaper,
