@@ -1,8 +1,8 @@
 import { TextField, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useMemo } from 'react';
+import { KeyValue, UserType } from '../../data';
 import { useFormState } from '../../data/appState';
-import { KeyValue, UserType } from '../../data/domain';
 import Section from '../section/section';
 
 interface Props {

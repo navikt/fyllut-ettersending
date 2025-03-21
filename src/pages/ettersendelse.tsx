@@ -7,7 +7,7 @@ import { Paths } from 'src/data/paths';
 import { fetchForms } from '../api/apiClient';
 import Layout from '../components/layout/layout';
 import FormSearch from '../components/search/formSearch';
-import { Form } from '../data/domain';
+import { Form } from '../data';
 import { getServerSideTranslations } from '../utils/i18nUtil';
 
 const Ettersendelse: NextPage = () => {

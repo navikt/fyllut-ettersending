@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next/types';
 import { verifyIdportenAccessToken } from 'src/auth/verifyIdPortenToken';
-import { QuerySubmissionType, UnauthenticatedError } from 'src/data/domain';
+import { QuerySubmissionType, UnauthenticatedError } from 'src/data';
 import { isLocalDevelopment } from 'src/utils/utils';
 import logger from '../utils/logger';
 

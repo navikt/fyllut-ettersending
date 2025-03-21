@@ -1,8 +1,8 @@
 import { Radio, RadioGroup, UNSAFE_Combobox } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
+import { NavUnit, UserType } from '../../data';
 import { useFormState } from '../../data/appState';
-import { NavUnit, UserType } from '../../data/domain';
 import SocialSecurityNo from '../form/socialSecurityNo';
 import Section from '../section/section';
 import ContactInformation from './contactInformation';

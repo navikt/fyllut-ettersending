@@ -1,5 +1,5 @@
 import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
-import { Form, QuerySubmissionType } from '../../data/domain';
+import { Form, QuerySubmissionType } from '../../data';
 import { Paths } from '../../data/paths';
 
 interface Props {

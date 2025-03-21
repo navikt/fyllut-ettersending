@@ -1,4 +1,4 @@
-import { HttpError, UnauthenticatedError } from '../data/domain';
+import { HttpError, UnauthenticatedError } from '../data';
 
 const MimeType = {
   JSON: 'application/json',

@@ -1,4 +1,4 @@
-import { LanguageCode } from 'src/data/domain';
+import { LanguageCode } from 'src/data';
 
 const toValidLanguageCodes = (languages: string[]): LanguageCode[] => {
   return languages.map((lang) => toValidLanguageCode(lang));

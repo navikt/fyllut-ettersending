@@ -3,7 +3,7 @@ import { Ingress } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useFormState } from 'src/data/appState';
-import { KeyValue, NavUnit } from '../../data/domain';
+import { KeyValue, NavUnit } from '../../data';
 import ChooseUser from '../submission/chooseUser';
 import SubjectOfSubmission from '../submission/subjectOfSubmission';
 import styles from './other-document.module.css';

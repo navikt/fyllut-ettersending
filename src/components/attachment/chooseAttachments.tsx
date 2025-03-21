@@ -1,7 +1,7 @@
 import { Checkbox, CheckboxGroup, TextField } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
+import { Form } from '../../data';
 import { useFormState } from '../../data/appState';
-import { Form } from '../../data/domain';
 import { hasOtherAttachment } from '../../utils/formDataUtil';
 import { isSubmissionTypePaper } from '../../utils/submissionUtil';
 import styles from '../attachment/attachment.module.css';

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { download } from '../../api/frontPageService';
-import { DownloadCoverPageRequestBody } from '../../data/domain';
+import { DownloadCoverPageRequestBody } from '../../data';
 import { getFileName } from '../../utils/formDataUtil';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

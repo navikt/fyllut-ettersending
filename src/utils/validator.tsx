@@ -1,6 +1,6 @@
 import { idnr } from '@navikt/fnrvalidator';
 import { TFunction } from 'next-i18next';
-import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data/domain';
+import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data';
 import { hasOtherAttachment } from './formDataUtil';
 
 const validateFormData = (formData: FormData, t: TFunction) => {

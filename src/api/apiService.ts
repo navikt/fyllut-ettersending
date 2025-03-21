@@ -15,7 +15,7 @@ import {
   KeyValue,
   LospostRequestBody,
   NavUnit,
-} from '../data/domain';
+} from '../data';
 import { mapInnsendingTypeToSubmissionTypes } from '../utils/apiUtil';
 import logger from '../utils/logger';
 import { FrontPageRequest } from './frontPageService';

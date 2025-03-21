@@ -6,7 +6,7 @@ import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { LanguageCode } from 'src/data/domain';
+import { LanguageCode } from 'src/data';
 import LanguageSelect from '../languageSelect/languageSelect';
 import styles from './layout.module.css';
 

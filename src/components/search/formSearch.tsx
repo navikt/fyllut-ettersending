@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from 'src/utils/submissionUtil';
-import { ListForm } from '../../data/domain';
+import { ListForm } from '../../data';
 import { Paths } from '../../data/paths';
 import Section from '../section/section';
 import styles from './search.module.css';

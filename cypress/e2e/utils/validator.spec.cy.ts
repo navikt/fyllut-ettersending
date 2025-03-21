@@ -1,5 +1,5 @@
 import { TFunction } from 'next-i18next';
-import { FormData, UserType } from '../../../src/data/domain';
+import { FormData, UserType } from '../../../src/data';
 import { validateFormData } from '../../../src/utils/validator';
 
 const tMock = ((key: string): string => key) as TFunction;
