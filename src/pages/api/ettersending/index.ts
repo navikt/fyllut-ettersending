@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createEttersending } from 'src/api/apiService';
 import { getIdPortenToken } from 'src/api/loginRedirect';
-import { EttersendingRequestBody, isHttpError } from '../../../data/domain';
+import { EttersendingRequestBody, isHttpError } from '../../../data';
 import { getEnvQualifier } from '../../../utils/apiUtil';
 import logger from '../../../utils/logger';
 

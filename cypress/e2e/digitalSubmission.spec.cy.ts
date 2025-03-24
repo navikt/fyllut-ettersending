@@ -1,5 +1,5 @@
 import FORM2 from '../../mocks/data/fyllut/form2.json';
-import { EttersendingRequestBody } from '../../src/data/domain';
+import { EttersendingRequestBody } from '../../src/data';
 import { uncapitalize } from '../../src/utils/stringUtil';
 import { TestButtonText } from './testUtils';
 

@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next';
-import { AllowedSubmissionType, AllowedSubmissionType_Old, EnvQualifierType } from '../data/domain';
+import { AllowedSubmissionType, AllowedSubmissionType_Old, EnvQualifierType } from '../data';
 
 const getEnvQualifier = (req: NextApiRequest): EnvQualifierType | undefined => {
   const host = req.headers['host'];

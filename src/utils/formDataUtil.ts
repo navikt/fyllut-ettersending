@@ -1,4 +1,4 @@
-import { FormData } from '../data/domain';
+import { FormData } from '../data';
 
 const hasOtherAttachment = (formData: FormData): boolean => {
   return !!formData.attachments?.find((attachment) => attachment.otherDocumentation);

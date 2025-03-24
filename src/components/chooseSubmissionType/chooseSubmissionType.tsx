@@ -1,7 +1,7 @@
 import { Heading, LinkPanel } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import NextLink from 'next/link';
-import { LanguageCode } from 'src/data/domain';
+import { LanguageCode } from 'src/data';
 import Layout from '../layout/layout';
 import styles from './chooseSubmissionType.module.css';
 

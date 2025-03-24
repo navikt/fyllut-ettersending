@@ -13,7 +13,7 @@ import { fetchNavUnits } from '../../api/apiClient';
 import { getArchiveSubjects } from '../../api/apiService';
 import Layout from '../../components/layout/layout';
 import OtherDocument from '../../components/other-document/other-document';
-import { KeyValue, NavUnit } from '../../data/domain';
+import { KeyValue, NavUnit } from '../../data';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { excludeKeysEmpty } from '../../utils/object';
 import { uncapitalize } from '../../utils/stringUtil';

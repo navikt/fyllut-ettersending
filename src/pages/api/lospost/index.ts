@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createLospost } from '../../../api/apiService';
 import { getIdPortenToken } from '../../../api/loginRedirect';
-import { LospostRequestBody, isHttpError } from '../../../data/domain';
+import { LospostRequestBody, isHttpError } from '../../../data';
 import { getEnvQualifier } from '../../../utils/apiUtil';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

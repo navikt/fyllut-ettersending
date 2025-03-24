@@ -1,4 +1,4 @@
-import { DownloadCoverPageRequestBody, FormData } from '../data/domain';
+import { DownloadCoverPageRequestBody, FormData } from '../data';
 import logger from '../utils/logger';
 import { downloadFrontPage } from './apiService';
 

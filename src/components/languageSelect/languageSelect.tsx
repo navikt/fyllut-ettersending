@@ -2,7 +2,7 @@ import { Select } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { LanguageCode } from 'src/data/domain';
+import { LanguageCode } from 'src/data';
 import { languageCodeMap, languageSortOrder } from 'src/utils/language';
 
 interface LanguageSelectProps {

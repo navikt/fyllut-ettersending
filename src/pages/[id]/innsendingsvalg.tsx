@@ -5,7 +5,7 @@ import { getForm } from 'src/api/apiService';
 import ChooseFormSubmissionType from 'src/components/chooseSubmissionType/chooseFormSubmissionType';
 import { Paths } from 'src/data/paths';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
-import { EttersendelseApplication, Form } from '../../data/domain';
+import { EttersendelseApplication, Form } from '../../data';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 
 interface Props {

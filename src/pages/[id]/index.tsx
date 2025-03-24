@@ -17,7 +17,6 @@ import { ButtonType } from '../../components/button/buttonGroupElement';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import ChooseUser from '../../components/submission/chooseUser';
-import { useFormState } from '../../data/appState';
 import {
   EttersendelseApplication,
   Form,
@@ -25,7 +24,8 @@ import {
   QuerySubmissionType,
   UnauthenticatedError,
   UserType,
-} from '../../data/domain';
+} from '../../data';
+import { useFormState } from '../../data/appState';
 import { Paths } from '../../data/paths';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';

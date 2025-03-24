@@ -8,7 +8,7 @@ import {
   HttpError,
   LospostRequestBody,
   NavUnit,
-} from '../data/domain';
+} from '../data';
 import { getFileName } from '../utils/formDataUtil';
 
 const baseUrl = '/fyllut-ettersending';
