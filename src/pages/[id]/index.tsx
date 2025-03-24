@@ -22,7 +22,7 @@ import {
   EttersendelseApplication,
   Form,
   NavUnit,
-  SubmissionType,
+  QuerySubmissionType,
   UnauthenticatedError,
   UserType,
 } from '../../data/domain';
@@ -33,7 +33,7 @@ import { getLoginRedirect } from '../../utils/login';
 import { uncapitalize } from '../../utils/stringUtil';
 import {
   areBothSubmissionTypesAllowed,
-  getDefaultSubmissionType,
+  getDefaultQuerySubmissionType,
   isSubmissionAllowed,
   isSubmissionTypePaper,
   isValidSubmissionTypeInUrl,
@@ -86,7 +86,7 @@ const Detaljer: NextPage<Props> = (props) => {
         formNumber: form.properties.formNumber,
         title: form.title,
         subjectOfSubmission: form.properties.subjectOfSubmission,
-        submissionType: getDefaultSubmissionType(form, router),
+        submissionType: getDefaultQuerySubmissionType(form, router),
         formId: id,
         language,
         userData: form.properties.hideUserTypes ? { type: UserType.none } : undefined,
@@ -145,7 +145,7 @@ const Detaljer: NextPage<Props> = (props) => {
 
             <ButtonGroup
               buttons={[
-                formData.submissionType === SubmissionType.digital ? submitButton : downloadButton,
+                formData.submissionType === QuerySubmissionType.digital ? submitButton : downloadButton,
                 ...(referrerPage ? [previousButton] : []),
               ]}
             />

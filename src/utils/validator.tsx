@@ -1,6 +1,6 @@
 import { idnr } from '@navikt/fnrvalidator';
 import { TFunction } from 'next-i18next';
-import { FormData, KeyValue, SubmissionType, UserType } from '../data/domain';
+import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data/domain';
 import { hasOtherAttachment } from './formDataUtil';
 
 const validateFormData = (formData: FormData, t: TFunction) => {
@@ -19,7 +19,7 @@ const validateFormData = (formData: FormData, t: TFunction) => {
       formErrors.attachments = t('attachments');
     }
 
-    if (formData.submissionType !== SubmissionType.digital) {
+    if (formData.submissionType !== QuerySubmissionType.digital) {
       if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
         formErrors.otherDocumentationTitle = t('otherDocumentation');
       }

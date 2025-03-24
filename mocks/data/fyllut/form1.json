@@ -6,8 +6,8 @@
   "properties": {
     "skjemanummer": "Testnummer",
     "tema": "HJE",
-    "innsending": "PAPIR_OG_DIGITAL",
     "ettersending": "PAPIR_OG_DIGITAL",
+    "subsequentSubmissionTypes": ["PAPER", "DIGITAL"],
     "enhetstyper": ["YTA"]
   },
   "attachments": [

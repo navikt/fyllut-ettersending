@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next';
-import { EnvQualifierType } from '../data/domain';
+import { AllowedSubmissionType, AllowedSubmissionType_Old, EnvQualifierType } from '../data/domain';
 
 const getEnvQualifier = (req: NextApiRequest): EnvQualifierType | undefined => {
   const host = req.headers['host'];
@@ -15,4 +15,27 @@ const getEnvQualifier = (req: NextApiRequest): EnvQualifierType | undefined => {
   return undefined;
 };
 
-export { getEnvQualifier };
+/**
+ *
+ * Metoden er implementert for å støtte bakoverkompatibilitet. Fjernes etter migrering
+ */
+function mapInnsendingTypeToSubmissionTypes(
+  allowedSubmissionType?: AllowedSubmissionType_Old,
+): AllowedSubmissionType[] {
+  if (!allowedSubmissionType) return ['PAPER', 'DIGITAL'];
+
+  switch (allowedSubmissionType) {
+    case 'PAPIR_OG_DIGITAL':
+      return ['PAPER', 'DIGITAL'];
+    case 'KUN_PAPIR':
+      return ['PAPER'];
+    case 'KUN_DIGITAL':
+      return ['DIGITAL'];
+    case 'INGEN':
+      return [];
+    default:
+      return [];
+  }
+}
+
+export { getEnvQualifier, mapInnsendingTypeToSubmissionTypes };

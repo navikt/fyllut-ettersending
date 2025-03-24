@@ -21,8 +21,8 @@ export interface FyllutListForm extends BasicForm {
 
 export interface FyllutListFormProperties {
   skjemanummer?: string;
-  innsending?: AllowedSubmissionType;
-  ettersending?: AllowedSubmissionType;
+  ettersending?: AllowedSubmissionType_Old;
+  subsequentSubmissionTypes: AllowedSubmissionType[];
 }
 
 export interface FyllutFoerstesidePdf {
@@ -32,8 +32,8 @@ export interface FyllutFoerstesidePdf {
 export interface FyllytFormProperties {
   skjemanummer?: string;
   tema: string;
-  innsending?: AllowedSubmissionType;
-  ettersending?: AllowedSubmissionType;
+  ettersending?: AllowedSubmissionType_Old;
+  subsequentSubmissionTypes?: AllowedSubmissionType[];
   enhetstyper?: string[];
   enhetMaVelgesVedPapirInnsending?: boolean;
   hideUserTypes?: boolean;
@@ -52,7 +52,7 @@ export interface ListForm extends BasicForm {
 
 export interface ListFormProperties {
   formNumber?: string;
-  submissionType?: AllowedSubmissionType;
+  allowedSubmissionTypes?: AllowedSubmissionType[];
 }
 
 export interface Form extends BasicForm {
@@ -69,12 +69,13 @@ export interface Attachment {
   attachmentForm?: string;
 }
 
-export type AllowedSubmissionType = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';
+export type AllowedSubmissionType_Old = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN'; // Fjernes
+export type AllowedSubmissionType = 'PAPER' | 'DIGITAL';
 
 export interface FormProperties {
   formNumber?: string;
   skjemanummer?: string;
-  submissionType?: AllowedSubmissionType;
+  allowedSubmissionTypes: AllowedSubmissionType[];
   navUnitTypes?: string[];
   navUnitMustBeSelected?: boolean;
   subjectOfSubmission?: string;
@@ -127,7 +128,7 @@ export interface OtherFormdata {
   otherDocumentationTitle?: string;
   subjectOfSubmission?: string;
   titleOfSubmission?: string;
-  submissionType?: SubmissionType;
+  submissionType?: QuerySubmissionType;
   title?: string;
   userData?: UserData;
   language?: string;
@@ -171,7 +172,7 @@ export interface LospostRequestBody {
   sprak: string;
 }
 
-export enum SubmissionType {
+export enum QuerySubmissionType {
   digital = 'digital',
   paper = 'paper',
 }
@@ -183,11 +184,11 @@ export const EnvQualifier = {
 } as const;
 export type EnvQualifierType = (typeof EnvQualifier)[keyof typeof EnvQualifier];
 
-export const getSubmissionTypeFromString = (string: string): SubmissionType => {
-  if (!Object.values(SubmissionType).includes(string as SubmissionType)) {
+export const getSubmissionTypeFromString = (string: string): QuerySubmissionType => {
+  if (!Object.values(QuerySubmissionType).includes(string as QuerySubmissionType)) {
     throw new Error(`Invalid submission type: ${string}`);
   }
-  return SubmissionType[string as keyof typeof SubmissionType];
+  return QuerySubmissionType[string as keyof typeof QuerySubmissionType];
 };
 
 export enum UserType {
