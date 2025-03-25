@@ -11,7 +11,8 @@
     "tema": "BIL",
     "navUnitMustBeSelected": null,
     "enhetstyper": ["YTA"],
-    "hideUserTypes": true
+    "hideUserTypes": true,
+    "publishedLanguages": ["nb"]
   },
   "attachments": [
     {
