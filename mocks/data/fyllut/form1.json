@@ -8,7 +8,8 @@
     "tema": "HJE",
     "ettersending": "PAPIR_OG_DIGITAL",
     "subsequentSubmissionTypes": ["PAPER", "DIGITAL"],
-    "enhetstyper": ["YTA"]
+    "enhetstyper": ["YTA"],
+    "publishedLanguages": ["nb"]
   },
   "attachments": [
     {
