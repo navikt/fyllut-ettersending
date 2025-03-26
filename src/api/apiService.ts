@@ -82,6 +82,7 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
       allowedSubmissionTypes: subsequentSubmissionTypes ?? mapInnsendingTypeToSubmissionTypes(ettersending),
       navUnitTypes: enhetstyper ?? [],
       subjectOfSubmission: tema,
+      // publishedLanguages will also contain 'nb' after migration to Forms API, we add 'nb' for backwards compatibility
       publishedLanguages: distinct(['nb', ...toValidLanguageCodes(publishedLanguages ?? [])]),
       ...(hideUserTypes && { hideUserTypes }),
       ...(enhetMaVelgesVedPapirInnsending && {
