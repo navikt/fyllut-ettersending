@@ -1,6 +1,6 @@
 import { Attachment } from './attachment';
 import { BasicForm } from './forms';
-import { AllowedSubmissionType, AllowedSubmissionType_Old, LanguageCode } from './types';
+import { AllowedSubmissionType, LanguageCode } from './types';
 
 /**
  * I denne filen er typene som returneres fra fyllut/form APIet definert
@@ -11,7 +11,6 @@ export interface FyllutListForm extends BasicForm {
 
 export interface FyllutListFormProperties {
   skjemanummer?: string;
-  ettersending?: AllowedSubmissionType_Old;
   subsequentSubmissionTypes: AllowedSubmissionType[];
 }
 
@@ -28,8 +27,7 @@ export interface FyllutFoerstesidePdf {
 export interface FyllytFormProperties {
   skjemanummer?: string;
   tema: string;
-  ettersending?: AllowedSubmissionType_Old;
-  subsequentSubmissionTypes?: AllowedSubmissionType[];
+  subsequentSubmissionTypes: AllowedSubmissionType[];
   enhetstyper?: string[];
   enhetMaVelgesVedPapirInnsending?: boolean;
   hideUserTypes?: boolean;
