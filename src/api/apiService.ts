@@ -17,7 +17,6 @@ import {
   LospostRequestBody,
   NavUnit,
 } from '../data';
-import { mapInnsendingTypeToSubmissionTypes } from '../utils/apiUtil';
 import logger from '../utils/logger';
 import { FrontPageRequest } from './frontPageService';
 import { get, post } from './http';
@@ -34,12 +33,12 @@ const getForms = async (): Promise<BasicForm[]> => {
   }
 
   return forms.map((form) => {
-    const { skjemanummer, subsequentSubmissionTypes, ettersending } = form.properties;
+    const { skjemanummer, subsequentSubmissionTypes } = form.properties;
     return {
       ...form,
       properties: {
         formNumber: skjemanummer ?? null,
-        allowedSubmissionTypes: subsequentSubmissionTypes ?? mapInnsendingTypeToSubmissionTypes(ettersending),
+        allowedSubmissionTypes: subsequentSubmissionTypes,
       },
     };
   });
@@ -72,14 +71,14 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     enhetstyper,
     subsequentSubmissionTypes,
     hideUserTypes,
-    ettersending,
     publishedLanguages,
   } = form.properties;
+
   return {
     ...form,
     properties: {
       formNumber: skjemanummer,
-      allowedSubmissionTypes: subsequentSubmissionTypes ?? mapInnsendingTypeToSubmissionTypes(ettersending),
+      allowedSubmissionTypes: subsequentSubmissionTypes,
       navUnitTypes: enhetstyper ?? [],
       subjectOfSubmission: tema,
       // publishedLanguages will also contain 'nb' after migration to Forms API, we add 'nb' for backwards compatibility
@@ -145,12 +144,10 @@ const getEttersendinger = async (idportenToken: string, id: string) => {
   try {
     const tokenxToken = await getTokenX(idportenToken);
 
-    const response = await get<EttersendelseApplication[]>(
+    return await get<EttersendelseApplication[]>(
       `${process.env.INNSENDING_API_URL}/frontend/v1/skjema/${id}/soknader?soknadstyper=ettersendelse`,
       { Authorization: `Bearer ${tokenxToken}` },
     );
-
-    return response;
   } catch (e) {
     logger.error('Could not fetch ettersendinger', e as Error);
     return [];
@@ -164,7 +161,7 @@ const createEttersending = async (
 ) => {
   const tokenxToken = await getTokenX(idportenToken);
 
-  const response = await post<Response>(
+  return await post<Response>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/ettersending`,
     ettersendingBody,
     {
@@ -173,14 +170,12 @@ const createEttersending = async (
     },
     { rawResponse: true },
   );
-
-  return response;
 };
 
 const createLospost = async (idportenToken: string, body: LospostRequestBody, appEnvQualifier?: EnvQualifierType) => {
   const tokenxToken = await getTokenX(idportenToken);
 
-  const response = await post<Response>(
+  return await post<Response>(
     `${process.env.INNSENDING_API_URL}/fyllut/v1/lospost`,
     body,
     {
@@ -189,8 +184,6 @@ const createLospost = async (idportenToken: string, body: LospostRequestBody, ap
     },
     { rawResponse: true },
   );
-
-  return response;
 };
 
 const getTokenX = async (idportenToken: string) => {

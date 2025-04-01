@@ -6,7 +6,6 @@
   "properties": {
     "skjemanummer": "kun-papir",
     "subsequentSubmissionTypes": ["PAPER"],
-    "ettersending": "KUN_PAPIR",
     "navUnitTypes": [],
     "tema": "BIL",
     "navUnitMustBeSelected": null,
