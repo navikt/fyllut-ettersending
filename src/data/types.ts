@@ -1,7 +1,3 @@
-/**
- * AllowedSubmissionType_Old skal fjernes
- */
-export type AllowedSubmissionType_Old = 'PAPIR_OG_DIGITAL' | 'KUN_PAPIR' | 'KUN_DIGITAL' | 'INGEN';
 export type AllowedSubmissionType = 'PAPER' | 'DIGITAL';
 
 export type FormDataPage = 'lospost' | 'digital-lospost' | 'other';
