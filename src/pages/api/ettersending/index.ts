@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.setHeader('location', response.headers.get('location')!);
       res.send(await response.json());
     } catch (error) {
-      logger.error('ErrorComponent creating ettersending', error);
+      logger.error('Error creating ettersending', error);
       if (isHttpError(error)) {
         res.status(error.status);
         res.send({ message: error.message });

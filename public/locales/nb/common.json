@@ -38,5 +38,15 @@
       "label": "Velg hvilken Nav-enhet som skal motta innsendingen"
     }
   },
-  "validationSummaryTitle": "For å gå videre må du rette opp følgende:"
+  "validationSummaryTitle": "For å gå videre må du rette opp følgende:",
+  "error": {
+    "heading": "Beklager en feil oppsto",
+    "attachment-not-possbile": "Det er ikke mulig å sende inn vedlegg til dette skjemaet.",
+    "use-search": "Bruk gjerne søket eller menyen,",
+    "url-feedback": "Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.",
+    "go-to-frontpage": "Gå til forsiden",
+    "report-error": "Meld inn feil på denne lenken",
+    "digital-only": "Det er bare mulig å ettersende digitalt til dette skjemaet. Du blir bedt om å logge inn.",
+    "paper-only": "Det er bare mulig å ettersende vedlegg til dette skjemaet i posten."
+  }
 }

@@ -1,21 +1,28 @@
 import { NextPageContext } from 'next';
-import { ErrorComponent } from '../components/error/ErrorComponent';
+import { Error as ErrorComponent } from '../components/error/Error';
 import Layout from '../components/layout/layout';
-// import ErrorComponent from '../components/error';
 
 const Error = ({ statusCode }: { statusCode: number }) => {
   return (
     <Layout title="Ettersend dokumentasjon" showBackLink={false}>
-      {statusCode === 404 ? (
+      {statusCode === 500 ? (
         <ErrorComponent
-          heading={'Beklager en feil oppsto'}
-          errorBody={'Denne siden kan være slettet eller flyttet, eller det er en feil i lenken.'}
+          heading={'Beklager, noe gikk galt.'}
+          errorBody={
+            'En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du gjorde.'
+          }
           navigateToFrontPage={'Gå til forsiden'}
           ctaButton={'Bruk gjerne søket eller menyen'}
           bugUrlTitle={'Meld inn feil på denne lenken'}
         />
       ) : (
-        <p>En feil har oppstått. Vennligst prøv igjen senere</p>
+        <ErrorComponent
+          heading={'Beklager, vi fant ikke siden'}
+          errorBody={'Denne siden kan være slettet eller flyttet, eller det er en feil i lenken.'}
+          navigateToFrontPage={'Gå til forsiden'}
+          ctaButton={'Bruk gjerne søket eller menyen'}
+          bugUrlTitle={'Meld inn feil på denne lenken'}
+        />
       )}
     </Layout>
   );

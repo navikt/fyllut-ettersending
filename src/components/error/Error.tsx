@@ -9,7 +9,7 @@ type ErrorProps = {
   bugUrlTitle: string; //Meld gjerne fra om at lenken ikke virker
 };
 
-export function ErrorComponent({ heading, bugUrlTitle, errorBody, navigateToFrontPage, ctaButton }: ErrorProps) {
+export function Error({ heading, bugUrlTitle, errorBody, navigateToFrontPage, ctaButton }: ErrorProps) {
   return (
     <Box>
       <VStack gap="16">
@@ -22,7 +22,7 @@ export function ErrorComponent({ heading, bugUrlTitle, errorBody, navigateToFron
             <List>
               <List.Item>{ctaButton}</List.Item>
               <List.Item>
-                <Link href="#">{navigateToFrontPage}</Link>
+                <Link href={process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no'}>{navigateToFrontPage}</Link>
               </List.Item>
             </List>
           </div>

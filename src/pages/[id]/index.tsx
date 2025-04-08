@@ -7,7 +7,13 @@ import { EttersendelseApplication, Form, UnauthenticatedError } from 'src/data';
 import { getServerSideTranslations, localePathPrefix } from 'src/utils/i18nUtil';
 import logger from 'src/utils/logger';
 import { getLoginRedirect } from 'src/utils/login';
-import { areBothSubmissionTypesAllowed, isValidSubmissionTypeInUrl } from 'src/utils/submissionUtil';
+import {
+  areBothSubmissionTypesAllowed,
+  isDigitalValidSubmission,
+  isPaperValidSubmission,
+  isSubmissionAllowed,
+  isValidSubmissionTypeInUrl,
+} from 'src/utils/submissionUtil';
 import { Paths } from '../../data/paths';
 
 interface Props {
@@ -47,12 +53,34 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  if (query.sub && !isValidSubmissionTypeInUrl(form, query.sub)) {
+  const hasNoSubmissionType = !isSubmissionAllowed(form);
+  const isInvalidSubmission = query.sub && !isValidSubmissionTypeInUrl(form, query.sub);
+
+  if (!isPaperValidSubmission(form, query.sub)) {
+    console.log('Paper submission not allowed');
+    // return {
+    //   props: {
+    //     error: true,
+    //     paperOnly: true,
+    //   },
+    // };
+  }
+
+  if (!isDigitalValidSubmission(form, query.sub)) {
+    console.log('Digital submission not allowed');
+    // return {
+    //   props: {
+    //     error: true,
+    //     digitalOnly: true,
+    //   },
+    // };
+  }
+
+  if (hasNoSubmissionType || isInvalidSubmission) {
     logger.info(
       `Submission type is not the same as the valid submission types in the form ${form.path}, returning not found`,
     );
-    logger.info('feila gitt');
-    return { notFound: true }; // TODO ha en bedre håndtering av når det er papir bare, men prøver digital/når det er digitalt bare og prøver papir
+    return { notFound: true };
   }
 
   // Fetch existing ettersendinger and redirect if necessary

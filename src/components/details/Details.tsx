@@ -18,7 +18,7 @@ import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
 import { uncapitalize } from 'src/utils/stringUtil';
 import { getDefaultQuerySubmissionType, isSubmissionAllowed, isSubmissionTypePaper } from 'src/utils/submissionUtil';
-import { ErrorComponent } from '../error/ErrorComponent';
+import { Error } from '../error/Error';
 
 interface Props {
   form: Form;
@@ -35,7 +35,6 @@ const Details: NextPage<Props> = (props) => {
   const { t, i18n } = useTranslation('detaljer');
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const hasAttachments = !!form.attachments?.length;
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -110,79 +109,50 @@ const Details: NextPage<Props> = (props) => {
       publishedLanguages={form.properties.publishedLanguages}
     >
       <ValidationSummary />
-
       <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
-
-      {/* Kun papir tillatt*/}
-      {/*<ErrorComponent*/}
-      {/*  heading={'Beklager en feil oppsto'}*/}
-      {/*  errorBody={'Kun ettersending per post er tillatt på denne saken'}*/}
-      {/*  navigateToFrontPage={'Gå til forsiden'}*/}
-      {/*  ctaButton={'Bruk gjerne søket eller menyen'}*/}
-      {/*  bugUrlTitle={'Meld inn feil på denne lenken'}*/}
-      {/*/>*/}
-
-      {/* Kun digital tillatt */}
-      {/*<ErrorComponent*/}
-      {/*  heading={'Beklager en feil oppsto'}*/}
-      {/*  errorBody={'Kun digital ettersending er tillatt for denne saken'}*/}
-      {/*  navigateToFrontPage={'Gå til forsiden'}*/}
-      {/*  ctaButton={'Bruk gjerne søket eller menyen'}*/}
-      {/*  bugUrlTitle={'Meld inn feil på denne lenken'}*/}
-      {/*/>*/}
-
-      {!hasAttachments ? (
-        <ErrorComponent
-          heading={'Beklager en feil oppsto'}
-          errorBody={t('no-attachments-alert')}
-          navigateToFrontPage={'Gå til forsiden'}
-          ctaButton={'Bruk gjerne søket eller menyen'}
-          bugUrlTitle={'Meld inn feil på denne lenken'}
-        />
-      ) : (
-        <>
-          {isSubmissionAllowed(form) ? (
-            formData.submissionType && (
-              <>
-                <ChooseAttachments form={form} />
-                {isSubmissionTypePaper(formData) && (
-                  <ChooseUser
-                    navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
-                    shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
-                    shouldRenderUserTypes={!form.properties.hideUserTypes}
-                  />
-                )}
-
-                <ButtonGroup
-                  buttons={[
-                    formData.submissionType === QuerySubmissionType.digital ? submitButton : downloadButton,
-                    ...(referrerPage ? [previousButton] : []),
-                  ]}
+      <>
+        {isSubmissionAllowed(form) ? (
+          formData.submissionType && (
+            <>
+              <ChooseAttachments form={form} />
+              {isSubmissionTypePaper(formData) && (
+                <ChooseUser
+                  navUnits={getNavUnitsConnectedToForm(form.properties.navUnitTypes)}
+                  shouldRenderNavUnits={form.properties.navUnitMustBeSelected}
+                  shouldRenderUserTypes={!form.properties.hideUserTypes}
                 />
-                <ButtonGroup
-                  center={!!referrerPage}
-                  buttons={[
-                    {
-                      text: tCommon('button.cancel'),
-                      path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
-                      variant: 'tertiary',
-                      external: true,
-                    },
-                  ]}
-                />
-              </>
-            )
-          ) : (
-            <ErrorComponent
-              heading={'Beklager en feil oppsto'}
-              errorBody={'Det er ikke mulig å ettersende dokumenter på denne saken'}
-              navigateToFrontPage={'Gå til forsiden'}
-              ctaButton={'Bruk gjerne søket eller menyen'}
-              bugUrlTitle={'Meld inn feil på denne lenken'}
-            />
-          )}
-        </>
-      )}
+              )}
+
+              <ButtonGroup
+                buttons={[
+                  formData.submissionType === QuerySubmissionType.digital ? submitButton : downloadButton,
+                  ...(referrerPage ? [previousButton] : []),
+                ]}
+              />
+              <ButtonGroup
+                center={!!referrerPage}
+                buttons={[
+                  {
+                    text: tCommon('button.cancel'),
+                    path: process.env.NEXT_PUBLIC_NAV_URL || 'https://nav.no',
+                    variant: 'tertiary',
+                    external: true,
+                  },
+                ]}
+              />
+            </>
+          )
+        ) : (
+          <Error
+            heading={'Beklager, her har det oppstått en feil'}
+            errorBody={'Det er ikke mulig å ettersende vedlegg til dette skjemaet'}
+            navigateToFrontPage={'Gå til forsiden'}
+            ctaButton={'Bruk gjerne søket eller menyen'}
+            bugUrlTitle={'Meld inn feil på denne lenken'}
+          />
+        )}
+      </>
+      )
     </Layout>
   );
 };
