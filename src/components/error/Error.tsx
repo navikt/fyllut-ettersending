@@ -5,13 +5,13 @@ type ErrorProps = {
   heading: string;
   errorBody: string; //Denne siden kan være slettet eller flyttet, eller det er en feil i lenken.
   navigateToFrontPage: string; //Gå til forsiden
-  ctaButton: string; // Bruk gjerne søket eller menyen
+  ctaButton?: string; // Bruk gjerne søket eller menyen
   bugUrlTitle: string; //Meld gjerne fra om at lenken ikke virker
 };
 
 export function Error({ heading, bugUrlTitle, errorBody, navigateToFrontPage, ctaButton }: ErrorProps) {
   return (
-    <Box>
+    <Box paddingBlock="20">
       <VStack gap="16">
         <VStack gap="12" align="start">
           <div>
@@ -26,10 +26,10 @@ export function Error({ heading, bugUrlTitle, errorBody, navigateToFrontPage, ct
               </List.Item>
             </List>
           </div>
-          <Button as="a" href="#">
+          <Button as="a" href="https://www.nav.no/minside">
             Gå til min side
           </Button>
-          <Link href="#">
+          <Link href="https://www.nav.no/person/kontakt-oss/nb/tilbakemeldinger/feil-og-mangler">
             <BugIcon aria-hidden />
             {bugUrlTitle}
           </Link>

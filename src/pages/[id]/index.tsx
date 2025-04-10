@@ -58,22 +58,24 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   if (!isPaperValidSubmission(form, query.sub)) {
     console.log('Paper submission not allowed');
-    // return {
-    //   props: {
-    //     error: true,
-    //     paperOnly: true,
-    //   },
-    // };
+    return {
+      props: {
+        form,
+        error: true,
+        paperOnly: true,
+      },
+    };
   }
 
   if (!isDigitalValidSubmission(form, query.sub)) {
     console.log('Digital submission not allowed');
-    // return {
-    //   props: {
-    //     error: true,
-    //     digitalOnly: true,
-    //   },
-    // };
+    return {
+      props: {
+        form,
+        error: true,
+        digitalOnly: true,
+      },
+    };
   }
 
   if (hasNoSubmissionType || isInvalidSubmission) {

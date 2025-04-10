@@ -24,11 +24,13 @@ interface Props {
   form: Form;
   id: string;
   existingEttersendinger: EttersendelseApplication[];
+  digitalOnly?: boolean;
+  paperOnly?: boolean;
 }
 
 const Details: NextPage<Props> = (props) => {
   const router = useRouter();
-  const { form, id } = props;
+  const { form, id, digitalOnly, paperOnly } = props;
   const { formData, resetFormData, updateFormDataLanguage } = useFormState();
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const referrerPage = useReffererPage();
@@ -102,6 +104,35 @@ const Details: NextPage<Props> = (props) => {
     external: true,
   };
 
+  if (isSubmissionAllowed(form)) {
+    if (digitalOnly) {
+      return (
+        <Error
+          heading={'Beklager, her har det oppstått en feil'}
+          errorBody={
+            'Det er bare mulig å ettersende vedlegg til dette skjemaet digitalt. Du blir bedt om å logge inn.' +
+            'Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.'
+          }
+          navigateToFrontPage={'Gå til forsiden'}
+          bugUrlTitle={'Meld inn feil på denne lenken'}
+        />
+      );
+    }
+    if (paperOnly) {
+      return (
+        <Error
+          heading={'Beklager, her har det oppstått en feil'}
+          errorBody={
+            'Det er bare mulig å ettersende vedlegg til dette skjemaet i posten.' +
+            'Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.'
+          }
+          navigateToFrontPage={'Gå til forsiden'}
+          bugUrlTitle={'Meld inn feil på denne lenken'}
+        />
+      );
+    }
+  }
+
   return (
     <Layout
       title={`${t('title-for')} ${uncapitalize(form.title)}`}
@@ -145,9 +176,11 @@ const Details: NextPage<Props> = (props) => {
         ) : (
           <Error
             heading={'Beklager, her har det oppstått en feil'}
-            errorBody={'Det er ikke mulig å ettersende vedlegg til dette skjemaet'}
+            errorBody={
+              'Det er ikke mulig å ettersende vedlegg til dette skjemaet.' +
+              ' Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.'
+            }
             navigateToFrontPage={'Gå til forsiden'}
-            ctaButton={'Bruk gjerne søket eller menyen'}
             bugUrlTitle={'Meld inn feil på denne lenken'}
           />
         )}
@@ -156,5 +189,4 @@ const Details: NextPage<Props> = (props) => {
     </Layout>
   );
 };
-
 export default Details;

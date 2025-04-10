@@ -1,10 +1,11 @@
+import '@navikt/ds-css';
 import { NextPageContext } from 'next';
 import { Error as ErrorComponent } from '../components/error/Error';
 import Layout from '../components/layout/layout';
 
 const Error = ({ statusCode }: { statusCode: number }) => {
   return (
-    <Layout title="Ettersend dokumentasjon" showBackLink={false}>
+    <Layout title={statusCode === 400 ? 'Feil: fant ikke siden' : 'Feil: noe gikk galt.'} hideTitle>
       {statusCode === 500 ? (
         <ErrorComponent
           heading={'Beklager, noe gikk galt.'}
