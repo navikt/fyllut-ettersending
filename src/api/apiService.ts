@@ -186,15 +186,12 @@ const createLospost = async (idportenToken: string, body: LospostRequestBody, ap
   );
 };
 
-const getTokenX = async (idportenToken: string) => {
-  let tokenxToken = 'mock-tokenx-token';
-  if (!isLocalDevelopment()) {
-    tokenxToken = (await getTokenxToken(
-      idportenToken,
-      process.env.INNSENDING_API_AUDIENCE ?? 'dev-gcp:team-soknad:innsending-api',
-    )) as string;
+const getTokenX = async (idportenToken: string): Promise<string> => {
+  if (isLocalDevelopment()) {
+    return 'mock-tokenx-token';
   }
-  return tokenxToken;
+  const audience = process.env.INNSENDING_API_AUDIENCE ?? 'dev-gcp:team-soknad:innsending-api';
+  return await getTokenxToken(idportenToken, audience);
 };
 
 export {

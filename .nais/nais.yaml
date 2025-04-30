@@ -5,6 +5,8 @@ metadata:
   namespace: "skjemadigitalisering"
   labels:
     team: skjemadigitalisering
+  annotations:
+    texas.nais.io/enabled: "true"
 spec:
   image: {{image}}
   port: 3002
