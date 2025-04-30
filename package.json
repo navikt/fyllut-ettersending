@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "rimraf node_modules .next",
+    "clean": "rimraf node_modules .next mocks/node_modules",
     "dev": "next dev -p 3002",
     "dev:test": "NODE_ENV=test next dev -p 3002",
     "build": "next build",
@@ -14,8 +14,8 @@
     "lint": "eslint .",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
-    "mocks": "mocks-server",
-    "mocks:no-cli": "mocks-server --no-plugins.inquirerCli.enabled",
+    "mocks": "cd mocks && yarn mocks",
+    "mocks:no-cli": "cd mocks && yarn mocks:no-cli",
     "prepare": "husky",
     "prettier": "prettier --write ."
   },
@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@mocks-server/cypress-commands": "^6.1.1",
-    "@mocks-server/main": "^4.1.0",
     "@testing-library/cypress": "^10.0.3",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^22.13.1",
