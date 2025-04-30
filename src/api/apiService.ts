@@ -52,7 +52,7 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     form = await get<FyllutForm>(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e) {
-    logger.error(`Failed to load form ${formPath}`, e as Error);
+    logger.warn(`Failed to load form ${formPath}`, e as Error);
     return undefined;
   }
 

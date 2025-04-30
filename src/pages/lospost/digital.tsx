@@ -121,7 +121,14 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, query } = context;
-  const { tema, gjelder } = query as { tema: string; gjelder: string };
+  const { tema, gjelder } = query as { tema?: string; gjelder?: string };
+  if (tema && !isValidSubjectCode(tema)) {
+    return { notFound: true };
+  }
+  if (gjelder && !isValidGjelder(gjelder)) {
+    return { notFound: true };
+  }
+
   const pageProps = excludeKeysEmpty({ tema, gjelder });
   // Attempt to verify the token and redirect to login if necessary
   try {
@@ -151,6 +158,14 @@ const redirectToLogin = (context: GetServerSidePropsContext) => {
     },
     props: {},
   };
+};
+
+const isValidSubjectCode = (code: string) => {
+  return /^[A-Z]{3}$/.test(code);
+};
+
+const isValidGjelder = (gjelder: string) => {
+  return /^[a-zA-ZøæåØÆÅ]+$/.test(gjelder);
 };
 
 export default DigitalLospostPage;

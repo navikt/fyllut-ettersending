@@ -207,6 +207,16 @@ describe('Løspost - Digital submission', () => {
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
+
+    it('rejects invalid value for param "gjelder"', () => {
+      cy.visit('/lospost/digital?tema=SYK&gjelder=(Select * from users)', { failOnStatusCode: false });
+      cy.findByText('Denne siden eksisterer ikke');
+    });
+
+    it('rejects invalid value for param "tema"', () => {
+      cy.visit('/lospost/digital?tema=GRRR&gjelder=Økologi', { failOnStatusCode: false });
+      cy.findByText('Denne siden eksisterer ikke');
+    });
   });
 
   describe('Creation of søknad fails', () => {

@@ -27,6 +27,7 @@ import {
 } from '../../data';
 import { useFormState } from '../../data/appState';
 import { Paths } from '../../data/paths';
+import { isValidFormPath } from '../../utils/formDataUtil';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
 import { getLoginRedirect } from '../../utils/login';
@@ -170,8 +171,14 @@ const Detaljer: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // Set cache control header
   const { res, query } = context;
+  const id = context.params?.id as string;
+  if (isValidFormPath(id)) {
+    logger.debug(`Invalid id parameter: '${id}'`);
+    return { notFound: true };
+  }
+
+  // Set cache control header
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
 
   // Attempt to verify the token and redirect to login if necessary
@@ -187,7 +194,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   // Fetch the form
-  const id = context.params?.id as string;
   const { locale } = context;
   const form = await getForm(id, locale);
 
