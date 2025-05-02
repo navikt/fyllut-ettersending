@@ -2,9 +2,6 @@ import { isValidFormPath } from '../../../src/utils/formDataUtil';
 
 describe('utils/formDataUtil', () => {
   describe('isValidFormPath', () => {
-    it('should return false for undefined', () => {
-      expect(isValidFormPath(undefined)).to.eq(false);
-    });
     it('should return false for empty string', () => {
       expect(isValidFormPath('')).to.eq(false);
     });

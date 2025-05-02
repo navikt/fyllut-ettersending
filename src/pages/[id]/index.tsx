@@ -173,7 +173,7 @@ const Detaljer: NextPage<Props> = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { res, query } = context;
   const id = context.params?.id as string;
-  if (isValidFormPath(id)) {
+  if (id && !isValidFormPath(id)) {
     logger.debug(`Invalid id parameter: '${id}'`);
     return { notFound: true };
   }
