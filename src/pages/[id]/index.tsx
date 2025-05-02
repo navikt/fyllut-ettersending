@@ -13,15 +13,20 @@ import {
   isPaperSubmissionAllowed,
   isSubmissionAllowed,
 } from 'src/utils/submissionUtil';
+import { InternalServerError } from '../../components/error/InternalServerError';
 import { Paths } from '../../data/paths';
 
 interface Props {
   form: Form;
   id: string;
   existingEttersendinger: EttersendelseApplication[];
+  serverError?: boolean;
 }
 
 const IndexPage: NextPage<Props> = (props) => {
+  if (props.serverError) {
+    return <InternalServerError />;
+  }
   return <Details {...props} />;
 };
 
@@ -45,9 +50,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Fetch the form
   const id = context.params?.id as string;
   const { locale } = context;
+  const isDigitalQuerySub = query.sub === QuerySubmissionType.digital;
+  const isPaperQuerySub = query.sub === QuerySubmissionType.paper;
+  const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
+
   const form = await getForm(id, locale);
 
-  const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
+  if (form === 'serverError') {
+    logger.error(`Server error occurred while fetching form ${id}`);
+    return {
+      props: {
+        error: true,
+        serverError: true,
+        ...translations,
+      },
+    };
+  }
 
   if (!form) {
     logger.info(`Failed to get form, returning not found`);
@@ -55,9 +73,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  const hasNoSubmissionType = !isSubmissionAllowed(form);
-
-  if (hasNoSubmissionType) {
+  if (!isSubmissionAllowed(form)) {
     logger.info(`Form ${form.path} has no allowed submission type`);
     return {
       props: {
@@ -69,7 +85,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  if (query.sub === QuerySubmissionType.paper && !isPaperSubmissionAllowed(form)) {
+  if (isPaperQuerySub && !isPaperSubmissionAllowed(form)) {
     logger.info(`Paper submission for form ${form.path} is not allowed`);
     return {
       props: {
@@ -81,7 +97,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  if (query.sub === QuerySubmissionType.digital && !isDigitalSubmissionAllowed(form)) {
+  if (isDigitalQuerySub && !isDigitalSubmissionAllowed(form)) {
     logger.info(`Digital submission for form ${form.path} is not allowed`);
     return {
       props: {

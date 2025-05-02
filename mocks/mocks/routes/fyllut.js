@@ -121,7 +121,7 @@ module.exports = [
         options: {
           status: 500,
           body: {
-            message: 'Serverfeil',
+            message: '500',
             errorCode: '500',
           },
         },

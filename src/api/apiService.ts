@@ -44,7 +44,7 @@ const getForms = async (): Promise<BasicForm[]> => {
   });
 };
 
-const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | undefined> => {
+const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | 'serverError' | undefined> => {
   const startTime = Date.now();
   let form: FyllutForm;
 
@@ -53,6 +53,9 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, e as Error);
+    if (e instanceof Error && e.message === '500') {
+      return 'serverError';
+    }
     return undefined;
   }
 
