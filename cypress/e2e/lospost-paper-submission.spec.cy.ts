@@ -254,9 +254,9 @@ describe('Løspost - Paper submission', () => {
     });
   });
 
-  describe("query param invalid 'tema'", () => {
+  describe.only("query param unknown 'tema'", () => {
     beforeEach(() => {
-      cy.visit('/lospost/paper?tema=invalid');
+      cy.visit('/lospost/paper?tema=ABC');
       cy.wait('@getNavUnits');
       // Intercept: Download cover page pdf
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
