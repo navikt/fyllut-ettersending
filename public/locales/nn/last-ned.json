@@ -23,6 +23,7 @@
   "button": {
     "download-cover-page": "Last ned førsteside"
   },
+  "download-error": "Nedlastingen feilet. Prøv igjen senere.",
   "cover-page-title": {
     "ettersendelse": "Ettersending til {{formNumber}} {{title}}",
     "innsendelse": "Innsendinga gjeld: {{titleOfSubmission}}{{extraInfo}}"

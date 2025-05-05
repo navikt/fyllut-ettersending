@@ -23,6 +23,7 @@
   "button": {
     "download-cover-page": "Download cover sheet"
   },
+  "download-error": "We failed to generate the document. Please try again later.",
   "cover-page-title": {
     "ettersendelse": "Additional documentation for {{formNumber}} {{title}}",
     "innsendelse": "Submission regarding: {{titleOfSubmission}}{{extraInfo}}"
