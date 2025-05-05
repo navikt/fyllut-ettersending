@@ -70,7 +70,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
           {t('button.download-cover-page')}
         </Button>
         {downloadError && (
-          <Alert className="download-error" variant="error">
+          <Alert className="download-error" variant="error" data-cy="DownloadError">
             {downloadError}
           </Alert>
         )}
