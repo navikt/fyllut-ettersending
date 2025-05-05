@@ -25,6 +25,7 @@ describe('Løspost - Paper submission', () => {
 
   beforeEach(() => {
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
+    cy.mocksRestoreRouteVariants();
     setConsentCookie();
   });
 
@@ -32,17 +33,6 @@ describe('Løspost - Paper submission', () => {
     beforeEach(() => {
       cy.visit('/lospost/paper');
       cy.wait('@getNavUnits');
-      // Intercept: Download cover page pdf
-      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
-        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
-        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
-        expect(req.body.title).to.equal(
-          'Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave',
-        );
-        expect(req.body.formData.userData.navUnit.name).to.equal(NAV_UNIT.name);
-        expect(req.body.formData.userData.navUnit.number).to.equal(NAV_UNIT.number);
-        req.reply('mock-pdf');
-      }).as('downloadForsteside');
     });
 
     it('should be able to fill out the form and go to next page (noSocialNumber)', () => {
@@ -96,10 +86,7 @@ describe('Løspost - Paper submission', () => {
 
       cy.get('button').contains(TestButtonText.next).click();
 
-      //Download page
-
       cy.url().should('include', '/last-ned');
-      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
     });
 
     it('should be able to fill out the form and go to next page (other)', () => {
@@ -450,6 +437,57 @@ describe('Løspost - Paper submission', () => {
       //Download page
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonTextNn.downloadCoverPage }).should('exist').click();
+    });
+  });
+
+  describe('Download front page', () => {
+    beforeEach(() => {
+      cy.visit('/lospost/paper');
+      cy.wait('@getNavUnits');
+    });
+
+    it('sends the required data for generating front page', () => {
+      // Intercept: Check request body for downloading cover page
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
+        expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
+        expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.title).to.equal(
+          'Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave',
+        );
+        expect(req.body.formData.userData.navUnit.name).to.equal(NAV_UNIT.name);
+        expect(req.body.formData.userData.navUnit.number).to.equal(NAV_UNIT.number);
+      }).as('downloadForsteside');
+
+      cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
+      cy.findAllByRole('radio').check('noSocialNumber');
+      cy.get('[name="firstName"]').type('Ola');
+      cy.get('[name="lastName"]').type('Nordmann');
+      cy.get('[name="streetName"]').type('Addresse 1');
+      cy.get('[name="postalCode"]').type('0001');
+      cy.get('[name="city"]').type('Oslo');
+      cy.get('[name="country"]').type('Norway');
+      cy.findAllByRole('radio').check('true');
+      cy.get('[name="contactInformationNavUnit"]').type(`${NAV_UNIT.name}{downArrow}{enter}`);
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+      cy.wait('@downloadForsteside');
+    });
+
+    it('handles errors', () => {
+      cy.mocksUseRouteVariant('download-frontpage:error');
+
+      cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
+      cy.get('[data-cy=DownloadError]').should('be.visible');
     });
   });
 
