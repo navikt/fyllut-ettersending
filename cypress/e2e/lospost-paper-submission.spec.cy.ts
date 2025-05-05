@@ -25,6 +25,7 @@ describe('Løspost - Paper submission', () => {
 
   beforeEach(() => {
     cy.intercept('GET', `${Cypress.config('baseUrl')}/api/nav-units`).as('getNavUnits');
+    cy.mocksRestoreRouteVariants();
     setConsentCookie();
   });
 
@@ -446,7 +447,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('sends the required data for generating front page', () => {
-      // Intercept: Download cover page pdf
+      // Intercept: Check request body for downloading cover page
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
@@ -455,7 +456,6 @@ describe('Løspost - Paper submission', () => {
         );
         expect(req.body.formData.userData.navUnit.name).to.equal(NAV_UNIT.name);
         expect(req.body.formData.userData.navUnit.number).to.equal(NAV_UNIT.number);
-        req.reply('mock-pdf');
       }).as('downloadForsteside');
 
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
@@ -477,9 +477,7 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('handles errors', () => {
-      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, {
-        statusCode: 400,
-      }).as('downloadForstesideError');
+      cy.mocksUseRouteVariant('download-frontpage:error');
 
       cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
       cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
@@ -489,7 +487,6 @@ describe('Løspost - Paper submission', () => {
 
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
-      cy.wait('@downloadForstesideError');
       cy.get('[data-cy=DownloadError]').should('be.visible');
     });
   });

@@ -144,4 +144,29 @@ module.exports = [
       },
     ],
   },
+  {
+    id: 'download-frontpage',
+    url: '/fyllut/api/foersteside',
+    method: 'POST',
+    variants: [
+      {
+        id: 'success',
+        type: 'json',
+        options: {
+          status: 200,
+          body: {},
+        },
+      },
+      {
+        id: 'error',
+        type: 'json',
+        options: {
+          status: 500,
+          body: {
+            message: 'Internal server error',
+          },
+        },
+      },
+    ],
+  },
 ];
