@@ -15,7 +15,7 @@ export const validateQueryParams = (params: FyllutEttersendingQueryParams): Vali
     return { success: false };
   }
 
-  if (gjelder !== undefined && !/^[0-9a-zA-ZøæåØÆÅ]+$/.test(gjelder)) {
+  if (gjelder !== undefined && !/^[0-9a-zA-ZøæåØÆÅ\s]+$/.test(gjelder)) {
     return { success: false };
   }
 

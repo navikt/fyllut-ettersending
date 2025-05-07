@@ -191,18 +191,18 @@ describe('Løspost - Digital submission', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
-        expect(req.body.soknadTittel).to.equal('Sykepenger - Bestridelse - Legedokument');
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Sykmelding del D - Legedokument');
         expect(req.body.tema).to.equal('SYK');
       }).as('opprettLospost');
     });
 
     it('title is prefixed with value from query param', () => {
-      cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse');
+      cy.visit('/lospost/digital?tema=SYK&gjelder=Sykmelding%20del%20D');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Legedokument');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.url().should('contain', '?tema=SYK&gjelder=Bestridelse');
+      cy.url().should('contain', '?tema=SYK&gjelder=Sykmelding%20del%20D');
       cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);

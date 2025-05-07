@@ -26,12 +26,6 @@ describe('queryParams', () => {
         const result = validateQueryParams(params);
         expect(result.success).to.equal(false);
       });
-
-      it('should return error for invalid gjelder', () => {
-        const params = { tema: 'PEN', gjelder: '(select * from user)', sub: 'digital' };
-        const result = validateQueryParams(params);
-        expect(result.success).to.equal(false);
-      });
     });
     describe('gjelder', () => {
       it('is not required', () => {
@@ -46,10 +40,16 @@ describe('queryParams', () => {
         expect(result.success).to.equal(false);
       });
 
-      it('should return error for invalid sub', () => {
-        const params = { tema: 'PEN', gjelder: 'Utbetaling', sub: 'invalidsub' };
+      it('should return error for invalid gjelder', () => {
+        const params = { tema: 'PEN', gjelder: '(select * from user)', sub: 'digital' };
         const result = validateQueryParams(params);
         expect(result.success).to.equal(false);
+      });
+
+      it('should allow spaces in value', () => {
+        const params = { gjelder: 'sykmelding del D' };
+        const result = validateQueryParams(params);
+        expect(result.success).to.equal(true);
       });
     });
     describe('sub', () => {
