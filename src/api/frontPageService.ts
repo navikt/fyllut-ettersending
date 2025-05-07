@@ -1,16 +1,10 @@
 import { DownloadCoverPageRequestBody, FormData } from '../data';
-import logger from '../utils/logger';
 import { downloadFrontPage } from './apiService';
 
 const download = async (body: DownloadCoverPageRequestBody, acceptLanguage: string | undefined) => {
-  let pdf;
-  try {
-    const spraakkode = toSpraakkode(acceptLanguage);
-    pdf = await downloadFrontPage(toFrontPageRequest(body, spraakkode));
-    return Buffer.from(pdf?.foersteside ?? '', 'base64');
-  } catch (e) {
-    logger.error('Failed to download front page', e);
-  }
+  const spraakkode = toSpraakkode(acceptLanguage);
+  const pdf = await downloadFrontPage(toFrontPageRequest(body, spraakkode));
+  return Buffer.from(pdf?.foersteside ?? '', 'base64');
 };
 
 const VALID_LANGUAGES = ['nb', 'nn', 'en'];

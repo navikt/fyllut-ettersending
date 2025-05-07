@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
 import '@navikt/ds-css';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
@@ -24,6 +24,7 @@ interface Props {
 const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
   const { formData } = useFormState();
   const [loading, setLoading] = useState<boolean>(false);
+  const [downloadError, setDownloadError] = useState<string>();
   const { t, i18n } = useTranslation('last-ned');
   const { t: tCommon } = useTranslation('common');
   const { updateFormDataLanguage } = useFormState();
@@ -44,6 +45,8 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
     const title = getCoverPageTitle(formData, t);
     try {
       await downloadFrontpage(formData, title, locale);
+    } catch (_e) {
+      setDownloadError(t('download-error'));
     } finally {
       setLoading(false);
     }
@@ -66,6 +69,11 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
         <Button variant="primary" onClick={download} size="medium" loading={loading}>
           {t('button.download-cover-page')}
         </Button>
+        {downloadError && (
+          <Alert className="download-error" variant="error" data-cy="DownloadError">
+            {downloadError}
+          </Alert>
+        )}
       </Section>
 
       {formData.attachments && (

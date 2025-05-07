@@ -28,7 +28,8 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
     formData,
     title,
   };
-  const b64 = await fetch(`${baseUrl}/api/download`, {
+
+  const result = await fetch(`${baseUrl}/api/download`, {
     body: JSON.stringify(jsonBody),
     headers: {
       'Content-Type': 'application/json; charset=utf8',
@@ -36,7 +37,12 @@ const downloadFrontpage = async (formData: FormData, title: string, lang: string
     },
     method: 'POST',
   });
-  FileSaver.saveAs(await b64.blob(), getFileName(formData));
+
+  if (!result.ok) {
+    throw new HttpError(result.statusText, result.status);
+  }
+
+  FileSaver.saveAs(await result.blob(), getFileName(formData));
 };
 
 const createEttersending = async (formData: FormData): Promise<string> => {

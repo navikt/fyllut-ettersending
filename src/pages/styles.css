@@ -42,3 +42,7 @@ input[type='number'] {
   outline: 3px solid var(--a-border-focus);
   outline-offset: 0.3rem;
 }
+
+.download-error {
+  margin-top: 1rem;
+}

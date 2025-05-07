@@ -132,11 +132,12 @@ const downloadFrontPage = async (data: FrontPageRequest) => {
   const startTime = Date.now();
 
   try {
-    const frontPage = post<FyllutFoerstesidePdf>(`${process.env.FYLLUT_BASE_URL}/api/foersteside`, data);
+    const frontPage = await post<FyllutFoerstesidePdf>(`${process.env.FYLLUT_BASE_URL}/api/foersteside`, data);
     logger.debug(`Download front page (ms: ${Date.now() - startTime})`);
     return frontPage;
   } catch (e) {
     logger.error('Failed to download front page', e as Error);
+    throw e;
   }
 };
 
