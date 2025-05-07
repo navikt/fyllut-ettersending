@@ -16,7 +16,7 @@ export default defineConfig({
     chromeWebSecurity: false,
     viewportWidth: 1500,
     viewportHeight: 1200,
-    setupNodeEvents(on, config) {},
+    setupNodeEvents(_on, _config) {},
     env: {
       INNSENDING_API_URL: 'http://127.0.0.1:3200',
       NEXT_PUBLIC_SEND_INN_FRONTEND_URL: 'http://127.0.0.1:3200/send-inn-frontend',
