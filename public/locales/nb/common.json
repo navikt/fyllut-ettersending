@@ -38,5 +38,24 @@
       "label": "Velg hvilken Nav-enhet som skal motta innsendingen"
     }
   },
-  "validationSummaryTitle": "For å gå videre må du rette opp følgende:"
+  "validationSummaryTitle": "For å gå videre må du rette opp følgende:",
+  "error": {
+    "default-heading": "Beklager, her har det oppstått en feil",
+    "not-found-heading": "Beklager, vi fant ikke siden",
+    "404-error-message": "Denne siden kan være slettet eller flyttet, eller det er en feil i lenken.",
+    "500-error-message": "En teknisk feil på våre servere gjør at siden er utilgjengelig. Dette skyldes ikke noe du gjorde.",
+    "500-error-problem-persists": "Hvis problemet vedvarer, kan du",
+    "500-error-contact-us-new-tab": " kontakte oss (åpnes i ny fane)",
+    "500-error-suggestion": "Du kan prøve å",
+    "500-error-refresh": "oppdatere siden",
+    "500-error-wait": "vente noen minutter og",
+    "500-error-previous-page": "gå tilbake til forrige side",
+    "url-feedback": "Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.",
+    "go-to-front-page": "Gå til forsiden",
+    "go-to-my-page": "Gå til Min side",
+    "report-error": "Meld inn feil på denne lenken",
+    "attachment-not-allowed": "Det er ikke mulig å ettersende vedlegg til dette skjemaet. Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.",
+    "digital-only": "Det er bare mulig å <FormUrl>ettersende digitalt</FormUrl> til dette skjemaet. Du blir bedt om å logge inn.",
+    "paper-only": "Det er bare mulig å ettersende vedlegg til dette skjemaet i posten."
+  }
 }

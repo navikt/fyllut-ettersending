@@ -1,0 +1,17 @@
+{
+  "_id": "3448f6beb99e7e00027f5a21",
+  "title": "Ingen ettersending tillatt",
+  "path": "no-attachments-allowed",
+  "modified": "2023-11-08T08:38:24.177Z",
+  "properties": {
+    "skjemanummer": "2",
+    "subsequentSubmissionTypes": [],
+    "navUnitTypes": [],
+    "tema": "BIL",
+    "navUnitMustBeSelected": null,
+    "enhetstyper": ["YTA"],
+    "hideUserTypes": true,
+    "publishedLanguages": ["nb"]
+  },
+  "attachments": []
+}

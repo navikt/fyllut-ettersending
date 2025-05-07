@@ -38,5 +38,24 @@
       "label": "Vel kva Nav-eining som skal ta imot innsendinga"
     }
   },
-  "validationSummaryTitle": "For å gå vidare må du retta opp følgjande:"
+  "validationSummaryTitle": "For å gå vidare må du retta opp følgjande:",
+  "error": {
+    "default-heading": "Beklagar, det har oppstått ein feil",
+    "not-found-heading": "Beklagar, vi fann ikkje sida",
+    "404-error-message": "Denne sida kan vere sletta eller flytta, eller det er ein feil i lenkja.",
+    "500-error-message": "Ein teknisk feil på serverane våre gjer at sida er utilgjengeleg. Dette skuldast ikkje noko du gjorde.",
+    "500-error-problem-persists": "Om problemet held fram, kan du",
+    "500-error-contact-us-new-tab": " kontakte oss (opnast i ny fane)",
+    "500-error-suggestion": "Du kan prøve å",
+    "500-error-refresh": "oppdatere sida",
+    "500-error-wait": "vente nokre minutt og",
+    "500-error-previous-page": "gå tilbake til førre side",
+    "url-feedback": "Om du klikka på ein lenke som førte deg hit, set vi pris på om du melder frå om kva lenke du klikka på.",
+    "go-to-front-page": "Gå til framsida",
+    "go-to-my-page": "Gå til Mi side",
+    "report-error": "Meld inn feil på denne lenka",
+    "attachment-not-allowed": "Det er ikkje mogleg å sende inn vedlegg til dette skjemaet. Om du klikka på ein lenke som førte deg hit, set vi pris på om du melder frå om kva lenke du klikka på.",
+    "digital-only": "Det er berre mogleg å <FormUrl>sende inn digitalt</FormUrl> til dette skjemaet. Du vil bli bedt om å logge inn.",
+    "paper-only": "Det er berre mogleg å sende inn vedlegg til dette skjemaet i posten."
+  }
 }

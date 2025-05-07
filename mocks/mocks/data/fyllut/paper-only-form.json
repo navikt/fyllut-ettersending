@@ -1,0 +1,58 @@
+{
+  "_id": "6332d4a61c23e6dea56309e4",
+  "title": "Kun papir tillatt",
+  "path": "paper-only",
+  "modified": "2022-10-12T14:22:13.762Z",
+  "properties": {
+    "skjemanummer": "3",
+    "tema": "HJE",
+    "subsequentSubmissionTypes": ["PAPER"],
+    "enhetstyper": ["YTA"],
+    "publishedLanguages": ["nb"]
+  },
+  "attachments": [
+    {
+      "label": "Veldig gammel dokumentasjon",
+      "key": "test1",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Annen dokumentasjon",
+      "key": "annenDokumentasjon",
+      "description": "Har du noen annen dokumentasjon du ønsker å legge ved?",
+      "otherDocumentation": true,
+      "attachmentTitle": "Annet",
+      "attachmentCode": "N6"
+    },
+    {
+      "label": "Test dokumentasjon",
+      "key": "test2",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Spennende dokumentasjon",
+      "key": "test3",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Gammel dokumentasjon",
+      "key": "test4",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    },
+    {
+      "label": "Ny dokumentasjon",
+      "key": "test5",
+      "description": "Test doc",
+      "attachmentTitle": "Something",
+      "attachmentCode": "A1"
+    }
+  ]
+}
