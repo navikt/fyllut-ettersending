@@ -10,28 +10,19 @@ import styles from './error.module.css';
 type ErrorProps = {
   heading: string;
   errorBody?: string;
-  showMyPage?: boolean;
   showGoToFrontPage?: boolean;
   children?: ReactNode;
   showReportBug?: boolean;
   locale: string;
 };
 
-export function Error({
-  heading,
-  errorBody,
-  showMyPage,
-  showGoToFrontPage,
-  showReportBug,
-  locale = 'nb',
-  children,
-}: ErrorProps) {
+export function Error({ heading, errorBody, showGoToFrontPage, showReportBug, locale = 'nb', children }: ErrorProps) {
   const { t } = useTranslation('common');
   return (
     <Layout title={heading} hideTitle>
       <Box paddingBlock="20">
         <VStack gap="16">
-          <VStack gap="12" align="start">
+          <VStack gap="8" align="start">
             <div>
               <Heading size="large" spacing>
                 {heading}
@@ -39,12 +30,6 @@ export function Error({
               {errorBody && <BodyShort spacing>{errorBody}</BodyShort>}
               {children}
             </div>
-            {showMyPage && (
-              <Button as="a" href={Paths.navMyPage(locale)}>
-                {t('error.go-to-my-page')}
-              </Button>
-            )}
-
             {showReportBug && (
               <Link className={styles.bugLink} href={Paths.navReportBugPage(locale)} target="_blank">
                 <BugIcon aria-hidden />
