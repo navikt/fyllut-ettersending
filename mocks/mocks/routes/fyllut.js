@@ -117,13 +117,10 @@ module.exports = [
       },
       {
         id: 'failure',
-        type: 'json',
+        type: 'text',
         options: {
           status: 500,
-          body: {
-            message: '500',
-            errorCode: '500',
-          },
+          body: 'INTERNAL SERVER ERROR',
         },
       },
     ],

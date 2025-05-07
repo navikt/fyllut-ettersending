@@ -16,28 +16,22 @@ export function InternalServerError() {
   }, []);
 
   return (
-    <ErrorComponent
-      locale={locale}
-      heading={t('error.default-heading')}
-      errorBody={t('error.500-error-message')}
-      showMyPage
-    >
+    <ErrorComponent locale={locale} heading={t('error.default-heading')} errorBody={t('error.500-error-message')}>
       <>
         <BodyShort>{t('error.500-error-suggestion')}</BodyShort>
         <List>
           <List.Item>
             {`${t('error.500-error-wait')} `}
-            <Link href="#" onClick={() => location.reload()}>
-              {t('error.500-error-refresh')}
-            </Link>
+            <Link onClick={() => location.reload()}>{t('error.500-error-refresh')}</Link>
           </List.Item>
           {historyLength && historyLength > 1 && (
             <List.Item>
-              <Link href="#" onClick={() => history.back()}>
-                {t('error.500-error-previous-page')}
-              </Link>
+              <Link onClick={() => history.back()}>{t('error.500-error-previous-page')}</Link>
             </List.Item>
           )}
+          <List.Item>
+            <Link href={Paths.navFrontPage(locale)}>{t('error.go-to-front-page').toLowerCase()}</Link>
+          </List.Item>
         </List>
         <BodyShort>
           {`${t('error.500-error-problem-persists')} `}

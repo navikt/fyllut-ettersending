@@ -45,6 +45,7 @@ const Details: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const locale = i18n.language;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const digitalFormPath = `${Paths.details(form.path)}?sub=digital`;
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -124,7 +125,7 @@ const Details: NextPage<Props> = (props) => {
               <Trans
                 i18nKey="error.digital-only"
                 components={{
-                  FormUrl: <Link href={`${Paths.details(form.path)}?sub=digital`}>ettersende digitalt</Link>,
+                  FormUrl: <Link href={digitalFormPath}></Link>,
                 }}
               />
             </BodyShort>
@@ -155,8 +156,6 @@ const Details: NextPage<Props> = (props) => {
       );
     }
   };
-
-  handleError();
 
   return (
     <>

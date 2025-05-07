@@ -29,11 +29,13 @@ const Innsendingsvalg: NextPage<Props> = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
   const { locale } = context;
-  const form = await getForm(id, locale);
   const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
-  if (form === 'serverError') {
-    logger.error(`Server error occurred while fetching form ${id}`);
+  let form: Form | undefined;
+  try {
+    form = await getForm(id, locale);
+  } catch (error) {
+    logger.error(`Server error occurred while fetching form ${id} caused by ${error}`);
     return {
       props: {
         error: true,

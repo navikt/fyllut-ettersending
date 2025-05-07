@@ -13,6 +13,8 @@ import {
   FyllutFoerstesidePdf,
   FyllutForm,
   FyllutListForm,
+  HttpError,
+  isHttpError,
   KeyValue,
   LospostRequestBody,
   NavUnit,
@@ -44,18 +46,25 @@ const getForms = async (): Promise<BasicForm[]> => {
   });
 };
 
-const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | 'serverError' | undefined> => {
+const getForm = async (formPath: string, language: string = 'nb'): Promise<Form | undefined> => {
   const startTime = Date.now();
-  let form: FyllutForm;
+  let form: FyllutForm | undefined;
 
   try {
     form = await get<FyllutForm>(`${process.env.FYLLUT_BASE_URL}/api/forms/${formPath}?type=limited&lang=${language}`);
     logger.debug(`Load form ${formPath} (ms: ${Date.now() - startTime})`);
   } catch (e) {
     logger.error(`Failed to load form ${formPath}`, e as Error);
-    if (e instanceof Error && e.message === '500') {
-      return 'serverError';
+    if (isHttpError(e)) {
+      if (e.status === 404) {
+        return undefined;
+      }
+      logger.info(e);
+      throw new HttpError(e.message, e.status);
     }
+  }
+
+  if (!form) {
     return undefined;
   }
 
@@ -67,6 +76,7 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
     }
     return a.label > b.label ? 1 : -1;
   });
+
   const {
     skjemanummer,
     enhetMaVelgesVedPapirInnsending,
@@ -84,7 +94,6 @@ const getForm = async (formPath: string, language: string = 'nb'): Promise<Form 
       allowedSubmissionTypes: subsequentSubmissionTypes,
       navUnitTypes: enhetstyper ?? [],
       subjectOfSubmission: tema,
-      // publishedLanguages will also contain 'nb' after migration to Forms API, we add 'nb' for backwards compatibility
       publishedLanguages: distinct(['nb', ...toValidLanguageCodes(publishedLanguages ?? [])]),
       ...(hideUserTypes && { hideUserTypes }),
       ...(enhetMaVelgesVedPapirInnsending && {

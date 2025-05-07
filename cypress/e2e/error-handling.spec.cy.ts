@@ -2,9 +2,6 @@ describe('displays correct error messages', () => {
   beforeEach(() => {
     cy.mocksRestoreRouteVariants();
   });
-  afterEach(() => {
-    cy.mocksRestoreRouteVariants();
-  });
 
   it('should display error message for digital only', () => {
     cy.visit('/paper-only?sub=digital');
@@ -30,7 +27,7 @@ describe('displays correct error messages', () => {
     cy.contains('Denne siden kan være slettet eller flyttet, eller det er en feil i lenken.').should('be.visible');
   });
 
-  it.only('should display 500 error page', () => {
+  it('should display 500 error page', () => {
     cy.mocksUseRouteVariant('get-digital-only:failure');
     cy.visit('/digital-only?sub=digital', { failOnStatusCode: false });
     cy.contains(

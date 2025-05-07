@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import { Paths } from '../../data/paths';
 import Layout from '../layout/layout';
+import styles from './error.module.css';
 
 type ErrorProps = {
   heading: string;
@@ -43,16 +44,17 @@ export function Error({
                 {t('error.go-to-my-page')}
               </Button>
             )}
+
+            {showReportBug && (
+              <Link className={styles.bugLink} href={Paths.navReportBugPage(locale)} target="_blank">
+                <BugIcon aria-hidden />
+                {t('error.report-error')}
+              </Link>
+            )}
             {showGoToFrontPage && (
               <Button as="a" href={Paths.navFrontPage(locale)}>
                 {t('error.go-to-front-page')}
               </Button>
-            )}
-            {showReportBug && (
-              <Link href={Paths.navReportBugPage(locale)} target="_blank">
-                <BugIcon aria-hidden />
-                {t('error.report-error')}
-              </Link>
             )}
           </VStack>
         </VStack>

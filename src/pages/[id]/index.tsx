@@ -54,10 +54,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const isPaperQuerySub = query.sub === QuerySubmissionType.paper;
   const translations = await getServerSideTranslations(locale, ['common', 'detaljer', 'validator']);
 
-  const form = await getForm(id, locale);
-
-  if (form === 'serverError') {
-    logger.error(`Server error occurred while fetching form ${id}`);
+  let form: Form | undefined;
+  try {
+    form = await getForm(id, locale);
+  } catch (error) {
+    logger.error(`Server error occurred while fetching form ${id} caused by ${error}`);
     return {
       props: {
         error: true,
@@ -69,7 +70,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   if (!form) {
     logger.info(`Failed to get form, returning not found`);
-
     return { notFound: true };
   }
 

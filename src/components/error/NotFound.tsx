@@ -16,9 +16,8 @@ export function NotFound() {
     >
       <>
         <List>
-          <List.Item>{t('error.use-search')}</List.Item>
           <List.Item>
-            <Link href={Paths.navFrontPage(locale)} target="_blank">
+            <Link href={Paths.navFrontPage(locale)} target="_blank" rel="noreferrer">
               {t('error.go-to-front-page')}
             </Link>
           </List.Item>

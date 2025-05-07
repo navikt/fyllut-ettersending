@@ -4,7 +4,7 @@
   "path": "digital-only",
   "modified": "2022-06-02T13:32:13.338Z",
   "properties": {
-    "skjemanummer": "test1",
+    "skjemanummer": "test1234",
     "tema": "HJE",
     "subsequentSubmissionTypes": ["DIGITAL"],
     "publishedLanguages": ["nb", "en"]
