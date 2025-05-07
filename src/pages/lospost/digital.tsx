@@ -121,7 +121,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, query } = context;
-  const { tema, gjelder } = query as { tema: string; gjelder: string };
+  const { tema, gjelder } = query as { tema?: string; gjelder?: string };
+
   const pageProps = excludeKeysEmpty({ tema, gjelder });
   // Attempt to verify the token and redirect to login if necessary
   try {
