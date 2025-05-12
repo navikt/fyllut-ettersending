@@ -38,5 +38,23 @@
       "label": "Select which Nav unit that should receive your documents"
     }
   },
-  "validationSummaryTitle": "To proceed, you must correct the following:"
+  "validationSummaryTitle": "To proceed, you must correct the following:",
+  "error": {
+    "default-heading": "Sorry, an error has occurred",
+    "not-found-heading": "Sorry, we couldn't find the page",
+    "404-error-message": "This page may have been deleted or moved, or there is an error in the link.",
+    "500-error-message": "A technical error on our servers makes the page unavailable. This is not caused by anything you did.",
+    "500-error-problem-persists": "If the problem persists, you can",
+    "500-error-contact-us-new-tab": " contact us (opens in a new tab)",
+    "500-error-suggestion": "You can try to",
+    "500-error-refresh": "refresh the page",
+    "500-error-wait": "wait a few minutes and",
+    "500-error-previous-page": "go back to the previous page",
+    "url-feedback": "If you clicked on a link that brought you here, we would appreciate it if you report which link you clicked on.",
+    "go-to-front-page": "Go to the front page",
+    "report-error": "Report an error on this link",
+    "attachment-not-allowed": "It is not possible to submit attachments for this form. If you clicked on a link that brought you here, we would appreciate it if you report which link you clicked on.",
+    "digital-only": "It is only possible to <FormUrl>submit digitally</FormUrl> for this form. You will be asked to log in.",
+    "paper-only": "It is only possible to submit attachments for this form by mail."
+  }
 }

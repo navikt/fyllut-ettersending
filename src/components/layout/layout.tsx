@@ -16,9 +16,10 @@ interface Props {
   backUrl?: string;
   showBackLink?: boolean;
   publishedLanguages?: LanguageCode[];
+  hideTitle?: boolean;
 }
 
-const Layout = ({ title, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
+const Layout = ({ title, hideTitle, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
   const { t } = useTranslation('common');
 
   const backLink = () => {
@@ -39,13 +40,17 @@ const Layout = ({ title, children, backUrl, showBackLink = true, publishedLangua
       <Head>
         <title>{title ?? t('heading.default-title')}</title>
       </Head>
-      <header className={classNames(styles.header, styles.content)}>
-        <Heading size="xlarge" level="1">
-          {title ?? t('heading.default-title')}
-        </Heading>
-      </header>
 
-      <hr className={styles.hr} />
+      {!hideTitle && (
+        <>
+          <header className={classNames(styles.header, styles.content)}>
+            <Heading size="xlarge">{title ?? t('heading.default-title')}</Heading>
+          </header>
+
+          <hr className={styles.hr} />
+        </>
+      )}
+
       <div className={classNames(styles.content, styles.mainContent)}>
         <div className={styles.mainColumn}>
           {backLink()}

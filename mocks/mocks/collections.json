@@ -11,6 +11,9 @@
       "get-form-1:success",
       "get-form-2:success",
       "get-form-3:success",
+      "get-digital-only:success",
+      "get-paper-only:success",
+      "get-no-attachments-allowed:success",
       "post-ettersending:success",
       "post-lospost:success"
     ]

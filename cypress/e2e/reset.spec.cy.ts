@@ -24,7 +24,7 @@ describe('reset', () => {
     cy.findAllByRole('textbox').type('test');
 
     // Click the second form in the list (digital)
-    cy.get('[data-cy="searchResults"]').findAllByRole('link').eq(0).click();
+    cy.get('[data-cy="searchResults"]').findByRole('link', { name: 'Testskjema (digital) Testnummer' }).click();
 
     // Check that the URL contain the form
     cy.url().should('include', '/form1');
@@ -40,7 +40,9 @@ describe('reset', () => {
     cy.findAllByRole('textbox').type('hund');
 
     // Click the second form in the list (paper)
-    cy.get('[data-cy="searchResults"]').findAllByRole('link').eq(1).click();
+    cy.get('[data-cy="searchResults"]')
+      .findAllByRole('link', { name: 'Søknad om førerhund (papir) NAV 10-07.50' })
+      .click();
 
     // Check that the URL contain the form
     cy.url().should('include', '/form2');
