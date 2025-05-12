@@ -9,15 +9,15 @@ describe('formDetail', () => {
   describe('invalid form path', () => {
     it('should reject invalid form path containing dashes', () => {
       cy.visit('/invalid-form-path?sub=digital', { failOnStatusCode: false });
-      cy.findByText('Beklager, vi fant ikke siden');
+      cy.findByRole('heading', { name: 'Beklager, vi fant ikke siden' }).should('exist');
     });
     it('should reject invalid form path containing filename', () => {
       cy.visit('/index.php?sub=digital', { failOnStatusCode: false });
-      cy.findByText('Beklager, vi fant ikke siden');
+      cy.findByRole('heading', { name: 'Beklager, vi fant ikke siden' }).should('exist');
     });
     it('should reject invalid form path with sql injections', () => {
       cy.visit('/ext0%22XOR(if(now()=sysdate(),sleep(15),0))XOR%22Z?sub=digital', { failOnStatusCode: false });
-      cy.findByText('Beklager, vi fant ikke siden');
+      cy.findByRole('heading', { name: 'Beklager, vi fant ikke siden' }).should('exist');
     });
   });
 
