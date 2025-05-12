@@ -15,6 +15,7 @@ import {
 } from 'src/utils/submissionUtil';
 import { InternalServerError } from '../../components/error/InternalServerError';
 import { Paths } from '../../data/paths';
+import { isValidFormPath } from '../../utils/formDataUtil';
 
 interface Props {
   form: Form;
@@ -31,8 +32,14 @@ const IndexPage: NextPage<Props> = (props) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // Set cache control header
   const { res, query } = context;
+  const id = context.params?.id as string;
+  if (id && !isValidFormPath(id)) {
+    logger.debug(`Invalid id parameter: '${id}'`);
+    return { notFound: true };
+  }
+
+  // Set cache control header
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
 
   // Attempt to verify the token and redirect to login if necessary
@@ -48,7 +55,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   // Fetch the form
-  const id = context.params?.id as string;
   const { locale } = context;
   const isDigitalQuerySub = query.sub === QuerySubmissionType.digital;
   const isPaperQuerySub = query.sub === QuerySubmissionType.paper;

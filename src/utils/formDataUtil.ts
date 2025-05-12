@@ -8,4 +8,8 @@ const getFileName = (formData: FormData) => {
   return `${formData.formNumber || 'Innsendelse'}.pdf`;
 };
 
-export { getFileName, hasOtherAttachment };
+const isValidFormPath = (formPath: string) => {
+  return /^[a-z0-9]+$/.test(formPath);
+};
+
+export { getFileName, hasOtherAttachment, isValidFormPath };

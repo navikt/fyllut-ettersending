@@ -104,7 +104,7 @@ module.exports = [
   },
   {
     id: 'get-digital-only',
-    url: '/fyllut/api/forms/digital-only',
+    url: '/fyllut/api/forms/digitalonly',
     method: 'GET',
     variants: [
       {
@@ -127,7 +127,7 @@ module.exports = [
   },
   {
     id: 'get-paper-only',
-    url: '/fyllut/api/forms/paper-only',
+    url: '/fyllut/api/forms/paperonly',
     method: 'GET',
     variants: [
       {
@@ -142,7 +142,7 @@ module.exports = [
   },
   {
     id: 'get-no-attachments-allowed',
-    url: '/fyllut/api/forms/no-attachments-allowed',
+    url: '/fyllut/api/forms/noattachmentsallowed',
     method: 'GET',
     variants: [
       {

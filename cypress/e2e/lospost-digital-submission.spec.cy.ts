@@ -83,11 +83,11 @@ describe('Løspost - Digital submission', () => {
       });
 
       it('unknown tema in query param is ignored and removed from url', () => {
-        cy.visit('/lospost/digital?tema=INVALID');
+        cy.visit('/lospost/digital?tema=ABC');
         cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav' }).should('be.visible');
         cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).should('exist');
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
-        cy.url().should('not.contain', 'tema=INVALID');
+        cy.url().should('not.contain', 'tema=ABC');
       });
 
       it('illegal tema PER in query param is ignored and removed from url', () => {
@@ -191,21 +191,33 @@ describe('Løspost - Digital submission', () => {
     beforeEach(() => {
       cy.mocksUseRouteVariant('post-lospost:success');
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
-        expect(req.body.soknadTittel).to.equal('Sykepenger - Bestridelse - Legedokument');
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Sykmelding del D - Legedokument');
         expect(req.body.tema).to.equal('SYK');
       }).as('opprettLospost');
     });
 
     it('title is prefixed with value from query param', () => {
-      cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse');
+      cy.visit('/lospost/digital?tema=SYK&gjelder=Sykmelding%20del%20D');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type('Legedokument');
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.url().should('contain', '?tema=SYK&gjelder=Bestridelse');
+      cy.url().should('contain', '?tema=SYK&gjelder=Sykmelding%20del%20D');
       cy.findByRole('button', { name: TestButtonText.next }).click();
       cy.wait('@opprettLospost');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+
+    it('rejects invalid value for param "gjelder"', () => {
+      cy.request({ url: '/lospost/digital?tema=SYK&gjelder=(Select * from users)', failOnStatusCode: false })
+        .its('status')
+        .should('equal', 400);
+    });
+
+    it('rejects invalid value for param "tema"', () => {
+      cy.request({ url: '/lospost/digital?tema=GRRR&gjelder=Økologi', failOnStatusCode: false })
+        .its('status')
+        .should('equal', 400);
     });
   });
 
