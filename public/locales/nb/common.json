@@ -55,6 +55,6 @@
     "report-error": "Meld inn feil på denne lenken",
     "attachment-not-allowed": "Det er ikke mulig å ettersende vedlegg til dette skjemaet. Hvis du har klikket på en lenke som førte deg hit, setter vi pris på om du melder fra om hvilken lenke du klikket på.",
     "digital-only": "Det er bare mulig å <FormUrl>ettersende digitalt</FormUrl> til dette skjemaet. Du blir bedt om å logge inn.",
-    "paper-only": "Det er bare mulig å ettersende vedlegg til dette skjemaet i posten."
+    "paper-only": "Det er bare mulig å <FormUrl>ettersende vedlegg</FormUrl> til dette skjemaet i posten."
   }
 }

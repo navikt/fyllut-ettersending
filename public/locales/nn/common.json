@@ -55,6 +55,6 @@
     "report-error": "Meld inn feil på denne lenka",
     "attachment-not-allowed": "Det er ikkje mogleg å sende inn vedlegg til dette skjemaet. Om du klikka på ein lenke som førte deg hit, set vi pris på om du melder frå om kva lenke du klikka på.",
     "digital-only": "Det er berre mogleg å <FormUrl>sende inn digitalt</FormUrl> til dette skjemaet. Du vil bli bedt om å logge inn.",
-    "paper-only": "Det er berre mogleg å sende inn vedlegg til dette skjemaet i posten."
+    "paper-only": "Det er berre mogleg å <FormUrl>sende inn vedlegg</FormUrl> til dette skjemaet i posten."
   }
 }
