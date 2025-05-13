@@ -46,6 +46,7 @@ const Details: NextPage<Props> = (props) => {
   const locale = i18n.language;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const digitalFormPath = `${Paths.details(form.path)}?sub=digital`;
+  const paperFormPath = `${Paths.details(form.path)}?sub=paper`;
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -138,7 +139,14 @@ const Details: NextPage<Props> = (props) => {
       return (
         <Error locale={locale} heading={tCommon('error.default-heading')} showGoToFrontPage showReportBug>
           <>
-            <BodyShort spacing>{tCommon('error.paper-only')}</BodyShort>
+            <BodyShort spacing>
+              <Trans
+                i18nKey="error.paper-only"
+                components={{
+                  FormUrl: <Link href={paperFormPath}></Link>,
+                }}
+              />
+            </BodyShort>
             <BodyShort>{tCommon('error.url-feedback')}</BodyShort>
           </>
         </Error>

@@ -22,7 +22,7 @@
   {
     "_id": "3448f6beb99e7e00027f5a21",
     "title": "Ingen ettersending tillatt",
-    "path": "no-attachments-allowed",
+    "path": "noattachmentsallowed",
     "modified": "2022-06-02T13:32:13.338Z",
     "properties": {
       "skjemanummer": "2",
@@ -32,7 +32,7 @@
   {
     "_id": "6332d4a61c23e6dea56309e4",
     "title": "Kun papir",
-    "path": "paper-only",
+    "path": "paperonly",
     "modified": "2022-06-02T13:32:13.338Z",
     "properties": {
       "skjemanummer": "3",
@@ -42,7 +42,7 @@
   {
     "_id": "6332d4a61c23e6dea56309e8",
     "title": "Kun digital",
-    "path": "digital-only",
+    "path": "digitalonly",
     "modified": "2022-06-02T13:32:13.338Z",
     "properties": {
       "skjemanummer": "test1234",
