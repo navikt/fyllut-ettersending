@@ -14,6 +14,10 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: nodejs
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
   liveness:
     path: "/fyllut-ettersending/api/internal/isalive"
     port: 3002
