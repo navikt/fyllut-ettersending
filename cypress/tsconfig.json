@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["dom"],
+    "lib": ["es6", "dom"],
     "types": ["cypress", "@testing-library/cypress", "node"],
     "allowJs": false,
     "strict": true,
     "jsx": "preserve",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
 
