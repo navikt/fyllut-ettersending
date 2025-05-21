@@ -78,6 +78,21 @@ describe('validator', () => {
         expect(errors?.otherDocumentationTitle).to.eq('otherDocumentation');
         expect(errors?.subjectOfSubmission).to.eq('subjectOfSubmission');
       });
+
+      it('allows valid characters in otherDocumentationTitle', () => {
+        formData.userData!.type = UserType.other;
+        formData.otherDocumentationTitle =
+          'abcdefghijklmnopqrstuvwxyzæøåäöëüïñõ ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅÄÖËÜÏ 1234567890 ./;()":,–_\'?&+’%#•@»«§';
+        const errors = validateFormData(formData, tMock);
+        expect(errors?.otherDocumentationTitle).to.eq(undefined);
+      });
+
+      it('does not allow invalid characters in otherDocumentationTitle', () => {
+        formData.userData!.type = UserType.other;
+        formData.otherDocumentationTitle = 'invalid title <script>';
+        const errors = validateFormData(formData, tMock);
+        expect(errors?.otherDocumentationTitle).to.eq('otherDocumentationInvalid');
+      });
     });
   });
 

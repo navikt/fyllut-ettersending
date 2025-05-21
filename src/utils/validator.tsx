@@ -10,7 +10,7 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
   // p{L} matches any kind of letter from any language
   // p{N} matches any kind of numeric character in any script
   // p{Zs} matches a whitespace character that is invisible, but does take up space
-  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]+$/gu;
+  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
   return validCharactersRegex.test(str);
 };
 
