@@ -3,6 +3,17 @@ import { TFunction } from 'next-i18next';
 import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data';
 import { hasOtherAttachment } from './formDataUtil';
 
+const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
+  // Regex is from "foerstesidegenerator" and checks that a string only contains characters that are defined as valid.
+  // https://github.com/navikt/foerstesidegenerator/blob/20170afdb8e8efbfa7ced1940290ff40cdc7bb95/app/src/main/java/no/nav/foerstesidegenerator/service/support/PostFoerstesideRequestValidator.java#L42C70-L42C124
+  // The flag /u enables full Unicode support. Allows us to match based on Unicode properties such as:
+  // p{L} matches any kind of letter from any language
+  // p{N} matches any kind of numeric character in any script
+  // p{Zs} matches a whitespace character that is invisible, but does take up space
+  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
+  return validCharactersRegex.test(str);
+};
+
 const validateFormData = (formData: FormData, t: TFunction) => {
   const formErrors: KeyValue = {};
   if (formData.page === 'digital-lospost') {
@@ -26,6 +37,13 @@ const validateFormData = (formData: FormData, t: TFunction) => {
 
       if ((!formData.formId || hasOtherAttachment(formData)) && (formData.otherDocumentationTitle ?? '').length > 150) {
         formErrors.otherDocumentationTitle = t('otherDocumentationLength');
+      }
+
+      if (
+        (!formData.formId || hasOtherAttachment(formData)) &&
+        !containsOnlyCharactersValidInFoerstesideGenerator(formData.otherDocumentationTitle ?? '')
+      ) {
+        formErrors.otherDocumentationTitle = t('otherDocumentationInvalid');
       }
 
       if (!formData.formId && !formData.subjectOfSubmission) {

@@ -9,6 +9,8 @@
   "city": "You have to fill in city",
   "country": "You have to fill in country",
   "otherDocumentation": "You have to fill in what documentation you want to send to Nav",
+  "otherDocumentationLength": "The document title may at most have 150 characters",
+  "otherDocumentationInvalid": "The field contains invalid characters",
   "subjectOfSubmission": "You have to choose topic for the submission",
   "navUnitContact": "You have to state whether you have been in contact with Nav about this matter previously",
   "navUnitContactSelect": "You have to select which Nav unit you have been in contact with",

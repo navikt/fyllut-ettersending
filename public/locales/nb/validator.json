@@ -10,6 +10,7 @@
   "country": "Du må fylle ut land",
   "otherDocumentation": "Du må fylle ut hvilken dokumentasjon vil du sende til Nav",
   "otherDocumentationLength": "Hvilken dokumentasjon vil du sende til Nav kan maksimalt ha 150 tegn",
+  "otherDocumentationInvalid": "Feltet inneholder ugyldige tegn",
   "subjectOfSubmission": "Du må velge tema for innsendingen",
   "navUnitContact": "Du må oppgi om du har vært i kontakt med Nav om denne saken tidligere",
   "navUnitContactSelect": "Du må velge hvilken Nav-enhet har du vært i kontakt med",
