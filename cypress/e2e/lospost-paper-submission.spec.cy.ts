@@ -507,7 +507,7 @@ describe('Løspost - Paper submission', () => {
       cy.findByRole('group', { name: 'Hvem gjelder innsendingen for?' })
         .should('exist')
         .within(() => {
-          cy.findByRole('radio', { name: 'Jeg har fødselsnummer eller d-nummer' }).should('exist').click();
+          cy.findByRole('radio', { name: 'Personen har fødselsnummer eller d-nummer' }).should('exist').click();
         });
 
       cy.findByRole('textbox', { name: 'Fødselsnummer / d-nummer' }).should('exist').type('28880948417');

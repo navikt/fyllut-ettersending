@@ -16,8 +16,8 @@
   "choose-user": {
     "user-type": {
       "legend": "Hvem gjelder innsendingen for?",
-      "choice-has-ssn": "Jeg har fødselsnummer eller d-nummer",
-      "choice-no-ssn": "Jeg har ikke fødselsnummer eller d-nummer",
+      "choice-has-ssn": "Personen har fødselsnummer eller d-nummer",
+      "choice-no-ssn": "Personen har ikke fødselsnummer eller d-nummer",
       "choice-other": "Flere personer samtidig eller tiltaksbedrifter, kursarrangører og andre virksomheter"
     },
     "ssn-input": {
