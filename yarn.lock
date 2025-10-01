@@ -411,33 +411,33 @@
     "@mocks-server/admin-api-client" "7.0.0"
     "@mocks-server/admin-api-paths" "5.0.0"
 
-"@navikt/aksel-icons@^7.29.1":
-  version "7.29.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.29.1/dd3a4014c46263847d74a531a9b4cf2850bbe018#dd3a4014c46263847d74a531a9b4cf2850bbe018"
-  integrity sha512-ERX4lUCYcPDQN3UT1051UY8bDb6vBwAePMSDuRO5bLnTSSq8ZqNxPDtSxaihp35DeqZi08j7AJQXGGpn0exd9g==
+"@navikt/aksel-icons@^7.29.1", "@navikt/aksel-icons@^7.31.0":
+  version "7.31.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.31.0/5d0ea15a5f0ba53bf9e0c38a0b45612235d6b332#5d0ea15a5f0ba53bf9e0c38a0b45612235d6b332"
+  integrity sha512-6rtyFhDDBOkyG815trxe9pnaJrvSnwLEpkJ7qh0qZm1B8g59a4bf2IJGVtKDPg9thVOrxNtA/H9G4N6n0v9Kkg==
 
 "@navikt/ds-css@^7.31.0":
   version "7.31.0"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.31.0/78afbca44bf15ca55be50990b19693411994a579#78afbca44bf15ca55be50990b19693411994a579"
   integrity sha512-7wA5Goihfxai/IkTuDIErUSye+/X5UUP2ixT/blipkDbN1Ny6u7PaujYuuGzRR7Glez3suaB4+ATYMxAXLJziw==
 
-"@navikt/ds-react@^7.29.1":
-  version "7.29.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/7.29.1/f3036f7ca457f8a0dc01631aff5962ca53d4e023#f3036f7ca457f8a0dc01631aff5962ca53d4e023"
-  integrity sha512-GDTCBzoATjw/P/p/CXrknDkSCqNITppVIpKAuwwf7vEINPQJGiOWitx5uIe5r2DIoDq5wfzIXRWkGcIJLGGTJA==
+"@navikt/ds-react@^7.31.0":
+  version "7.31.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/7.31.0/6a2825dae4e35d7f11a63e4ecbd3c0808ef5e308#6a2825dae4e35d7f11a63e4ecbd3c0808ef5e308"
+  integrity sha512-soQmDwnTMYoFTsJggDgYKijtSQe0VuHNbksGRrjgb2+F1HZ2zwjDP/mLzg73Mwr3kkrz4nkwS9NTGhoHO+dt3w==
   dependencies:
     "@floating-ui/react" "0.27.8"
     "@floating-ui/react-dom" "^2.0.9"
-    "@navikt/aksel-icons" "^7.29.1"
-    "@navikt/ds-tokens" "^7.29.1"
+    "@navikt/aksel-icons" "^7.31.0"
+    "@navikt/ds-tokens" "^7.31.0"
     clsx "^2.1.0"
     date-fns "^4.0.0"
     react-day-picker "9.7.0"
 
-"@navikt/ds-tokens@^7.29.1":
-  version "7.29.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/7.29.1/7e294b5a3d8670cdb8590b8af75b8d9e6b170e68#7e294b5a3d8670cdb8590b8af75b8d9e6b170e68"
-  integrity sha512-bgZE6i9YiPC86NtmkFuzlXEhrhgmL1cDCiy3TKZ7H9OiF93KYAPSxK+tGRmpFkf8LxXx5QXK3LYAfK8RmRDxFg==
+"@navikt/ds-tokens@^7.31.0":
+  version "7.31.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/7.31.0/c8ff6b4d9a463ddab2a357fd4dee135c26693322#c8ff6b4d9a463ddab2a357fd4dee135c26693322"
+  integrity sha512-cW7be0OyW9FIcIrgagIO0/YZoc3774iCqq9VYvx9cyIYT3CK6kSziCEyT/Kro3wEzyW+nJokTORgyx28zk3y9A==
 
 "@navikt/fnrvalidator@^2.1.5":
   version "2.1.5"
