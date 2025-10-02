@@ -5,6 +5,7 @@ const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 const js = require('@eslint/js');
 
 const { FlatCompat } = require('@eslint/eslintrc');
+const pluginCypress = require('eslint-plugin-cypress');
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -15,13 +16,15 @@ const compat = new FlatCompat({
 module.exports = defineConfig([
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-    extends: compat.extends(
-      'eslint:recommended',
-      'plugin:@typescript-eslint/recommended',
-      'plugin:cypress/recommended',
-      'prettier',
-      'next/core-web-vitals',
-    ),
+    extends: [
+      ...compat.extends(
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'next/core-web-vitals',
+      ),
+      pluginCypress.configs.recommended,
+    ],
 
     languageOptions: {
       parser: tsParser,
