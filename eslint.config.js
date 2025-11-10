@@ -52,5 +52,5 @@ module.exports = defineConfig([
       '@typescript-eslint/no-require-imports': 'off',
     },
   },
-  globalIgnores(['**/**.config.js', '**/.next/**', '**/node_modules/**']),
+  globalIgnores(['**/**.config.js', '**/.next/**', '**/node_modules/**', 'next-env.d.ts']),
 ]);
