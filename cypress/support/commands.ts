@@ -10,7 +10,15 @@
 // ***********************************************
 //
 import '@testing-library/cypress/add-commands';
-//
+
+Cypress.Commands.add('closeConsentBanner', () => {
+  return cy
+    .findByRole('region', { name: /Får vi bruke valgfrie informasjon­skapsler|Can we use optional cookies/ })
+    .within(() => {
+      cy.findByRole('button', { name: /Ja|Yes/ }).click();
+    });
+});
+
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 //
