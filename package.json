@@ -20,7 +20,7 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "@navikt/aksel-icons": "^7.29.1",
+    "@navikt/aksel-icons": "^7.33.2",
     "@navikt/ds-css": "^7.31.0",
     "@navikt/ds-react": "^7.31.0",
     "@navikt/fnrvalidator": "^2.1.5",
