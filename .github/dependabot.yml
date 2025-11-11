@@ -19,7 +19,14 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
-      navikt-aksel:
+      navikt-aksel-minor-patch:
+        patterns:
+          - '@navikt/ds-*'
+          - '@navikt/aksel-icons'
+        update-types:
+          - 'minor'
+          - 'patch'
+      navikt-aksel-major:
         patterns:
           - '@navikt/ds-*'
           - '@navikt/aksel-icons'
@@ -28,6 +35,34 @@ updates:
       typescript-eslint:
         patterns: 
           - '@typescript-eslint/*'
+        update-types:
+          - 'major'
+      react-and-next-minor-patch:
+        patterns:
+          - 'react*'
+          - 'next*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      react-and-next-major:
+        patterns:
+          - 'react*'
+          - 'next*'
+        update-types:
+          - 'major'
+      eslint-typescript-cypress-minor-patch:
+        patterns:
+          - '*eslint*'
+          - '*typescript*'
+          - '*cypress*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      eslint-typescript-cypress-major:
+        patterns:
+          - '*eslint*'
+          - '*typescript*'
+          - '*cypress*'
         update-types:
           - 'major'
 
