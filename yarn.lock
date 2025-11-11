@@ -442,10 +442,10 @@
   resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.31.0/5d0ea15a5f0ba53bf9e0c38a0b45612235d6b332#5d0ea15a5f0ba53bf9e0c38a0b45612235d6b332"
   integrity sha512-6rtyFhDDBOkyG815trxe9pnaJrvSnwLEpkJ7qh0qZm1B8g59a4bf2IJGVtKDPg9thVOrxNtA/H9G4N6n0v9Kkg==
 
-"@navikt/ds-css@^7.31.0":
-  version "7.31.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.31.0/78afbca44bf15ca55be50990b19693411994a579#78afbca44bf15ca55be50990b19693411994a579"
-  integrity sha512-7wA5Goihfxai/IkTuDIErUSye+/X5UUP2ixT/blipkDbN1Ny6u7PaujYuuGzRR7Glez3suaB4+ATYMxAXLJziw==
+"@navikt/ds-css@^7.33.2":
+  version "7.33.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.33.2/479e17163cea5c114de01a6b6801b321b8e94207#479e17163cea5c114de01a6b6801b321b8e94207"
+  integrity sha512-isd/GMpXLLrfEl1fLXVZmwxCQUa+tb7qY8V4zt+OqKVXxb9RkNvYONEAVmR7pFTklhPYafU4sJDt6mPfWBrhZw==
 
 "@navikt/ds-react@^7.31.0":
   version "7.31.0"
