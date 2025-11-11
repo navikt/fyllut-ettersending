@@ -33,6 +33,7 @@ describe('Løspost - Paper submission', () => {
     beforeEach(() => {
       cy.visit('/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
     });
 
     it('should be able to fill out the form and go to next page (noSocialNumber)', () => {
@@ -151,6 +152,7 @@ describe('Løspost - Paper submission', () => {
         );
         req.reply('mock-pdf');
       }).as('downloadForsteside');
+      cy.closeConsentBanner();
     });
 
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
@@ -180,6 +182,7 @@ describe('Løspost - Paper submission', () => {
         expect(req.body.title).to.equal('Innsendingen gjelder: Tiltak - Tiltak for noe');
         req.reply('mock-pdf');
       }).as('downloadForsteside');
+      cy.closeConsentBanner();
     });
 
     it('should hide radio buttons, use subject from query param and be able to fill out and go to next page', () => {
@@ -216,6 +219,7 @@ describe('Løspost - Paper submission', () => {
         expect(req.body.title).to.equal('Innsendingen gjelder: Tiltak - Tiltak for noe');
         req.reply('mock-pdf');
       }).as('downloadForsteside');
+      cy.closeConsentBanner();
     });
 
     it('should hide radio buttons and be able to fill out and go to next page', () => {
@@ -241,7 +245,7 @@ describe('Løspost - Paper submission', () => {
     });
   });
 
-  describe.only("query param unknown 'tema'", () => {
+  describe("query param unknown 'tema'", () => {
     beforeEach(() => {
       cy.visit('/lospost/paper?tema=ABC');
       cy.wait('@getNavUnits');
@@ -251,6 +255,7 @@ describe('Løspost - Paper submission', () => {
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
         req.reply('mock-pdf');
       }).as('downloadForsteside');
+      cy.closeConsentBanner();
     });
 
     it('should show combobox for subject and be able to fill out and go to next page', () => {
@@ -278,6 +283,7 @@ describe('Løspost - Paper submission', () => {
         expect(req.body.title).to.equal('Innsendingen gjelder: Sykepenger - Bestridelse - Min dokumentasjon');
         req.reply('mock-pdf');
       }).as('downloadForsteside');
+      cy.closeConsentBanner();
     });
 
     it('should include predefined text in title', () => {
@@ -323,6 +329,7 @@ describe('Løspost - Paper submission', () => {
     it('should use bokmål tema description', () => {
       cy.visit('/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
 
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
@@ -352,6 +359,7 @@ describe('Løspost - Paper submission', () => {
     it('should use nynorsk tema description', () => {
       cy.visit('/nn/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
 
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
@@ -381,6 +389,7 @@ describe('Løspost - Paper submission', () => {
     it('should use english tema description', () => {
       cy.visit('/en/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
 
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
@@ -410,6 +419,7 @@ describe('Løspost - Paper submission', () => {
     it('should support switching language and use correct tema description', () => {
       cy.visit('/en/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
 
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_SYK.subject);
@@ -444,6 +454,7 @@ describe('Løspost - Paper submission', () => {
     beforeEach(() => {
       cy.visit('/lospost/paper');
       cy.wait('@getNavUnits');
+      cy.closeConsentBanner();
     });
 
     it('sends the required data for generating front page', () => {
@@ -499,6 +510,7 @@ describe('Løspost - Paper submission', () => {
 
     it('should navigate back from download-page and keep input data', () => {
       cy.visit('/lospost/paper?tema=BIL');
+      cy.closeConsentBanner();
 
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')

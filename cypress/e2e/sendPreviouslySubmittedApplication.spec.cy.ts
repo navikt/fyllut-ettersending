@@ -27,6 +27,7 @@ describe('downloading forsteside pdf', () => {
   });
   it('should fill out fields and download pdf with correct information', () => {
     cy.visit('/form2');
+    cy.closeConsentBanner();
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendPaper).click();
     cy.url().should('include', '?sub=paper');
@@ -74,6 +75,7 @@ describe('sendPreviouslySubmittedApplication', () => {
   });
   it('fill out and send documentation by mail, should redirect to subType-page', () => {
     cy.visit('/form2');
+    cy.closeConsentBanner();
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendPaper).click();
     cy.url().should('include', '?sub=paper');
@@ -93,6 +95,7 @@ describe('sendPreviouslySubmittedApplication', () => {
 
   it('fill out and send documentation digitally, should redirect to subType-page', () => {
     cy.visit('/form2');
+    cy.closeConsentBanner();
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendDigital).click();
     cy.url().should('include', '?sub=digital');
@@ -106,6 +109,7 @@ describe('sendPreviouslySubmittedApplication', () => {
   // Don't fill out userType because hideUserTypes is true
   it('fill out + submit, should not redirect to subType-page', () => {
     cy.visit('/form3');
+    cy.closeConsentBanner();
     cy.get('[type="checkbox"]').first().check();
     cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
     cy.get('button').contains(TestButtonText.next).click();
