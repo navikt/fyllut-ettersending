@@ -1,8 +1,8 @@
 {
   "title": "Send documentation to Nav",
   "heading": "How would you like to send the documentation?",
-  "digital-title": "Submit online",
-  "digital-description": "Submitting online is faster and easier. You will be asked to log in.",
+  "digital-title": "Log in and submit digitally",
+  "digital-description": "It is easiest and fastest to upload digitally.",
   "paper-title": "Send by post",
   "paper-description": "You must download a cover sheet which you will send along with the documents."
 }

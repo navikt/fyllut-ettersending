@@ -11,19 +11,34 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--a-spacing-7);
+  gap: var(--a-spacing-3);
 }
 
-.linkList :global(.navds-link-panel) {
-  border-color: var(--a-border-subtle);
-  border-radius: var(--a-border-radius-medium);
+.linkCard {
+  border: '1px solid var(--a-border-subtle)',
+}
+
+.linkCard svg {
+  color: var(--a-surface-action);
+}
+
+.linkCard:hover {
   background-color: var(--a-surface-action-subtle);
+  border-color: var(--a-surface-action-subtle);
 }
 
-.linkList :global(.navds-link-panel__title) {
-  font-size: var(--a-font-size-heading-small);
+.linkCard:hover .linkCardTitle a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .15625rem;
 }
 
-.linkList :global(.navds-link-panel__description) {
-  font-size: var(--a-font-size-medium);
+.linkCardTitle {
+  color: var(--a-surface-action); 
+  font-size: var(--a-font-size-18);
+  font-weight: 400;
+}
+
+.linkCardTitle a {
+  text-decoration: none;
 }
