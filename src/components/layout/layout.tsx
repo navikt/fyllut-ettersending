@@ -1,5 +1,4 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
-import '@navikt/ds-css';
 import { Heading, HStack, Link as NavLink } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
