@@ -2,25 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: var(--a-spacing-4) 0 0 0;
 }
 
 .header {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
   background-color: #ffffff;
 }
 
-.hr {
-  height: 4px;
-  width: 100%;
-  background-color: #99c4dd;
-  margin: 0;
-  border: 0;
+.headerActions {
+  flex-direction: row-reverse;
+  padding-bottom: 1.5rem;
 }
 
 .content {
   background-color: #ffffff;
-  max-width: 840px;
+  max-width: 640px;
   width: 100%;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -38,21 +35,9 @@
   flex-direction: column;
   max-width: 640px;
   width: 100%;
-  margin-right: 4rem;
-}
-
-.sideColumn {
-  flex-direction: column;
-  max-width: 200px;
-  width: 100%;
-}
-
-.children {
-  margin-top: 1.75rem;
 }
 
 a.backLink {
-  margin-top: 2.75rem;
   text-decoration: none;
   font-weight: bold;
 }

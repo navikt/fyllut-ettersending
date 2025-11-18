@@ -1,4 +1,3 @@
-import '@navikt/ds-css';
 import { Loader } from '@navikt/ds-react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';

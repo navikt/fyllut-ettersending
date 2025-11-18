@@ -1,5 +1,4 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
-import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { GetServerSidePropsContext } from 'next/types';

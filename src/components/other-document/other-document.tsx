@@ -1,4 +1,3 @@
-import '@navikt/ds-css';
 import { Ingress } from '@navikt/ds-react';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';

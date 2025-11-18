@@ -20,7 +20,7 @@ enum TestButtonTextEn {
 }
 
 enum TestLinkText {
-  sendDigital = 'Send digitalt',
+  sendDigital = 'Logg inn og send digitalt',
   sendPaper = 'Send i posten',
 }
 
