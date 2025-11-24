@@ -1,4 +1,4 @@
-import { Heading, LinkPanel } from '@navikt/ds-react';
+import { Heading, LinkCard, VStack } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import NextLink from 'next/link';
 import { LanguageCode } from 'src/data';
@@ -20,16 +20,25 @@ const ChooseSubmissionType = ({ pathDigital, pathPaper, languages }: Props) => {
         {t('heading')}
       </Heading>
 
-      <div className={styles.linkList}>
-        <LinkPanel as={NextLink} border href={pathDigital} rel="noreferrer">
-          <LinkPanel.Title>{t('digital-title')}</LinkPanel.Title>
-          <LinkPanel.Description>{t('digital-description')}</LinkPanel.Description>
-        </LinkPanel>
-        <LinkPanel as={NextLink} border href={pathPaper} rel="noreferrer">
-          <LinkPanel.Title>{t('paper-title')}</LinkPanel.Title>
-          <LinkPanel.Description>{t('paper-description')}</LinkPanel.Description>
-        </LinkPanel>
-      </div>
+      <VStack gap="space-12" paddingBlock="space-12">
+        <LinkCard data-color="accent">
+          <LinkCard.Title as="h3">
+            <LinkCard.Anchor asChild>
+              <NextLink href={pathDigital}>{t('digital-title')}</NextLink>
+            </LinkCard.Anchor>
+          </LinkCard.Title>
+          <LinkCard.Description>{t('digital-description')}</LinkCard.Description>
+        </LinkCard>
+
+        <LinkCard data-color="accent">
+          <LinkCard.Title as="h3">
+            <LinkCard.Anchor asChild>
+              <NextLink href={pathPaper}>{t('paper-title')}</NextLink>
+            </LinkCard.Anchor>
+          </LinkCard.Title>
+          <LinkCard.Description>{t('paper-description')}</LinkCard.Description>
+        </LinkCard>
+      </VStack>
     </Layout>
   );
 };

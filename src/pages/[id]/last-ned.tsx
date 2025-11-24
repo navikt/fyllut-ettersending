@@ -1,5 +1,4 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
-import '@navikt/ds-css';
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';

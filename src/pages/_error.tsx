@@ -1,4 +1,3 @@
-import '@navikt/ds-css';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { InternalServerError } from '../components/error/InternalServerError';

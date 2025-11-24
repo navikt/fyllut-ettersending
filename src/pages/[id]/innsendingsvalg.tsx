@@ -1,4 +1,3 @@
-import '@navikt/ds-css';
 import type { NextPage } from 'next';
 import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
