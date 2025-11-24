@@ -85,9 +85,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
             {formData.attachments.map((attachment) => {
               const title = attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label;
               const shouldRenderLink = !attachment.otherDocumentation && attachment.attachmentForm;
-              const formUrl = attachment.attachmentForm
-                ? `/fyllut-ettersending/${attachment.attachmentForm}?sub=paper`
-                : undefined;
+              const formUrl = attachment.attachmentForm ? Paths.attachmentForm(attachment.attachmentForm) : undefined;
 
               return (
                 <li key={attachment.key}>
