@@ -115,4 +115,22 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
   });
+
+  it('should render attachment links when attachmentForm field exists', () => {
+    cy.visit('/form1');
+    cy.closeConsentBanner();
+    cy.url().should('include', 'innsendingsvalg');
+    cy.get('a').contains(TestLinkText.sendPaper).click();
+    cy.get('[type="checkbox"]').first().check();
+    cy.get('[type="radio"]').check('hasSocialNumber');
+    cy.get('[name="socialSecurityNo"]').type('28119135003');
+    cy.get('button').contains(TestButtonText.next).click();
+    cy.url().should('include', '/last-ned');
+
+    // Verify attachments with attachmentForm render as links
+    cy.get('a[href="/fyllut-ettersending/nav100754?sub=paper"]')
+      .should('exist')
+      .contains('Veldig gammel dokumentasjon');
+    cy.get('a[href="/fyllut-ettersending/nav100753?sub=paper"]').should('exist').contains('Test dokumentasjon');
+  });
 });
