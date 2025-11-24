@@ -52,8 +52,6 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
     }
   };
 
-  console.log(formData);
-
   return (
     <Layout
       title={t(`title.${submissionType}`)}

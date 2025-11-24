@@ -8,7 +8,6 @@ export interface Attachment {
   attachmentTitle: string;
   attachmentCode: string;
   attachmentForm?: string;
-  skjemaurl?: string;
 }
 
 export interface ApplicationAttachment {
