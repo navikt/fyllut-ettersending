@@ -49,11 +49,7 @@ const Layout = ({ title, hideTitle, children, backUrl, showBackLink = true, publ
           )}
           {backLink()}
         </HStack>
-        {!hideTitle && (
-          <>
-            <Heading size="xlarge">{title ?? t('heading.default-title')}</Heading>
-          </>
-        )}
+        {!hideTitle && <Heading size="xlarge">{title ?? t('heading.default-title')}</Heading>}
       </header>
 
       <div className={classNames(styles.content, styles.mainContent)}>
