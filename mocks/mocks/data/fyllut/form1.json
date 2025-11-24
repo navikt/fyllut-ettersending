@@ -16,7 +16,8 @@
       "key": "test1",
       "description": "Test doc",
       "attachmentTitle": "Something",
-      "attachmentCode": "A1"
+      "attachmentCode": "A1",
+      "attachmentForm": "nav100754"
     },
     {
       "label": "Annen dokumentasjon",
@@ -31,7 +32,8 @@
       "key": "test2",
       "description": "Test doc",
       "attachmentTitle": "Something",
-      "attachmentCode": "A1"
+      "attachmentCode": "A1",
+      "attachmentForm": "nav100753"
     },
     {
       "label": "Spennende dokumentasjon",
