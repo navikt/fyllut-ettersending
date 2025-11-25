@@ -121,7 +121,8 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.closeConsentBanner();
     cy.url().should('include', 'innsendingsvalg');
     cy.get('a').contains(TestLinkText.sendPaper).click();
-    cy.get('[type="checkbox"]').first().check();
+    cy.findByRole('checkbox', { name: 'Veldig gammel dokumentasjon' }).check();
+    cy.findByRole('checkbox', { name: 'Test dokumentasjon' }).check();
     cy.get('[type="radio"]').check('hasSocialNumber');
     cy.get('[name="socialSecurityNo"]').type('28119135003');
     cy.get('button').contains(TestButtonText.next).click();
