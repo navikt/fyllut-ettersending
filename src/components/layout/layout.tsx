@@ -1,6 +1,5 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
-import '@navikt/ds-css';
-import { Heading, Link as NavLink } from '@navikt/ds-react';
+import { Heading, HStack, Link as NavLink } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
@@ -41,27 +40,21 @@ const Layout = ({ title, hideTitle, children, backUrl, showBackLink = true, publ
         <title>{title ?? t('heading.default-title')}</title>
       </Head>
 
-      {!hideTitle && (
-        <>
-          <header className={classNames(styles.header, styles.content)}>
-            <Heading size="xlarge">{title ?? t('heading.default-title')}</Heading>
-          </header>
-
-          <hr className={styles.hr} />
-        </>
-      )}
-
-      <div className={classNames(styles.content, styles.mainContent)}>
-        <div className={styles.mainColumn}>
-          {backLink()}
-          <div className={styles.children}>{children}</div>
-        </div>
-        <div className={styles.sideColumn}>
+      <header className={classNames(styles.header, styles.content)}>
+        <HStack className={classNames(styles.headerActions)} justify="space-between">
           {(!publishedLanguages || publishedLanguages.length > 1) && (
             <div className={styles.children}>
               <LanguageSelect publishedLanguages={publishedLanguages} />
             </div>
           )}
+          {backLink()}
+        </HStack>
+        {!hideTitle && <Heading size="xlarge">{title ?? t('heading.default-title')}</Heading>}
+      </header>
+
+      <div className={classNames(styles.content, styles.mainContent)}>
+        <div className={styles.mainColumn}>
+          <div className={styles.children}>{children}</div>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 {
   "title": "Send dokument til Nav",
   "heading": "Korleis vil du senda dokumenta?",
-  "digital-title": "Send digitalt",
-  "digital-description": "Det er enklast og raskast å lasta opp digitalt. Du blir beden om å logga inn.",
+  "digital-title": "Logg inn og send digitalt",
+  "digital-description": "Det er enklast og raskast å lasta opp digitalt.",
   "paper-title": "Send i posten",
   "paper-description": "Du må lasta ned ei førsteside som du skal senda saman med dokumenta."
 }
