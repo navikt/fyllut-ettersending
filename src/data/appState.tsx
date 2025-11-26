@@ -56,6 +56,7 @@ export function FormDataProvider({ children, page, documentationTitlePrefix }: P
         ...attachment,
         attachmentTitle: formAttachment?.attachmentTitle || '',
         label: formAttachment?.label || '',
+        attachmentForm: formAttachment?.attachmentForm || attachment.attachmentForm,
       };
     });
     const data = {

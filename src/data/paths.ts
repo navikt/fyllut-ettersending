@@ -5,6 +5,7 @@ const Paths = {
   otherDocumentation: '/lospost',
   formDocumentation: '/ettersendelse',
   submissionType: (id: string) => `/${id}/innsendingsvalg`,
+  attachmentForm: (formId: string) => `/fyllut-ettersending/${formId}?sub=paper`,
   navFrontPage: (locale: string) => (locale === 'en' ? 'https://nav.no/en' : 'https://nav.no'),
   navMyPage: (locale: string) => (locale === 'en' ? 'https://nav.no/minside/en' : 'https://nav.no/minside'),
   navContactUsPage: (locale: string) =>

@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
-import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
+import '@navikt/ds-css';
+import { Alert, BodyShort, Button, Heading, Link as NavLink } from '@navikt/ds-react';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
@@ -81,11 +82,25 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
             {t(`section-attachments.title.${formData.attachments.length > 1 ? 'plural' : 'single'}`)}
           </Heading>
           <ul>
-            {formData.attachments.map((attachment) => (
-              <li key={attachment.key}>
-                {attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label}
-              </li>
-            ))}
+            {formData.attachments.map((attachment) => {
+              const title = attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label;
+              const formUrl =
+                !attachment.otherDocumentation && attachment.attachmentForm
+                  ? Paths.attachmentForm(attachment.attachmentForm)
+                  : undefined;
+
+              return (
+                <li key={attachment.key}>
+                  {formUrl ? (
+                    <NavLink target="_blank" rel="noopener noreferrer" href={formUrl}>
+                      {title}
+                    </NavLink>
+                  ) : (
+                    title
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </Section>
       )}

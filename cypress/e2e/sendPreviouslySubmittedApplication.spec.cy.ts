@@ -115,4 +115,23 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
   });
+
+  it('should render attachment links when attachmentForm field exists', () => {
+    cy.visit('/form1');
+    cy.closeConsentBanner();
+    cy.url().should('include', 'innsendingsvalg');
+    cy.get('a').contains(TestLinkText.sendPaper).click();
+    cy.findByRole('checkbox', { name: 'Veldig gammel dokumentasjon' }).check();
+    cy.findByRole('checkbox', { name: 'Test dokumentasjon' }).check();
+    cy.get('[type="radio"]').check('hasSocialNumber');
+    cy.get('[name="socialSecurityNo"]').type('28119135003');
+    cy.get('button').contains(TestButtonText.next).click();
+    cy.url().should('include', '/last-ned');
+    [
+      { href: '/fyllut-ettersending/nav100754?sub=paper', label: 'Veldig gammel dokumentasjon' },
+      { href: '/fyllut-ettersending/nav100753?sub=paper', label: 'Test dokumentasjon' },
+    ].forEach(({ href, label }) => {
+      cy.get(`a[href="${href}"]`).should('exist').and('contain', label);
+    });
+  });
 });
