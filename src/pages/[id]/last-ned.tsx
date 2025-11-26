@@ -84,12 +84,14 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
           <ul>
             {formData.attachments.map((attachment) => {
               const title = attachment.otherDocumentation ? formData.otherDocumentationTitle : attachment.label;
-              const shouldRenderLink = !attachment.otherDocumentation && attachment.attachmentForm;
-              const formUrl = attachment.attachmentForm ? Paths.attachmentForm(attachment.attachmentForm) : undefined;
+              const formUrl =
+                !attachment.otherDocumentation && attachment.attachmentForm
+                  ? Paths.attachmentForm(attachment.attachmentForm)
+                  : undefined;
 
               return (
                 <li key={attachment.key}>
-                  {shouldRenderLink && formUrl ? (
+                  {formUrl ? (
                     <NavLink target="_blank" rel="noopener noreferrer" href={formUrl}>
                       {title}
                     </NavLink>

@@ -127,11 +127,11 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.get('[name="socialSecurityNo"]').type('28119135003');
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
-
-    // Verify attachments with attachmentForm render as links
-    cy.get('a[href="/fyllut-ettersending/nav100754?sub=paper"]')
-      .should('exist')
-      .contains('Veldig gammel dokumentasjon');
-    cy.get('a[href="/fyllut-ettersending/nav100753?sub=paper"]').should('exist').contains('Test dokumentasjon');
+    [
+      { href: '/fyllut-ettersending/nav100754?sub=paper', label: 'Veldig gammel dokumentasjon' },
+      { href: '/fyllut-ettersending/nav100753?sub=paper', label: 'Test dokumentasjon' },
+    ].forEach(({ href, label }) => {
+      cy.get(`a[href="${href}"]`).should('exist').and('contain', label);
+    });
   });
 });
