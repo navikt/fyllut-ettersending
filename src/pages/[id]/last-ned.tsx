@@ -92,7 +92,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
                 <li key={attachment.key}>
                   {formUrl ? (
                     <NavLink target="_blank" rel="noopener noreferrer" href={formUrl}>
-                      {title}
+                      {title} {tCommon('opensInNewTab')}
                     </NavLink>
                   ) : (
                     title
