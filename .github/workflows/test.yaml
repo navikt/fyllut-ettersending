@@ -20,7 +20,7 @@ jobs:
     name: 'Test'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -39,7 +39,7 @@ jobs:
       - name: 'Run mock server'
         run: yarn mocks:no-cli &
       - name: 'Cypress tests'
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           install: false
           start: 'yarn start'
