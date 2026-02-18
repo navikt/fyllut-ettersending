@@ -23,15 +23,17 @@ interface Props {
   subjects?: KeyValue;
 }
 
-const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
+const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const { t } = useTranslation('lospost');
   const { t: tCommon } = useTranslation('common');
   const referrerPage = useReffererPage();
+  const query = new URLSearchParams(excludeKeysEmpty({ tema, gjelder })).toString();
+  const withQuery = (path: string) => (query ? `${path}?${query}` : path);
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage('lospost'),
+    path: withQuery(Paths.downloadPage('lospost')),
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -41,7 +43,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage,
+    path: withQuery(referrerPage),
     external: true,
   };
 
@@ -58,7 +60,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
   const title = tema && subjects?.[tema] ? `${t('title-about')} ${uncapitalize(subjects[tema])}` : t('title');
 
   return (
-    <Layout title={title} backUrl={referrerPage}>
+    <Layout title={title} backUrl={withQuery(referrerPage)}>
       <ValidationSummary />
       <OtherDocument archiveSubjects={subjects ?? {}} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />
