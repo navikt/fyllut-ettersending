@@ -15,6 +15,7 @@ import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { excludeKeysEmpty } from '../../utils/object';
+import { mergeQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -28,8 +29,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const { t } = useTranslation('lospost');
   const { t: tCommon } = useTranslation('common');
   const referrerPage = useReffererPage();
-  const query = new URLSearchParams(excludeKeysEmpty({ tema, gjelder })).toString();
-  const withQuery = (path: string) => (query ? `${path}?${query}` : path);
+  const withQuery = (path: string) => mergeQueryString(path, { tema, gjelder });
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),

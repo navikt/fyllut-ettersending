@@ -2,6 +2,7 @@ import { LinkPanel, TextField } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
+import { mergeQueryString, normalizeQueryValue } from 'src/utils/queryParams';
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from 'src/utils/submissionUtil';
 import { ListForm } from '../../data';
 import { Paths } from '../../data/paths';
@@ -17,6 +18,8 @@ const FormSearch = ({ forms }: Props) => {
   const [searchResult, setSearchResult] = useState<ListForm[]>([]);
   const router = useRouter();
   const { t } = useTranslation('ettersendelse');
+  const { tema, gjelder } = router.query as { tema?: string | string[]; gjelder?: string | string[] };
+  const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
@@ -58,7 +61,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}?sub=digital`);
+                    await router.push(mergeQueryString(`${Paths.details(form.path)}?sub=digital`, queryParams));
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (digital)`}</LinkPanel.Title>
@@ -73,7 +76,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}?sub=paper`);
+                    await router.push(mergeQueryString(`${Paths.details(form.path)}?sub=paper`, queryParams));
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (papir)`}</LinkPanel.Title>

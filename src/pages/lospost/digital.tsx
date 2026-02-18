@@ -23,14 +23,16 @@ import logger from '../../utils/logger';
 import { getLoginRedirect } from '../../utils/login';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 import { excludeKeysEmpty } from '../../utils/object';
+import { mergeQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
   tema?: string;
+  gjelder?: string;
   subjects?: KeyValue;
 }
 
-const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects }) => {
+const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSubjects }) => {
   const { formData, updateFormData } = useFormState();
   const router = useRouter();
   const { t, i18n } = useTranslation('digital-lospost');
@@ -38,6 +40,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
   const referrerPage = useReffererPage();
+  const withQuery = (path: string) => mergeQueryString(path, { tema, gjelder });
 
   const submitButtonPressed = async () => {
     try {
@@ -60,7 +63,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage,
+    path: withQuery(referrerPage),
     external: true,
   };
 
@@ -98,7 +101,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, subjects: serverSubjects })
     tema && serverSubjects?.[tema] ? `${t('title-about')} ${uncapitalize(serverSubjects[tema])}` : t('title');
 
   return (
-    <Layout title={title} backUrl={referrerPage}>
+    <Layout title={title} backUrl={withQuery(referrerPage)}>
       <ValidationSummary />
       <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
       <DigitalLospostForm subjects={subjectsState} />

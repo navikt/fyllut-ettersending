@@ -4,6 +4,27 @@ export type FyllutEttersendingQueryParams = {
   sub?: string;
 };
 
+export const normalizeQueryValue = (value?: string | string[]) => (Array.isArray(value) ? value[0] : value);
+
+export const mergeQueryString = (path: string, params: Record<string, string | undefined>) => {
+  if (!path) {
+    return path;
+  }
+  const cleaned = Object.entries(params).reduce<Record<string, string>>((acc, [key, value]) => {
+    if (value !== undefined && value !== '') {
+      acc[key] = value;
+    }
+    return acc;
+  }, {});
+  const [base, query = ''] = path.split('?');
+  const merged = new URLSearchParams(query);
+  Object.entries(cleaned).forEach(([key, value]) => {
+    merged.set(key, value);
+  });
+  const qs = merged.toString();
+  return qs ? `${base}?${qs}` : base;
+};
+
 type ValidationResult = {
   success: boolean;
 };
