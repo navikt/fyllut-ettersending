@@ -23,7 +23,7 @@ import logger from '../../utils/logger';
 import { getLoginRedirect } from '../../utils/login';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 import { excludeKeysEmpty } from '../../utils/object';
-import { mergeQueryString } from '../../utils/queryParams';
+import { buildQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -40,7 +40,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSu
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
   const referrerPage = useReffererPage();
-  const withQuery = (path: string) => mergeQueryString(path, { tema, gjelder });
+  const queryString = buildQueryString({ tema, gjelder });
+  const referrerQuerySuffix = queryString ? `${referrerPage?.includes('?') ? '&' : '?'}${queryString}` : '';
 
   const submitButtonPressed = async () => {
     try {
@@ -63,7 +64,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSu
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: withQuery(referrerPage),
+    path: referrerPage ? `${referrerPage}${referrerQuerySuffix}` : '',
     external: true,
   };
 
@@ -101,7 +102,7 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSu
     tema && serverSubjects?.[tema] ? `${t('title-about')} ${uncapitalize(serverSubjects[tema])}` : t('title');
 
   return (
-    <Layout title={title} backUrl={withQuery(referrerPage)}>
+    <Layout title={title} backUrl={referrerPage ? `${referrerPage}${referrerQuerySuffix}` : ''}>
       <ValidationSummary />
       <Section>{errorMessage && <Alert variant="error">{errorMessage}</Alert>}</Section>
       <DigitalLospostForm subjects={subjectsState} />

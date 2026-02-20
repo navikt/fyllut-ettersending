@@ -17,7 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { mergeQueryString, normalizeQueryValue } from 'src/utils/queryParams';
+import { buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -48,9 +48,14 @@ const Details: NextPage<Props> = (props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const { tema, gjelder } = router.query as { tema?: string | string[]; gjelder?: string | string[] };
   const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
-  const withQuery = (path: string) => mergeQueryString(path, queryParams);
-  const digitalFormPath = withQuery(`${Paths.details(form.path)}?sub=digital`);
-  const paperFormPath = withQuery(`${Paths.details(form.path)}?sub=paper`);
+  const queryString = buildQueryString(queryParams);
+  const querySuffix = queryString ? `?${queryString}` : '';
+  const referrerQuerySuffix = queryString ? `${referrerPage?.includes('?') ? '&' : '?'}${queryString}` : '';
+  const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
+  const digitalQuery = buildQueryString({ sub: 'digital', ...queryParams });
+  const paperQuery = buildQueryString({ sub: 'paper', ...queryParams });
+  const digitalFormPath = `${Paths.details(form.path)}${digitalQuery ? `?${digitalQuery}` : ''}`;
+  const paperFormPath = `${Paths.details(form.path)}${paperQuery ? `?${paperQuery}` : ''}`;
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -95,7 +100,7 @@ const Details: NextPage<Props> = (props) => {
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
-    path: withQuery(Paths.downloadPage(id)),
+    path: downloadPath,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -114,7 +119,7 @@ const Details: NextPage<Props> = (props) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: withQuery(referrerPage),
+    path: referrerPage ? `${referrerPage}${referrerQuerySuffix}` : '',
     external: true,
   };
 
@@ -174,7 +179,7 @@ const Details: NextPage<Props> = (props) => {
       {isSubmissionAllowed(form) && isMethodAllowed && formData.submissionType ? (
         <Layout
           title={`${t('title-for')} ${uncapitalize(form.title)}`}
-          backUrl={withQuery(referrerPage)}
+          backUrl={referrerPage ? `${referrerPage}${referrerQuerySuffix}` : ''}
           publishedLanguages={form.properties.publishedLanguages}
         >
           <ValidationSummary />

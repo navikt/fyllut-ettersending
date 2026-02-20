@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
 import { Form, QuerySubmissionType } from '../../data';
 import { Paths } from '../../data/paths';
-import { mergeQueryString, normalizeQueryValue } from '../../utils/queryParams';
+import { buildQueryString, normalizeQueryValue } from '../../utils/queryParams';
 
 interface Props {
   id: string;
@@ -14,10 +14,12 @@ const ChooseFormSubmissionType = ({ id, form }: Props) => {
   const pathWithId = Paths.details(id);
   const { tema, gjelder } = router.query as { tema?: string | string[]; gjelder?: string | string[] };
   const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
+  const digitalQuery = buildQueryString({ sub: QuerySubmissionType.digital, ...queryParams });
+  const paperQuery = buildQueryString({ sub: QuerySubmissionType.paper, ...queryParams });
   return (
     <ChooseSubmissionType
-      pathDigital={mergeQueryString(`${pathWithId}?sub=${QuerySubmissionType.digital}`, queryParams)}
-      pathPaper={mergeQueryString(`${pathWithId}?sub=${QuerySubmissionType.paper}`, queryParams)}
+      pathDigital={`${pathWithId}${digitalQuery ? `?${digitalQuery}` : ''}`}
+      pathPaper={`${pathWithId}${paperQuery ? `?${paperQuery}` : ''}`}
       languages={form.properties.publishedLanguages}
     />
   );

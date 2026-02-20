@@ -3,7 +3,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
 import ChooseFormSubmissionType from 'src/components/chooseSubmissionType/chooseFormSubmissionType';
 import { Paths } from 'src/data/paths';
-import { mergeQueryString, normalizeQueryValue } from 'src/utils/queryParams';
+import { buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { InternalServerError } from '../../components/error/InternalServerError';
 import { EttersendelseApplication, Form } from '../../data';
@@ -31,6 +31,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, query } = context;
   const { tema, gjelder } = query as { tema?: string | string[]; gjelder?: string | string[] };
   const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
+  const queryString = buildQueryString(queryParams);
   const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   let form: Form | undefined;
@@ -55,7 +56,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: localePathPrefix(context) + mergeQueryString(Paths.details(id), queryParams),
+        destination: `${localePathPrefix(context)}${Paths.details(id)}${queryString ? `?${queryString}` : ''}`,
         locale: false,
       },
     };

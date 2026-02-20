@@ -13,7 +13,7 @@ import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import { getCoverPageTitle } from '../../utils/lastNedUtil';
-import { excludeKeysEmpty } from '../../utils/object';
+import { buildQueryString, normalizeQueryValue } from '../../utils/queryParams';
 
 interface Props {
   locale: string | undefined;
@@ -141,13 +141,15 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, params, query } = context;
-  const { tema, gjelder } = query as { tema?: string; gjelder?: string };
+  const { tema, gjelder } = query as { tema?: string | string[]; gjelder?: string | string[] };
   const id = params?.id as string;
-  const queryString = new URLSearchParams(excludeKeysEmpty({ tema, gjelder })).toString();
-  const previousPathBase = id === 'lospost' ? `${Paths.otherDocumentation}/paper` : Paths.details(id) + '?sub=paper';
-  const previousPath = queryString
-    ? `${previousPathBase}${previousPathBase.includes('?') ? '&' : '?'}${queryString}`
-    : previousPathBase;
+  const previousPathBase = id === 'lospost' ? `${Paths.otherDocumentation}/paper` : Paths.details(id);
+  const queryString = buildQueryString({
+    tema: normalizeQueryValue(tema),
+    gjelder: normalizeQueryValue(gjelder),
+    sub: id === 'lospost' ? undefined : 'paper',
+  });
+  const previousPath = `${previousPathBase}${queryString ? `?${queryString}` : ''}`;
   if (isHardNavigation(context)) {
     // Only allows soft navigation to this page, because client won't have any state on hard navigation
     return {
