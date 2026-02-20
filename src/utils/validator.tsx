@@ -3,20 +3,26 @@ import { TFunction } from 'next-i18next';
 import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data';
 import { hasOtherAttachment } from './formDataUtil';
 
-const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
-  // Regex is from "foerstesidegenerator" and checks that a string only contains characters that are defined as valid.
-  // https://github.com/navikt/foerstesidegenerator/blob/20170afdb8e8efbfa7ced1940290ff40cdc7bb95/app/src/main/java/no/nav/foerstesidegenerator/service/support/PostFoerstesideRequestValidator.java#L42C70-L42C124
-  // The flag /u enables full Unicode support. Allows us to match based on Unicode properties such as:
-  // p{L} matches any kind of letter from any language
-  // p{N} matches any kind of numeric character in any script
-  // p{Zs} matches a whitespace character that is invisible, but does take up space
-  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
-  return validCharactersRegex.test(str);
+//const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
+// Regex is from "foerstesidegenerator" and checks that a string only contains characters that are defined as valid.
+// https://github.com/navikt/foerstesidegenerator/blob/20170afdb8e8efbfa7ced1940290ff40cdc7bb95/app/src/main/java/no/nav/foerstesidegenerator/service/support/PostFoerstesideRequestValidator.java#L42C70-L42C124
+// The flag /u enables full Unicode support. Allows us to match based on Unicode properties such as:
+// p{L} matches any kind of letter from any language
+// p{N} matches any kind of numeric character in any script
+// p{Zs} matches a whitespace character that is invisible, but does take up space
+// const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
+// return validCharactersRegex.test(str);
+//};
+const inputFilter = (input: string | undefined) => {
+  if (!input) return undefined;
+  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t.,;:!?'"()\-–_/&%#+@]*$/u;
+  return input.replace(validCharactersRegex, '')?.trim();
 };
 
 const validateFormData = (formData: FormData, t: TFunction) => {
   const formErrors: KeyValue = {};
   if (formData.page === 'digital-lospost') {
+    formData.documentTitle = inputFilter(formData.documentTitle);
     if (!formData.documentTitle) {
       formErrors.documentTitle = t('digitalLospost.documentTitle');
     } else if (formData.documentTitle.length > 150) {
@@ -31,19 +37,15 @@ const validateFormData = (formData: FormData, t: TFunction) => {
     }
 
     if (formData.submissionType !== QuerySubmissionType.digital) {
+      if (hasOtherAttachment(formData)) {
+        formData.otherDocumentationTitle = inputFilter(formData.otherDocumentationTitle);
+      }
       if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
         formErrors.otherDocumentationTitle = t('otherDocumentation');
       }
 
       if ((!formData.formId || hasOtherAttachment(formData)) && (formData.otherDocumentationTitle ?? '').length > 150) {
         formErrors.otherDocumentationTitle = t('otherDocumentationLength');
-      }
-
-      if (
-        (!formData.formId || hasOtherAttachment(formData)) &&
-        !containsOnlyCharactersValidInFoerstesideGenerator(formData.otherDocumentationTitle ?? '')
-      ) {
-        formErrors.otherDocumentationTitle = t('otherDocumentationInvalid');
       }
 
       if (!formData.formId && !formData.subjectOfSubmission) {
@@ -59,21 +61,27 @@ const validateFormData = (formData: FormData, t: TFunction) => {
           formErrors.socialSecurityNo = t('socialSecurityNo');
         }
       } else if (formData.userData?.type === UserType.noSocialNumber) {
+        formData.userData.firstName = inputFilter(formData.userData.firstName);
         if (!formData.userData?.firstName) {
           formErrors.firstName = t('firstName');
         }
+        formData.userData.lastName = inputFilter(formData.userData.lastName);
         if (!formData.userData?.lastName) {
           formErrors.lastName = t('lastName');
         }
+        formData.userData.streetName = inputFilter(formData.userData.streetName);
         if (!formData.userData?.streetName) {
           formErrors.streetName = t('streetName');
         }
+        formData.userData.postalCode = inputFilter(formData.userData.postalCode);
         if (!formData.userData?.postalCode) {
           formErrors.postalCode = t('postalCode');
         }
+        formData.userData.city = inputFilter(formData.userData.city);
         if (!formData.userData?.city) {
           formErrors.city = t('city');
         }
+        formData.userData.country = inputFilter(formData.userData.country);
         if (!formData.userData?.country) {
           formErrors.country = t('country');
         }
