@@ -144,13 +144,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const tema = normalizeQueryValue(query.tema);
   const gjelder = normalizeQueryValue(query.gjelder);
   const id = params?.id as string;
-  const previousPathBase = id === 'lospost' ? `${Paths.otherDocumentation}/paper` : Paths.details(id);
+  const previousPathBase = id === 'lospost' ? `${Paths.otherDocumentation}/paper` : `${Paths.details(id)}?sub=paper`;
   const queryString = buildQueryString({
     tema,
     gjelder,
-    sub: id === 'lospost' ? undefined : 'paper',
   });
-  const previousPath = `${previousPathBase}${queryString ? `?${queryString}` : ''}`;
+  const previousPath = queryString ? `${previousPathBase}&${queryString}` : previousPathBase;
   if (isHardNavigation(context)) {
     // Only allows soft navigation to this page, because client won't have any state on hard navigation
     return {
