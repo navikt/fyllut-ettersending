@@ -46,14 +46,25 @@ const Details: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const locale = i18n.language;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const { tema, gjelder } = router.query as { tema?: string | string[]; gjelder?: string | string[] };
-  const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
-  const queryString = buildQueryString(queryParams);
+  const tema = normalizeQueryValue(router.query.tema);
+  const gjelder = normalizeQueryValue(router.query.gjelder);
+  const queryString = buildQueryString({
+    tema,
+    gjelder,
+  });
   const querySuffix = queryString ? `?${queryString}` : '';
   const referrerQuerySuffix = queryString ? `${referrerPage?.includes('?') ? '&' : '?'}${queryString}` : '';
   const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
-  const digitalQuery = buildQueryString({ sub: 'digital', ...queryParams });
-  const paperQuery = buildQueryString({ sub: 'paper', ...queryParams });
+  const digitalQuery = buildQueryString({
+    sub: 'digital',
+    tema,
+    gjelder,
+  });
+  const paperQuery = buildQueryString({
+    sub: 'paper',
+    tema,
+    gjelder,
+  });
   const digitalFormPath = `${Paths.details(form.path)}${digitalQuery ? `?${digitalQuery}` : ''}`;
   const paperFormPath = `${Paths.details(form.path)}${paperQuery ? `?${paperQuery}` : ''}`;
 

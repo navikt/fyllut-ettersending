@@ -12,10 +12,18 @@ interface Props {
 const ChooseFormSubmissionType = ({ id, form }: Props) => {
   const router = useRouter();
   const pathWithId = Paths.details(id);
-  const { tema, gjelder } = router.query as { tema?: string | string[]; gjelder?: string | string[] };
-  const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
-  const digitalQuery = buildQueryString({ sub: QuerySubmissionType.digital, ...queryParams });
-  const paperQuery = buildQueryString({ sub: QuerySubmissionType.paper, ...queryParams });
+  const tema = normalizeQueryValue(router.query.tema);
+  const gjelder = normalizeQueryValue(router.query.gjelder);
+  const digitalQuery = buildQueryString({
+    sub: QuerySubmissionType.digital,
+    tema,
+    gjelder,
+  });
+  const paperQuery = buildQueryString({
+    sub: QuerySubmissionType.paper,
+    tema,
+    gjelder,
+  });
   return (
     <ChooseSubmissionType
       pathDigital={`${pathWithId}${digitalQuery ? `?${digitalQuery}` : ''}`}

@@ -29,9 +29,12 @@ const Innsendingsvalg: NextPage<Props> = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
   const { locale, query } = context;
-  const { tema, gjelder } = query as { tema?: string | string[]; gjelder?: string | string[] };
-  const queryParams = { tema: normalizeQueryValue(tema), gjelder: normalizeQueryValue(gjelder) };
-  const queryString = buildQueryString(queryParams);
+  const tema = normalizeQueryValue(query.tema);
+  const gjelder = normalizeQueryValue(query.gjelder);
+  const queryString = buildQueryString({
+    tema,
+    gjelder,
+  });
   const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   let form: Form | undefined;

@@ -141,12 +141,13 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, params, query } = context;
-  const { tema, gjelder } = query as { tema?: string | string[]; gjelder?: string | string[] };
+  const tema = normalizeQueryValue(query.tema);
+  const gjelder = normalizeQueryValue(query.gjelder);
   const id = params?.id as string;
   const previousPathBase = id === 'lospost' ? `${Paths.otherDocumentation}/paper` : Paths.details(id);
   const queryString = buildQueryString({
-    tema: normalizeQueryValue(tema),
-    gjelder: normalizeQueryValue(gjelder),
+    tema,
+    gjelder,
     sub: id === 'lospost' ? undefined : 'paper',
   });
   const previousPath = `${previousPathBase}${queryString ? `?${queryString}` : ''}`;
