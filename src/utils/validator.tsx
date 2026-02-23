@@ -16,7 +16,7 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
 const inputFilter = (input: string | undefined) => {
   if (!input) return;
   const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
-  return input.replace(validCharactersRegex, '').trim() || undefined;
+  return input.replace(validCharactersRegex, '')?.trim();
 };
 
 const validateFormData = (formData: FormData, t: TFunction) => {
