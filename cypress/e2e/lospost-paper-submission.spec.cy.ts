@@ -169,6 +169,23 @@ describe('Løspost - Paper submission', () => {
       cy.url().should('include', '/last-ned');
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).should('exist').click();
     });
+
+    it('keeps tema when navigating back from last-ned', () => {
+      cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav om permittering og masseoppsigelser' });
+      cy.get('[name="otherDocumentationTitle"]').click();
+      cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
+      cy.get('[name="subjectOfSubmission"]').should('not.exist');
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').click();
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.url().should('include', '/last-ned');
+      cy.findByRole('button', { name: TestButtonText.previous }).click();
+
+      cy.url().should('include', '/lospost/paper?tema=PER');
+      cy.get('[name="subjectOfSubmission"]').should('not.exist');
+    });
   });
 
   describe("query param 'tema=TIL", () => {

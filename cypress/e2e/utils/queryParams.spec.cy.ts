@@ -1,4 +1,4 @@
-import { validateQueryParams } from '../../../src/utils/queryParams';
+import { buildQueryString, validateQueryParams } from '../../../src/utils/queryParams';
 
 describe('queryParams', () => {
   describe('validateQueryParams', () => {
@@ -82,6 +82,22 @@ describe('queryParams', () => {
         const result = validateQueryParams(params);
         expect(result.success).to.equal(false);
       });
+    });
+  });
+
+  describe('buildQueryString', () => {
+    it('builds query string from params', () => {
+      const qs = buildQueryString({ sub: 'paper', tema: 'SYK' });
+      const params = new URLSearchParams(qs);
+      expect(params.get('sub')).to.equal('paper');
+      expect(params.get('tema')).to.equal('SYK');
+    });
+
+    it('skips empty values', () => {
+      const qs = buildQueryString({ tema: '', gjelder: 'Utbetaling' });
+      const params = new URLSearchParams(qs);
+      expect(params.get('tema')).to.equal(null);
+      expect(params.get('gjelder')).to.equal('Utbetaling');
     });
   });
 });
