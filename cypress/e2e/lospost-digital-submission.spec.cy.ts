@@ -1,6 +1,6 @@
 import { TestButtonText, TestButtonTextEn, TestButtonTextNn } from './testUtils';
 
-describe.only('Løspost - Digital submission', () => {
+describe('Løspost - Digital submission', () => {
   const URL_FYLLUT_ETTERSENDING = Cypress.config().baseUrl;
   const URL_SEND_INN_FRONTEND = 'http://127.0.0.1:3200/send-inn-frontend';
 
@@ -13,7 +13,7 @@ describe.only('Løspost - Digital submission', () => {
       }).as('opprettLospost');
     });
 
-    it.only('requires both title and subject to proceed', () => {
+    it('requires both title and subject to proceed', () => {
       cy.visit('/lospost/digital');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
