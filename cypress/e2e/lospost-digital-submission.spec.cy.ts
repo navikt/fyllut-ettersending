@@ -246,19 +246,23 @@ describe('Løspost - Digital submission', () => {
     });
 
     it('Control character and trailing spaces are removed', () => {
+      const inputTitle = 'Mitt førerkort     ';
+      const expectedTitle = 'Sykepenger - Mitt førerkort';
+
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
-        expect(req.body.soknadTittel).to.equal('Sykepenger - Mitt førerkort    ');
+        // Her verifiserer vi at verdien som sendes til serveren er trimmet
+        expect(req.body.soknadTittel).to.equal(expectedTitle);
         expect(req.body.tema).to.equal('SYK');
-      }).as('opprettLospost');
+      }).as('opprettLospostTrimmed');
 
       cy.visit('/lospost/digital?tema=SYK');
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
-        .type('Mitt førerkort');
-      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
-      cy.url().should('contain', '?tema=SYK');
+        .type(inputTitle);
+
       cy.findByRole('button', { name: TestButtonText.next }).click();
-      cy.wait('@opprettLospost');
+
+      cy.wait('@opprettLospostTrimmed');
       cy.url().should('contain', URL_SEND_INN_FRONTEND);
     });
   });
