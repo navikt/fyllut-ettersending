@@ -239,4 +239,27 @@ describe.only('Løspost - Digital submission', () => {
       cy.url().should('not.contain', URL_SEND_INN_FRONTEND);
     });
   });
+
+  describe('Illegal charcters filtered and trailing spaces removed', () => {
+    beforeEach(() => {
+      cy.mocksUseRouteVariant('post-lospost:success');
+    });
+
+    it('Control character and trailing spaces are removed', () => {
+      cy.intercept('POST', `${Cypress.config('baseUrl')}/api/lospost`, (req) => {
+        expect(req.body.soknadTittel).to.equal('Sykepenger - Mitt førerkort    ');
+        expect(req.body.tema).to.equal('SYK');
+      }).as('opprettLospost');
+
+      cy.visit('/lospost/digital?tema=SYK');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+        .should('exist')
+        .type('Mitt førerkort');
+      cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      cy.url().should('contain', '?tema=SYK');
+      cy.findByRole('button', { name: TestButtonText.next }).click();
+      cy.wait('@opprettLospost');
+      cy.url().should('contain', URL_SEND_INN_FRONTEND);
+    });
+  });
 });
