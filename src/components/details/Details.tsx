@@ -53,7 +53,9 @@ const Details: NextPage<Props> = (props) => {
     gjelder,
   });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const referrerQuerySuffix = queryString ? `${referrerPage?.includes('?') ? '&' : '?'}${queryString}` : '';
+  const shouldAppendQuery =
+    !!queryString && !!referrerPage && !referrerPage.includes('tema=') && !referrerPage.includes('gjelder=');
+  const referrerQuerySuffix = shouldAppendQuery ? `${referrerPage.includes('?') ? '&' : '?'}${queryString}` : '';
   const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
   const digitalQuery = buildQueryString({
     sub: 'digital',

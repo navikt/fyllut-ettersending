@@ -38,6 +38,7 @@ describe('Testing layout component', () => {
     const baseUrl = Cypress.config('baseUrl')!;
     cy.visit('/lospost/digital?tema=SYK&gjelder=Bestridelse&referrer=' + encodeURIComponent(`${baseUrl}/lospost`));
     cy.findByRole('link', { name: TestButtonText.previous }).should('exist').click();
+    cy.url().should('not.contain', 'tema=SYK&gjelder=Bestridelse&tema=SYK&gjelder=Bestridelse');
     cy.url().should('equal', `${baseUrl}/lospost?tema=SYK&gjelder=Bestridelse`);
   });
 });

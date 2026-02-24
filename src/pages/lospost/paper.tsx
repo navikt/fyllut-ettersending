@@ -31,7 +31,9 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const referrerPage = useReffererPage();
   const queryString = buildQueryString({ tema, gjelder });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const referrerQuerySuffix = queryString ? `${referrerPage?.includes('?') ? '&' : '?'}${queryString}` : '';
+  const shouldAppendQuery =
+    !!queryString && !!referrerPage && !referrerPage.includes('tema=') && !referrerPage.includes('gjelder=');
+  const referrerQuerySuffix = shouldAppendQuery ? `${referrerPage.includes('?') ? '&' : '?'}${queryString}` : '';
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
