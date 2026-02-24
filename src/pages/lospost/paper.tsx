@@ -15,7 +15,7 @@ import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { excludeKeysEmpty } from '../../utils/object';
-import { buildQueryString } from '../../utils/queryParams';
+import { appendQueryParams, buildQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -31,9 +31,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const referrerPage = useReffererPage();
   const queryString = buildQueryString({ tema, gjelder });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const shouldAppendQuery =
-    !!queryString && !!referrerPage && !referrerPage.includes('tema=') && !referrerPage.includes('gjelder=');
-  const referrerQuerySuffix = shouldAppendQuery ? `${referrerPage.includes('?') ? '&' : '?'}${queryString}` : '';
+  const backUrl = referrerPage ? appendQueryParams(referrerPage, { tema, gjelder }) : '';
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
@@ -47,7 +45,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage ? `${referrerPage}${referrerQuerySuffix}` : '',
+    path: backUrl,
     external: true,
   };
 
@@ -64,7 +62,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const title = tema && subjects?.[tema] ? `${t('title-about')} ${uncapitalize(subjects[tema])}` : t('title');
 
   return (
-    <Layout title={title} backUrl={referrerPage ? `${referrerPage}${referrerQuerySuffix}` : ''}>
+    <Layout title={title} backUrl={backUrl}>
       <ValidationSummary />
       <OtherDocument archiveSubjects={subjects ?? {}} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />

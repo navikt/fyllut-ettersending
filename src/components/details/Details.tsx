@@ -17,7 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
+import { appendQueryParams, buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -53,9 +53,7 @@ const Details: NextPage<Props> = (props) => {
     gjelder,
   });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const shouldAppendQuery =
-    !!queryString && !!referrerPage && !referrerPage.includes('tema=') && !referrerPage.includes('gjelder=');
-  const referrerQuerySuffix = shouldAppendQuery ? `${referrerPage.includes('?') ? '&' : '?'}${queryString}` : '';
+  const backUrl = referrerPage ? appendQueryParams(referrerPage, { tema, gjelder }) : '';
   const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
   const digitalQuery = buildQueryString({
     sub: 'digital',
@@ -132,7 +130,7 @@ const Details: NextPage<Props> = (props) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage ? `${referrerPage}${referrerQuerySuffix}` : '',
+    path: backUrl,
     external: true,
   };
 
@@ -192,7 +190,7 @@ const Details: NextPage<Props> = (props) => {
       {isSubmissionAllowed(form) && isMethodAllowed && formData.submissionType ? (
         <Layout
           title={`${t('title-for')} ${uncapitalize(form.title)}`}
-          backUrl={referrerPage ? `${referrerPage}${referrerQuerySuffix}` : ''}
+          backUrl={backUrl}
           publishedLanguages={form.properties.publishedLanguages}
         >
           <ValidationSummary />
