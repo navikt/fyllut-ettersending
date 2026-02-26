@@ -20,7 +20,7 @@ const inputFilter = (input: string | undefined) => {
   // To strip invalid characters, we use a negated character class ( [^ ... ] )
   // We remove ^ and $ because we want to match individual invalid characters, not the whole string.
   // We keep 'g' to replace all occurrences and 'u' for unicode support.
-  const invalidCharactersRegex = /[^\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]/gu;
+  const invalidCharactersRegex = /[^\p{L}\p{N}\p{Zs}\n\t\-.!/;()":,–_'?&+’%#•@»«§]/gu;
 
   return input.replace(invalidCharactersRegex, '')?.trim();
 };
