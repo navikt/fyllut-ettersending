@@ -14,21 +14,9 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
   return validCharactersRegex.test(str);
 };
 
-const inputFilter = (input: string | undefined) => {
-  if (!input) return '';
-
-  // To strip invalid characters, we use a negated character class ( [^ ... ] )
-  // We remove ^ and $ because we want to match individual invalid characters, not the whole string.
-  // We keep 'g' to replace all occurrences and 'u' for unicode support.
-  const invalidCharactersRegex = /[^\p{L}\p{N}\p{Zs}\n\t\-.!/;()":,–_'?&+’%#•@»«§]/gu;
-
-  return input.replace(invalidCharactersRegex, '')?.trim();
-};
-
 const validateFormData = (formData: FormData, t: TFunction) => {
   const formErrors: KeyValue = {};
   if (formData.page === 'digital-lospost') {
-    formData.documentTitle = inputFilter(formData.documentTitle);
     if (!formData.documentTitle) {
       formErrors.documentTitle = t('digitalLospost.documentTitle');
     } else if (formData.documentTitle.length > 150) {
