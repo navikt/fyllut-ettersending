@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@navikt/aksel-icons": "^7.33.2",
-    "@navikt/ds-css": "^7.33.2",
+    "@navikt/ds-css": "^8.6.0",
     "@navikt/ds-react": "^7.33.2",
     "@navikt/fnrvalidator": "^2.2.1",
     "@navikt/nav-dekoratoren-moduler": "^2.1.6",
