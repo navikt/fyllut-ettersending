@@ -4,8 +4,6 @@ export type FyllutEttersendingQueryParams = {
   sub?: string;
 };
 
-export const normalizeQueryValue = (value?: string | string[]) => (Array.isArray(value) ? value[0] : value);
-
 export const buildQueryString = (params: Record<string, string | undefined>) => {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {

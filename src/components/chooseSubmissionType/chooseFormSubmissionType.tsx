@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import ChooseSubmissionType from '../../components/chooseSubmissionType/chooseSubmissionType';
 import { Form, QuerySubmissionType } from '../../data';
 import { Paths } from '../../data/paths';
-import { buildQueryString, normalizeQueryValue } from '../../utils/queryParams';
+import { buildQueryString } from '../../utils/queryParams';
 
 interface Props {
   id: string;
@@ -12,8 +12,8 @@ interface Props {
 const ChooseFormSubmissionType = ({ id, form }: Props) => {
   const router = useRouter();
   const pathWithId = Paths.details(id);
-  const tema = normalizeQueryValue(router.query.tema);
-  const gjelder = normalizeQueryValue(router.query.gjelder);
+  const tema = router.query.tema as string | undefined;
+  const gjelder = router.query.gjelder as string | undefined;
   const digitalQuery = buildQueryString({
     sub: QuerySubmissionType.digital,
     tema,

@@ -17,7 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
+import { buildQueryString } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -46,8 +46,8 @@ const Details: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const locale = i18n.language;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const tema = normalizeQueryValue(router.query.tema);
-  const gjelder = normalizeQueryValue(router.query.gjelder);
+  const tema = router.query.tema as string | undefined;
+  const gjelder = router.query.gjelder as string | undefined;
 
   let backUrl = '';
   if (referrerPage) {

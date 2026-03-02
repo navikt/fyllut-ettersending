@@ -13,7 +13,7 @@ import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import { getCoverPageTitle } from '../../utils/lastNedUtil';
-import { buildQueryString, normalizeQueryValue } from '../../utils/queryParams';
+import { buildQueryString } from '../../utils/queryParams';
 
 interface Props {
   locale: string | undefined;
@@ -141,8 +141,8 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { locale, params, query } = context;
-  const tema = normalizeQueryValue(query.tema);
-  const gjelder = normalizeQueryValue(query.gjelder);
+  const tema = query.tema as string | undefined;
+  const gjelder = query.gjelder as string | undefined;
   const id = params?.id as string;
   const queryString = buildQueryString({ tema, gjelder });
   const previousPath =
