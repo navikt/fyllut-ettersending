@@ -16,21 +16,6 @@ export const buildQueryString = (params: Record<string, string | undefined>) => 
   return searchParams.toString();
 };
 
-export const appendQueryParams = (url: string, params: Record<string, string | undefined>) => {
-  try {
-    const urlObj = new URL(url);
-    Object.entries(params).forEach(([key, value]) => {
-      if (value === undefined || value === '') return;
-      if (!urlObj.searchParams.has(key)) {
-        urlObj.searchParams.set(key, value);
-      }
-    });
-    return urlObj.toString();
-  } catch (_error) {
-    return url;
-  }
-};
-
 type ValidationResult = {
   success: boolean;
 };

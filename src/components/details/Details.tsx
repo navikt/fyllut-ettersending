@@ -17,7 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { appendQueryParams, buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
+import { buildQueryString, normalizeQueryValue } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -53,7 +53,18 @@ const Details: NextPage<Props> = (props) => {
     gjelder,
   });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const backUrl = referrerPage ? appendQueryParams(referrerPage, { tema, gjelder }) : '';
+
+  let backUrl = '';
+  if (referrerPage) {
+    try {
+      const url = new URL(referrerPage);
+      if (tema && !url.searchParams.has('tema')) url.searchParams.set('tema', tema);
+      if (gjelder && !url.searchParams.has('gjelder')) url.searchParams.set('gjelder', gjelder);
+      backUrl = url.toString();
+    } catch {
+      backUrl = referrerPage;
+    }
+  }
   const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
   const digitalQuery = buildQueryString({
     sub: 'digital',

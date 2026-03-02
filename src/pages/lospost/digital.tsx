@@ -23,7 +23,6 @@ import logger from '../../utils/logger';
 import { getLoginRedirect } from '../../utils/login';
 import { PAPER_ONLY_SUBJECTS } from '../../utils/lospost';
 import { excludeKeysEmpty } from '../../utils/object';
-import { appendQueryParams } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -40,7 +39,18 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSu
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
   const referrerPage = useReffererPage();
-  const backUrl = referrerPage ? appendQueryParams(referrerPage, { tema, gjelder }) : '';
+
+  let backUrl = '';
+  if (referrerPage) {
+    try {
+      const url = new URL(referrerPage);
+      if (tema && !url.searchParams.has('tema')) url.searchParams.set('tema', tema);
+      if (gjelder && !url.searchParams.has('gjelder')) url.searchParams.set('gjelder', gjelder);
+      backUrl = url.toString();
+    } catch {
+      backUrl = referrerPage;
+    }
+  }
 
   const submitButtonPressed = async () => {
     try {

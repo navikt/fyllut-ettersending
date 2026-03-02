@@ -15,7 +15,7 @@ import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { excludeKeysEmpty } from '../../utils/object';
-import { appendQueryParams, buildQueryString } from '../../utils/queryParams';
+import { buildQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -31,7 +31,18 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const referrerPage = useReffererPage();
   const queryString = buildQueryString({ tema, gjelder });
   const querySuffix = queryString ? `?${queryString}` : '';
-  const backUrl = referrerPage ? appendQueryParams(referrerPage, { tema, gjelder }) : '';
+
+  let backUrl = '';
+  if (referrerPage) {
+    try {
+      const url = new URL(referrerPage);
+      if (tema && !url.searchParams.has('tema')) url.searchParams.set('tema', tema);
+      if (gjelder && !url.searchParams.has('gjelder')) url.searchParams.set('gjelder', gjelder);
+      backUrl = url.toString();
+    } catch {
+      backUrl = referrerPage;
+    }
+  }
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
