@@ -29,8 +29,6 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const { t } = useTranslation('lospost');
   const { t: tCommon } = useTranslation('common');
   const referrerPage = useReffererPage();
-  const queryString = buildQueryString({ tema, gjelder });
-  const querySuffix = queryString ? `?${queryString}` : '';
 
   let backUrl = '';
   if (referrerPage) {
@@ -44,9 +42,11 @@ const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
     }
   }
 
+  const queryString = buildQueryString({ tema, gjelder });
+
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: `${Paths.downloadPage('lospost')}${querySuffix}`,
+    path: `${Paths.downloadPage('lospost')}${queryString ? `?${queryString}` : ''}`,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',

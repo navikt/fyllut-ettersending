@@ -48,11 +48,6 @@ const Details: NextPage<Props> = (props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const tema = normalizeQueryValue(router.query.tema);
   const gjelder = normalizeQueryValue(router.query.gjelder);
-  const queryString = buildQueryString({
-    tema,
-    gjelder,
-  });
-  const querySuffix = queryString ? `?${queryString}` : '';
 
   let backUrl = '';
   if (referrerPage) {
@@ -65,17 +60,11 @@ const Details: NextPage<Props> = (props) => {
       backUrl = referrerPage;
     }
   }
-  const downloadPath = `${Paths.downloadPage(id)}${querySuffix}`;
-  const digitalQuery = buildQueryString({
-    sub: 'digital',
-    tema,
-    gjelder,
-  });
-  const paperQuery = buildQueryString({
-    sub: 'paper',
-    tema,
-    gjelder,
-  });
+
+  const queryString = buildQueryString({ tema, gjelder });
+  const downloadPath = `${Paths.downloadPage(id)}${queryString ? `?${queryString}` : ''}`;
+  const digitalQuery = buildQueryString({ sub: 'digital', tema, gjelder });
+  const paperQuery = buildQueryString({ sub: 'paper', tema, gjelder });
   const digitalFormPath = `${Paths.details(form.path)}${digitalQuery ? `?${digitalQuery}` : ''}`;
   const paperFormPath = `${Paths.details(form.path)}${paperQuery ? `?${paperQuery}` : ''}`;
 
