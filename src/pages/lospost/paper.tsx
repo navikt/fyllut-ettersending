@@ -15,6 +15,7 @@ import OtherDocument from '../../components/other-document/other-document';
 import { KeyValue, NavUnit } from '../../data';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import { excludeKeysEmpty } from '../../utils/object';
+import { addParamsToReferrer, buildQueryString } from '../../utils/queryParams';
 import { uncapitalize } from '../../utils/stringUtil';
 
 interface Props {
@@ -23,15 +24,17 @@ interface Props {
   subjects?: KeyValue;
 }
 
-const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
+const PaperLospostPage: NextPage<Props> = ({ tema, gjelder, subjects }) => {
   const [navUnits, setNavUnits] = useState<NavUnit[]>([]);
   const { t } = useTranslation('lospost');
   const { t: tCommon } = useTranslation('common');
   const referrerPage = useReffererPage();
+  const backUrl = referrerPage ? addParamsToReferrer(referrerPage, { tema, gjelder }) : '';
+  const queryString = buildQueryString({ tema, gjelder });
 
   const nextButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage('lospost'),
+    path: `${Paths.downloadPage('lospost')}${queryString ? `?${queryString}` : ''}`,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -41,7 +44,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage,
+    path: backUrl,
     external: true,
   };
 
@@ -58,7 +61,7 @@ const PaperLospostPage: NextPage<Props> = ({ tema, subjects }) => {
   const title = tema && subjects?.[tema] ? `${t('title-about')} ${uncapitalize(subjects[tema])}` : t('title');
 
   return (
-    <Layout title={title} backUrl={referrerPage}>
+    <Layout title={title} backUrl={backUrl}>
       <ValidationSummary />
       <OtherDocument archiveSubjects={subjects ?? {}} navUnits={navUnits} subject={tema} />
       <ButtonGroup buttons={[nextButton, ...(referrerPage ? [previousButton] : [])]} />

@@ -13,6 +13,7 @@ import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import { getCoverPageTitle } from '../../utils/lastNedUtil';
+import { buildQueryString } from '../../utils/queryParams';
 
 interface Props {
   locale: string | undefined;
@@ -30,7 +31,7 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
   const isLospost = !formData.formId;
   const submissionType = isLospost ? 'lospost' : 'ettersending';
-  const backButtonPath = isLospost ? `${previousPath}/paper` : previousPath;
+  const backButtonPath = previousPath;
 
   useEffect(() => {
     const language = i18n.language;
@@ -139,9 +140,15 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { locale, params } = context;
+  const { locale, params, query } = context;
+  const tema = query.tema as string | undefined;
+  const gjelder = query.gjelder as string | undefined;
   const id = params?.id as string;
-  const previousPath = id === 'lospost' ? Paths.otherDocumentation : Paths.details(id) + '?sub=paper';
+  const queryString = buildQueryString({ tema, gjelder });
+  const previousPath =
+    id === 'lospost'
+      ? `${Paths.otherDocumentation}/paper${queryString ? `?${queryString}` : ''}`
+      : `${Paths.details(id)}?sub=paper${queryString ? `&${queryString}` : ''}`;
   if (isHardNavigation(context)) {
     // Only allows soft navigation to this page, because client won't have any state on hard navigation
     return {

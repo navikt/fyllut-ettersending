@@ -17,6 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
+import { addParamsToReferrer, buildQueryString } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -45,8 +46,15 @@ const Details: NextPage<Props> = (props) => {
   const { t: tCommon } = useTranslation('common');
   const locale = i18n.language;
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const digitalFormPath = `${Paths.details(form.path)}?sub=digital`;
-  const paperFormPath = `${Paths.details(form.path)}?sub=paper`;
+  const tema = router.query.tema as string | undefined;
+  const gjelder = router.query.gjelder as string | undefined;
+  const backUrl = referrerPage ? addParamsToReferrer(referrerPage, { tema, gjelder }) : '';
+  const queryString = buildQueryString({ tema, gjelder });
+  const downloadPath = `${Paths.downloadPage(id)}${queryString ? `?${queryString}` : ''}`;
+  const digitalQuery = buildQueryString({ sub: 'digital', tema, gjelder });
+  const paperQuery = buildQueryString({ sub: 'paper', tema, gjelder });
+  const digitalFormPath = `${Paths.details(form.path)}${digitalQuery ? `?${digitalQuery}` : ''}`;
+  const paperFormPath = `${Paths.details(form.path)}${paperQuery ? `?${paperQuery}` : ''}`;
 
   const fetchData = useCallback(async () => {
     setNavUnits(await fetchNavUnits());
@@ -91,7 +99,7 @@ const Details: NextPage<Props> = (props) => {
 
   const downloadButton: ButtonType = {
     text: tCommon('button.next'),
-    path: Paths.downloadPage(id),
+    path: downloadPath,
     validateForm: true,
     icon: <ArrowRightIcon aria-hidden />,
     iconPosition: 'right',
@@ -110,7 +118,7 @@ const Details: NextPage<Props> = (props) => {
     text: tCommon('button.previous'),
     variant: 'secondary',
     icon: <ArrowLeftIcon aria-hidden />,
-    path: referrerPage,
+    path: backUrl,
     external: true,
   };
 
@@ -170,7 +178,7 @@ const Details: NextPage<Props> = (props) => {
       {isSubmissionAllowed(form) && isMethodAllowed && formData.submissionType ? (
         <Layout
           title={`${t('title-for')} ${uncapitalize(form.title)}`}
-          backUrl={referrerPage}
+          backUrl={backUrl}
           publishedLanguages={form.properties.publishedLanguages}
         >
           <ValidationSummary />

@@ -105,6 +105,21 @@ describe('Løspost - Digital submission', () => {
         cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('exist');
         cy.url().should('not.contain', 'tema=TIL');
       });
+
+      it('keeps tema when navigating back from send-inn', () => {
+        cy.visit('/lospost/digital?tema=BIL');
+        cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+          .should('exist')
+          .type('Førerkort');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+        cy.findByRole('button', { name: TestButtonText.next }).click();
+        cy.wait('@opprettLospost');
+        cy.url().should('contain', URL_SEND_INN_FRONTEND);
+
+        cy.go('back');
+        cy.url().should('include', '/lospost/digital?tema=BIL');
+        cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).should('not.exist');
+      });
     });
   });
 

@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from 'next/types';
 import { getForm } from 'src/api/apiService';
 import ChooseFormSubmissionType from 'src/components/chooseSubmissionType/chooseFormSubmissionType';
 import { Paths } from 'src/data/paths';
+import { buildQueryString } from 'src/utils/queryParams';
 import { areBothSubmissionTypesAllowed } from 'src/utils/submissionUtil';
 import { InternalServerError } from '../../components/error/InternalServerError';
 import { EttersendelseApplication, Form } from '../../data';
@@ -27,7 +28,13 @@ const Innsendingsvalg: NextPage<Props> = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.params?.id as string;
-  const { locale } = context;
+  const { locale, query } = context;
+  const tema = query.tema as string | undefined;
+  const gjelder = query.gjelder as string | undefined;
+  const queryString = buildQueryString({
+    tema,
+    gjelder,
+  });
   const translations = await getServerSideTranslations(locale, ['common', 'innsendingsvalg']);
 
   let form: Form | undefined;
@@ -52,7 +59,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       redirect: {
         permanent: false,
-        destination: localePathPrefix(context) + Paths.details(id),
+        destination: `${localePathPrefix(context)}${Paths.details(id)}${queryString ? `?${queryString}` : ''}`,
         locale: false,
       },
     };

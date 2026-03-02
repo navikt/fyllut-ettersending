@@ -4,6 +4,30 @@ export type FyllutEttersendingQueryParams = {
   sub?: string;
 };
 
+export const buildQueryString = (params: Record<string, string | undefined>) => {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== '') {
+      searchParams.set(key, value);
+    }
+  });
+  return searchParams.toString();
+};
+
+export const addParamsToReferrer = (referrerPage: string, params: Record<string, string | undefined>): string => {
+  try {
+    const url = new URL(referrerPage);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value && !url.searchParams.has(key)) {
+        url.searchParams.set(key, value);
+      }
+    });
+    return url.toString();
+  } catch {
+    return referrerPage;
+  }
+};
+
 type ValidationResult = {
   success: boolean;
 };

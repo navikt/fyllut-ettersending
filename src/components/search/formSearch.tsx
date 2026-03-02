@@ -17,6 +17,12 @@ const FormSearch = ({ forms }: Props) => {
   const [searchResult, setSearchResult] = useState<ListForm[]>([]);
   const router = useRouter();
   const { t } = useTranslation('ettersendelse');
+  const withQuery = (sub: string) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('sub', sub);
+    const qs = params.toString();
+    return qs ? `?${qs}` : '';
+  };
 
   useEffect(() => {
     const lcSearchInput = searchInput.toLowerCase();
@@ -58,7 +64,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}?sub=digital`);
+                    await router.push(`${Paths.details(form.path)}${withQuery('digital')}`);
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (digital)`}</LinkPanel.Title>
@@ -73,7 +79,7 @@ const FormSearch = ({ forms }: Props) => {
                   border
                   onClick={async (e) => {
                     e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}?sub=paper`);
+                    await router.push(`${Paths.details(form.path)}${withQuery('paper')}`);
                   }}
                 >
                   <LinkPanel.Title>{`${form.title} (papir)`}</LinkPanel.Title>
