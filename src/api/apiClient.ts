@@ -83,13 +83,22 @@ const createEttersending = async (formData: FormData): Promise<string> => {
   return location;
 };
 
+const inputFilter = (input: string | undefined) => {
+  if (!input) return '';
+
+  const invalidCharactersRegex = /[^\p{L}\p{N}\p{Zs}\n\t\-.!/;()":,–_'?&+’%#•@»«§]/gu;
+
+  return input.replace(invalidCharactersRegex, '')?.trim();
+};
+
 const createLospost = async (formData: DigitalLospostFormData): Promise<string> => {
   if (!formData.subject || !formData.documentTitle) {
     throw new Error('Ufullstendig skjema');
   }
   const titlePrefix = formData.documentationTitlePrefix ? `${formData.documentationTitlePrefix} - ` : '';
+  const filtrertDokumentTittel = inputFilter(formData.documentTitle);
   const jsonBody: LospostRequestBody = {
-    soknadTittel: `${formData.subject.label} - ${titlePrefix}${formData.documentTitle}`,
+    soknadTittel: `${formData.subject.label} - ${titlePrefix}${filtrertDokumentTittel}`,
     tema: formData.subject.value,
     dokumentTittel: `${titlePrefix}${formData.documentTitle}`,
     sprak: formData.language || 'nb',
