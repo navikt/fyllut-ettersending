@@ -17,7 +17,7 @@ import { EttersendelseApplication, Form, NavUnit, QuerySubmissionType, UserType 
 import { useFormState } from 'src/data/appState';
 import { Paths } from 'src/data/paths';
 import { useReffererPage } from 'src/hooks/useReferrerPage';
-import { buildQueryString } from 'src/utils/queryParams';
+import { addParamsToReferrer, buildQueryString } from 'src/utils/queryParams';
 import { uncapitalize } from 'src/utils/stringUtil';
 import {
   getDefaultQuerySubmissionType,
@@ -48,19 +48,7 @@ const Details: NextPage<Props> = (props) => {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
   const tema = router.query.tema as string | undefined;
   const gjelder = router.query.gjelder as string | undefined;
-
-  let backUrl = '';
-  if (referrerPage) {
-    try {
-      const url = new URL(referrerPage);
-      if (tema && !url.searchParams.has('tema')) url.searchParams.set('tema', tema);
-      if (gjelder && !url.searchParams.has('gjelder')) url.searchParams.set('gjelder', gjelder);
-      backUrl = url.toString();
-    } catch {
-      backUrl = referrerPage;
-    }
-  }
-
+  const backUrl = referrerPage ? addParamsToReferrer(referrerPage, { tema, gjelder }) : '';
   const queryString = buildQueryString({ tema, gjelder });
   const downloadPath = `${Paths.downloadPage(id)}${queryString ? `?${queryString}` : ''}`;
   const digitalQuery = buildQueryString({ sub: 'digital', tema, gjelder });
