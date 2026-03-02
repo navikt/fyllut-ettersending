@@ -1,4 +1,4 @@
-import { buildQueryString, validateQueryParams } from '../../../src/utils/queryParams';
+import { addParamsToReferrer, buildQueryString, validateQueryParams } from '../../../src/utils/queryParams';
 
 describe('queryParams', () => {
   describe('validateQueryParams', () => {
@@ -98,6 +98,43 @@ describe('queryParams', () => {
       const params = new URLSearchParams(qs);
       expect(params.get('tema')).to.equal(null);
       expect(params.get('gjelder')).to.equal('Utbetaling');
+    });
+  });
+
+  describe('addParamsToReferrer', () => {
+    it('adds params to URL when missing', () => {
+      const result = addParamsToReferrer('https://nav.no/page', { tema: 'SYK', gjelder: 'Utbetaling' });
+      expect(result).to.equal('https://nav.no/page?tema=SYK&gjelder=Utbetaling');
+    });
+
+    it('skips params that already exist in URL', () => {
+      const result = addParamsToReferrer('https://nav.no/page?tema=BIL', { tema: 'SYK', gjelder: 'Utbetaling' });
+      const url = new URL(result);
+      expect(url.searchParams.get('tema')).to.equal('BIL');
+      expect(url.searchParams.get('gjelder')).to.equal('Utbetaling');
+    });
+
+    it('skips undefined param values', () => {
+      const result = addParamsToReferrer('https://nav.no/page', { tema: 'SYK', gjelder: undefined });
+      expect(result).to.equal('https://nav.no/page?tema=SYK');
+    });
+
+    it('handles malformed URLs gracefully by returning original', () => {
+      const result = addParamsToReferrer('/relative/path', { tema: 'SYK' });
+      expect(result).to.equal('/relative/path');
+    });
+
+    it('handles empty string gracefully', () => {
+      const result = addParamsToReferrer('', { tema: 'SYK' });
+      expect(result).to.equal('');
+    });
+
+    it('preserves existing query params and hash', () => {
+      const result = addParamsToReferrer('https://nav.no/page?existing=value#section', { tema: 'SYK' });
+      const url = new URL(result);
+      expect(url.searchParams.get('existing')).to.equal('value');
+      expect(url.searchParams.get('tema')).to.equal('SYK');
+      expect(url.hash).to.equal('#section');
     });
   });
 });
