@@ -18,7 +18,7 @@
     "user-type": {
       "legend": "Who is the submission for?",
       "choice-has-ssn": "The person has a Norwegian national identification number or d-number",
-      "choice-no-ssn": "The person do not have a Norwegian national identification number or d-number",
+      "choice-no-ssn": "The person does not have a Norwegian national identification number or d-number",
       "choice-other": "Several people at the same time, or employment scheme organizers, course organizers and other businesses"
     },
     "ssn-input": {
