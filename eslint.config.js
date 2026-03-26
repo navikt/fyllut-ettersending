@@ -1,40 +1,18 @@
 const { defineConfig, globalIgnores } = require('eslint/config');
-
-const tsParser = require('@typescript-eslint/parser');
-const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 const js = require('@eslint/js');
-
-const { FlatCompat } = require('@eslint/eslintrc');
 const pluginCypress = require('eslint-plugin-cypress');
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+const nextCoreWebVitals = require('eslint-config-next/core-web-vitals');
+const prettier = require('eslint-config-prettier');
 
 module.exports = defineConfig([
+  js.configs.recommended,
+  ...nextCoreWebVitals,
   {
-    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-    extends: [
-      ...compat.extends(
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'prettier',
-        'next/core-web-vitals',
-      ),
-      pluginCypress.configs.recommended,
-    ],
-
-    languageOptions: {
-      parser: tsParser,
-    },
-
-    plugins: {
-      '@typescript-eslint': typescriptEslint,
-    },
-
+    files: ['**/*.ts', '**/*.tsx'],
     rules: {
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
+      'no-redeclare': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -43,7 +21,12 @@ module.exports = defineConfig([
           varsIgnorePattern: '^[_$].*',
         },
       ],
+      'react-hooks/set-state-in-effect': 'off',
     },
+  },
+  {
+    files: ['cypress/**/*.{js,jsx,ts,tsx}'],
+    ...pluginCypress.configs.recommended,
   },
   {
     files: ['**/mocks/**'],
@@ -52,5 +35,6 @@ module.exports = defineConfig([
       '@typescript-eslint/no-require-imports': 'off',
     },
   },
+  prettier,
   globalIgnores(['**/**.config.js', '**/.next/**', '**/node_modules/**', 'next-env.d.ts']),
 ]);

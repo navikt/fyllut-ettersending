@@ -1,5 +1,5 @@
 import { idnr } from '@navikt/fnrvalidator';
-import { TFunction } from 'next-i18next';
+import { TFunction } from 'i18next';
 import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data';
 import { hasOtherAttachment } from './formDataUtil';
 

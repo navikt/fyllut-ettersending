@@ -1,5 +1,5 @@
 import { Heading, LinkCard, VStack } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import NextLink from 'next/link';
 import { LanguageCode } from 'src/data';
 import Layout from '../layout/layout';

@@ -4,8 +4,7 @@ import {
   DecoratorLocale,
   fetchDecoratorReact,
 } from '@navikt/nav-dekoratoren-moduler/ssr';
-import { DocumentContext, DocumentInitialProps } from 'next/dist/pages/_document';
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 
 type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponents };
 

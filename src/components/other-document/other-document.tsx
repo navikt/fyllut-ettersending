@@ -1,6 +1,6 @@
 import { Ingress } from '@navikt/ds-react';
 import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useFormState } from 'src/data/appState';
 import { KeyValue, NavUnit } from '../../data';
 import ChooseUser from '../submission/chooseUser';

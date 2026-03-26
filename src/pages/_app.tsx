@@ -1,6 +1,6 @@
 import '@navikt/ds-css/darkside';
 import { Theme } from '@navikt/ds-react';
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation } from 'next-i18next/pages';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';

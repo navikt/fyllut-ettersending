@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import type { GetServerSideProps, NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useCallback, useEffect, useState } from 'react';
 import { Paths } from 'src/data/paths';
 import { fetchForms } from '../api/apiClient';

@@ -1,5 +1,5 @@
 import { Radio, RadioGroup, UNSAFE_Combobox } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useMemo } from 'react';
 import { NavUnit, UserType } from '../../data';
 import { useFormState } from '../../data/appState';

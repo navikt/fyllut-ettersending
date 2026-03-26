@@ -1,5 +1,5 @@
 import { BodyLong, Skeleton, TextField, UNSAFE_Combobox } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useCallback } from 'react';
 import { useFormState } from '../../data/appState';
 import { SubjectsState } from './archiveSubjectsReducer';

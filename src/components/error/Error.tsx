@@ -1,6 +1,6 @@
 import { BugIcon } from '@navikt/aksel-icons';
 import { BodyShort, Box, Button, Heading, VStack } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import { Paths } from '../../data/paths';
