@@ -3,6 +3,7 @@
 
 # Allow files and directories
 !/next.config.js
+!/next-i18next.config.js
 !/package.json
 !/yarn.lock
 !/public
