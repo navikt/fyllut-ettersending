@@ -447,6 +447,11 @@
   resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/7.33.2/e39a489773cb78aa2a0cb96ee89ba3793dc856de#e39a489773cb78aa2a0cb96ee89ba3793dc856de"
   integrity sha512-yF676LoUCSVQoN9X03ONh0gi3svpTpWScpjmHqxxjBPDJf0okIBQKFztI6iGOrFIB/kVyI4M8Qy8EsBuop1KAA==
 
+"@navikt/aksel-icons@^8.9.0":
+  version "8.9.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/8.9.0/6aa76719a9783fd0de5c01291adc8b920d2cf065#6aa76719a9783fd0de5c01291adc8b920d2cf065"
+  integrity sha512-AaHoHwSlULrQxNPLV1tmWNdx4RL6QTdzhkM7NcKrnaq0hUPvcUbHyVLiecubiDmjEiAAPVQQboo6/QRuw2UvXg==
+
 "@navikt/ds-css@^7.33.2":
   version "7.33.2"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/7.33.2/479e17163cea5c114de01a6b6801b321b8e94207#479e17163cea5c114de01a6b6801b321b8e94207"
