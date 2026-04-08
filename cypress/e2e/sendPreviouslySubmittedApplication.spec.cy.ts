@@ -93,6 +93,24 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.url().should('include', '/last-ned');
   });
 
+  it('should navigate back with the top link from form2 download-page', () => {
+    cy.visit('/form2');
+    cy.closeConsentBanner();
+    cy.url().should('include', 'innsendingsvalg');
+    cy.get('a').contains(TestLinkText.sendPaper).click();
+    cy.url().should('include', '?sub=paper');
+    cy.get('[type="checkbox"]').first().check();
+    cy.get('[type="radio"]').check('hasSocialNumber');
+    cy.get('[name="socialSecurityNo"]').click();
+    cy.get('[name="socialSecurityNo"]').type('28119135003');
+    cy.get('button').contains(TestButtonText.next).click();
+    cy.url().should('include', '/last-ned');
+
+    cy.findByRole('link', { name: TestButtonText.previous }).should('exist').click();
+    cy.url().should('include', '/fyllut-ettersending/form2?sub=paper');
+    cy.get('[name="socialSecurityNo"]').should('have.value', '28119135003');
+  });
+
   it('fill out and send documentation digitally, should redirect to subType-page', () => {
     cy.visit('/form2');
     cy.closeConsentBanner();
