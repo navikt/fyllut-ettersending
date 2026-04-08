@@ -525,6 +525,32 @@ describe('Løspost - Paper submission', () => {
       cy.url().should('not.include', '/last-ned');
     });
 
+    it('should navigate back with the top link from download-page', () => {
+      cy.visit('/lospost/paper?tema=BIL');
+      cy.closeConsentBanner();
+
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+        .should('exist')
+        .type('Lisenskostnader');
+
+      cy.findByRole('group', { name: 'Hvem gjelder innsendingen for?' })
+        .should('exist')
+        .within(() => {
+          cy.findByRole('radio', { name: 'Personen har fødselsnummer eller d-nummer' }).should('exist').click();
+        });
+
+      cy.findByRole('textbox', { name: 'Fødselsnummer / d-nummer' }).should('exist').type('28880948417');
+
+      cy.get('button').contains(TestButtonText.next).click();
+      cy.findByRole('heading', { name: 'Send inn dokumentasjon' }).should('exist');
+
+      cy.findByRole('link', { name: TestButtonText.previous }).should('exist').click();
+      cy.url().should('include', '/fyllut-ettersending/lospost/paper?tema=BIL');
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
+        .should('exist')
+        .should('contain.value', 'Lisenskostnader');
+    });
+
     it('should navigate back from download-page and keep input data', () => {
       cy.visit('/lospost/paper?tema=BIL');
       cy.closeConsentBanner();

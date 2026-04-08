@@ -1,5 +1,5 @@
 import { BodyShort, Link, List } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useEffect, useState } from 'react';
 import { Paths } from '../../data/paths';
 import { Error as ErrorComponent } from './Error';

@@ -1,6 +1,6 @@
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import type { GetServerSideProps, NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/layout';
 import Section from '../components/section/section';

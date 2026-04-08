@@ -1,9 +1,9 @@
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
 import { Heading, HStack, Link as NavLink } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import Head from 'next/head';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { LanguageCode } from 'src/data';
 import LanguageSelect from '../languageSelect/languageSelect';
@@ -20,16 +20,17 @@ interface Props {
 
 const Layout = ({ title, hideTitle, children, backUrl, showBackLink = true, publishedLanguages }: Props) => {
   const { t } = useTranslation('common');
+  const isInternalBackUrl = backUrl?.startsWith('/');
 
   const backLink = () => {
     if (backUrl && showBackLink) {
+      const BackLinkComponent = isInternalBackUrl ? NextLink : NavLink;
+
       return (
-        <Link href={backUrl} passHref legacyBehavior>
-          <NavLink className={styles.backLink}>
-            <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
-            {t('button.previous')}
-          </NavLink>
-        </Link>
+        <BackLinkComponent className={styles.backLink} href={backUrl}>
+          <ArrowLeftIcon className={styles.backLinkIcon} aria-hidden={true} />
+          {t('button.previous')}
+        </BackLinkComponent>
       );
     }
   };

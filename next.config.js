@@ -8,9 +8,6 @@ const nextConfig = {
   basePath: '/fyllut-ettersending',
   reactStrictMode: true,
   output: 'standalone',
-  eslint: {
-    dirs: ['src', 'cypress'],
-  },
   i18n,
   webpack(config) {
     config.resolve.fallback = {

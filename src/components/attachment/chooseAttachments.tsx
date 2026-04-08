@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup, TextField } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { Form } from '../../data';
 import { useFormState } from '../../data/appState';
 import { hasOtherAttachment } from '../../utils/formDataUtil';

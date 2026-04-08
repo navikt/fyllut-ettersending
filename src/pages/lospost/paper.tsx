@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useState } from 'react';
 import ButtonGroup from 'src/components/button/buttonGroup';

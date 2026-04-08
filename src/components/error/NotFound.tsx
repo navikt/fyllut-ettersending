@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { Error as ErrorComponent } from './Error';
 
 export function NotFound() {

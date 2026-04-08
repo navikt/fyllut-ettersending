@@ -1,5 +1,5 @@
 import { TextField, UNSAFE_Combobox } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useEffect, useMemo } from 'react';
 import { KeyValue, UserType } from '../../data';
 import { useFormState } from '../../data/appState';

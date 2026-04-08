@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@navikt/aksel-icons';
 import { Alert } from '@navikt/ds-react';
 import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext } from 'next/types';
 import { useCallback, useEffect, useReducer, useState } from 'react';
@@ -16,7 +16,7 @@ import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { FormDataPage, KeyValue, UnauthenticatedError } from '../../data';
 import { useFormState } from '../../data/appState';
-import archiveSubjectsReducer from '../../forms/digitalLospost/archiveSubjectsReducer';
+import archiveSubjectsReducer, { SubjectsState } from '../../forms/digitalLospost/archiveSubjectsReducer';
 import DigitalLospostForm from '../../forms/digitalLospost/DigitalLospost';
 import { getServerSideTranslations } from '../../utils/i18nUtil';
 import logger from '../../utils/logger';
@@ -38,7 +38,8 @@ const DigitalLospostPage: NextPage<Props> = ({ tema, gjelder, subjects: serverSu
   const { t, i18n } = useTranslation('digital-lospost');
   const { t: tCommon } = useTranslation('common');
   const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
-  const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, { status: 'init' }, (state) => state);
+  const initialSubjectsState: SubjectsState = { status: 'init' };
+  const [subjectsState, dispatch] = useReducer(archiveSubjectsReducer, initialSubjectsState);
   const referrerPage = useReffererPage();
   const backUrl = referrerPage ? addParamsToReferrer(referrerPage, { tema, gjelder }) : '';
 

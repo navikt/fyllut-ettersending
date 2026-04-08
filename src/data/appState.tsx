@@ -1,4 +1,4 @@
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import React, { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import { validateFormData } from '../utils/validator';
 import { Form, FormData, FormDataPage, KeyValue, UserData } from './index';
@@ -11,7 +11,7 @@ interface AppStateType {
   resetFormData: (formData?: Partial<FormData>) => void;
   errors: KeyValue;
   setValidate: (valid: boolean) => boolean;
-  validationSummaryRef: React.RefObject<HTMLDivElement>;
+  validationSummaryRef: React.RefObject<HTMLDivElement | null>;
   validationSummaryFocus: () => void;
 }
 

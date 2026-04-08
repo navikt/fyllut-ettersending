@@ -1,5 +1,5 @@
 import { Select } from '@navikt/ds-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next/pages';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { LanguageCode } from 'src/data';

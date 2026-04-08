@@ -1,4 +1,4 @@
-import { TFunction } from 'next-i18next';
+import { TFunction } from 'i18next';
 import { FormData } from '../data';
 
 const getCoverPageTitle = (formData: FormData, t: TFunction) => {
