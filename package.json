@@ -10,13 +10,14 @@
     "dev": "next dev --webpack -p 3002",
     "dev:test": "NODE_ENV=test next dev --webpack -p 3002",
     "build": "next build --webpack",
+    "typegen": "next typegen",
     "start": "next start -p 3002",
     "lint": "eslint .",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
     "mocks": "cd mocks && yarn mocks",
     "mocks:no-cli": "cd mocks && yarn mocks:no-cli",
-    "prepare": "husky",
+    "prepare": "yarn typegen && husky",
     "prettier": "prettier --write ."
   },
   "dependencies": {
