@@ -2,6 +2,6 @@
   cursor: pointer;
 }
 
-.results a {
+.results > :not(:last-child) {
   margin-bottom: 1.5rem;
 }

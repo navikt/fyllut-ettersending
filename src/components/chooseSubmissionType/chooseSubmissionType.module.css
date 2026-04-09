@@ -1,6 +1,6 @@
 .heading {
-  margin-top: var(--a-spacing-2);
+  margin-top: var(--ax-space-8);
   @media only screen and (max-width: 767px) {
-    margin-top: var(--a-spacing-0);
+    margin-top: var(--ax-space-0);
   }
 }
