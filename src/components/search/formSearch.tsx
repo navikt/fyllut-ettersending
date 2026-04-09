@@ -1,10 +1,12 @@
-import { LinkPanel, TextField } from '@navikt/ds-react';
+import { LinkCard, TextField } from '@navikt/ds-react';
 import { useTranslation } from 'next-i18next/pages';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { isDigitalSubmissionAllowed, isPaperSubmissionAllowed } from 'src/utils/submissionUtil';
 import { ListForm } from '../../data';
 import { Paths } from '../../data/paths';
+import { buildQueryString } from '../../utils/queryParams';
 import Section from '../section/section';
 import styles from './search.module.css';
 
@@ -17,11 +19,29 @@ const FormSearch = ({ forms }: Props) => {
   const [searchResult, setSearchResult] = useState<ListForm[]>([]);
   const router = useRouter();
   const { t } = useTranslation('ettersendelse');
-  const withQuery = (sub: string) => {
-    const params = new URLSearchParams(window.location.search);
-    params.set('sub', sub);
-    const qs = params.toString();
-    return qs ? `?${qs}` : '';
+  const tema = typeof router.query.tema === 'string' ? router.query.tema : undefined;
+  const gjelder = typeof router.query.gjelder === 'string' ? router.query.gjelder : undefined;
+
+  const withQuery = (formPath: string, sub: 'digital' | 'paper') => {
+    const queryString = buildQueryString({ sub, tema, gjelder });
+    return `${Paths.details(formPath)}${queryString ? `?${queryString}` : ''}`;
+  };
+
+  const renderSubmissionLinkCard = (form: ListForm, sub: 'digital' | 'paper') => {
+    const submissionTypeLabel = sub === 'digital' ? 'digital' : 'papir';
+    const title = `${form.title} (${submissionTypeLabel})`;
+    const ariaLabel = [title, form.properties?.formNumber].filter(Boolean).join(' ');
+
+    return (
+      <LinkCard className={styles.clickable} data-color="accent">
+        <LinkCard.Title as="h3">
+          <LinkCard.Anchor asChild aria-label={ariaLabel}>
+            <NextLink href={withQuery(form.path, sub)}>{title}</NextLink>
+          </LinkCard.Anchor>
+        </LinkCard.Title>
+        <LinkCard.Description>{form.properties?.formNumber}</LinkCard.Description>
+      </LinkCard>
+    );
   };
 
   useEffect(() => {
@@ -55,37 +75,11 @@ const FormSearch = ({ forms }: Props) => {
       <div className={styles.results} data-cy="searchResults">
         {searchResult
           .sort((a, b) => sortForms(a, b))
-          .map((form, index) => (
-            <Fragment key={`submission-${index}`}>
-              {isDigitalSubmissionAllowed(form) && (
-                <LinkPanel
-                  href="#"
-                  className={styles.clickable}
-                  border
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}${withQuery('digital')}`);
-                  }}
-                >
-                  <LinkPanel.Title>{`${form.title} (digital)`}</LinkPanel.Title>
-                  <LinkPanel.Description>{form.properties?.formNumber}</LinkPanel.Description>
-                </LinkPanel>
-              )}
+          .map((form) => (
+            <Fragment key={form.path}>
+              {isDigitalSubmissionAllowed(form) && renderSubmissionLinkCard(form, 'digital')}
 
-              {isPaperSubmissionAllowed(form) && (
-                <LinkPanel
-                  href="#"
-                  className={styles.clickable}
-                  border
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    await router.push(`${Paths.details(form.path)}${withQuery('paper')}`);
-                  }}
-                >
-                  <LinkPanel.Title>{`${form.title} (papir)`}</LinkPanel.Title>
-                  <LinkPanel.Description>{form.properties?.formNumber}</LinkPanel.Description>
-                </LinkPanel>
-              )}
+              {isPaperSubmissionAllowed(form) && renderSubmissionLinkCard(form, 'paper')}
             </Fragment>
           ))}
       </div>

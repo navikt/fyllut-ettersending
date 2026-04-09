@@ -20,9 +20,9 @@ export function Error({ heading, errorBody, showGoToFrontPage, showReportBug, lo
   const { t } = useTranslation('common');
   return (
     <Layout title={heading} hideTitle>
-      <Box paddingBlock="20">
-        <VStack gap="16">
-          <VStack gap="8" align="start">
+      <Box paddingBlock="space-20">
+        <VStack gap="space-16">
+          <VStack gap="space-8" align="start">
             <div>
               <Heading size="large" spacing>
                 {heading}
