@@ -3788,10 +3788,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-i18next@^16.0.2:
-  version "16.0.2"
-  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-16.0.2.tgz#e0f2c0fe49af8c6a8b4419d2ef6cf8fe57491682"
-  integrity sha512-otxTSjgyaagO9+CE2uBidpFfotUYFlMxHPNw68UGxfoiiM17MPiWQwsHSjC2NNUp2uG5NDl8uv+9yOFxdDh22Q==
+next-i18next@^16.0.5:
+  version "16.0.5"
+  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-16.0.5.tgz#72db1c191012287976a46b2044ebd2a2805b431d"
+  integrity sha512-f9+WycNPxG5ruto1jacLZxlTJGsHGy312x4FpiE3ZUgE5K5peEJedQNBR/TSzkYqmvQ3kCqc94JKbjU88iP+LA==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.7"
     hoist-non-react-statics "^3.3.2"
