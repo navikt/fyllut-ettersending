@@ -28,7 +28,7 @@
     "@navikt/nav-dekoratoren-moduler": "^2.1.6",
     "classnames": "^2.5.1",
     "file-saver": "^2.0.5",
-    "i18next": "^25.10.10",
+    "i18next": "^26.0.8",
     "jsdom": "^27.1.0",
     "next": "^16.2.3",
     "next-i18next": "^16.0.2",
