@@ -146,8 +146,8 @@ describe('sendPreviouslySubmittedApplication', () => {
     cy.get('button').contains(TestButtonText.next).click();
     cy.url().should('include', '/last-ned');
     [
-      { href: '/fyllut-ettersending/nav100754?sub=paper', label: 'Veldig gammel dokumentasjon' },
-      { href: '/fyllut-ettersending/nav100753?sub=paper', label: 'Test dokumentasjon' },
+      { href: '/fyllut/nav100754?sub=paper', label: 'Veldig gammel dokumentasjon' },
+      { href: '/fyllut/nav100753?sub=paper', label: 'Test dokumentasjon' },
     ].forEach(({ href, label }) => {
       cy.get(`a[href="${href}"]`).should('exist').and('contain', label);
     });
