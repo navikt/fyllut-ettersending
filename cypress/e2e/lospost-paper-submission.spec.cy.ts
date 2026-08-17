@@ -118,6 +118,19 @@ describe('Løspost - Paper submission', () => {
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).click();
     });
 
+    it('does not allow a whitespace-only title', () => {
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).type('   ');
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('link', { name: 'Du må fylle ut hvilken dokumentasjon vil du sende til Nav' }).should('exist');
+      });
+      cy.url().should('not.include', '/last-ned');
+    });
+
     it('does not allow title of length more than 150 characters', () => {
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')

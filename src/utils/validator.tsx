@@ -17,7 +17,7 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
 const validateFormData = (formData: FormData, t: TFunction) => {
   const formErrors: KeyValue = {};
   if (formData.page === 'digital-lospost') {
-    if (!formData.documentTitle) {
+    if (!formData.documentTitle?.trim()) {
       formErrors.documentTitle = t('digitalLospost.documentTitle');
     } else if (formData.documentTitle.length > 150) {
       formErrors.documentTitle = t('digitalLospost.documentTitleLength');
@@ -31,7 +31,7 @@ const validateFormData = (formData: FormData, t: TFunction) => {
     }
 
     if (formData.submissionType !== QuerySubmissionType.digital) {
-      if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
+      if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle?.trim()) {
         formErrors.otherDocumentationTitle = t('otherDocumentation');
       }
 
