@@ -11,6 +11,7 @@ import { downloadFrontpage } from '../../api/apiClient';
 import Layout from '../../components/layout/layout';
 import Section from '../../components/section/section';
 import { useFormState } from '../../data/appState';
+import { trimAttachmentDescriptions } from '../../utils/attachmentDescription';
 import { getServerSideTranslations, localePathPrefix } from '../../utils/i18nUtil';
 import { getCoverPageTitle } from '../../utils/lastNedUtil';
 import { buildQueryString } from '../../utils/queryParams';
@@ -42,9 +43,10 @@ const LastNed: NextPage<Props> = ({ locale, previousPath, form }) => {
 
   const download = async () => {
     setLoading(true);
-    const title = getCoverPageTitle(formData, t);
+    const normalizedFormData = trimAttachmentDescriptions(formData);
+    const title = getCoverPageTitle(normalizedFormData, t);
     try {
-      await downloadFrontpage(formData, title, locale);
+      await downloadFrontpage(normalizedFormData, title, locale);
     } catch (_e) {
       setDownloadError(t('download-error'));
     } finally {

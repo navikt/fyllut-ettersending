@@ -160,6 +160,7 @@ describe('Løspost - Paper submission', () => {
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.formData.otherDocumentationTitle).to.equal('Application for parental leave');
         expect(req.body.title).to.equal(
           'Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave',
         );
@@ -171,7 +172,7 @@ describe('Løspost - Paper submission', () => {
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
       cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav om permittering og masseoppsigelser' });
       cy.get('[name="otherDocumentationTitle"]').click();
-      cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
+      cy.get('[name="otherDocumentationTitle"]').type(' Application for parental leave ');
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
       cy.findAllByRole('radio').check('hasSocialNumber');
       cy.get('[name="socialSecurityNo"]').click();

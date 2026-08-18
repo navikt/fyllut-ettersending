@@ -79,6 +79,20 @@ describe('validator', () => {
         expect(errors?.subjectOfSubmission).to.eq('subjectOfSubmission');
       });
 
+      it('treats whitespace-only otherDocumentationTitle as empty', () => {
+        formData.userData!.type = UserType.other;
+        formData.otherDocumentationTitle = '   ';
+        const errors = validateFormData(formData, tMock);
+        expect(errors?.otherDocumentationTitle).to.eq('otherDocumentation');
+      });
+
+      it('does not count surrounding whitespace towards otherDocumentationTitle length', () => {
+        formData.userData!.type = UserType.other;
+        formData.otherDocumentationTitle = ` ${'a'.repeat(150)} `;
+        const errors = validateFormData(formData, tMock);
+        expect(errors?.otherDocumentationTitle).to.eq(undefined);
+      });
+
       it('allows valid characters in otherDocumentationTitle', () => {
         formData.userData!.type = UserType.other;
         formData.otherDocumentationTitle =
@@ -93,6 +107,24 @@ describe('validator', () => {
         const errors = validateFormData(formData, tMock);
         expect(errors?.otherDocumentationTitle).to.eq('otherDocumentationInvalid');
       });
+    });
+  });
+
+  describe('digital lospost', () => {
+    beforeEach(() => {
+      formData.page = 'digital-lospost';
+    });
+
+    it('treats whitespace-only documentTitle as empty', () => {
+      formData.documentTitle = '   ';
+      const errors = validateFormData(formData, tMock);
+      expect(errors?.documentTitle).to.eq('digitalLospost.documentTitle');
+    });
+
+    it('does not count surrounding whitespace towards documentTitle length', () => {
+      formData.documentTitle = ` ${'a'.repeat(150)} `;
+      const errors = validateFormData(formData, tMock);
+      expect(errors?.documentTitle).to.eq(undefined);
     });
   });
 

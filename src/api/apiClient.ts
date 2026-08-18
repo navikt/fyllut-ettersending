@@ -9,6 +9,7 @@ import {
   LospostRequestBody,
   NavUnit,
 } from '../data';
+import { trimAttachmentDescription } from '../utils/attachmentDescription';
 import { getFileName } from '../utils/formDataUtil';
 
 const baseUrl = '/fyllut-ettersending';
@@ -92,15 +93,16 @@ const inputFilter = (input: string | undefined) => {
 };
 
 const createLospost = async (formData: DigitalLospostFormData): Promise<string> => {
-  if (!formData.subject || !formData.documentTitle) {
+  const documentTitle = trimAttachmentDescription(formData.documentTitle);
+  if (!formData.subject || !documentTitle) {
     throw new Error('Ufullstendig skjema');
   }
   const titlePrefix = formData.documentationTitlePrefix ? `${formData.documentationTitlePrefix} - ` : '';
-  const filtrertDokumentTittel = inputFilter(formData.documentTitle);
+  const filtrertDokumentTittel = inputFilter(documentTitle);
   const jsonBody: LospostRequestBody = {
     soknadTittel: `${formData.subject.label} - ${titlePrefix}${filtrertDokumentTittel}`,
     tema: formData.subject.value,
-    dokumentTittel: `${titlePrefix}${formData.documentTitle}`,
+    dokumentTittel: `${titlePrefix}${documentTitle}`,
     sprak: formData.language || 'nb',
   };
   const result = await fetch(`${baseUrl}/api/lospost`, {
