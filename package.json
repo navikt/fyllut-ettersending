@@ -74,6 +74,5 @@
     "*.{md,mdx}": [
       "prettier --write"
     ]
-  },
-  "resolutions": {}
+  }
 }
