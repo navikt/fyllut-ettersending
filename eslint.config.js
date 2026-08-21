@@ -1,3 +1,4 @@
+const { fixupConfigRules } = require('@eslint/compat');
 const { defineConfig, globalIgnores } = require('eslint/config');
 const js = require('@eslint/js');
 const pluginCypress = require('eslint-plugin-cypress');
@@ -6,7 +7,7 @@ const prettier = require('eslint-config-prettier');
 
 module.exports = defineConfig([
   js.configs.recommended,
-  ...nextCoreWebVitals,
+  ...fixupConfigRules(nextCoreWebVitals),
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
@@ -30,6 +31,9 @@ module.exports = defineConfig([
   },
   {
     files: ['**/mocks/**'],
+    languageOptions: {
+      parser: require('@typescript-eslint/parser'),
+    },
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-require-imports': 'off',
