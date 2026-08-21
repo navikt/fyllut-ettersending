@@ -2956,12 +2956,10 @@ html-encoding-sniffer@^4.0.0:
   dependencies:
     whatwg-encoding "^3.1.1"
 
-html-parse-stringify@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz#dfc1017347ce9f77c8141a507f233040c59c55d2"
-  integrity sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==
-  dependencies:
-    void-elements "3.1.0"
+html-parse-stringify@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/html-parse-stringify/-/html-parse-stringify-4.0.1.tgz#7264be901df0fef8829eb04632191be0aa94f55e"
+  integrity sha512-0zHsZJrK7S3K2aucXWL6ycoYJ/iNtIcFHC/nYQgFklPtrv5LpJctIiSCroWZWeuoXvuyFdzp6KzjJQ+OT5MfFw==
 
 html-react-parser@^3.0.16:
   version "3.0.16"
@@ -3025,12 +3023,10 @@ i18next-resources-to-backend@^1.2.1:
   dependencies:
     "@babel/runtime" "^7.23.2"
 
-i18next@^25.10.10:
-  version "25.10.10"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.10.10.tgz#d610511c87150e7a98c58fa780e93f90603fe187"
-  integrity sha512-cqUW2Z3EkRx7NqSyywjkgCLK7KLCL6IFVFcONG7nVYIJ3ekZ1/N5jUsihHV6Bq37NfhgtczxJcxduELtjTwkuQ==
-  dependencies:
-    "@babel/runtime" "^7.29.2"
+i18next@26.3.6:
+  version "26.3.6"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-26.3.6.tgz#599db275c50b66d28a69d8f6c5162c245ce9296b"
+  integrity sha512-Bu5Z2nAXgfVyM8xvW3jk9EKRIuX37PudsrBViThNFx7CR7aaYTpP01cxNB/E4c4UUzTDiAZRstEhsRfPOL/8xA==
 
 iconv-lite@0.6.3:
   version "0.6.3"
@@ -3743,10 +3739,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-i18next@^16.0.2:
-  version "16.0.2"
-  resolved "https://registry.yarnpkg.com/next-i18next/-/next-i18next-16.0.2.tgz#e0f2c0fe49af8c6a8b4419d2ef6cf8fe57491682"
-  integrity sha512-otxTSjgyaagO9+CE2uBidpFfotUYFlMxHPNw68UGxfoiiM17MPiWQwsHSjC2NNUp2uG5NDl8uv+9yOFxdDh22Q==
+next-i18next@^16.0.10:
+  version "16.0.10"
+  resolved "https://registry.npmjs.org/next-i18next/-/next-i18next-16.0.10.tgz#aae9462ef73f198e9fcf5ca8862966adada3dc2a"
+  integrity sha512-nUcp2rL5Y2Iy6IxayF/qY+rrYdQzuvxD+wWHMjabXvFA9i+L8kFXmFkbXI2/4RQ/HwW/MfVEro116Tm0W3vbYA==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.7"
     hoist-non-react-statics "^3.3.2"
@@ -4115,13 +4111,13 @@ react-dom@^19.2.0:
   dependencies:
     scheduler "^0.27.0"
 
-react-i18next@^16.6.6:
-  version "16.6.6"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-16.6.6.tgz#046bbf651ab4837ba505a5995189c1d42b8956c7"
-  integrity sha512-ZgL2HUoW34UKUkOV7uSQFE1CDnRPD+tCR3ywSuWH7u2iapnz86U8Bi3Vrs620qNDzCf1F47NxglCEkchCTDOHw==
+react-i18next@17.0.11:
+  version "17.0.11"
+  resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-17.0.11.tgz#62e93cbc4cd336554f018ac05a677c26886a0f72"
+  integrity sha512-cDtkXgxjuFTWUH6V+aQn1Ve5vDiUztCNPWW5GtSHDccsgRXO1nE6QFWCEmc1KAutrb3OUv87wFShJL5RhUwPXg==
   dependencies:
     "@babel/runtime" "^7.29.2"
-    html-parse-stringify "^3.0.1"
+    html-parse-stringify "^4.0.1"
     use-sync-external-store "^1.6.0"
 
 react-is@^16.13.1, react-is@^16.7.0:
@@ -5005,11 +5001,6 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
-
-void-elements@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
-  integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
 w3c-xmlserializer@^5.0.0:
   version "5.0.0"
