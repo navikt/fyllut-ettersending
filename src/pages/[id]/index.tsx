@@ -4,6 +4,7 @@ import { getEttersendinger, getForm } from 'src/api/apiService';
 import { getIdPortenTokenFromContext } from 'src/api/loginRedirect';
 import Details from 'src/components/details/Details';
 import { EttersendelseApplication, Form, QuerySubmissionType, UnauthenticatedError } from 'src/data';
+import { filterAttachmentsByCode, normalizeAttachmentCodeFilter } from 'src/utils/attachmentFilter';
 import { getServerSideTranslations, localePathPrefix } from 'src/utils/i18nUtil';
 import logger from 'src/utils/logger';
 import { getLoginRedirect } from 'src/utils/login';
@@ -77,6 +78,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!form) {
     logger.info(`Failed to get form, returning not found`);
     return { notFound: true };
+  }
+
+  const attachmentCodeFilter = normalizeAttachmentCodeFilter(query.filter);
+  if (attachmentCodeFilter.length > 0) {
+    form = { ...form, attachments: filterAttachmentsByCode(form.attachments, attachmentCodeFilter) };
   }
 
   if (!isSubmissionAllowed(form)) {
