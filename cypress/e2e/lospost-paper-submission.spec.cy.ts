@@ -547,7 +547,7 @@ describe('Løspost - Paper submission', () => {
         .should('exist')
         .type('Lisenskostnader');
 
-      cy.findByRole('group', { name: 'Hvem gjelder innsendingen for?' })
+      cy.findByRole('radiogroup', { name: 'Hvem gjelder innsendingen for?' })
         .should('exist')
         .within(() => {
           cy.findByRole('radio', { name: 'Personen har fødselsnummer eller d-nummer' }).should('exist').click();
@@ -573,7 +573,7 @@ describe('Løspost - Paper submission', () => {
         .should('exist')
         .type('Lisenskostnader');
 
-      cy.findByRole('group', { name: 'Hvem gjelder innsendingen for?' })
+      cy.findByRole('radiogroup', { name: 'Hvem gjelder innsendingen for?' })
         .should('exist')
         .within(() => {
           cy.findByRole('radio', { name: 'Personen har fødselsnummer eller d-nummer' }).should('exist').click();
