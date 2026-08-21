@@ -1,6 +1,7 @@
 import { idnr } from '@navikt/fnrvalidator';
 import { TFunction } from 'i18next';
 import { FormData, KeyValue, QuerySubmissionType, UserType } from '../data';
+import { trimAttachmentDescriptions } from './attachmentDescription';
 import { hasOtherAttachment } from './formDataUtil';
 
 const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
@@ -16,10 +17,11 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
 
 const validateFormData = (formData: FormData, t: TFunction) => {
   const formErrors: KeyValue = {};
+  const normalizedFormData = trimAttachmentDescriptions(formData);
   if (formData.page === 'digital-lospost') {
-    if (!formData.documentTitle) {
+    if (!normalizedFormData.documentTitle) {
       formErrors.documentTitle = t('digitalLospost.documentTitle');
-    } else if (formData.documentTitle.length > 150) {
+    } else if (normalizedFormData.documentTitle.length > 150) {
       formErrors.documentTitle = t('digitalLospost.documentTitleLength');
     }
     if (!formData.subject) {
@@ -31,17 +33,20 @@ const validateFormData = (formData: FormData, t: TFunction) => {
     }
 
     if (formData.submissionType !== QuerySubmissionType.digital) {
-      if ((!formData.formId || hasOtherAttachment(formData)) && !formData.otherDocumentationTitle) {
+      if ((!formData.formId || hasOtherAttachment(formData)) && !normalizedFormData.otherDocumentationTitle) {
         formErrors.otherDocumentationTitle = t('otherDocumentation');
       }
 
-      if ((!formData.formId || hasOtherAttachment(formData)) && (formData.otherDocumentationTitle ?? '').length > 150) {
+      if (
+        (!formData.formId || hasOtherAttachment(formData)) &&
+        (normalizedFormData.otherDocumentationTitle ?? '').length > 150
+      ) {
         formErrors.otherDocumentationTitle = t('otherDocumentationLength');
       }
 
       if (
         (!formData.formId || hasOtherAttachment(formData)) &&
-        !containsOnlyCharactersValidInFoerstesideGenerator(formData.otherDocumentationTitle ?? '')
+        !containsOnlyCharactersValidInFoerstesideGenerator(normalizedFormData.otherDocumentationTitle ?? '')
       ) {
         formErrors.otherDocumentationTitle = t('otherDocumentationInvalid');
       }

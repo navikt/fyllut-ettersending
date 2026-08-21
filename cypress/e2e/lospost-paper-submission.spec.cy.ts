@@ -118,6 +118,19 @@ describe('Løspost - Paper submission', () => {
       cy.findByRole('button', { name: TestButtonText.downloadCoverPage }).click();
     });
 
+    it('does not allow a whitespace-only title', () => {
+      cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' }).type('   ');
+      cy.get('[name="subjectOfSubmission"]').type(`${SUBJECT_PER.subject}{downArrow}{enter}`);
+      cy.findAllByRole('radio').check('hasSocialNumber');
+      cy.get('[name="socialSecurityNo"]').type('16020256145');
+      cy.get('button').contains(TestButtonText.next).click();
+
+      cy.get('[data-cy=ValidationSummary]').within(() => {
+        cy.findByRole('link', { name: 'Du må fylle ut hvilken dokumentasjon vil du sende til Nav' }).should('exist');
+      });
+      cy.url().should('not.include', '/last-ned');
+    });
+
     it('does not allow title of length more than 150 characters', () => {
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
@@ -147,6 +160,7 @@ describe('Løspost - Paper submission', () => {
       cy.intercept('POST', `${Cypress.config('baseUrl')}/api/download`, (req) => {
         expect(req.body.formData.subjectOfSubmission).to.equal(SUBJECT_PER.subject);
         expect(req.body.formData.titleOfSubmission).to.equal(SUBJECT_PER.title);
+        expect(req.body.formData.otherDocumentationTitle).to.equal('Application for parental leave');
         expect(req.body.title).to.equal(
           'Innsendingen gjelder: Permittering og masseoppsigelser - Application for parental leave',
         );
@@ -158,7 +172,7 @@ describe('Løspost - Paper submission', () => {
     it('should hide combobox, use subject from query param and be able to fill out and go to next page', () => {
       cy.findByRole('heading', { level: 1, name: 'Send dokumenter til Nav om permittering og masseoppsigelser' });
       cy.get('[name="otherDocumentationTitle"]').click();
-      cy.get('[name="otherDocumentationTitle"]').type('Application for parental leave');
+      cy.get('[name="otherDocumentationTitle"]').type(' Application for parental leave ');
       cy.get('[name="subjectOfSubmission"]').should('not.exist');
       cy.findAllByRole('radio').check('hasSocialNumber');
       cy.get('[name="socialSecurityNo"]').click();
