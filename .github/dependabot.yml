@@ -11,6 +11,8 @@ updates:
       - npm-github
     schedule:
       interval: 'monthly'
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 20
     groups:
       all-minor-patch:
@@ -70,6 +72,8 @@ updates:
     directory: '/'
     schedule:
       interval: 'monthly'
+    cooldown:
+      default-days: 7
     groups:
       all:
         patterns:
@@ -79,3 +83,5 @@ updates:
     directory: '/'
     schedule:
       interval: 'monthly'
+    cooldown:
+      default-days: 7
