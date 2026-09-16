@@ -1,7 +1,6 @@
 import util from 'util';
 import winston from 'winston';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LoggingArgs = any[];
 
 export const rawLogger = winston.createLogger({
