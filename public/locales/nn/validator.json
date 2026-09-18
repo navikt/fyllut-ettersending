@@ -2,6 +2,7 @@
   "userType": "Du må velja kven innsendinga gjeld for",
   "socialSecurityNo": "Dette er ikkje eit gyldig fødselsnummer eller D-nummer",
   "socialSecurityNoIsEmpty": "Du må fylla ut fødselsnummer / d-nummer",
+  "invalidCharacters": "Feltet inneheld ugyldige tegn",
   "firstName": "Du må fylla ut fornamn",
   "lastName": "Du må fylla ut etternamn",
   "streetName": "Du må fylla ut vegadresse",
