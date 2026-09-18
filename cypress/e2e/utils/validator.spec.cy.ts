@@ -31,6 +31,8 @@ describe('validator', () => {
     });
 
     describe('type noSocialNumber', () => {
+      const userInfoFields = ['firstName', 'lastName', 'streetName', 'postalCode', 'city', 'country'] as const;
+
       it('validate userdata', () => {
         formData.userData!.type = UserType.noSocialNumber;
         const errors = validateFormData(formData, tMock);
@@ -60,6 +62,26 @@ describe('validator', () => {
         formData.userData!.navUnitContact = false;
         const errors = validateFormData(formData, tMock);
         expect(errors?.navUnitContact).to.eq(undefined);
+      });
+
+      userInfoFields.forEach((field) => {
+        it(`rejects invalid characters in ${field}`, () => {
+          formData.userData = {
+            type: UserType.noSocialNumber,
+            firstName: 'Ola',
+            lastName: 'Nordmann',
+            streetName: 'Gate 1',
+            postalCode: '0001',
+            city: 'Oslo',
+            country: 'Norge',
+            navUnitContact: false,
+            [field]: 'Test\\',
+          };
+
+          const errors = validateFormData(formData, tMock);
+
+          expect(errors?.[field]).to.eq('invalidCharacters');
+        });
       });
     });
 
