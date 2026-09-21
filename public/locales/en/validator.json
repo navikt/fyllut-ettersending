@@ -2,6 +2,7 @@
   "userType": "You have to select who the submission applies to",
   "socialSecurityNo": "This is not a valid Norwegian national identification number / D number",
   "socialSecurityNoIsEmpty": "You have to fill in your Norwegian national identification number / d-number",
+  "invalidCharacters": "The field contains invalid characters",
   "firstName": "You have to fill in your first name",
   "lastName": "You have to fill in your last name",
   "streetName": "You have to fill in the street address",

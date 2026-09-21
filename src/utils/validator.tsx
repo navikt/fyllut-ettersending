@@ -11,8 +11,19 @@ const containsOnlyCharactersValidInFoerstesideGenerator = (str: string) => {
   // p{L} matches any kind of letter from any language
   // p{N} matches any kind of numeric character in any script
   // p{Zs} matches a whitespace character that is invisible, but does take up space
-  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/gu;
+  const validCharactersRegex = /^[\p{L}\p{N}\p{Zs}\n\t\-./;()":,–_'?&+’%#•@»«§]*$/u;
   return validCharactersRegex.test(str);
+};
+
+const validateCoverPageUserInfo = (formData: FormData, formErrors: KeyValue, t: TFunction) => {
+  const fields = ['firstName', 'lastName', 'streetName', 'postalCode', 'city', 'country'] as const;
+
+  fields.forEach((field) => {
+    const value = formData.userData?.[field];
+    if (value && !containsOnlyCharactersValidInFoerstesideGenerator(value)) {
+      formErrors[field] = t('invalidCharacters');
+    }
+  });
 };
 
 const validateFormData = (formData: FormData, t: TFunction) => {
@@ -82,6 +93,8 @@ const validateFormData = (formData: FormData, t: TFunction) => {
         if (!formData.userData?.country) {
           formErrors.country = t('country');
         }
+
+        validateCoverPageUserInfo(formData, formErrors, t);
 
         if (formData.userData?.navUnitContact === undefined) {
           formErrors.navUnitContact = t('navUnitContact');
