@@ -18,13 +18,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
       - name: deploy to dev
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@v3
         env:
           CLUSTER: dev-gcp
           RESOURCE: .nais/alerts.yaml
           VARS: .nais/dev.yaml
       - name: deploy to prod
-        uses: nais/deploy/actions/deploy@v2
+        uses: nais/deploy/actions/deploy@v3
         env:
           CLUSTER: prod-gcp
           RESOURCE: .nais/alerts.yaml
