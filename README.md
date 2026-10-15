@@ -87,7 +87,7 @@ For å kjøre testene, følg disse trinnene:
 
 ## Henvendelser
 
-Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.
+Opprett en issue her på GitHub hvis du har spørsmål om koden eller prosjektet.
 
 ## For Nav-ansatte
 
