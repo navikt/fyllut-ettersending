@@ -1,14 +1,14 @@
 import {
-  DecoratorComponents,
+  DecoratorComponentsReact,
   DecoratorFetchProps,
   DecoratorLocale,
   fetchDecoratorReact,
 } from '@navikt/nav-dekoratoren-moduler/ssr';
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 
-type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponents };
+type MyDocumentInitialProps = DocumentInitialProps & { Decorator: DecoratorComponentsReact };
 
-class _Document extends Document<{ Decorator: DecoratorComponents }> {
+class _Document extends Document<{ Decorator: DecoratorComponentsReact }> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
     const { locale } = ctx;
@@ -28,22 +28,22 @@ class _Document extends Document<{ Decorator: DecoratorComponents }> {
   }
 
   render() {
-    const { Styles, Scripts, Header, Footer } = this.props.Decorator;
+    const { HeadAssets, Scripts, Header, Footer } = this.props.Decorator;
 
     return (
       <Html lang={this.props.locale}>
         <Head>
           <meta name="description" content="Ettersend dokumentasjon" />
           <link rel="icon" href="/favicon.ico" />
+          <HeadAssets />
         </Head>
-        <Styles />
-        <Scripts />
         <body>
           <Header />
           <main className="main">
             <Main />
           </main>
           <Footer />
+          <Scripts />
           <NextScript />
         </body>
       </Html>
