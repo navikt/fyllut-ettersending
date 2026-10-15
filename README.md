@@ -1,4 +1,4 @@
-# Ettersendelse av dokumentasjon til en søknad.
+# Ettersendelse av dokumentasjon til en søknad
 
 Testversjonen av løsningen er tilgjengelig på https://fyllut-ettersending.intern.dev.nav.no/fyllut-ettersending
 
