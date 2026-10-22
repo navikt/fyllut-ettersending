@@ -13,11 +13,14 @@
 import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('closeConsentBanner', () => {
-  return cy
-    .findByRole('region', { name: /Får vi bruke valgfrie informasjon­skapsler|Can we use optional cookies/ })
-    .within(() => {
-      cy.findByRole('button', { name: /Ja|Yes/ }).click();
-    });
+  const bannerName =
+    /^(Får vi samle informasjon om hvordan nav\.no brukes\?|Can we collect information about how nav\.no is used\?)$/;
+
+  cy.findByRole('region', { name: bannerName }).within(() => {
+    cy.findByRole('button', { name: /^(Ja|Yes)$/ }).click();
+  });
+
+  return cy.findByRole('region', { name: bannerName }).should('not.exist');
 });
 
 // -- This is a parent command --
