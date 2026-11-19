@@ -36,9 +36,9 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: 'Deploy to PROD'
-        uses: nais/deploy/actions/deploy@v3
+        uses: nais/deploy/actions/deploy@30ed20fc7021e78d03ca9544b0c561d37f826296 # v3
         env:
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
@@ -53,9 +53,9 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: 'Deploy to DEV'
-        uses: nais/deploy/actions/deploy@v3
+        uses: nais/deploy/actions/deploy@30ed20fc7021e78d03ca9544b0c561d37f826296 # v3
         env:
           CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
