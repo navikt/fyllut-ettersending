@@ -29,13 +29,13 @@
     "classnames": "^2.5.1",
     "file-saver": "^2.0.5",
     "html-react-parser": "6.1.9",
-    "i18next": "26.4.2",
-    "jsdom": "30.1.2",
+    "i18next": "27.1.1",
+    "jsdom": "31.0.0",
     "next": "16.4.6",
     "next-i18next": "16.4.8",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-i18next": "17.0.16",
+    "react-i18next": "18.0.1",
     "winston": "^3.19.0"
   },
   "devDependencies": {
