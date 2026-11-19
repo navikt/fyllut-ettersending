@@ -6,6 +6,10 @@ declare global {
       mount: typeof mount;
 
       closeConsentBanner(): Chainable<JQuery>;
+
+      mocksUseRouteVariant(routeVariantId: string): Chainable<void>;
+
+      mocksRestoreRouteVariants(): Chainable<void>;
     }
   }
 }

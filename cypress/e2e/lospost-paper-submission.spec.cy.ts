@@ -132,10 +132,12 @@ describe('Løspost - Paper submission', () => {
     });
 
     it('does not allow title of length more than 150 characters', () => {
+      // Cypress 16 types with no delay by default. 151 synchronous change events exceed React's nested update limit.
       cy.findByRole('textbox', { name: 'Hvilken dokumentasjon vil du sende til Nav?' })
         .should('exist')
         .type(
           'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
+          { delay: 10 },
         );
       cy.findByRole('combobox', { name: 'Hva gjelder innsendingen?' }).type('Bi{downArrow}{downArrow}{enter}');
       cy.findByRole('button', { name: TestButtonText.next }).click();
